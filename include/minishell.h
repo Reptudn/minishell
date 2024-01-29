@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/01/29 12:03:42 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/01/29 12:25:52 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,11 @@
 # include <errno.h>
 # include <termios.h>
 # include <sys/ioctl.h>
+//# include <readline/readline.h>
+//# include <readline/history.h>
+
+# define PROMPT "minishell ➜ "
+
+int	command_loop(void);
 
 #endif

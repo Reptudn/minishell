@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/01/29 12:26:05 by jkauker          ###   ########.fr       */
+/*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
+/*   Updated: 2024/01/29 12:27:23 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(int argc, char **argv)
+int	command_loop(void)
 {
-	if (argc != 1)
+	char	*line;
+	char	**args;
+
+	printf("%s%s%s", COLOR_CYAN, PROMPT, COLOR_YELLOW);
+	line = readline(STDIN_FILENO);
+	while (line)
 	{
-		printf("%sUsage: %s%s\n", COLOR_RED, argv[0], COLOR_RESET);
-		return (1);
+		// args = ft_split(line, ' ');
+		free(line);
+		printf("%s%s%s", COLOR_CYAN, PROMPT, COLOR_YELLOW);
+		line = readline(STDIN_FILENO);
 	}
-	command_loop();
+	if (line)
+		free(line);
 	return (0);
 }
