@@ -9,8 +9,10 @@ SRCDIR := ./src/
 SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)input.c \
 			$(SRCDIR)utils/split.c \
+			$(SRCDIR)utils/command_error.c \
 			$(SRCDIR)commands/show_history.c \
-			$(SRCDIR)builtins/exit.c \
+			$(SRCDIR)builtin/exit.c \
+			$(SRCDIR)builtin/echo.c \
 
 OBJS	:= ${SRCS:.c=.o}
 
@@ -31,7 +33,7 @@ ft_printf:
 	$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
 $(NAME): $(OBJS) libft ft_printf
-	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/ft_printf/libftprintf.a $(HEADERS) -lreadline -o $(NAME) && printf "Compilation finished!\n"
+	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/ft_printf/libftprintf.a $(HEADERS) -lreadline -o $(NAME) && printf "\n\nCompilation finished!\n"
 
 clean:
 	@make -C ./lib/libft clean

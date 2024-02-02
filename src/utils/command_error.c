@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   show_history.c                                     :+:      :+:    :+:   */
+/*   command_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 12:29:05 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/02 14:07:57 by jkauker          ###   ########.fr       */
+/*   Created: 2024/02/02 13:58:11 by jkauker           #+#    #+#             */
+/*   Updated: 2024/02/02 14:00:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include <readline/history.h>
 
-int	display_history(void)
+void	print_invalid_cmd(char *command)
 {
-	int			i;
-	HIST_ENTRY	*entry;
+	char	**args;
+	int		i;
 
-	i = 0;
-	if (history_length == 1)
-	{
-		printf("No command history\n");
-		return (1);
-	}
-	while (i < history_length)
-	{
-		entry = history_get(i + 1);
-		if (!entry)
-			return (0);
-		printf("%-3d↠  %s\n", i + 1, entry->line);
-		i++;
-	}
-	return (1);
+	args = ft_split(command, ' ');
+	i = -1;
+	printf("%scommand not found: %s%s\n%s", COLOR_RED,
+		COLOR_MAGENTA, args[0], COLOR_RESET);
+	while (args[++i])
+		free(args[i]);
+	free(args);
 }
