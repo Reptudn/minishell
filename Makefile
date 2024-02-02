@@ -1,6 +1,6 @@
 NAME	:= minishell
 
-CFLAGS	:= -Wextra -Wall -Werror
+CFLAGS	:= -Wextra -Wall -Werror -gdwarf-4 -g
 
 HEADERS	:= -I ./include
 
@@ -29,7 +29,7 @@ ft_printf:
 	$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
 $(NAME): $(OBJS) libft ft_printf
-	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/ft_printf/libftprintf.a $(HEADERS) -o $(NAME) && printf "Compilation finished!\n"
+	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/ft_printf/libftprintf.a $(HEADERS) -lreadline -o $(NAME) && printf "Compilation finished!\n"
 
 clean:
 	@make -C ./lib/libft clean
