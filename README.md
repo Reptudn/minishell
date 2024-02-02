@@ -2,8 +2,8 @@
 The objective of this project is for you to create a simple shell.
 
 # Resources
-- pipes -> https://reactive.so/post/42-a-comprehensive-guide-to-pipex
-- minishell_guide -> https://achrafbelarif.medium.com/42cursus-minishell-29cd25f972e6
+- [pipes](https://reactive.so/post/42-a-comprehensive-guide-to-pipex)
+- [minishell guide](https://achrafbelarif.medium.com/42cursus-minishell-29cd25f972e6)
 
 # Overview
 ## Parsing
