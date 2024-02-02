@@ -8,7 +8,9 @@ SRCDIR := ./src/
 
 SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)input.c \
-			$(SRCDIR)/utils/split.c \
+			$(SRCDIR)utils/split.c \
+			$(SRCDIR)commands/show_history.c \
+			$(SRCDIR)builtins/exit.c \
 
 OBJS	:= ${SRCS:.c=.o}
 

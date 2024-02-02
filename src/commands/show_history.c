@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   show_history.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/02 13:09:24 by jkauker          ###   ########.fr       */
+/*   Created: 2024/02/02 12:29:05 by jkauker           #+#    #+#             */
+/*   Updated: 2024/02/02 13:06:26 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
+#include <readline/history.h>
 
-int	main(void)
+int	display_history(void)
 {
-	t_shell	shell;
+	int			i;
+	HIST_ENTRY	*entry;
 
-	shell.run = true;
-	shell.commands = NULL;
-	command_loop(&shell);
-	return (0);
+	i = history_length;
+	if (history_length == 1)
+	{
+		printf("No command history\n");
+		return (1);
+	}
+	while (i >= 0)
+	{
+		entry = history_get(i);
+		if (!entry)
+			return (0);
+		printf("%-3d:  %s\n", i, entry->line);
+		i--;
+	}
+	return (1);
 }
