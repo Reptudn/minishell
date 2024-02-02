@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/02 13:34:26 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/02 13:42:43 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	command_loop(t_shell *shell)
 			display_history();
 		else if (ft_strncmp(line, "exit", 4) == 0)
 			break ;
+		// else if (ft_strncmp(line, "echo", 4) == 0)
+		// 	ft_echo(&(t_command){"echo", line});
 		else
 			printf("%scommand not found: %s%s\n%s", COLOR_RED,
 				COLOR_MAGENTA, line, COLOR_RESET);
