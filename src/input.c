@@ -6,14 +6,12 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/02 13:29:22 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/02 13:32:12 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <string.h>
-
-
 
 int	command_loop(t_shell *shell)
 {
