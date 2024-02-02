@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/02 12:23:22 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/02 14:35:30 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char **ft_split_shell(const char *str)
 
 int main() {
 	char **result;
-	char *str = "echo \"hello\" || wc || ls || ls -la";
+	char *str = "echo \"hel<lo\" || wc || ls || ls -la";
 	int i = 0;
 
 	result = ft_split_shell(str);
