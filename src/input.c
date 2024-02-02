@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/02 10:57:41 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/02 11:10:30 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	command_loop(void)
 	return (0);
 	while (line)
 	{
-		// args = ft_split(line, ' ');
+		// args = ft_split(line, );
 		free(line);
 		printf("%s%s%s", COLOR_CYAN, PROMPT, COLOR_YELLOW);
 		line = readline(STDIN_FILENO);
