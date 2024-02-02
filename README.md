@@ -18,3 +18,29 @@ In dieser Phase führt die Shell die Befehle und Aktionen aus, die durch den gep
 Dies kann bedeuten, dass Programme gestartet, Dateien erstellt oder bearbeitet, Umgebungsvariablen gesetzt oder andere Aktionen ausgeführt werden, die vom Befehl angegeben sind.
 Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von Eingaben vom Benutzer oder andere interaktive Aktionen umfassen, die Teil des Befehls sind.
 
+# Timeline
+- [ ] Endless loop for Commands
+- [ ] Parsing
+	- [ ] Linked List for Arguments:
+		```c
+		#define NONE -1 (none)
+		#define PIPE 0 ( | )
+		#defie OR 1 ( || )
+		#define AND 2 ( && )
+		#define REDIRECT_IN 3 ( < )
+		#define REDIRECT_OUT 4 ( > )
+		#define REDIRECT_OUT_APPEND 5 ( >> )
+		#define REDIRECT_IN_DELIMITER 6 ( << )
+
+		typedef struct s_command {
+			char *command;
+			char **args
+			int pipe_dings;
+			struct s_command *next;
+			struct s_command *prev;
+		} t_command;
+		```
+	- [ ]  ft_split
+		- split after operator
+		- if no quote found -> print "not implemented" (for now)
+	- [ ] malloc for struct and when splitting just copy the content from old split pointer into the new struct pointer then free the split so that all thats malloc after parsing is the pointers in the struct
