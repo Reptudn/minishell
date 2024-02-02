@@ -4,8 +4,6 @@ CFLAGS	:= -Wextra -Wall -Werror
 
 HEADERS	:= -I ./include
 
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
-
 SRCDIR := ./src/
 
 SRCS	:=  $(SRCDIR)main.c \
@@ -31,7 +29,7 @@ ft_printf:
 	$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
 $(NAME): $(OBJS) libft ft_printf
-	$(CC) $(OBJS) $(LIBS) ./lib/libft/libft.a ./lib/ft_printf/libftprintf.a $(HEADERS) -o $(NAME) && printf "Compilation finished!\n"
+	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/ft_printf/libftprintf.a $(HEADERS) -o $(NAME) && printf "Compilation finished!\n"
 
 clean:
 	@make -C ./lib/libft clean
