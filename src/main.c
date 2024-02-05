@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 10:52:24 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:57:50 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ char	**get_env(void)
 	return (envp);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 
 	shell.run = true;
 	shell.path = getcwd(NULL, 0);
+	shell.envp = envp;
+	argc++;
+	argv = 0;
 	if (!shell.path)
 	{
 		ft_putstr_fd("Error: current working directory\n", STDERR_FILENO);

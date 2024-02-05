@@ -15,9 +15,12 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \
 			$(SRCDIR)commands/command_handler.c \
+			$(SRCDIR)builtin/unset.c \
 			$(SRCDIR)builtin/exit.c \
 			$(SRCDIR)builtin/echo.c \
 			$(SRCDIR)builtin/pwd.c \
+			$(SRCDIR)builtin/env.c \
+			$(SRCDIR)builtin/export.c \
 			$(SRCDIR)signals/signal_handler.c \
 			$(SRCDIR)utils/make_cmds.c \
 			$(SRCDIR)utils/free_split_cmds.c \

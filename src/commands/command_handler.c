@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:30:38 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:07:22 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:55:53 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	command_handler(t_shell *shell, char *line)
 		if (*cmds->operator_type != NONE && cmds->next)
 		{
 			i = 0;
-			break;
+			break ;
 		}
 		if (ft_strncmp(cmds->command, "history", 7) == 0)
 			display_history();
@@ -41,6 +41,12 @@ int	command_handler(t_shell *shell, char *line)
 			pwd();
 		else if (ft_strncmp(cmds->command, "clear", 5) == 0)
 			ft_clear();
+		else if (ft_strncmp(cmds->command, "export", 6) == 0)
+			ft_export(shell);
+		else if (ft_strncmp(cmds->command, "env", 3) == 0)
+			ft_env(shell);
+		else if (ft_strncmp(cmds->command, "unset", 5) == 0)
+			ft_unset();
 		else
 		{
 			if (!run_env_command(shell, cmds))
