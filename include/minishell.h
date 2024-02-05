@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 09:38:43 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 10:12:12 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@
 # define REDIRECT_OUT_APPEND 5
 # define REDIRECT_IN_DELIMITER 6
 
+typedef struct s_shell
+{
+	bool		run;
+	char		*path;
+	char		**env;
+}			t_shell;
+
 typedef struct s_command
 {
 	char				*command;
@@ -51,14 +58,9 @@ typedef struct s_command
 	int					operator_type;
 	struct s_command	*next;
 	struct s_command	*prev;
+	t_shell				*shell;
 }			t_command;
 
-typedef struct s_shell
-{
-	bool		run;
-	char		*path;
-	t_command	*commands;
-}			t_shell;
 
 int		command_loop(t_shell *shell);
 
@@ -74,6 +76,9 @@ int		ft_unset(t_command *cmd);
 int		ft_env(t_command *cmd);
 int		ft_exit(t_shell *shell);
 int		ft_echo(t_command *cmd);
+
+// exec env commands
+int		run_env_command(t_shell *shell, char *cmd);
 
 //our commands
 int		display_history(void);

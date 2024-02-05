@@ -12,6 +12,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/command_error.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \
+			$(SRCDIR)commands/env_commands.c \
 			$(SRCDIR)builtin/exit.c \
 			$(SRCDIR)builtin/echo.c \
 			$(SRCDIR)builtin/pwd.c \
