@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   free_split_cmds.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 13:36:09 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:26:15 by jkauker          ###   ########.fr       */
+/*   Created: 2024/02/05 12:05:13 by jkauker           #+#    #+#             */
+/*   Updated: 2024/02/05 13:38:31 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_echo(t_command *cmd)
+t_command *free_split(char **split)
 {
 	int	i;
 
 	i = 0;
-	if (ft_strncmp(cmd->command, "echo", 4) != 0)
-		return (0);
-	printf("cmd->args[0]: %s\n", cmd->args[0]);
-	while (cmd->args[i])
+	while (split[++i])
+		free(split[i]);
+	free (split);
+	return (0);
+}
+
+void	free_cmds(t_command *cmds)
+{
+	t_command	*tmp;
+
+	while (cmds)
 	{
-		printf("%s", cmd->args[i]);
-		if (cmd->args[i + 1])
-			printf(" ");
-		i++;
+		tmp = cmds->next;
+		free(cmds->command);
+		free(cmds->args);
+		free(cmds->operator_type);
+		free(cmds);
+		cmds = tmp;
 	}
-	printf("\n");
-	return (1);
 }
