@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/02 12:05:27 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 10:31:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@
 
 # define PROMPT "minishell ➜ "
 
-int	command_loop(void);
+int		command_loop(void);
+
+char	*ft_strncpy(char *dest, const char *src, size_t n);
+int		is_shell_op(char *str, char *shell_op[], int size);
 
 #endif
