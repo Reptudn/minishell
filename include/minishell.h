@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 12:10:14 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 13:45:54 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_command
 
 
 int		command_loop(t_shell *shell);
-int		command_handler(t_command *cmd, t_shell *shell);
+int		command_handler(t_shell *shell, char *line);
 
 // Parsing
 char	*ft_strncpy(char *dest, const char *src, size_t n);
@@ -79,7 +79,7 @@ int		ft_exit(t_shell *shell);
 int		ft_echo(t_command *cmd);
 
 // exec env commands
-int		run_env_command(t_shell *shell, char *cmd);
+int		run_env_command(t_shell *shell, t_command *cmd);
 
 //our commands
 int		display_history(void);
@@ -89,6 +89,9 @@ int		ft_clear(void);
 void		print_invalid_cmd(char *command);
 char		**ft_split_shell(const char *str);
 t_command	*free_split(char **split);
+int			is_operator(char *str);
+t_command	*make_cmds(char *line, t_shell *shell);
+void		free_cmds(t_command *cmds);
 
 //signals
 void	signal_handler(int signum);

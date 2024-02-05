@@ -1,6 +1,6 @@
 NAME	:= minishell
 
-CFLAGS	:= -Wextra -Wall -Werror -gdwarf-4 -g
+CFLAGS	:= -Wextra -Wall -gdwarf-4 -g
 
 HEADERS	:= -I ./include
 
@@ -14,11 +14,14 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \
+			$(SRCDIR)commands/command_handler.c \
 			$(SRCDIR)builtin/exit.c \
 			$(SRCDIR)builtin/echo.c \
 			$(SRCDIR)builtin/pwd.c \
 			$(SRCDIR)signals/signal_handler.c \
 			$(SRCDIR)utils/make_cmds.c \
+			$(SRCDIR)utils/free_split_cmds.c \
+			$(SRCDIR)utils/command_utils.c \
 
 OBJS	:= ${SRCS:.c=.o}
 

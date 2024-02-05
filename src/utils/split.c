@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 11:18:16 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:24:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void update_indices(int *i, int *start, int len, int op_len)
 
 void process_string(const char *str, char **result, int *res_i)
 {
-	char *shell_op[] = {"||", "&&", "<", "<<", ">", ">>"};
+	char *shell_op[] = {"||", "&&", "<", "<<", ">", ">>", " "};
 	int i = 0;
 	int start = 0;
 	int op_len;
@@ -87,6 +87,7 @@ char **ft_split_shell(const char *str)
 
 	process_string(str, result, &res_i);
 	result[res_i] = NULL;
+	
 	return result;
 }
 

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 10:21:39 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 13:45:59 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // if that fails, it return error so that it counts as invalid command
 // FOR NOW it just prints takes the cmd without args (gotta fork later for 
 // env command with return value)
-int	run_env_command(t_shell *shell, char *cmd)
+int	run_env_command(t_shell *shell, t_command *cmd)
 {
 	char	*cmd_path;
 	int		i;
@@ -31,7 +31,7 @@ int	run_env_command(t_shell *shell, char *cmd)
 		cmd_path = ft_strjoin(shell->env[i], "/");
 		if (!cmd_path)
 			return (0);
-		cmd_path = ft_strjoin(cmd_path, cmd);
+		cmd_path = ft_strjoin(cmd_path, cmd->command);
 		if (!cmd_path)
 		{
 			free(cmd_path);
@@ -42,7 +42,7 @@ int	run_env_command(t_shell *shell, char *cmd)
 			// if (execve(cmd_path, cmd->args, NULL) == -1)
 			// 	break ;
 			ran = 1;
-			printf("RAN: %s/%s%s%s\n", shell->env[i], COLOR_BG_GREEN, cmd, COLOR_RESET);
+			printf("RAN: %s/%s%s%s\n", shell->env[i], COLOR_BG_GREEN, cmd->command, COLOR_RESET);
 			break ;
 		}
 		free(cmd_path);
