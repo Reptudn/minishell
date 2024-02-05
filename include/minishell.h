@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:41:10 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:53:55 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_shell
 	bool		run;
 	char		*path;
 	char		**env;
+	char		**envp;
 }			t_shell;
 
 typedef struct s_command
@@ -60,7 +61,6 @@ typedef struct s_command
 	t_shell				*shell;
 }			t_command;
 
-
 int		command_loop(t_shell *shell);
 int		command_handler(t_shell *shell, char *line);
 
@@ -72,9 +72,9 @@ int		is_shell_op(char *str, char *shell_op[], int size);
 int		cd(t_command *cmd, t_shell *shell);
 int		ft_cd(t_command *cmd);
 int		pwd(void);
-int		ft_export(t_command *cmd);
-int		ft_unset(t_command *cmd);
-int		ft_env(t_command *cmd);
+int		ft_export(t_shell *shell);
+int		ft_unset(void);
+int		ft_env(t_shell *shell);
 int		ft_exit(t_shell *shell);
 int		ft_echo(t_command *cmd);
 
