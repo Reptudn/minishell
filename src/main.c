@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 10:05:40 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 10:52:24 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(void)
 		ft_putstr_fd("Error: environment\n", STDERR_FILENO);
 		return (1);
 	}
-	if (signal(SIGINT, signal_handler) == SIG_ERR)
+	if (signal(SIGINT, signal_handler) == SIG_ERR || signal(SIGQUIT, signal_handler) == SIG_ERR)
 	{
 		ft_putstr_fd("Error: signal handler\n", STDERR_FILENO);
 		free(shell.path);

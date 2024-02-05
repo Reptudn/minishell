@@ -9,6 +9,7 @@ SRCDIR := ./src/
 SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)input.c \
 			$(SRCDIR)utils/split.c \
+			$(SRCDIR)utils/split_helper.c \
 			$(SRCDIR)utils/command_error.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \

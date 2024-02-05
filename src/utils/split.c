@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 10:31:26 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 10:38:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char *create_operator_string(const char *str, int len)
 	return result;
 }
 
-void update_indices(int *i, int *start, int *res_i, int len, int op_len)
+void update_indices(int *i, int *start, int len, int op_len)
 {
 	if (op_len > 0)
 	{
@@ -76,7 +76,7 @@ void process_string(const char *str, char **result, int *res_i)
 			result[*res_i] = create_operator_string(&str[i], op_len);
 			(*res_i)++;
 		}
-		update_indices(&i, &start, res_i, len, op_len);
+		update_indices(&i, &start, len, op_len);
 	}
 }
 
