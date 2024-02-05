@@ -92,6 +92,7 @@ t_command	*free_split(char **split);
 int			is_operator(char *str);
 t_command	*make_cmds(char *line, t_shell *shell);
 void		free_cmds(t_command *cmds);
+char		**clean_data(char **temp, char ** result);
 
 //signals
 void	signal_handler(int signum);

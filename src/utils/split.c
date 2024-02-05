@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:24:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:43:49 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,28 +82,17 @@ void process_string(const char *str, char **result, int *res_i)
 
 char **ft_split_shell(const char *str)
 {
-	char **result = (char **)malloc((strlen(str) + 1) * sizeof(char *));
+	char **temp;
 	int res_i = 0;
+	char **result;
 
-	process_string(str, result, &res_i);
-	result[res_i] = NULL;
-	
+	temp = (char **)malloc((strlen(str) + 1) * sizeof(char *));
+	result = (char **)malloc((strlen(str) + 1) * sizeof(char *));
+	process_string(str, temp, &res_i);
+	temp[res_i] = NULL;
+	result = clean_data(temp, result);
+	free(temp);
+	for (int i = 0; result[i]; i++)
+		printf("%s\n", result[i]);
 	return result;
 }
-
-// #include <stdio.h>
-
-// int main() {
-// 	char **result;
-// 	char *str = "echo \"hel<lo\" || wc || ls || ls -la";
-// 	int i = 0;
-
-// 	result = ft_split_shell(str);
-// 	while (result[i] != NULL) {
-// 		printf("%s\n", result[i]);
-// 		free(result[i]);
-// 		i++;
-// 	}
-// 	free(result);
-// 	return 0;
-// }
