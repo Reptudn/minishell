@@ -11,8 +11,10 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/split.c \
 			$(SRCDIR)utils/command_error.c \
 			$(SRCDIR)commands/show_history.c \
+			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)builtin/exit.c \
 			$(SRCDIR)builtin/echo.c \
+			$(SRCDIR)builtin/pwd.c \
 			$(SRCDIR)signals/signal_handler.c \
 
 OBJS	:= ${SRCS:.c=.o}

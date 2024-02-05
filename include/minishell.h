@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 09:00:38 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 09:38:43 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_command
 typedef struct s_shell
 {
 	bool		run;
+	char		*path;
 	t_command	*commands;
 }			t_shell;
 
@@ -65,16 +66,18 @@ int		command_loop(t_shell *shell);
 // parsing stuff
 
 // builtins
-int		ft_echo(t_command *cmd);
+int		cd(t_command *cmd, t_shell *shell);
 int		ft_cd(t_command *cmd);
-int		ft_pwd(t_command *cmd);
+int		pwd(void);
 int		ft_export(t_command *cmd);
 int		ft_unset(t_command *cmd);
 int		ft_env(t_command *cmd);
 int		ft_exit(t_shell *shell);
+int		ft_echo(t_command *cmd);
 
 //our commands
 int		display_history(void);
+int		ft_clear(void);
 
 //utils
 void	print_invalid_cmd(char *command);
