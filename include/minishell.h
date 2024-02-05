@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 13:45:54 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:41:10 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ t_command	*free_split(char **split);
 int			is_operator(char *str);
 t_command	*make_cmds(char *line, t_shell *shell);
 void		free_cmds(t_command *cmds);
+char		**clean_data(char **temp, char ** result);
 
 //signals
 void	signal_handler(int signum);

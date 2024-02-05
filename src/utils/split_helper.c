@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 08:56:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:24:18 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 14:46:11 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,24 @@ int is_shell_op(char *str, char *shell_op[], int size)
 		i++;
 	}
 	return (0);
+}
+
+char	**clean_data(char **temp, char ** result)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (temp[i])
+	{
+		if (!(ft_strlen(temp[i]) == 1 && temp[i][0] == ' '))
+		{
+			result[j] = ft_strdup(temp[i]);
+			j++;
+		}
+		i++;
+	}
+	result[j] = NULL;
+	return (result);
 }
