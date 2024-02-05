@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 08:51:07 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 09:00:38 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,8 @@ int		display_history(void);
 
 //utils
 void	print_invalid_cmd(char *command);
+
+//signals
+void	signal_handler(int signum);
 
 #endif

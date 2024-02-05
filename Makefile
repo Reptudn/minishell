@@ -13,6 +13,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)builtin/exit.c \
 			$(SRCDIR)builtin/echo.c \
+			$(SRCDIR)signals/signal_handler.c \
 
 OBJS	:= ${SRCS:.c=.o}
 
