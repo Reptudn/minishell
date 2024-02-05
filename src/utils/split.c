@@ -6,68 +6,104 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/02 11:15:30 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 10:31:26 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
+#include "../../include/minishell.h"
 
-static int	wordcounting(const char *s, char c)
+char *create_split_string(const char *str, int start, int len)
 {
-	int		counter;
-	int		words;
-
-	counter = 0;
-	words = 0;
-	while (*s != 0)
-	{
-		if ((!(*s == c)) && (words == 0))
-		{
-			words = 1;
-			counter++;
-		}
-		else if (*s == c)
-			words = 0;
-		s++;
-	}
-	return (counter);
-}
-
-static int	malloc_check(char **result, int i)
-{
-	i--;
-	while (i >= 0)
-	{
-		free (result[i--]);
-	}
-	free (result);
-	return (1);
-}
-
-char	**ft_split(const char *s, char c)
-{
-	int		word_counter;
-	char	**result;
-	int		word_length;
-	int		i;
-
-	word_counter = wordcounting(s, c);
-	result = (char **)ft_calloc(word_counter + 1, sizeof(char *));
-	if (!result)
-		return (0);
-	i = 0;
-	while (*s && i < word_counter)
-	{
-		while (*s == c)
-			s++;
-		word_length = 0;
-		while (s[word_length] && s[word_length] != c)
-			word_length++;
-		result[i] = ft_substr(s, 0, word_length);
-		if (!result[i] && malloc_check(result, i))
-			return (0);
-		i++;
-		s += word_length;
-	}
+	char *result;
+	
+	result = (char *)malloc((len + 1) * sizeof(char));
+	ft_strncpy(result, &str[start], len);
+	result[len] = '\0';
 	return (result);
 }
+
+char *create_operator_string(const char *str, int len)
+{
+	char *result;
+	
+	result = malloc((len + 1) * sizeof(char));
+	ft_strncpy(result, &str[0], len);
+	result[len] = '\0';
+	return result;
+}
+
+void update_indices(int *i, int *start, int *res_i, int len, int op_len)
+{
+	if (op_len > 0)
+	{
+		*i += op_len;
+		*start = *i;
+	}
+	else if (len > 0)
+	{
+		(*i)++;
+		*start = *i;
+	}
+	else
+		(*i)++;
+}
+
+void process_string(const char *str, char **result, int *res_i)
+{
+	char *shell_op[] = {"||", "&&", "<", "<<", ">", ">>"};
+	int i = 0;
+	int start = 0;
+	int op_len;
+	int len;
+
+	while (str[i] != '\0')
+	{
+		op_len = is_shell_op((char *) &str[i], shell_op, sizeof(shell_op) / sizeof(shell_op[0]));
+		if (op_len > 0)
+			len = i - start;
+		else if (str[i + 1] == '\0')
+			len = i - start + 1;
+		else
+			len = 0;
+		if (len > 0)
+		{
+			result[*res_i] = create_split_string(str, start, len);
+			(*res_i)++;
+		}
+		if (op_len > 0)
+		{
+			result[*res_i] = create_operator_string(&str[i], op_len);
+			(*res_i)++;
+		}
+		update_indices(&i, &start, res_i, len, op_len);
+	}
+}
+
+char **ft_split_shell(const char *str)
+{
+	char **result = (char **)malloc((strlen(str) + 1) * sizeof(char *));
+	int res_i = 0;
+
+	process_string(str, result, &res_i);
+
+	result[res_i] = NULL;
+	return result;
+}
+
+// #include <stdio.h>
+
+// int main() {
+// 	char **result;
+// 	char *str = "echo \"hel<lo\" || wc || ls || ls -la";
+// 	int i = 0;
+
+// 	result = ft_split_shell(str);
+// 	while (result[i] != NULL) {
+// 		printf("%s\n", result[i]);
+// 		free(result[i]);
+// 		i++;
+// 	}
+// 	free(result);
+// 	return 0;
+// }

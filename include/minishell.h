@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 10:12:12 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 10:31:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # include <stdbool.h>
 
 # define PROMPT "\033[0;36mminishell ➜ \033[0;33m"
-
 # define NONE -1
 # define PIPE 0
 # define OR 1
@@ -65,7 +64,8 @@ typedef struct s_command
 int		command_loop(t_shell *shell);
 
 // Parsing
-// parsing stuff
+char	*ft_strncpy(char *dest, const char *src, size_t n);
+int		is_shell_op(char *str, char *shell_op[], int size);
 
 // builtins
 int		cd(t_command *cmd, t_shell *shell);
