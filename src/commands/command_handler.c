@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:30:38 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:55:53 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:16:25 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,24 @@ int	command_handler(t_shell *shell, char *line)
 			i = 0;
 			break ;
 		}
-		if (ft_strncmp(cmds->command, "history", 7) == 0)
+		if (str_is_equal(cmds->command, "history"))
 			display_history();
-		else if (ft_strncmp(cmds->command, "exit", 4) == 0)
+		else if (str_is_equal(cmds->command, "exit"))
 		{
 			shell->run = false;
 			break ;
 		}
-		else if (ft_strncmp(cmds->command, "echo", 4) == 0)
+		else if (str_is_equal(cmds->command, "echo"))
 			ft_echo(cmds);
-		else if (ft_strncmp(cmds->command, "pwd", 3) == 0)
+		else if (str_is_equal(cmds->command, "pwd"))
 			pwd();
-		else if (ft_strncmp(cmds->command, "clear", 5) == 0)
+		else if (str_is_equal(cmds->command, "clear"))
 			ft_clear();
-		else if (ft_strncmp(cmds->command, "export", 6) == 0)
+		else if (str_is_equal(cmds->command, "export"))
 			ft_export(shell);
-		else if (ft_strncmp(cmds->command, "env", 3) == 0)
+		else if (str_is_equal(cmds->command, "env"))
 			ft_env(shell);
-		else if (ft_strncmp(cmds->command, "unset", 5) == 0)
+		else if (str_is_equal(cmds->command, "unset"))
 			ft_unset();
 		else
 		{

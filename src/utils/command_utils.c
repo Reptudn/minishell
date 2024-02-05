@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:41:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 13:22:21 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:13:42 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,16 @@ int is_operator(char *str)
 	return (NONE);
 }
 
+int	str_is_equal(char *str1, char *str2)
+{
+	int i;
+	if (ft_strlen(str1) != ft_strlen(str2))
+		return (0);
+	i = -1;
+	while(str1[++i] && str2[i])
+	{
+		if (str1[i] != str2[i])
+			return (0);
+	}
+	return (1);
+}
