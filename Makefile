@@ -18,6 +18,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)builtin/echo.c \
 			$(SRCDIR)builtin/pwd.c \
 			$(SRCDIR)signals/signal_handler.c \
+			$(SRCDIR)utils/make_cmds.c \
 
 OBJS	:= ${SRCS:.c=.o}
 

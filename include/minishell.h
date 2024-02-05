@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 10:39:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 12:10:14 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_command
 {
 	char				*command;
 	char				**args;
-	int					operator_type;
+	int					*operator_type;
 	struct s_command	*next;
 	struct s_command	*prev;
 	t_shell				*shell;
@@ -62,6 +62,7 @@ typedef struct s_command
 
 
 int		command_loop(t_shell *shell);
+int		command_handler(t_command *cmd, t_shell *shell);
 
 // Parsing
 char	*ft_strncpy(char *dest, const char *src, size_t n);
@@ -85,7 +86,9 @@ int		display_history(void);
 int		ft_clear(void);
 
 //utils
-void	print_invalid_cmd(char *command);
+void		print_invalid_cmd(char *command);
+char		**ft_split_shell(const char *str);
+t_command	*free_split(char **split);
 
 //signals
 void	signal_handler(int signum);
