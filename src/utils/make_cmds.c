@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:16:40 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 16:14:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,18 @@
 
 int is_valid_input(char **split)
 {
-	if (is_operator(split[0]))
+	int i;
+	int	j;
+
+	i = 0;
+	if (is_operator(split[0]) != NONE)
 		return (0);
-	if (is_operator(split[ft_strlen(split[0]) - 1]))
+	while (split[i] != NULL)
+	{
+		i++;
+	}
+	printf("%s\n", split[i - 1]);
+	if (is_operator(split[i - 1]) != NONE)
 		return (0);
 	return (1);
 }
@@ -30,7 +39,6 @@ int allocate_cmd(t_command *cmd, char **split)
 	i = 0;
 	arg_count = 0;
 	cmd->command = ft_strdup(split[0]);
-	printf("Command: %s\n", cmd->command);
 	if (!cmd->command)
 		return (0);
 	while (split[i] && is_operator(split[i]) != NONE)
@@ -39,24 +47,24 @@ int allocate_cmd(t_command *cmd, char **split)
 		arg_count++;
 	}
 	cmd->args = malloc(arg_count * sizeof(char *));
+	if (!cmd->args)
+		return (0);
 	i -= arg_count;
 	arg_count = 0;
-	while (split[i] && is_operator(split[i]) != NONE)
+	while (split[i]) // here lies zhe problem 
 	{
 		cmd->args[arg_count] = ft_strdup(split[i]);
-		printf("Arg: %s\n", cmd->args[arg_count]);
 		if (!cmd->args[arg_count])
 			break;
 		arg_count++;
 		i++;
 	}
-	if (split[i] && is_operator(split[i]))
+	if (split[i] && is_operator(split[i])) // probably also here
 	{
 		cmd->operator_type = malloc(sizeof(int));
 		if (!cmd->operator_type)
 			return(0);
 		*(cmd->operator_type) = is_operator(split[i]);
-		printf("Operator: %d\n", *cmd->operator_type);
 		i++;
 	}
 	cmd->prev = NULL;
@@ -72,15 +80,19 @@ t_command *make_cmds(char *line, t_shell *shell)
 	// int arg_count;
 
 	split = ft_split_shell(line);
-	for (i = 0; split[i]; i++)
-		printf("Split[%d]: %s\n", i, split[i]);
-	printf("--------------------\n");
 	if (!split)
 		return (0);
 	first = malloc(sizeof(t_command));
 	if (!first)
 		return (free_split(split));
+	if (!is_valid_input(split))
+		return (free_split(split));
 	i = allocate_cmd(first, split);
+	printf("Cmd: %s\nArgs:\n", first->command);
+	for (int t = 0; first->args[t]; t++)
+	{
+		printf("%s\n", first->args[t]);
+	}
 	// while (split[++i])
 	// {
 	// 	if (!cmd)

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:30:38 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 15:16:25 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:54:00 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	command_handler(t_shell *shell, char *line)
 
 	cmds = make_cmds(line, shell);
 	if (!cmds)
+	{
+		printf("cmd failed\n");
 		return (0);
+	}
 	i = 1;
 	while (cmds)
 	{

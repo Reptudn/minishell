@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:43:49 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/05 15:45:58 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,5 @@ char **ft_split_shell(const char *str)
 	temp[res_i] = NULL;
 	result = clean_data(temp, result);
 	free(temp);
-	for (int i = 0; result[i]; i++)
-		printf("%s\n", result[i]);
 	return result;
 }
