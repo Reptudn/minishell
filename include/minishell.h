@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 15:14:01 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/06 13:30:51 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,29 +61,29 @@ typedef struct s_command
 	t_shell				*shell;
 }			t_command;
 
-int		command_loop(t_shell *shell);
-int		command_handler(t_shell *shell, char *line);
+int			command_loop(t_shell *shell);
+int			command_handler(t_shell *shell, char *line);
 
 // Parsing
-char	*ft_strncpy(char *dest, const char *src, size_t n);
-int		is_shell_op(char *str, char *shell_op[], int size);
+char		*ft_strncpy(char *dest, const char *src, size_t n);
+int			is_shell_op(char *str, char *shell_op[], int size);
 
 // builtins
-int		cd(t_command *cmd, t_shell *shell);
-int		ft_cd(t_command *cmd);
-int		pwd(void);
-int		ft_export(t_shell *shell);
-int		ft_unset(void);
-int		ft_env(t_shell *shell);
-int		ft_exit(t_shell *shell);
-int		ft_echo(t_command *cmd);
+int			cd(t_command *cmd, t_shell *shell);
+int			ft_cd(t_command *cmd);
+int			pwd(void);
+int			ft_export(t_shell *shell);
+int			ft_unset(void);
+int			ft_env(t_shell *shell);
+int			ft_exit(t_shell *shell);
+int			ft_echo(t_command *cmd);
 
 // exec env commands
-int		run_env_command(t_shell *shell, t_command *cmd);
+int			run_env_command(t_shell *shell, t_command *cmd);
 
 //our commands
-int		display_history(void);
-int		ft_clear(void);
+int			display_history(void);
+int			ft_clear(void);
 
 //utils
 void		print_invalid_cmd(char *command);
@@ -94,8 +94,9 @@ t_command	*make_cmds(char *line, t_shell *shell);
 void		free_cmds(t_command *cmds);
 char		**clean_data(char **temp, char ** result);
 int			str_is_equal(char *str1, char *str2);
+int			is_valid_input(char **split, char *line);
 
 //signals
-void	signal_handler(int signum);
+void		signal_handler(int signum);
 
 #endif

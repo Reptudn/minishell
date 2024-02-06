@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/06 13:24:22 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/06 13:35:24 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,12 @@ t_command *make_cmds(char *line, t_shell *shell)
 	first = malloc(sizeof(t_command));
 	if (!first)
 		return (free_split(split));
-	if (!is_valid_input(split))
+	if (!is_valid_input(split, line))
+	{
+		// free first
+		printf("Invalid input\n");
 		return (free_split(split));
+	}
 	i = allocate_cmd(first, split);
 	printf("Cmd: %s\nArgs:\n", first->command);
 	for (int t = 0; first->args[t]; t++)

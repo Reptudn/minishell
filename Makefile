@@ -11,6 +11,10 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/split.c \
 			$(SRCDIR)utils/split_helper.c \
 			$(SRCDIR)utils/command_error.c \
+			$(SRCDIR)utils/make_cmds.c \
+			$(SRCDIR)utils/free_split_cmds.c \
+			$(SRCDIR)utils/command_utils.c \
+			$(SRCDIR)utils/input_validation.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \
@@ -22,9 +26,6 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)builtin/env.c \
 			$(SRCDIR)builtin/export.c \
 			$(SRCDIR)signals/signal_handler.c \
-			$(SRCDIR)utils/make_cmds.c \
-			$(SRCDIR)utils/free_split_cmds.c \
-			$(SRCDIR)utils/command_utils.c \
 
 OBJS	:= ${SRCS:.c=.o}
 

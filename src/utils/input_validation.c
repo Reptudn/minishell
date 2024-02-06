@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:22:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/06 13:24:44 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/06 13:34:48 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,21 @@ int	get_quote_cout(char *str)
 	return (quote_count);
 }
 
-int is_valid_input(char **split)
+int	is_valid_input(char **split, char *line)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = 0;
 	if (is_operator(split[0]) != NONE)
 		return (0);
-	while (split[i] != NULL)
+	if (get_quote_cout(split[0]) % 2 != 0)
 	{
-		i++;
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (0);
 	}
 	printf("%s\n", split[i - 1]);
-	if (is_operator(split[i - 1]) != NONE)
+	if (is_operator(ft_strtrim(split[i - 1], " 	")) != NONE)
 		return (0);
 	return (1);
 }
