@@ -3,33 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   make_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 16:14:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/06 13:24:22 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
 #include "../../include/minishell.h"
-
-int is_valid_input(char **split)
-{
-	int i;
-	int	j;
-
-	i = 0;
-	if (is_operator(split[0]) != NONE)
-		return (0);
-	while (split[i] != NULL)
-	{
-		i++;
-	}
-	printf("%s\n", split[i - 1]);
-	if (is_operator(split[i - 1]) != NONE)
-		return (0);
-	return (1);
-}
 
 int allocate_cmd(t_command *cmd, char **split)
 {
