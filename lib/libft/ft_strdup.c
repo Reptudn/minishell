@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 02:00:22 by jonask            #+#    #+#             */
-/*   Updated: 2024/02/07 10:16:47 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/07 13:17:27 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ char	*ft_strdup(const char *s)
 		dup[i] = s[i];
 		i++;
 	}
-	dup[i] = 0;
+	dup[i] = '\0';
 	return (dup);
 }

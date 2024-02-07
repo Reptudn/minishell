@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/07 12:28:41 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/07 13:36:52 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ int allocate_cmd(t_command *cmd, char **split)
 	while (split[i])
 	{
 		cmd->args[arg_count] = ft_strdup(split[i]);
-		printf("args[%d]: %s\n", arg_count, cmd->args[arg_count]);
+		printf("allocate_cmds[%d]: %s\n", arg_count, cmd->args[arg_count]);
 		if (!cmd->args[arg_count])
 			break;
 		arg_count++;
 		i++;
 	}
+	cmd->args[arg_count] = NULL;
 
 	//wenn es ein shell_op gibt dann reinkopieren
 	if (split[i] && is_operator(split[i]))
@@ -82,6 +83,10 @@ t_command *make_cmds(char *line, t_shell *shell)
 	if (!first)
 		return (free_split(split));
 	i = allocate_cmd(first, split);
+	for (int j = 0; first->args[j]; j++)
+	{
+		printf("make_cmds[%d]: %s\n", j, first->args[j]);
+	}
 	// while (split[++i])
 	// {
 	// 	if (!cmd)
