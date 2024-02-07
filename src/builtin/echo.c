@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:36:09 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 16:02:51 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/07 12:39:24 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,11 @@ int	ft_echo(t_command *cmd)
 	i = 0;
 	if (ft_strncmp(cmd->command, "echo", ft_strlen(cmd->command)) != 0)
 		return (0);
-	for(int t = 0; cmd->args[t]; t++)
-	{
-		printf("%s", cmd->args[t]);
-	}
 	while (cmd->args[i])
 	{
-		printf("%s", cmd->args[i]);
-		if (cmd->args[i + 1])
-			printf(" ");
+		// printf("%s", cmd->args[i]);
 		i++;
 	}
+	printf("\n");
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:30:38 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 15:54:00 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/07 12:04:01 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	command_handler(t_shell *shell, char *line)
 	i = 1;
 	while (cmds)
 	{
-		if (*cmds->operator_type != NONE && cmds->next)
-		{
-			i = 0;
-			break ;
-		}
+		// if (*cmds->operator_type != NONE && cmds->next)
+		// {
+		// 	i = 0;
+		// 	break ;
+		// }
 		if (str_is_equal(cmds->command, "history"))
 			display_history();
 		else if (str_is_equal(cmds->command, "exit"))
