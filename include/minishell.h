@@ -92,7 +92,7 @@ t_command	*free_split(char **split);
 int			is_operator(char *str);
 t_command	*make_cmds(char *line, t_shell *shell);
 void		free_cmds(t_command *cmds);
-char		**clean_data(char **temp, char ** result);
+char		**clean_data(char **temp, char **result);
 int			str_is_equal(char *str1, char *str2);
 int			is_valid_input(char **split, char *line);
 

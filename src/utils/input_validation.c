@@ -30,14 +30,28 @@ int	get_quote_cout(char *str)
 
 int	is_valid_input(char **split, char *line)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*tmp;
+	char	*tmp_line;
 
 	i = 0;
 	if (is_operator(split[0]) != NONE)
 		return (0);
 	if (get_quote_cout(split[0]) % 2 != 0)
 	{
+		line = readline("quote> ");
+		while (ft_strchr(line, '"') == NULL)
+		{
+			if (!line)
+				return (0);
+			tmp = ft_strjoin(line, " ");
+			free(line);
+			tmp_line = ft_strjoin(tmp, tmp_line);
+			free(tmp);
+			line = readline("quote> ");
+		}
+		tmp = line;
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
