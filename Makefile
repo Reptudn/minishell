@@ -25,6 +25,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)builtin/pwd.c \
 			$(SRCDIR)builtin/env.c \
 			$(SRCDIR)builtin/export.c \
+			$(SRCDIR)builtin/cd.c \
 			$(SRCDIR)signals/signal_handler.c \
 
 OBJDIR := ./obj/

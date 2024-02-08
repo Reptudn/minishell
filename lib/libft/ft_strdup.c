@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbrnn.de>    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 02:00:22 by jonask            #+#    #+#             */
-/*   Updated: 2023/10/11 13:27:03 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/08 09:11:21 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ char	*ft_strdup(const char *s)
 		dup[i] = s[i];
 		i++;
 	}
-	dup[i] = 0;
+	dup[i] = '\0';
 	return (dup);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:06:52 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/07 13:15:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	command_loop(t_shell *shell)
 	char	*line;
 
 	line = (char *)readline(PROMPT);
+	if (!line)
+		return (0);
 	while (shell->run)
 	{
 		if (!line)
