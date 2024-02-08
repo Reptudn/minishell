@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/06 13:35:24 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/07 08:51:14 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,20 @@ int allocate_cmd(t_command *cmd, char **split)
 	cmd->args = malloc(arg_count * sizeof(char *));
 	if (!cmd->args)
 		return (0);
-	i -= arg_count;
+	i = 1;
 	arg_count = 0;
-	while (split[i]) // here lies zhe problem 
+	while (split[i] && is_operator(split[i]) == 0)
 	{
 		cmd->args[arg_count] = ft_strdup(split[i]);
 		if (!cmd->args[arg_count])
 			break;
 		arg_count++;
 		i++;
+		// printf("cmd->args[%d] = %s\n", arg_count, cmd->args[arg_count]);
 	}
-	if (split[i] && is_operator(split[i])) // probably also here
+	// printf("cmd->args[0] = %s\n", cmd->args[0]);
+	cmd->args[arg_count] = NULL;
+	if (split[i] && is_operator(split[i]) != 0)
 	{
 		cmd->operator_type = malloc(sizeof(int));
 		if (!cmd->operator_type)
@@ -54,10 +57,49 @@ int allocate_cmd(t_command *cmd, char **split)
 	return (i);
 }
 
+// t_command *make_cmds(char *line, t_shell *shell)
+// {
+// 	char 		**split;
+// 	int			i;
+// 	t_command	*first, *current;
+
+// 	split = ft_split_shell(line);
+// 	if (!split)
+// 		return (0);
+// 	first = malloc(sizeof(t_command));
+// 	if (!first)
+// 		return (free_split(split));
+// 	i = allocate_cmd(first, split);
+// 	current = first;
+// 	while (split[i])
+// 	{
+// 		t_command *new_cmd = malloc(sizeof(t_command));
+// 		if (!new_cmd)
+// 		{
+// 			// handle error, free memory, etc.	
+// 			return (0);
+// 		}
+// 		i = allocate_cmd(new_cmd, &split[i]);
+// 		current->next = new_cmd;
+// 		new_cmd->prev = current;
+// 		current = new_cmd;
+// 	}
+// 	free_split(split);
+// 	return(first);
+// }
+
+
+
+
+
+
+
+
+
 t_command *make_cmds(char *line, t_shell *shell)
 {
 	char 		**split;
-	int 		i;
+	int			i;
 	t_command	*first;
 	// int arg_count;
 
@@ -67,21 +109,10 @@ t_command *make_cmds(char *line, t_shell *shell)
 	first = malloc(sizeof(t_command));
 	if (!first)
 		return (free_split(split));
-	if (!is_valid_input(split, line))
-	{
-		// free first
-		printf("Invalid input\n");
-		return (free_split(split));
-	}
 	i = allocate_cmd(first, split);
-	printf("Cmd: %s\nArgs:\n", first->command);
-	for (int t = 0; first->args[t]; t++)
-	{
-		printf("%s\n", first->args[t]);
-	}
 	// while (split[++i])
 	// {
-	// 	if (!cmd)
+	// 	if (!cmd)+
 	// 		return (0);
 	// 	cmd->command = split[i];
 	// 	arg_count = 0;

@@ -6,11 +6,29 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 13:45:59 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/08 09:50:46 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	execute(char *cmd_path, char **args)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid < 0)
+		return (0);
+	else if (pid == 0)
+	{
+		if (execve(cmd_path, args, NULL) == -1)
+			return (0);
+	}
+	else
+		waitpid(pid, &status, 0);
+	return (1);
+}
 
 // this function will later be called when the builtin command
 // is not found in the command list and the shell will try to
@@ -39,10 +57,9 @@ int	run_env_command(t_shell *shell, t_command *cmd)
 		}
 		if (access(cmd_path, F_OK) == 0)
 		{
-			// if (execve(cmd_path, cmd->args, NULL) == -1)
-			// 	break ;
+			if (execute(cmd_path, cmd->args) == 0)
+				break ;
 			ran = 1;
-			printf("RAN: %s/%s%s%s\n", shell->env[i], COLOR_BG_GREEN, cmd->command, COLOR_RESET);
 			break ;
 		}
 		free(cmd_path);

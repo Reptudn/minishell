@@ -25,9 +25,12 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)builtin/pwd.c \
 			$(SRCDIR)builtin/env.c \
 			$(SRCDIR)builtin/export.c \
+			$(SRCDIR)builtin/cd.c \
 			$(SRCDIR)signals/signal_handler.c \
 
-OBJS	:= ${SRCS:.c=.o}
+OBJDIR := ./obj/
+OBJS	:= $(SRCS:.c=.o)
+OBJS	:= $(addprefix $(OBJDIR),$(OBJS))
 
 CC		:= cc
 
@@ -41,8 +44,8 @@ libft:
 ft_printf:
 	@make -C ./lib/ft_printf
 
-
-%.o: %.c
+$(OBJDIR)%.o: %.c
+	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
 $(NAME): $(OBJS) libft ft_printf
@@ -51,7 +54,7 @@ $(NAME): $(OBJS) libft ft_printf
 clean:
 	@make -C ./lib/libft clean
 	@make -C ./lib/ft_printf clean
-	@rm -rf $(OBJS)
+	@rm -rf $(OBJDIR)
 
 fclean: clean
 	@make -C ./lib/libft fclean
