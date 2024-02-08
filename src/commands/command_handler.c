@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:30:38 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/08 09:39:13 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/08 09:57:31 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	command_handler(t_shell *shell, char *line)
 			ft_env(shell);
 		else if (str_is_equal(cmds->command, "unset"))
 			ft_unset();
+		else if (str_is_equal(cmds->command, "cd"))
+			ft_cd(cmds, shell);
 		else
 		{
 			if (run_env_command(shell, cmds) == 0)

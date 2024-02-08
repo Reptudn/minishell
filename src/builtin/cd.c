@@ -6,13 +6,13 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:21:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 09:30:04 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/08 09:56:58 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	cd(t_command *cmd, t_shell *shell)
+int	ft_cd(t_command *cmd, t_shell *shell)
 {
 	char	*new_path;
 

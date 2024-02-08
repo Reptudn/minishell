@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/08 08:49:00 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/08 09:58:53 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ char		*ft_strncpy(char *dest, const char *src, size_t n);
 int			is_shell_op(char *str, char *shell_op[], int size);
 
 // builtins
-int			cd(t_command *cmd, t_shell *shell);
-int			ft_cd(t_command *cmd);
+int			ft_cd(t_command *cmd, t_shell *shell);
 int			pwd(void);
 int			ft_export(t_shell *shell);
 int			ft_unset(void);
