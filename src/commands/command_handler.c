@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:30:38 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/07 12:04:01 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/08 09:39:13 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	command_handler(t_shell *shell, char *line)
 			ft_unset();
 		else
 		{
-			if (!run_env_command(shell, cmds))
+			if (run_env_command(shell, cmds) == 0)
 			{
 				print_invalid_cmd(cmds->command);
 				i = 0;

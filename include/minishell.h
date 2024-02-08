@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/07 11:35:32 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/08 08:49:00 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@
 # include <stdbool.h>
 
 # define PROMPT "\033[0;36mminishell ➜ \033[0;33m"
-# define NONE -1
-# define PIPE 0
-# define OR 1
-# define AND 2
-# define REDIRECT_IN 3
-# define REDIRECT_OUT 4
-# define REDIRECT_OUT_APPEND 5
-# define REDIRECT_IN_DELIMITER 6
+# define NONE 0
+# define PIPE 1
+# define OR 2
+# define AND 3
+# define REDIRECT_IN 4
+# define REDIRECT_OUT 5
+# define REDIRECT_OUT_APPEND 6
+# define REDIRECT_IN_DELIMITER 7
 
 typedef struct s_shell
 {
