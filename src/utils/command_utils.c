@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:41:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 15:43:44 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/08 10:22:43 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ int is_operator(char *str)
 {
 	if (ft_strlen(str) == 1)
 	{
-		if (str_is_equal(str, "|") == 0)
+		if (str_is_equal(str, "|") == 1)
 			return (PIPE);
-		if (str_is_equal(str, ">") == 0)
+		if (str_is_equal(str, ">") == 1)
 			return (REDIRECT_OUT);	
-		if (str_is_equal(str, "<") == 0)
+		if (str_is_equal(str, "<") == 1)
 			return (REDIRECT_IN);
 	}
 	else if (ft_strlen(str) == 2)
 	{
-		if (str_is_equal(str, "||") == 0)
+		if (str_is_equal(str, "||") == 1)
 			return (OR);
-		if (str_is_equal(str, "&&") == 0)
+		if (str_is_equal(str, "&&") == 1)
 			return (AND);
-		if (str_is_equal(str, ">>") == 0)
+		if (str_is_equal(str, ">>") == 1)
 			return (REDIRECT_OUT_APPEND);
-		if (str_is_equal(str, "<<") == 0)
+		if (str_is_equal(str, "<<") == 1)
 			return (REDIRECT_IN_DELIMITER);
 	}
 	return (NONE);
