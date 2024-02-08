@@ -22,7 +22,7 @@ int	command_loop(t_shell *shell)
 	while (shell->run)
 	{
 		if (!line)
-			break;
+			break ;
 		if (ft_strlen(line) == 0)
 		{
 			free(line);
