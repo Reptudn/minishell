@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/09 11:16:11 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/09 13:29:33 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_command
 	char				*command;
 	char				**args;
 	int					*operator_type;
+	int					priority;
 	struct s_command	*next;
 	struct s_command	*prev;
 	t_shell				*shell;
