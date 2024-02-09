@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/07 08:51:14 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/09 10:55:24 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,9 @@ t_command *make_cmds(char *line, t_shell *shell)
 	split = ft_split_shell(line);
 	if (!split)
 		return (0);
+	line = is_valid_input(line);
+	if (!line)
+		return (free_split(split));
 	first = malloc(sizeof(t_command));
 	if (!first)
 		return (free_split(split));

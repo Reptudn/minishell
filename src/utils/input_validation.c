@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:22:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/08 10:32:26 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/09 10:54:41 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,43 +28,37 @@ int	get_quote_cout(char *str)
 	return (quote_count);
 }
 
-int	handle_missing_quotes(char	*line)
+char	*handle_missing_quotes(char	*line)
 {
 	char	*tmp;
-	char	*tmp_line;
+	char	*new_line;
 
 	if (ft_strchr(line, '"') != 0 && get_quote_cout(line) % 2 != 0)
 	{
-		line = readline("\033[0;31mquote> \033[0m");
-		while (ft_strchr(line, '"') == NULL)
+		while (get_quote_cout(line) % 2 != 0)
 		{
-			if (!line)
+			tmp = readline("\033[0;31mquote> \033[0m");
+			if (!tmp)
 				return (0);
-			tmp = ft_strjoin(line, " ");
+			new_line = ft_strjoin(line, "\n");
+			new_line = ft_strjoin(new_line, tmp);
 			free(line);
-			tmp_line = ft_strjoin(tmp, tmp_line);
-			free(tmp);
-			line = readline("\033[0;31mquote> \033[0m");
+			if (!new_line)
+				return (0);
+			line = new_line;
 		}
-		tmp = line;
-		return (0);
 	}
-	return (1);
+	return (line);
 }
 
-int	is_valid_input(char **split, char *line)
+char	*is_valid_input(char *line)
 {
-	int		i;
+	int		return_value;
 	int		j;
-	char	*tmp;
-	char	*tmp_line;
 
-	i = 0;
-	if (is_operator(split[0]) != NONE)
+	return_value = 1;
+	line = handle_missing_quotes(line);
+	if (!line)
 		return (0);
-	handle_missing_quotes(line);
-	printf("%s\n", split[i - 1]);
-	if (is_operator(split[i - 1]) != NONE)
-		return (0);
-	return (1);
+	return (line);
 }

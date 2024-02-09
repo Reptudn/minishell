@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/08 09:58:53 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/09 10:52:36 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_command	*make_cmds(char *line, t_shell *shell);
 void		free_cmds(t_command *cmds);
 char		**clean_data(char **temp, char **result);
 int			str_is_equal(char *str1, char *str2);
-int			is_valid_input(char **split, char *line);
+char		*is_valid_input(char *line);
 
 //signals
 void		signal_handler(int signum);
