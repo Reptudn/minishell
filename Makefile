@@ -12,6 +12,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/split_helper.c \
 			$(SRCDIR)utils/command_error.c \
 			$(SRCDIR)utils/make_cmds.c \
+			$(SRCDIR)utils/make_cmds_helper.c \
 			$(SRCDIR)utils/free_split_cmds.c \
 			$(SRCDIR)utils/command_utils.c \
 			$(SRCDIR)utils/input_validation.c \

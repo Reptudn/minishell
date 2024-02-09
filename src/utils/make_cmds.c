@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/09 13:16:28 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:58:20 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,19 @@ int allocate_cmd(t_command *cmd, char **split, int i)
 t_command *make_cmds(char *line, t_shell *shell)
 {
 	char		**split;
+	char		**split_2;
 	int			i;
 	t_command	*first;
 	t_command	*current;
 	t_command	*new_cmd;
 
 	split = ft_split_shell(line);
+	for (int i = 0; split[i]; i++)
+		printf("split[%d] = %s\n", i, split[i]);
+	split_2 = filter_variables(split);
+	free_split(split);
+	for (int i = 0; split[i]; i++)
+		printf("split_n[%d] = %s\n", i, split[i]);
 	if (!split)
 		return (0);
 	first = malloc(sizeof(t_command));
@@ -92,59 +99,7 @@ t_command *make_cmds(char *line, t_shell *shell)
 		new_cmd->prev = current;
 		current = new_cmd;
 	}
-	free_split(split);
+	free_split(split_2);
 	return(first);
 }
 
-
-
-
-
-
-
-
-
-// t_command *make_cmds(char *line, t_shell *shell)
-// {
-// 	char 		**split;
-// 	int			i;
-// 	t_command	*first;
-// 	// int arg_count;
-
-// 	split = ft_split_shell(line);
-// 	if (!split)
-// 		return (0);
-// 	// is_valid_input(split, line); //segfault kommen von hier
-// 	first = malloc(sizeof(t_command));
-// 	if (!first)
-// 		return (free_split(split));
-// 	i = allocate_cmd(first, split);
-// 	// while (split[++i])
-// 	// {
-// 	// 	if (!cmd)+
-// 	// 		return (0);
-// 	// 	cmd->command = split[i];
-// 	// 	arg_count = 0;
-// 	// 	while (split[i] && is_operator(split[i]) != NONE)
-// 	// 	{
-// 	// 		cmd->args[arg_count] = ft_strdup(split[i]);
-// 	// 		if (!cmd->args[arg_count])
-// 	// 			break;
-// 	// 		arg_count++;
-// 	// 		i++;
-// 	// 	}
-// 	// 	if (split[i] && is_operator(split[i]))
-// 	// 	{
-// 	// 		cmd->operator_type = malloc(sizeof(int));
-// 	// 		if (!cmd->operator_type)
-// 	// 			break;
-// 	// 		*(cmd->operator_type) = is_operator(split[i]);
-// 	// 		i++;
-// 	// 	}
-// 	// 	cmd->args = malloc(arg_count * sizeof(char *));
-// 	// 	if (!cmd->args)
-// 	// 		break;
-// 	// }
-// 	free_split(split);
-// 	return(first);
-// }
