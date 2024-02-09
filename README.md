@@ -19,9 +19,9 @@ Dies kann bedeuten, dass Programme gestartet, Dateien erstellt oder bearbeitet, 
 Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von Eingaben vom Benutzer oder andere interaktive Aktionen umfassen, die Teil des Befehls sind.
 
 # Timeline
-- [ ] Endless loop for Commands
+- [x] Endless loop for Commands
 - [ ] Parsing
-	- [ ] Linked List for Arguments:
+	- [x] Linked List for Arguments:
 		```c
 		#define NONE -1 (none)
 		#define PIPE 0 ( | )
@@ -40,7 +40,8 @@ Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von
 			struct s_command *prev;
 		} t_command;
 		```
-	- [ ]  ft_split
+	- [x]  ft_split
 		- split after operator
 		- if no quote found -> print "not implemented" (for now)
-	- [ ] malloc for struct and when splitting just copy the content from old split pointer into the new struct pointer then free the split so that all thats malloc after parsing is the pointers in the struct
+	- [x] malloc for struct and when splitting just copy the content from old split pointer into the new struct pointer then free the split so that all thats malloc after parsing is the pointers in the struct
+        - [ ] filter out the arguments and put them into the argument linked list
