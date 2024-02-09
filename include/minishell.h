@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/09 10:52:36 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/09 11:16:11 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,21 @@
 # define REDIRECT_OUT_APPEND 6
 # define REDIRECT_IN_DELIMITER 7
 
+typedef struct s_variable
+{
+	char				*name;
+	char				*value;
+	struct s_variable	*next;
+	struct s_variable	*prev;
+}			t_variable;
+
 typedef struct s_shell
 {
 	bool		run;
 	char		*path;
 	char		**env;
 	char		**envp;
+	t_variable	*variables;
 }			t_shell;
 
 typedef struct s_command
