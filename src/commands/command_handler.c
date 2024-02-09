@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:30:38 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/08 09:57:31 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/09 11:10:46 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ int	command_handler(t_shell *shell, char *line)
 		cmds = cmds->next;
 		// link command after operator
 	}
-	// free_cmds(cmds);
+	free_cmds(cmds);
 	return(i);
 }
