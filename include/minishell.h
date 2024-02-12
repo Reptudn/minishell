@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/09 14:10:01 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/12 17:00:41 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int			is_operator(char *str);
 t_command	*make_cmds(char *line, t_shell *shell);
 char		**filter_variables(char **split);
 void		free_cmds(t_command *cmds);
+void		free_cmds_helper(t_variable *cmds);
 char		**clean_data(char **temp, char **result);
 int			str_is_equal(char *str1, char *str2);
 int			is_valid_input(char **split, char *line);

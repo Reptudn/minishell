@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/09 15:58:20 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/12 17:15:10 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,31 +61,32 @@ t_command *make_cmds(char *line, t_shell *shell)
 	char		**split;
 	char		**split_2;
 	int			i;
-	t_command	*first;
 	t_command	*current;
 	t_command	*new_cmd;
+	t_command	*prev;
 
 	split = ft_split_shell(line);
-	for (int i = 0; split[i]; i++)
-		printf("split[%d] = %s\n", i, split[i]);
-	split_2 = filter_variables(split);
-	free_split(split);
-	for (int i = 0; split[i]; i++)
-		printf("split_n[%d] = %s\n", i, split[i]);
 	if (!split)
-		return (0);
-	first = malloc(sizeof(t_command));
-	if (!first)
-		return (free_split(split));
+		return (NULL);
+	// for (int i = 0; split[i]; i++)
+	// 	printf("split[%d] = %s\n", i, split[i]);
+	split_2 = filter_variables(split);
+	if (!split_2)
+		return (NULL);
+	free_split(split);
+	// for (int i = 0; split[i]; i++)
+	// 	printf("split_n[%d] = %s\n", i, split[i]);
+	return(NULL);
+	current = malloc(sizeof(t_command));
+	if (!current)
+		return (free_split(split_2));
 	i = 0;
-	i = allocate_cmd(first, split, i);
-	current = first;
-	while (split[i])
+	i = allocate_cmd(current, split_2, i);
+	while (split_2[i])
 	{
 		new_cmd = malloc(sizeof(t_command));
 		if (!new_cmd)
 		{
-			t_command *prev;
 			while (current != NULL)
 			{
 				prev = current->prev;
@@ -94,12 +95,12 @@ t_command *make_cmds(char *line, t_shell *shell)
 			}
 			return (NULL);
 		}
-		i = allocate_cmd(new_cmd, split, i);
+		i = allocate_cmd(new_cmd, split_2, i);
 		current->next = new_cmd;
 		new_cmd->prev = current;
 		current = new_cmd;
 	}
 	free_split(split_2);
-	return(first);
+	return(current);
 }
 
