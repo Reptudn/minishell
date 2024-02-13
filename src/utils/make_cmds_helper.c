@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:07:17 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/12 17:19:03 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/13 13:38:54 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,18 @@ void	is_var(char *str, t_variable *var)
 	var->next = NULL;
 }
 
-char	**filter_variables(char **split)
+char	**filter_variables(char **split, t_shell *shell)
 {
 	t_variable	*var;
 	t_variable	*new_var;
 	t_variable	*prev;
 	char		**result;
+	char		**test = malloc(100 * sizeof(char *));
 	int			i;
+	int			j;
 
 	i = 0;
+	j = 0;
 	while (split[i] != NULL)
 	{
 		if (ft_strchr(split[i], '=') != NULL)
@@ -71,79 +74,18 @@ char	**filter_variables(char **split)
 			is_var(split[i], var);
 			split[i][0] = ' ';
 			split[i][1] = '\0';		//idk koennte ein leak sein who knows?
+			if (shell->variables == NULL)
+				shell->variables = var;
 			var->next = new_var;
 			new_var->prev = var;
 			var = new_var;
-		} //sonst wird anscheinend alles richtig eingelesen, das Problem ist nur
-		//dass ich es nicht testen kann, weil clean_data() drunterliegt!
+		}
 		i++;
 	}
-	result = (char **)malloc(10000); //here is the segfault
-	return (NULL);
-	result = clean_data(split, result);
+	result = clean_data(split, test);
+	for (i = 0; result[i] != NULL; i++)
+	{
+		printf("result[%d] = %s\n", i, result[i]);
+	}
 	return (result);
 }
-
-
-// t_variable *is_var(char *str)
-// {
-// 	t_variable *var;
-// 	char	*name;
-// 	char	*value;
-// 	int		i;
-// 	int		m;
-
-// 	i = 0;
-// 	m = 0;
-// 	name = malloc(strlen(str) + 1);
-// 	value = malloc(strlen(str) + 1);
-// 	var = malloc(sizeof(t_variable));
-// 	while (str[i] != '=')
-// 	{
-// 		name[i] = str[i];
-// 		i++;
-// 	}
-// 	name[i] = '\0';
-// 	i++;
-// 	var->name = name;
-// 	while (str[i])
-// 	{
-// 		value[m] = str[i];
-// 		m++;
-// 		i++;
-// 	}
-// 	value[m] = '\0';
-// 	var->value = value;
-// 	var->next = NULL;
-// 	var->prev = NULL;
-// 	return var;
-// }
-
-// void filter_variables(char **split)
-// {
-// 	t_variable *current = NULL;
-// 	t_variable *new_var;
-// 	int i = 0;
-
-// 	while (split[i])
-// 	{
-// 		if (ft_strchr(split[i], '=') != NULL)
-// 		{
-// 			new_var = is_var(split[i]);
-// 			if (!new_var)
-// 			{
-// 				// handle error
-// 				return;
-// 			}
-// 			if (current)
-// 			{
-// 				current->next = new_var;
-// 				new_var->prev = current;
-// 			}
-// 			current = new_var;
-// 		}
-// 		i++;
-// 	}
-// 	// current now points to the last node in the linked list
-// 	// do something with the linked list
-// }

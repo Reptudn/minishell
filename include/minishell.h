@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/12 17:00:41 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/13 13:03:32 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char		**ft_split_shell(const char *str);
 t_command	*free_split(char **split);
 int			is_operator(char *str);
 t_command	*make_cmds(char *line, t_shell *shell);
-char		**filter_variables(char **split);
+char		**filter_variables(char **split, t_shell *shell);
 void		free_cmds(t_command *cmds);
 void		free_cmds_helper(t_variable *cmds);
 char		**clean_data(char **temp, char **result);
