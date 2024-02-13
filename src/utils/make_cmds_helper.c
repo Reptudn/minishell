@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:07:17 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/13 13:38:54 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/13 13:44:15 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ char	**filter_variables(char **split, t_shell *shell)
 				return (NULL);
 			}
 			is_var(split[i], var);
-			split[i][0] = ' ';
-			split[i][1] = '\0';		//idk koennte ein leak sein who knows?
 			if (shell->variables == NULL)
 				shell->variables = var;
 			var->next = new_var;
@@ -85,7 +83,7 @@ char	**filter_variables(char **split, t_shell *shell)
 	result = clean_data(split, test);
 	for (i = 0; result[i] != NULL; i++)
 	{
-		printf("result[%d] = %s\n", i, result[i]);
+		printf("(makecmds) result[%d] = %s\n", i, result[i]);
 	}
 	return (result);
 }
