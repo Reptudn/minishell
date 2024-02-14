@@ -6,14 +6,14 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:41:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/08 10:22:43 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/12 14:43:46 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
 #include "../../include/minishell.h"
 
-int is_operator(char *str)
+int	is_operator(char *str)
 {
 	if (ft_strlen(str) == 1)
 	{
@@ -40,16 +40,71 @@ int is_operator(char *str)
 
 int	str_is_equal(char *str1, char *str2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_strlen(str1) != ft_strlen(str2))
 		return (0);
-	while(str1[i] && str2[i])
+	while (str1[i] && str2[i])
 	{
 		if (str1[i] != str2[i])
 			return (0);
 		i++;
 	}
 	return (1);
+}
+
+int	is_env_command(t_shell *shell, char *str)
+{
+	int		i;
+	char	*cmd_path;
+	char	*tmp;
+
+	i = -1;
+	while (shell->env[++i])
+	{
+		cmd_path = ft_strjoin(shell->env[i], "/");
+		if (!cmd_path)
+			return (0);
+		tmp = ft_strjoin(cmd_path, str);
+		free(cmd_path);
+		cmd_path = tmp;
+		if (!cmd_path)
+		{
+			free(cmd_path);
+			return (0);
+		}
+		if (access(cmd_path, F_OK) == 0)
+		{
+			free(cmd_path);
+			return (1);
+		}
+		free(cmd_path);
+	}
+	return (0);
+}
+
+int	is_command(char *str, t_shell *shell)
+{
+	if (str_is_equal("echo", str) == 1)
+		return (1);
+	if (str_is_equal("pwd", str) == 1)
+		return (1);
+	if (str_is_equal("clear", str) == 1)
+		return (1);
+	if (str_is_equal("export", str) == 1)
+		return (1);
+	if (str_is_equal("env", str) == 1)
+		return (1);
+	if (str_is_equal("unset", str) == 1)
+		return (1);
+	if (str_is_equal("cd", str) == 1)
+		return (1);
+	if (str_is_equal("history", str) == 1)
+		return (1);
+	if (str_is_equal("exit", str) == 1)
+		return (1);
+	if (is_env_command(shell, str) == 1)
+		return (1);
+	return (0);
 }
