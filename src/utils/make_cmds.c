@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/09 13:16:28 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/13 13:03:35 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,29 @@ int allocate_cmd(t_command *cmd, char **split, int i)
 t_command *make_cmds(char *line, t_shell *shell)
 {
 	char		**split;
+	char		**split_2;
 	int			i;
-	t_command	*first;
 	t_command	*current;
 	t_command	*new_cmd;
+	t_command	*prev;
 
 	split = ft_split_shell(line);
 	if (!split)
-		return (0);
-	first = malloc(sizeof(t_command));
-	if (!first)
-		return (free_split(split));
+		return (NULL);
+	split_2 = filter_variables(split, shell);
+	if (!split_2)
+		return (NULL);
+	free_split(split);
+	current = malloc(sizeof(t_command));
+	if (!current)
+		return (free_split(split_2));
 	i = 0;
-	i = allocate_cmd(first, split, i);
-	current = first;
-	while (split[i])
+	i = allocate_cmd(current, split_2, i);
+	while (split_2[i])
 	{
 		new_cmd = malloc(sizeof(t_command));
 		if (!new_cmd)
 		{
-			t_command *prev;
 			while (current != NULL)
 			{
 				prev = current->prev;
@@ -87,64 +90,12 @@ t_command *make_cmds(char *line, t_shell *shell)
 			}
 			return (NULL);
 		}
-		i = allocate_cmd(new_cmd, split, i);
+		i = allocate_cmd(new_cmd, split_2, i);
 		current->next = new_cmd;
 		new_cmd->prev = current;
 		current = new_cmd;
 	}
-	free_split(split);
-	return(first);
+	free_split(split_2);
+	return(current);
 }
 
-
-
-
-
-
-
-
-
-// t_command *make_cmds(char *line, t_shell *shell)
-// {
-// 	char 		**split;
-// 	int			i;
-// 	t_command	*first;
-// 	// int arg_count;
-
-// 	split = ft_split_shell(line);
-// 	if (!split)
-// 		return (0);
-// 	// is_valid_input(split, line); //segfault kommen von hier
-// 	first = malloc(sizeof(t_command));
-// 	if (!first)
-// 		return (free_split(split));
-// 	i = allocate_cmd(first, split);
-// 	// while (split[++i])
-// 	// {
-// 	// 	if (!cmd)+
-// 	// 		return (0);
-// 	// 	cmd->command = split[i];
-// 	// 	arg_count = 0;
-// 	// 	while (split[i] && is_operator(split[i]) != NONE)
-// 	// 	{
-// 	// 		cmd->args[arg_count] = ft_strdup(split[i]);
-// 	// 		if (!cmd->args[arg_count])
-// 	// 			break;
-// 	// 		arg_count++;
-// 	// 		i++;
-// 	// 	}
-// 	// 	if (split[i] && is_operator(split[i]))
-// 	// 	{
-// 	// 		cmd->operator_type = malloc(sizeof(int));
-// 	// 		if (!cmd->operator_type)
-// 	// 			break;
-// 	// 		*(cmd->operator_type) = is_operator(split[i]);
-// 	// 		i++;
-// 	// 	}
-// 	// 	cmd->args = malloc(arg_count * sizeof(char *));
-// 	// 	if (!cmd->args)
-// 	// 		break;
-// 	// }
-// 	free_split(split);
-// 	return(first);
-// }
