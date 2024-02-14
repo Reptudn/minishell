@@ -13,14 +13,13 @@
 #include "../../lib/libft/libft.h"
 #include "../../include/minishell.h"
 
-int allocate_cmd(t_command *cmd, char **split)
+int allocate_cmd(t_command *cmd, char **split, int i)
 {
-	int i;
 	int arg_count;
 
-	i = 0;
 	arg_count = 0;
-	cmd->command = ft_strdup(split[0]);
+	cmd->command = ft_strdup(split[i]);
+	i++;
 	if (!cmd->command)
 		return (0);
 	while (split[i] && is_operator(split[i]) != NONE)
@@ -31,8 +30,8 @@ int allocate_cmd(t_command *cmd, char **split)
 	cmd->args = malloc(arg_count * sizeof(char *));
 	if (!cmd->args)
 		return (0);
-	i = 1;
 	arg_count = 0;
+	i = i - arg_count;
 	while (split[i] && is_operator(split[i]) == 0)
 	{
 		cmd->args[arg_count] = ft_strdup(split[i]);
@@ -57,88 +56,49 @@ int allocate_cmd(t_command *cmd, char **split)
 	return (i);
 }
 
-// t_command *make_cmds(char *line, t_shell *shell)
-// {
-// 	char 		**split;
-// 	int			i;
-// 	t_command	*first, *current;
-
-// 	split = ft_split_shell(line);
-// 	if (!split)
-// 		return (0);
-// 	first = malloc(sizeof(t_command));
-// 	if (!first)
-// 		return (free_split(split));
-// 	i = allocate_cmd(first, split);
-// 	current = first;
-// 	while (split[i])
-// 	{
-// 		t_command *new_cmd = malloc(sizeof(t_command));
-// 		if (!new_cmd)
-// 		{
-// 			// handle error, free memory, etc.	
-// 			return (0);
-// 		}
-// 		i = allocate_cmd(new_cmd, &split[i]);
-// 		current->next = new_cmd;
-// 		new_cmd->prev = current;
-// 		current = new_cmd;
-// 	}
-// 	free_split(split);
-// 	return(first);
-// }
-
-
-
-
-
-
-
-
-
 t_command *make_cmds(char *line, t_shell *shell)
 {
-	char 		**split;
+	char		**split;
+	char		**split_2;
 	int			i;
-	t_command	*first;
-	// int arg_count;
+	t_command	*current;
+	t_command	*new_cmd;
+	t_command	*prev;
 
 	line = is_valid_input(line);
 	if (!line)
 		return (0);
 	split = ft_split_shell(line);
 	if (!split)
-		return (0);
-	first = malloc(sizeof(t_command));
-	if (!first)
-		return (free_split(split));
-	i = allocate_cmd(first, split);
-	// while (split[++i])
-	// {
-	// 	if (!cmd)+
-	// 		return (0);
-	// 	cmd->command = split[i];
-	// 	arg_count = 0;
-	// 	while (split[i] && is_operator(split[i]) != NONE)
-	// 	{
-	// 		cmd->args[arg_count] = ft_strdup(split[i]);
-	// 		if (!cmd->args[arg_count])
-	// 			break;
-	// 		arg_count++;
-	// 		i++;
-	// 	}
-	// 	if (split[i] && is_operator(split[i]))
-	// 	{
-	// 		cmd->operator_type = malloc(sizeof(int));
-	// 		if (!cmd->operator_type)
-	// 			break;
-	// 		*(cmd->operator_type) = is_operator(split[i]);
-	// 		i++;
-	// 	}
-	// 	cmd->args = malloc(arg_count * sizeof(char *));
-	// 	if (!cmd->args)
-	// 		break;
-	// }
+		return (NULL);
+	split_2 = filter_variables(split, shell);
+	if (!split_2)
+		return (NULL);
 	free_split(split);
-	return(first);
+	current = malloc(sizeof(t_command));
+	if (!current)
+		return (free_split(split_2));
+	i = 0;
+	i = allocate_cmd(current, split_2, i);
+	while (split_2[i])
+	{
+		new_cmd = malloc(sizeof(t_command));
+		if (!new_cmd)
+		{
+			while (current != NULL)
+			{
+				prev = current->prev;
+				free_cmds(current);
+				current = prev;
+			}
+			return (NULL);
+		}
+		i = allocate_cmd(new_cmd, split_2, i);
+		current->next = new_cmd;
+		new_cmd->prev = current;
+		current = new_cmd;
+	}
+	free_split(split_2);
+	return(current);
 }
+

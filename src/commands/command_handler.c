@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:30:38 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/08 09:57:31 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/13 13:48:47 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ int	command_handler(t_shell *shell, char *line)
 	i = 1;
 	while (cmds)
 	{
-		// if (*cmds->operator_type != NONE && cmds->next)
-		// {
-		// 	i = 0;
-		// 	break ;
-		// }
 		if (str_is_equal(cmds->command, "history"))
 			display_history();
 		else if (str_is_equal(cmds->command, "exit"))
@@ -52,6 +47,11 @@ int	command_handler(t_shell *shell, char *line)
 			ft_unset();
 		else if (str_is_equal(cmds->command, "cd"))
 			ft_cd(cmds, shell);
+		else if (ft_strchr(cmds->command, '=') != NULL)
+		{
+			cmds = cmds->next;
+			continue;
+		}
 		else
 		{
 			if (run_env_command(shell, cmds) == 0)
@@ -64,6 +64,6 @@ int	command_handler(t_shell *shell, char *line)
 		cmds = cmds->next;
 		// link command after operator
 	}
-	// free_cmds(cmds);
+	free_cmds(cmds);
 	return(i);
 }
