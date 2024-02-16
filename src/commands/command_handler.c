@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:30:38 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/13 13:48:47 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/16 10:06:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	command_handler(t_shell *shell, char *line)
 		else if (ft_strchr(cmds->command, '=') != NULL)
 		{
 			cmds = cmds->next;
-			continue;
+			continue ;
 		}
 		else
 		{
