@@ -20,6 +20,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \
 			$(SRCDIR)commands/command_handler.c \
+			$(SRCDIR)commands/exec_pipe_command.c \
 			$(SRCDIR)builtin/unset.c \
 			$(SRCDIR)builtin/exit.c \
 			$(SRCDIR)builtin/echo.c \

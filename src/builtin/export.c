@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:35:05 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:57:36 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/16 15:04:33 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_export(t_shell *shell)
 	if (!shell->envp)
 	{
 		printf("no envp\n");
-		return (0);
+		return (1);
 	}
 	while (shell->envp[++i])
 	{
@@ -32,5 +32,5 @@ int	ft_export(t_shell *shell)
 		ft_putstr_fd(shell->envp[i], STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	}
-	return (1);
+	return (0);
 }

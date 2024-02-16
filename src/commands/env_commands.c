@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/16 13:35:08 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/16 15:23:52 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	**make_env_args(char *cmd, char **args)
 	char	**env_args;
 
 	len = 0;
+	if (!args)
+		return ((char *[]){cmd, NULL});
 	while (args[len] != NULL)
 		len++;
 	env_args = malloc((len + 2) * sizeof(char *));
@@ -65,6 +67,32 @@ int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
 	else
 		waitpid(pid, &status, 0);
 	return (1);
+}
+
+// TODO: check for leaks
+char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
+{
+	int		i;
+	char	*cmd_path;
+
+	i = -1;
+	while (shell->env[++i])
+	{
+		cmd_path = ft_strjoin(shell->env[i], "/");
+		if (!cmd_path)
+			return (0);
+		cmd_path = ft_strjoin(cmd_path, cmd);
+		if (!cmd_path)
+		{
+			free(cmd_path);
+			return (0);
+		}
+		if (access(cmd_path, F_OK) == 0)
+			return (cmd_path);
+		free(cmd_path);
+		cmd_path = NULL;
+	}
+	return (NULL);
 }
 
 // this function will later be called when the builtin command

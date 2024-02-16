@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:35:08 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:58:28 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/16 15:04:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 int	ft_unset(void)
 {
 	printf("%sunset ur mom%s\n", COLOR_RED, COLOR_RESET);
-	return (1);
+	return (0);
 }

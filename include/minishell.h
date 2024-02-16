@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/09 13:29:33 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/16 15:14:53 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,12 @@ void		free_cmds_helper(t_variable *cmds);
 char		**clean_data(char **temp, char **result);
 int			str_is_equal(char *str1, char *str2);
 char		*is_valid_input(char *line);
+
+// pipes
+int			run_pipe_cmd(t_command *cmd1, t_command *cmd2, t_shell *shell);
+
+char		**make_env_args(char *cmd, char **args);
+char		*get_env_path_to_cmd(t_shell *shell, char *cmd);
 
 //signals
 void		signal_handler(int signum);

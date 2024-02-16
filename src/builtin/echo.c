@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:36:09 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/07 12:44:44 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/16 15:04:08 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_echo(t_command *cmd)
 
 	i = 0;
 	if (ft_strncmp(cmd->command, "echo", ft_strlen(cmd->command)) != 0)
-		return (0);
+		return (1);
 	while (cmd->args[i])
 	{
 		printf("%s", cmd->args[i]);
@@ -27,5 +27,5 @@ int	ft_echo(t_command *cmd)
 		i++;
 	}
 	printf("\n");
-	return (1);
+	return (0);
 }

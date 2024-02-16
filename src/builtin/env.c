@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:34:36 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:50:43 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/16 15:03:51 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ int	ft_env(t_shell *shell)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		i++;
 	}
-	return (1);
+	return (0);
 }
