@@ -20,28 +20,48 @@ Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von
 
 # Timeline
 - [x] Endless loop for Commands
-- [ ] Parsing
+- [x] Parsing
 	- [x] Linked List for Arguments:
 		```c
-		#define NONE -1 (none)
-		#define PIPE 0 ( | )
-		#defie OR 1 ( || )
-		#define AND 2 ( && )
-		#define REDIRECT_IN 3 ( < )
-		#define REDIRECT_OUT 4 ( > )
-		#define REDIRECT_OUT_APPEND 5 ( >> )
-		#define REDIRECT_IN_DELIMITER 6 ( << )
+		#define NONE 0 (none)
+		#define PIPE 1 ( | )
+		#define OR 2 ( || )
+		#define AND 3 ( && )
+		#define REDIRECT_IN 4 ( < )
+		#define REDIRECT_OUT 5 ( > )
+		#define REDIRECT_OUT_APPEND 6 ( >> )
+		#define REDIRECT_IN_DELIMITER 7 ( << )
 
-		typedef struct s_command {
-			char *command;
-			char **args
-			int pipe_dings;
-			struct s_command *next;
-			struct s_command *prev;
-		} t_command;
+		typedef struct s_variable
+		{
+			char				*name;
+			char				*value;
+			struct s_variable	*next;
+			struct s_variable	*prev;
+		}			t_variable;
+
+		typedef struct s_shell
+		{
+			bool		run;
+			char		*path;
+			char		**env;
+			char		**envp;
+			t_variable	*variables;
+		}			t_shell;
+
+		typedef struct s_command
+		{
+			char				*command;
+			char				**args;
+			int					*operator_type;
+			int					priority;
+			struct s_command	*next;
+			struct s_command	*prev;
+			t_shell				*shell;
+		}			t_command;
 		```
 	- [x]  ft_split
 		- split after operator
 		- if no quote found -> print "not implemented" (for now)
 	- [x] malloc for struct and when splitting just copy the content from old split pointer into the new struct pointer then free the split so that all thats malloc after parsing is the pointers in the struct
-        - [ ] filter out the arguments and put them into the argument linked list
+        - [x] filter out the arguments and put them into the argument linked list
