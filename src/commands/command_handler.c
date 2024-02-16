@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:30:38 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/16 10:06:16 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/16 13:16:46 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	command_handler(t_shell *shell, char *line)
 {
 	t_command	*cmds;
+	int			exit_status;
 	int			i;
 
 	cmds = make_cmds(line, shell);
@@ -54,9 +55,11 @@ int	command_handler(t_shell *shell, char *line)
 		}
 		else
 		{
-			if (run_env_command(shell, cmds) == 0)
+			exit_status = run_env_command(shell, cmds);
+			if (exit_status <= 0)
 			{
-				print_invalid_cmd(cmds->command);
+				if (exit_status == 0)
+					print_invalid_cmd(cmds->command);
 				i = 0;
 				break ;
 			}

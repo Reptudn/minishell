@@ -3,36 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   env_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/16 09:58:30 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/16 13:27:50 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include <stdio.h>
 
+// this will cause lots of leaks, but for now it's just a test
 char	**make_env_args(char *cmd, char **args)
 {
-	char	**new_arr;
-	int		arr_len;
+	int		len;
 	int		i;
+	char	**env_args;
 
+	len = 0;
+	while (args[len] != NULL)
+		len++;
+	env_args = malloc((len + 2) * sizeof(char *));
+	if (!env_args)
+		return (NULL);
+	env_args[0] = strdup(cmd);
 	i = -1;
-	arr_len = ft_strlen(args);
-	new_arr = malloc((arr_len + 2) * sizeof(char *));
-	if (!new_arr)
-		return (0);
-	new_arr[0] = ft_strdup(cmd);
-	if (!new_arr[0])
-		return (0);
-	while (++i < arr_len)
-		new_arr[i + 1] = ft_strdup(args[i]);
-	new_arr[arr_len + 1] = NULL;
-	return (new_arr);
+	while (++i < len)
+		env_args[i + 1] = strdup(args[i]);
+	env_args[len + 1] = NULL;
+	return (env_args);
 }
 
-int	execute(char *cmd_path, char **args, char *command)
+int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
@@ -45,17 +47,19 @@ int	execute(char *cmd_path, char **args, char *command)
 	{
 		if (args[0] == NULL)
 		{
-			if (execve(cmd_path, (char *[]){command, NULL}, NULL) == -1)
+			if (execve(cmd_path, (char *[]){command, NULL}, shell->envp) == -1)
 				return (0);
 		}
 		else
 		{
 			env_args = make_env_args(command, args);
-			printf("env_args[0]: %s\n", env_args[0]);
 			if (!env_args)
 				return (0);
-			if (execve(cmd_path, env_args, NULL) == -1)
-				return (0);
+			if (execve(cmd_path, env_args, shell->envp) == -1)
+			{
+				perror("\033[0;31mCommand failed to execute");
+				return (-1);
+			}
 		}
 	}
 	else
@@ -90,7 +94,7 @@ int	run_env_command(t_shell *shell, t_command *cmd)
 		}
 		if (access(cmd_path, F_OK) == 0)
 		{
-			if (execute(cmd_path, cmd->args, cmd->command) == 0)
+			if (execute(cmd_path, cmd->args, cmd->command, shell) == 0)
 				break ;
 			ran = 1;
 			break ;
