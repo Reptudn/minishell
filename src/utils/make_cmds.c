@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/12 14:53:14 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/16 09:36:07 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,16 @@ int allocate_cmd(t_command *cmd, char **split, int i)
 	{
 		cmd->args[arg_count] = ft_strdup(split[i]);
 		if (!cmd->args[arg_count])
-			break;
+			break ;
 		arg_count++;
 		i++;
-		// printf("cmd->args[%d] = %s\n", arg_count, cmd->args[arg_count]);
 	}
-	// printf("cmd->args[0] = %s\n", cmd->args[0]);
 	cmd->args[arg_count] = NULL;
 	if (split[i] && is_operator(split[i]) != 0)
 	{
 		cmd->operator_type = malloc(sizeof(int));
 		if (!cmd->operator_type)
-			return(0);
+			return (0);
 		*(cmd->operator_type) = is_operator(split[i]);
 		i++;
 	}
@@ -56,7 +54,7 @@ int allocate_cmd(t_command *cmd, char **split, int i)
 	return (i);
 }
 
-t_command *make_cmds(char *line, t_shell *shell)
+t_command	*make_cmds(char *line, t_shell *shell)
 {
 	char		**split;
 	char		**split_2;
@@ -99,6 +97,6 @@ t_command *make_cmds(char *line, t_shell *shell)
 		current = new_cmd;
 	}
 	free_split(split_2);
-	return(current);
+	return (current);
 }
 

@@ -6,11 +6,23 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/07 10:20:38 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/16 10:24:14 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	print_start_logo()
+{
+	printf("\033[H\033[J%s%s", COLOR_BG_GREEN, COLOR_MAGENTA);
+	printf(" __    __     __     __   __     __     ______     __  __     ______     __         __ \n");
+	printf("/\\ '-./  \\   /\\ \\   /\\ '-.\\ \\   /\\ \\   /\\  ___\\   /\\ \\_\\ \\   /\\  ___\\   /\\ \\       /\\ \\       \n");
+	printf("\\ \\ \\-./\\ \\  \\ \\ \\  \\ \\ \\-.  \\  \\ \\ \\  \\ \\___  \\  \\ \\  __ \\  \\ \\  __\\   \\ \\ \\____  \\ \\ \\____  \n");
+	printf(" \\ \\_\\ \\ \\_\\  \\ \\_\\  \\ \\_\\\\'\\_\\  \\ \\_\\  \\/\\_____\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_____\\  \\ \\_____\\ \n");
+	printf("  \\/_/  \\/_/   \\/_/   \\/_/ \\/_/   \\/_/   \\/_____/   \\/_/\\/_/   \\/_____/   \\/_____/   \\/_____/ \n\n");
+	printf("                                 by %sjkauker%s and %snsabia%s\n\n", COLOR_RED, COLOR_MAGENTA, COLOR_RED, COLOR_RESET);
+	printf("%s", COLOR_RESET);
+}
 
 char	**get_env(void)
 {
@@ -52,6 +64,7 @@ int	main(int argc, char **argv, char **envp)
 		free(shell.path);
 		return (1);
 	}
+	print_start_logo();
 	command_loop(&shell);
 	free(shell.path);
 	return (0);
