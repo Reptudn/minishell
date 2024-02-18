@@ -72,7 +72,7 @@ Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von
 - make a function for any operator we got
 	- && function
  	- || function
-  	- >> function
+  	- ">>" function
   	- NONE is just the basic stuff run
 	- ...
 - the main command handler function should be recursive and return 0 when its over
