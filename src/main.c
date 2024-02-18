@@ -6,13 +6,13 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/16 10:24:14 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/18 23:04:40 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	print_start_logo()
+void	print_start_logo(t_shell *shell)
 {
 	printf("\033[H\033[J%s%s", COLOR_BG_GREEN, COLOR_MAGENTA);
 	printf(" __    __     __     __   __     __     ______     __  __     ______     __         __ \n");
@@ -20,8 +20,9 @@ void	print_start_logo()
 	printf("\\ \\ \\-./\\ \\  \\ \\ \\  \\ \\ \\-.  \\  \\ \\ \\  \\ \\___  \\  \\ \\  __ \\  \\ \\  __\\   \\ \\ \\____  \\ \\ \\____  \n");
 	printf(" \\ \\_\\ \\ \\_\\  \\ \\_\\  \\ \\_\\\\'\\_\\  \\ \\_\\  \\/\\_____\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_____\\  \\ \\_____\\ \n");
 	printf("  \\/_/  \\/_/   \\/_/   \\/_/ \\/_/   \\/_/   \\/_____/   \\/_/\\/_/   \\/_____/   \\/_____/   \\/_____/ \n\n");
-	printf("                                 by %sjkauker%s and %snsabia%s\n\n", COLOR_RED, COLOR_MAGENTA, COLOR_RED, COLOR_RESET);
+	printf("                                 by %s\033]8;;https://profile.intra.42.fr/users/jkauker\ajkauker\033]8;;\a%s and %s\033]8;;https://profile.intra.42.fr/users/nsabia\ansabia\033]8;;\a%s\n\n", COLOR_RED, COLOR_MAGENTA, COLOR_RED, COLOR_RESET);
 	printf("%s", COLOR_RESET);
+	printf("\n%sWelcome ✨%s%s✨%s\n\n", COLOR_MAGENTA, COLOR_GREEN , getenv("USER"), COLOR_RESET);
 }
 
 char	**get_env(void)
@@ -64,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 		free(shell.path);
 		return (1);
 	}
-	print_start_logo();
+	print_start_logo(&shell);
 	command_loop(&shell);
 	free(shell.path);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/16 15:14:53 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/18 22:43:39 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # include <fcntl.h>
 # include <stdbool.h>
 
-# define PROMPT "\033[0;36mminishell ➜ \033[0;33m"
+# define PROMPT "🪄  \033[0;36mminishell \033[0;31m➜ \033[0;33m"
 # define NONE 0
 # define PIPE 1
 # define OR 2
