@@ -84,6 +84,7 @@ Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von
 - we have to find out the depth of each command (the higher the depth value is the earlier we have to run this command) -> code a find_highest_depth_cmd() func which returns the first command if finds with the highest depth from the first command on (we'll probably have to check it from the back tho)
 - everytime a command has been run we decrease the depth value by one and once its smaller than 0 we know we dont have to execute it anymore
 - we will probably have to better the parsing and include depth correctly
+- add depth as int to t_command struct
 - depth default is 0
 - all the functions for executing the different operators have to decrease the depth value by one
 
