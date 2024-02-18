@@ -78,3 +78,21 @@ Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von
 - the main command handler function should be recursive and return 0 when its over
 - when only one command is given or only the one command is available and not cmd->next just run this command
 - FIX DOUBLE FREE OR SEGV WHEN COMMAND IS BEING RUN AND IT HAS AN OPERATOR OTHER THAN "NONE"
+```c
+#defince SUCCESS_CMD 0
+#define INVALID_TOKEN -1
+
+int	run_command(t_command *cmd); // this runs only one command and that is basically like the old command handler we have but without a loop and we know there is no operator
+
+int	command_hanlder(t_command cmd1, t_command cmd2) // or just cmd1 and we get the next one by cmd1->next
+{
+	if (!cmd1 || (!cmd1 && !cmd2)) // if the first command doesnt exits OR of both commands dont exist return 0 for done
+		return (SUCCESS_CMD)
+	if (cmd1 && (*cmd1->operator_type != NONE && !cmd2)) // if the first command does exist and it has an operator type but there is no operator return error for operator given but no second command (we might have to code completion for that too)
+		reutrn (INVALID_TOKEN)
+	if (!cmd2)
+		run_command(cmd1); // supposed to run only one command -> is handling one command with no operator
+			
+}
+```
+
