@@ -88,7 +88,7 @@ int	command_hanlder(t_command *cmd1, t_command *cmd2) // or just cmd1 and we get
 {
 	if (!cmd1 || (!cmd1 && !cmd2)) // if the first command doesnt exits OR of both commands dont exist return 0 for done
 		return (SUCCESS_CMD)
-	if (cmd1 && (*cmd1->operator_type != NONE && !cmd2)) // if the first command does exist and it has an operator type but there is no operator return error for operator given but no second command (we might have to code completion for that too)
+	if (cmd1 && ((*cmd1->operator_type != NONE) && !cmd2)) // if the first command does exist and it has an operator type but there is no operator return error for operator given but no second command (we might have to code completion for that too)
 		reutrn (INVALID_TOKEN)
 	if (!cmd2)
 		run_command(cmd1); // supposed to run only one command -> is handling one command with no operator
