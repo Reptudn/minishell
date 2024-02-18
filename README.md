@@ -65,3 +65,16 @@ Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von
 		- if no quote found -> print "not implemented" (for now)
 	- [x] malloc for struct and when splitting just copy the content from old split pointer into the new struct pointer then free the split so that all thats malloc after parsing is the pointers in the struct
         - [x] filter out the arguments and put them into the argument linked list
+
+
+# Components
+## Command Handler
+- make a function for any operator we got
+	- && function
+ 	- || function
+  	- >> function
+  	- NONE is just the basic stuff run
+	- ...
+- the main command handler function should be recursive and return 0 when its over
+- when only one command is given or only the one command is available and not cmd->next just run this command
+- FIX DOUBLE FREE OR SEGV WHEN COMMAND IS BEING RUN AND IT HAS AN OPERATOR OTHER THAN "NONE"
