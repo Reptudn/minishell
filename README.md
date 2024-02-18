@@ -84,7 +84,7 @@ Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von
 
 int	run_command(t_command *cmd); // this runs only one command and that is basically like the old command handler we have but without a loop and we know there is no operator
 
-int	command_hanlder(t_command cmd1, t_command cmd2) // or just cmd1 and we get the next one by cmd1->next
+int	command_hanlder(t_command *cmd1, t_command *cmd2) // or just cmd1 and we get the next one by cmd1->next
 {
 	if (!cmd1 || (!cmd1 && !cmd2)) // if the first command doesnt exits OR of both commands dont exist return 0 for done
 		return (SUCCESS_CMD)
@@ -92,7 +92,18 @@ int	command_hanlder(t_command cmd1, t_command cmd2) // or just cmd1 and we get t
 		reutrn (INVALID_TOKEN)
 	if (!cmd2)
 		run_command(cmd1); // supposed to run only one command -> is handling one command with no operator
-			
+
+	if (cmd1->operator_type == PIPE)
+		run_pipe(cmd1, cmd2);
+	else if (cmd1->operator_type == OR)
+		run_or(cmd1, cmd2);
+	else if (cmd1->operator_type == AND)
+		run_and(cmd1, cmd2);
+	else if (cmd1->operator_type == REDIRECT_IN)
+		run_redirect_in(cmd1, cmd2);
+	// the rest
+
+	return (command_handler(cmd2, cmd2->next)); // recusively give it the next two commands
 }
 ```
 
