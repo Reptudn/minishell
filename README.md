@@ -82,7 +82,7 @@ Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von
 #defince SUCCESS_CMD 0
 #define INVALID_TOKEN -1
 
-int	run_command(t_command *cmd); // this runs only one command and that is basically like the old command handler we have but without a loop and we know there is no operator
+int	run_command(t_command *cmd); // this runs only one command and that is basically like the old command handler we have but without a loop and we know there is no operator and it returns success or error
 
 // we might have to overthing this because cmd2 is always being ran twice
 int	command_hanlder(t_command *cmd1, t_command *cmd2) // or just cmd1 and we get the next one by cmd1->next
@@ -92,7 +92,7 @@ int	command_hanlder(t_command *cmd1, t_command *cmd2) // or just cmd1 and we get
 	if (cmd1 && ((*cmd1->operator_type != NONE) && !cmd2)) // if the first command does exist and it has an operator type but there is no operator return error for operator given but no second command (we might have to code completion for that too)
 		return (INVALID_TOKEN)
 	if (!cmd2)
-		run_command(cmd1); // supposed to run only one command -> is handling one command with no operator
+		return (run_command(cmd1)); // supposed to run only one command -> is handling one command with no operator
 
 	if (cmd1->operator_type == PIPE)
 		run_pipe(cmd1, cmd2);
