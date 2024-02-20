@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/20 11:35:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/20 12:07:55 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	command_loop(t_shell *shell)
 {
-	char	*line;
+	char		*line;
+	t_command	*commands;
 
 	line = (char *)readline(PROMPT);
 	if (!line)
@@ -32,7 +33,18 @@ int	command_loop(t_shell *shell)
 		printf("%s", COLOR_RESET);
 		if (ft_strlen(line) > 0)
 			add_history(line);
-		command_handler(shell, line);
+		commands = make_cmds(line, shell);
+		if (!commands)
+		{
+			printf("cmd failed\n");
+			return (0);
+		}
+		else
+		{
+			while (commands->prev)
+				commands = commands->prev;
+			execute_commands(shell, commands, commands->next);
+		}
 		free(line);
 		if (!shell->run)
 			break ;
