@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:41:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/12 14:43:46 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/20 09:39:02 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_operator(char *str)
 		if (str_is_equal(str, "|") == 1)
 			return (PIPE);
 		if (str_is_equal(str, ">") == 1)
-			return (REDIRECT_OUT);	
+			return (REDIRECT_OUT);
 		if (str_is_equal(str, "<") == 1)
 			return (REDIRECT_IN);
 	}
