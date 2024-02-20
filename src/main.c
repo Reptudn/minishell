@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/18 23:04:40 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/20 09:42:56 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_start_logo(t_shell *shell)
 	printf("  \\/_/  \\/_/   \\/_/   \\/_/ \\/_/   \\/_/   \\/_____/   \\/_/\\/_/   \\/_____/   \\/_____/   \\/_____/ \n\n");
 	printf("                                 by %s\033]8;;https://profile.intra.42.fr/users/jkauker\ajkauker\033]8;;\a%s and %s\033]8;;https://profile.intra.42.fr/users/nsabia\ansabia\033]8;;\a%s\n\n", COLOR_RED, COLOR_MAGENTA, COLOR_RED, COLOR_RESET);
 	printf("%s", COLOR_RESET);
-	printf("\n%sWelcome ✨%s%s✨%s\n\n", COLOR_MAGENTA, COLOR_GREEN , getenv("USER"), COLOR_RESET);
+	printf("\n%sWelcome %s✨ %s ✨%s\n\n", COLOR_MAGENTA, COLOR_GREEN , getenv("USER"), COLOR_RESET);
 }
 
 char	**get_env(void)
