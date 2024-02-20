@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/20 11:03:46 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/20 12:07:55 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,11 @@ int	command_loop(t_shell *shell)
 			return (0);
 		}
 		else
+		{
+			while (commands->prev)
+				commands = commands->prev;
 			execute_commands(shell, commands, commands->next);
+		}
 		free(line);
 		if (!shell->run)
 			break ;
