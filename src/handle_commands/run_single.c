@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:27:22 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/20 11:09:14 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/20 12:10:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	run_command(t_shell *shell, t_command *cmd)
 {
 	int	status;
 
-	printf("Run command: %s\n", cmd->command);
 	status = CMD_SUCCESS;
 	if (str_is_equal(cmd->command, "history"))
 		display_history();
