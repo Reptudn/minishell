@@ -51,8 +51,8 @@ int	command_loop(t_shell *shell)
 		line = readline(PROMPT);
 	}
 	clear_history();
-	// if (line)
-	// 	free(line);
+	if (line)
+		free(line);
 	return (0);
 }
 
