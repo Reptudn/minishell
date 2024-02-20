@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:30:38 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/16 15:23:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/20 10:50:07 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,6 @@ int	command_handler(t_shell *shell, char *line)
 	i = 1;
 	while (cmds)
 	{
-		// if (*cmds->operator_type == PIPE)
-		// {
-		// 	if (cmds->next == NULL)
-		// 	{
-		// 		printf("expected command after pipe\n");
-		// 		break ;
-		// 	}
-		// 	if (run_pipe_cmd(cmds, cmds->next, shell) != 0)
-		// 		break ;
-		// 	cmds = cmds->next->next;
-		// 	continue ;
-		// }
 		if (str_is_equal(cmds->command, "history"))
 			display_history();
 		else if (str_is_equal(cmds->command, "exit"))
@@ -76,15 +64,8 @@ int	command_handler(t_shell *shell, char *line)
 				break ;
 			}
 		}
-		// if (*cmds->operator_type == NONE)
-		// 	break ;
-		// if (*cmds->operator_type == AND)
-		// 	cmds = cmds->next;
-		// else if (*cmds->operator_type == OR && exit_status != 0)
-		// 	cmds = cmds->next;
 		break ;
-		// link command after operator
 	}
-	// free_cmds(cmds);
+	free_cmds(cmds);
 	return(i);
 }
