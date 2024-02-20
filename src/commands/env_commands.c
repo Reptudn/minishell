@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/16 15:23:52 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/20 10:39:35 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	run_env_command(t_shell *shell, t_command *cmd)
 			free(cmd_path);
 			return (0);
 		}
-		if (access(cmd_path, F_OK) == 0)
+		if (access(cmd_path, F_OK) == 0 && access(cmd_path, X_OK) == 0)
 		{
 			if (execute(cmd_path, cmd->args, cmd->command, shell) == 0)
 				break ;
@@ -133,6 +133,6 @@ int	run_env_command(t_shell *shell, t_command *cmd)
 	if (cmd_path)
 		free(cmd_path);
 	if (ran)
-		return (1);
-	return (0);
+		return (CMD_SUCCESS);
+	return (CMD_FAILURE);
 }

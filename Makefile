@@ -29,6 +29,11 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)builtin/export.c \
 			$(SRCDIR)builtin/cd.c \
 			$(SRCDIR)signals/signal_handler.c \
+			$(SRCDIR)handle_commands/and.c \
+			$(SRCDIR)handle_commands/or.c \
+			$(SRCDIR)handle_commands/path_cmd.c \
+			$(SRCDIR)handle_commands/handler.c \
+			$(SRCDIR)handle_commands/run_single.c \
 
 OBJDIR := ./obj/
 OBJS	:= $(SRCS:.c=.o)

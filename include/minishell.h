@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/18 22:43:39 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/20 11:02:06 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@
 # define REDIRECT_OUT_APPEND 6
 # define REDIRECT_IN_DELIMITER 7
 
+# define CMD_SUCCESS 0
+# define CMD_FAILURE 1
+# define INVLAID_TOKEN 2
+
 typedef struct s_variable
 {
 	char				*name;
@@ -71,6 +75,12 @@ typedef struct s_command
 	t_shell				*shell;
 }			t_command;
 
+// command hanling
+int	run_command(t_shell *shell, t_command *cmd);
+int	run_path_command(t_shell *shell, t_command *cmd);
+int	execute_commands(t_shell *shell, t_command *cmd1, t_command *cmd2);
+
+// old
 int			command_loop(t_shell *shell);
 int			command_handler(t_shell *shell, char *line);
 
