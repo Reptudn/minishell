@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:22:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/20 10:19:48 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/20 13:02:04 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,6 @@ char	*handle_missing(char *line, char missing)
 
 char	*is_valid_input(char *line)
 {
-	int		return_value;
-	int		j;
-
-	return_value = 1;
 	line = handle_missing(line, '"');
 	if (!line)
 		return (0);
