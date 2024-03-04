@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/20 09:42:56 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/20 15:01:04 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,17 @@ char	**get_env(void)
 		return (NULL);
 	envp = ft_split(env, ':');
 	if (!envp)
+	{
+		free(envp);
 		return (NULL);
+	}
 	return (envp);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
+	char	**temp;
 
 	shell.run = true;
 	shell.path = getcwd(NULL, 0);
@@ -68,5 +72,12 @@ int	main(int argc, char **argv, char **envp)
 	print_start_logo(&shell);
 	command_loop(&shell);
 	free(shell.path);
+	temp = shell.env;
+	while (*temp != NULL)
+	{
+		free(*temp);
+		temp++;
+	}
+	free(shell.env);
 	return (0);
 }

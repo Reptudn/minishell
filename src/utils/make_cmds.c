@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/20 10:37:50 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/04 15:03:20 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,14 @@ int allocate_cmd(t_command *cmd, char **split, int i)
 		cmd->args[arg_count] = ft_strdup(split[i]);
 		if (!cmd->args[arg_count])
 		{
-			while(arg_count > 0) {
+			while(arg_count > 0)
 				free(cmd->args[--arg_count]);
-			}
 			free(cmd->args);
 			break ;
 		}
 		arg_count++;
 		i++;
 	}
-	cmd->args[arg_count] = NULL;
 	if (split[i] && is_operator(split[i]) != 0)
 	{
 		cmd->operator_type = malloc(sizeof(int));

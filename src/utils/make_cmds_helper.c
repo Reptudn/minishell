@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:07:17 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/16 09:36:24 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/02/20 13:02:33 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,8 @@ char	**filter_variables(char **split, t_shell *shell)
 	char		**result;
 	char		**test = malloc(100 * sizeof(char *));
 	int			i;
-	int			j;
 
 	i = 0;
-	j = 0;
 	while (split[i] != NULL)
 	{
 		if (ft_strchr(split[i], '=') != NULL)
