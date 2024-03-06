@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:41:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 15:29:23 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/06 19:30:51 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ int	is_operator(char *str)
 			return (REDIRECT_OUT);
 		if (str_is_equal(str, "<") == 1)
 			return (REDIRECT_IN);
+		if (str_is_equal(str, "(") == 1)
+			return (OPEN_PAREN);
+		if (str_is_equal(str, ")") == 1)
+			return (CLOSE_PAREN);
 	}
 	else if (str && ft_strlen(str) == 2)
 	{
