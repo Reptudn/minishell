@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 21:07:01 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/06 23:03:27 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void	stack_to_output_end(t_shunting_yard *yard)
 
 void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 {
+	t_shunting_node	*tmp;
+
 	if (!node)
 		return ;
 	printf("Placing node ");
@@ -102,7 +104,25 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 		if (!yard->stack)
 			yard->stack = node;
 		else
-			append_node(yard->stack, node);
+		{
+			tmp = yard->stack;
+			while (tmp->next)
+				tmp = tmp->next;
+			while (tmp && *node->priority >= *tmp->priority) {
+				stack_to_output_end(yard);
+				tmp = yard->stack;
+				while (tmp && tmp->next)
+					tmp = tmp->next;
+			}
+			if (tmp)
+				append_node(tmp, node);
+			else
+			{
+				yard->stack = node;
+				node->next = NULL;
+				node->prev = NULL;
+			}
+		}
 		printf("in stack\t:  %s\n", node->value);
 	}
 	else
