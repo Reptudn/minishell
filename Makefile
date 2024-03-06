@@ -35,6 +35,8 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)handle_commands/path_cmd.c \
 			$(SRCDIR)handle_commands/handler.c \
 			$(SRCDIR)handle_commands/run_single.c \
+			$(SRCDIR)AST/shunting_yard.c \
+			$(SRCDIR)AST/ast_utils.c \
 
 OBJDIR := ./obj/
 OBJS	:= $(SRCS:.c=.o)
