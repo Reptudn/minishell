@@ -6,12 +6,13 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 10:05:06 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/06 15:17:11 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../lib/libft/libft.h"
 #include "../../include/minishell.h"
+
+t_shunting_yard	*shunting_yard_create(char	**tokens);
 
 int allocate_cmd(t_command *cmd, char **split, int i)
 {
@@ -79,10 +80,8 @@ t_command	*make_cmds(char *line, t_shell *shell)
 		free_split(split);
 		return (NULL);
 	}
-	for (int i = 0; split_2[i]; i++)
-		printf("token[%d]: %s\n", i, split_2[i]);
 	free_split(split);
-	build_ast(split_2);
+	shunting_yard_create(split_2);
 	current = malloc(sizeof(t_command));
 	if (!current)
 		return (free_split(split_2));

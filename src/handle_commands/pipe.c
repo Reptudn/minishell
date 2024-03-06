@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:20:58 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/20 11:40:36 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/06 11:49:23 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	run_pipe_cmd(t_command *cmd1, t_command *cmd2, t_shell *shell)
 	pid_t	pid;
 	int		status;
 
-	printf("running pipe\n");
 	status = CMD_SUCCESS;
 	if (pipe(fd) == -1)
 		return (0);

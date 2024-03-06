@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 09:50:54 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/06 15:25:09 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,22 @@ typedef struct s_command
 	t_shell				*shell;
 }			t_command;
 
-typedef struct s_ast
+typedef struct s_shunting_node
 {
-	char			*value;
-	int				type;
-	char			**args;
-	struct s_ast	*left;
-	struct s_ast	*right;
-}	t_ast;
+	char					*value;
+	char					**args;
+	int						*type;
+	int						*priority;
+	struct s_shunting_node	*next;
+	struct s_shunting_node	*prev;
+}	t_shunting_node;
+
+typedef struct	s_shunting_yard
+{
+	t_shunting_node			*input;
+	t_shunting_node			*output;
+	t_shunting_node			*stack;
+}	t_shunting_yard;
 
 // command hanling
 int			run_command(t_shell *shell, t_command *cmd);
@@ -97,7 +105,7 @@ int			command_handler(t_shell *shell, char *line);
 // Parsing
 char		*ft_strncpy(char *dest, const char *src, size_t n);
 int			is_shell_op(char *str, char *shell_op[], int size);
-t_ast		*build_ast(char **tokens);
+int			get_operator_priority(char *operator);
 
 // builtins
 int			ft_cd(t_command *cmd, t_shell *shell);
