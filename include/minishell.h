@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 15:25:09 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/06 17:42:49 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define REDIRECT_OUT 5
 # define REDIRECT_OUT_APPEND 6
 # define REDIRECT_IN_DELIMITER 7
-# define COMMAND 8
+# define COMMAND 8 // can be removed probably
 
 # define CMD_SUCCESS 0
 # define CMD_FAILURE 1
@@ -105,7 +105,7 @@ int			command_handler(t_shell *shell, char *line);
 // Parsing
 char		*ft_strncpy(char *dest, const char *src, size_t n);
 int			is_shell_op(char *str, char *shell_op[], int size);
-int			get_operator_priority(char *operator);
+t_shunting_yard	*shunting_yard_create(char	**tokens);
 
 // builtins
 int			ft_cd(t_command *cmd, t_shell *shell);

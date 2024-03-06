@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shunting_yard.c                                    :+:      :+:    :+:   */
+/*   shunting_yard_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:40:50 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 15:47:51 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/06 17:43:51 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	get_operator_priority(char *operator);
 
 void	print_shunting_node(t_shunting_node *node, int a)
 {
