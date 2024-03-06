@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 09:18:27 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/06 10:05:06 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ t_command	*make_cmds(char *line, t_shell *shell)
 	split = ft_split_shell(line);
 	if (!split)
 		return (NULL);
-	for (int i = 0; split[i]; i++)
-		printf("split[%d]: %s\n", i, split[i]);
 	split_2 = filter_variables(split, shell);
 	if (!split_2)
 	{
@@ -82,7 +80,7 @@ t_command	*make_cmds(char *line, t_shell *shell)
 		return (NULL);
 	}
 	for (int i = 0; split_2[i]; i++)
-		printf("split_2[%d]: %s\n", i, split_2[i]);
+		printf("token[%d]: %s\n", i, split_2[i]);
 	free_split(split);
 	build_ast(split_2);
 	current = malloc(sizeof(t_command));
