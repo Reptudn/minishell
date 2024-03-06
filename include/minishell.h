@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/04 15:03:10 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/06 09:50:54 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define REDIRECT_OUT 5
 # define REDIRECT_OUT_APPEND 6
 # define REDIRECT_IN_DELIMITER 7
+# define COMMAND 8
 
 # define CMD_SUCCESS 0
 # define CMD_FAILURE 1
@@ -75,10 +76,19 @@ typedef struct s_command
 	t_shell				*shell;
 }			t_command;
 
+typedef struct s_ast
+{
+	char			*value;
+	int				type;
+	char			**args;
+	struct s_ast	*left;
+	struct s_ast	*right;
+}	t_ast;
+
 // command hanling
-int	run_command(t_shell *shell, t_command *cmd);
-int	run_path_command(t_shell *shell, t_command *cmd);
-int	execute_commands(t_shell *shell, t_command *cmd1, t_command *cmd2);
+int			run_command(t_shell *shell, t_command *cmd);
+int			run_path_command(t_shell *shell, t_command *cmd);
+int			execute_commands(t_shell *shell, t_command *cmd1, t_command *cmd2);
 
 // old
 int			command_loop(t_shell *shell);
@@ -87,6 +97,7 @@ int			command_handler(t_shell *shell, char *line);
 // Parsing
 char		*ft_strncpy(char *dest, const char *src, size_t n);
 int			is_shell_op(char *str, char *shell_op[], int size);
+t_ast		*build_ast(char **tokens);
 
 // builtins
 int			ft_cd(t_command *cmd, t_shell *shell);
