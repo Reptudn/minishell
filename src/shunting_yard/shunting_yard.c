@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 23:03:27 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/07 00:10:33 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,24 @@ void	free_node(t_shunting_node *node)
 	free(node);
 }
 
-void	del_last_node(t_shunting_node *node)
+void	del_last_node(t_shunting_node **node_ptr)
 {
-	if (!node)
-		return ;
+	t_shunting_node	*node;
+	t_shunting_node	*prev_node;
+
+	if (!node_ptr || !*node_ptr)
+		return;
+	prev_node = NULL;
+	node = *node_ptr;
 	while (node->next)
+	{
+		prev_node = node;
 		node = node->next;
-	node->prev->next = NULL;
+	}
+	if (prev_node)
+		prev_node->next = NULL;
+	else
+		*node_ptr = NULL;
 	free_node(node);
 }
 
@@ -98,8 +109,41 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 
 	if (!node)
 		return ;
-	printf("Placing node ");
-	if (*node->type != NONE)
+	printf("placing node: %c\n", node->value[0]);
+	if (*node->type == OPEN_PAREN)
+	{
+		if (!yard->stack)
+			yard->stack = node;
+		else
+			append_node(yard->stack, node);
+	}
+	else if (*node->type == CLOSE_PAREN) // it never gets inside this block
+	{
+		while (yard->stack && *yard->stack->type != OPEN_PAREN)
+			stack_to_output_end(yard);
+		if (!yard->stack)
+			printf("Error: Unbalanced parenthesis\n");
+		else if (yard->stack && *yard->stack->type == OPEN_PAREN)
+		{
+			printf("found open paren in stack\n");
+			// del_last_node(&yard->stack);
+			if (!yard->stack->prev)
+			{
+				yard->stack = NULL;
+				printf("stack is null\n");
+			}
+			else
+			{
+				tmp = yard->stack;
+				while (tmp->next)
+					tmp = tmp->next;
+				printf("end of stack: %s\n", tmp->value);
+				tmp->prev->next = NULL;
+				// unsafe af cuz the struct is flying around somewhere malloced
+			};
+		}
+	}
+	else if (*node->type != NONE)
 	{
 		if (!yard->stack)
 			yard->stack = node;
@@ -123,7 +167,6 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 				node->prev = NULL;
 			}
 		}
-		printf("in stack\t:  %s\n", node->value);
 	}
 	else
 	{
@@ -131,7 +174,6 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 			yard->output = node;
 		else
 			append_node(yard->output, node);
-		printf("in output\t:  %s\n", node->value);
 	}
 }
 
@@ -144,6 +186,7 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	yard = shunting_yard_create(tokens);
 	if (!yard)
 		return (NULL);
+	print_all_stacks(yard);
 	while (yard->input)
 	{
 		node = get_first_input(yard);

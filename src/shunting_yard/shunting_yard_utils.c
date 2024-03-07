@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:40:50 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 20:12:12 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/06 23:53:57 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	print_shunting_node(t_shunting_node *node, int a)
 		return ;
 	printf("-- Node: %d\n", a);
 	printf("value: %s\n", node->value);
-	printf("args:\n");
-	if (node->args && node->args[0])
-		while (node->args[++i])
-			printf("  %s\n", node->args[i]);
-	else
-		printf("  NULL\n");
-	printf("type: %d\n", *node->type);
-	printf("priority: %d\n", *node->priority);
+	// printf("args:\n");
+	// if (node->args && node->args[0])
+	//	while (node->args[++i])
+	//		printf("  %s\n", node->args[i]);
+	// else
+	// 	printf("  NULL\n");
+	printf("type: %d\n", node->type ? *node->type : -1);
+	printf("priority: %d\n", node->priority ? *node->priority : -1);
 	printf("----------\n");
 	print_shunting_node(node->next, ++a);
 }
@@ -106,7 +106,7 @@ t_shunting_yard	*shunting_yard_create(char	**tokens)
 
 void	print_all_stacks(t_shunting_yard *yard)
 {
-	printf("\nInput:\n");
+	printf("\n\n>>>>>>>>\nInput:\n");
 	if (!yard->input)
 		printf("  NULL\n");
 	else
