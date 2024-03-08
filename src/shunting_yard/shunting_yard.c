@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/08 12:37:23 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/08 16:11:56 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 	}
 }
 
+// when something is after a bracket it end up in an endless loop or whatever
 // return NULL if something fails else return a pointer to a t_shunting_yard
 t_shunting_yard	*shunting_yard(char **tokens)
 {
