@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/07 00:10:33 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/08 12:37:23 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 #include <stdio.h>
 
 void	print_shunting_node(t_shunting_node *node, int a);
+
+t_shunting_node	*get_last_node(t_shunting_node *node)
+{
+	if (!node)
+		return (NULL);
+	while (node->next)
+		node = node->next;
+	return (node);
+}
 
 // returns the first node from the input array and also removes it
 // from the input array
@@ -57,7 +66,7 @@ void	del_last_node(t_shunting_node **node_ptr)
 	t_shunting_node	*prev_node;
 
 	if (!node_ptr || !*node_ptr)
-		return;
+		return ;
 	prev_node = NULL;
 	node = *node_ptr;
 	while (node->next)
@@ -72,26 +81,25 @@ void	del_last_node(t_shunting_node **node_ptr)
 	free_node(node);
 }
 
-void	stack_to_output_end(t_shunting_yard *yard)
+int	stack_to_output_end(t_shunting_yard *yard)
 {
 	t_shunting_node	*last_stack;
 	t_shunting_node	*last_output;
 	t_shunting_node	*tmp;
 
 	if (!yard || !yard->stack)
-		return ;
-	last_stack = yard->stack;
-	while (last_stack->next)
-		last_stack = last_stack->next;
+		return (0);
+	if (get_last_node(yard->stack)
+		&& *get_last_node(yard->stack)->type == OPEN_PAREN)
+		return (0);
+	last_stack = get_last_node(yard->stack);
 	if (last_stack->prev)
 		last_stack->prev->next = NULL;
 	else
 		yard->stack = NULL;
 	if (yard->output)
 	{
-		last_output = yard->output;
-		while (last_output->next)
-			last_output = last_output->next;
+		last_output = get_last_node(yard->output);
 		last_output->next = last_stack;
 		last_stack->prev = last_output;
 	}
@@ -101,6 +109,7 @@ void	stack_to_output_end(t_shunting_yard *yard)
 		last_stack->prev = NULL;
 	}
 	last_stack->next = NULL;
+	return (1);
 }
 
 void	place_node(t_shunting_node *node, t_shunting_yard *yard)
@@ -109,39 +118,42 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 
 	if (!node)
 		return ;
-	printf("placing node: %c\n", node->value[0]);
 	if (*node->type == OPEN_PAREN)
 	{
 		if (!yard->stack)
+		{
 			yard->stack = node;
+			node->prev = NULL;
+			node->next = NULL;
+		}
 		else
-			append_node(yard->stack, node);
+		{
+			tmp = yard->stack;
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = node;
+			node->prev = tmp;
+			node->next = NULL;
+		}
 	}
-	else if (*node->type == CLOSE_PAREN) // it never gets inside this block
+	else if (*node->type == CLOSE_PAREN)
 	{
 		while (yard->stack && *yard->stack->type != OPEN_PAREN)
-			stack_to_output_end(yard);
-		if (!yard->stack)
-			printf("Error: Unbalanced parenthesis\n");
-		else if (yard->stack && *yard->stack->type == OPEN_PAREN)
+			if (!stack_to_output_end(yard))
+				break ;
+		tmp = get_last_node(yard->stack);
+		if (yard->stack && tmp && *tmp->type == OPEN_PAREN)
 		{
-			printf("found open paren in stack\n");
-			// del_last_node(&yard->stack);
-			if (!yard->stack->prev)
-			{
+			if (!tmp->prev)
 				yard->stack = NULL;
-				printf("stack is null\n");
-			}
 			else
 			{
-				tmp = yard->stack;
-				while (tmp->next)
-					tmp = tmp->next;
-				printf("end of stack: %s\n", tmp->value);
 				tmp->prev->next = NULL;
-				// unsafe af cuz the struct is flying around somewhere malloced
-			};
+			}
+			get_last_node(yard->stack);
 		}
+		else
+			printf("ERROR: Unbalanced Parens\n");
 	}
 	else if (*node->type != NONE)
 	{
@@ -149,14 +161,10 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 			yard->stack = node;
 		else
 		{
-			tmp = yard->stack;
-			while (tmp->next)
-				tmp = tmp->next;
-			while (tmp && *node->priority >= *tmp->priority) {
+			tmp = get_last_node(yard->stack);
+			while (tmp && *node->priority >= *tmp->priority)
+			{
 				stack_to_output_end(yard);
-				tmp = yard->stack;
-				while (tmp && tmp->next)
-					tmp = tmp->next;
 			}
 			if (tmp)
 				append_node(tmp, node);
@@ -186,7 +194,6 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	yard = shunting_yard_create(tokens);
 	if (!yard)
 		return (NULL);
-	print_all_stacks(yard);
 	while (yard->input)
 	{
 		node = get_first_input(yard);
