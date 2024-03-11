@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 19:28:26 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:19:53 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@
 # include <fcntl.h>
 # include <stdbool.h>
 
-# define PROMPT "🪄  \033[0;36mminishell \033[0;31m➜ \033[0;33m"
+# define PROMPT_SUCCESS "🟢 \033[0;36mminishell \033[0;31m➜ \033[0;33m"
+# define PROMPT_FAILURE "🔴 \033[0;36mminishell \033[0;31m➜ \033[0;33m"
+# define PROMPT_HELLO "👋 \033[0;36mminishell \033[0;31m➜ \033[0;33m"
 # define NONE 0
 # define PIPE 1
 # define OR 2
@@ -83,11 +85,13 @@ typedef struct s_shunting_node
 	char					**args;
 	int						*type;
 	int						*priority;
+	int						*fd;
+	int						*exit_status; // 0 = success, 1 = failure, -1 = not ran yet
 	struct s_shunting_node	*next;
 	struct s_shunting_node	*prev;
 }	t_shunting_node;
 
-typedef struct	s_shunting_yard
+typedef struct s_shunting_yard
 {
 	t_shunting_node			*input;
 	t_shunting_node			*output;
@@ -95,9 +99,9 @@ typedef struct	s_shunting_yard
 }	t_shunting_yard;
 
 // command hanling
-int			run_command(t_shell *shell, t_command *cmd);
-int			run_path_command(t_shell *shell, t_command *cmd);
-int			execute_commands(t_shell *shell, t_command *cmd1, t_command *cmd2);
+int			run_command(t_shell *shell, t_shunting_node *cmd);
+int			run_path_command(t_shell *shell, t_shunting_node *cmd);
+int			execute_commands(t_shunting_yard *yard, t_shell *shell);
 
 // old
 int			command_loop(t_shell *shell);
@@ -111,16 +115,16 @@ t_shunting_yard	*shunting_yard(char **tokens);
 void	print_all_stacks(t_shunting_yard *yard);
 
 // builtins
-int			ft_cd(t_command *cmd, t_shell *shell);
+int			ft_cd(t_shunting_node *cmd, t_shell *shell);
 int			pwd(void);
 int			ft_export(t_shell *shell);
 int			ft_unset(void);
 int			ft_env(t_shell *shell);
 int			ft_exit(t_shell *shell);
-int			ft_echo(t_command *cmd);
+int			ft_echo(t_shunting_node *cmd);
 
 // exec env commands
-int			run_env_command(t_shell *shell, t_command *cmd);
+int			run_env_command(t_shell *shell, t_shunting_node *cmd);
 
 //our commands
 int			display_history(void);
@@ -140,7 +144,7 @@ int			str_is_equal(char *str1, char *str2);
 char		*is_valid_input(char *line);
 
 // pipes
-int			run_pipe_cmd(t_command *cmd1, t_command *cmd2, t_shell *shell);
+int			run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell);
 
 char		**make_env_args(char *cmd, char **args);
 char		*get_env_path_to_cmd(t_shell *shell, char *cmd);

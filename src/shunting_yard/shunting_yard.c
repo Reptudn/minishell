@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/08 16:11:56 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 09:05:55 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_shunting_node	*get_first_input(t_shunting_yard *yard)
 {
 	t_shunting_node	*node;
 
+	if (!yard || !yard->input)
+		return (NULL);
 	node = yard->input;
 	yard->input = yard->input->next;
 	node->next = NULL;
@@ -165,6 +167,7 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 			while (tmp && *node->priority >= *tmp->priority)
 			{
 				stack_to_output_end(yard);
+				tmp = get_last_node(yard->stack);
 			}
 			if (tmp)
 				append_node(tmp, node);

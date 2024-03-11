@@ -6,13 +6,13 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:20:58 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 11:49:23 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:19:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	run_pipe_cmd(t_command *cmd1, t_command *cmd2, t_shell *shell)
+int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell)
 {
 	int		fd[2];
 	pid_t	pid;

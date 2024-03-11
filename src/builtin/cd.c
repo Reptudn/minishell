@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:21:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/16 15:04:00 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 09:52:08 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_cd(t_command *cmd, t_shell *shell)
+int	ft_cd(t_shunting_node *cmd, t_shell *shell)
 {
 	char	*new_path;
 
