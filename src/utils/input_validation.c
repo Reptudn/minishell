@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:22:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/20 13:02:04 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 12:34:13 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	get_quote_cout(char *str)
 char	*handle_missing(char *line, char missing)
 {
 	char	*tmp;
+	char	*temp;
 	char	*new_line;
 
 	if (ft_strchr(line, missing) != 0 && get_quote_cout(line) % 2 != 0)
@@ -41,11 +42,14 @@ char	*handle_missing(char *line, char missing)
 			if (!tmp)
 				return (0);
 			new_line = ft_strjoin(line, "\n");
-			new_line = ft_strjoin(new_line, tmp);
+			temp = new_line;
 			free(line);
+			new_line = ft_strjoin(temp, tmp);
+			free(temp);
 			if (!new_line)
 				return (0);
 			line = new_line;
+			free(tmp);
 		}
 	}
 	return (line);

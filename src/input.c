@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 11:57:40 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 12:44:15 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	command_loop(t_shell *shell)
 	char			**split_2;
 
 	line = readline(PROMPT_HELLO);
-	// line = readline(PROMPT); //hier liegt das Problem teste es mit NULL du wirst sehen fast keine leaks mehr
 	if (!line)
 		return (0);
 	status = -1;
@@ -43,7 +42,6 @@ int	command_loop(t_shell *shell)
 		line = is_valid_input(line);
 		if (!line)
 		{
-			free(line);
 			line = readline(PROMPT_FAILURE);
 			continue ;
 		}
@@ -65,7 +63,7 @@ int	command_loop(t_shell *shell)
 		yard = shunting_yard(split_2);
 		if (!yard)
 		{
-			printf("Shtunting yard failed\n");
+			printf("Shunting yard failed\n");
 			free_split(split_2);
 			free(line);
 			line = readline(PROMPT_FAILURE);
