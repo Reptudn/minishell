@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/20 10:39:35 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:18:57 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 // if that fails, it return error so that it counts as invalid command
 // FOR NOW it just prints takes the cmd without args (gotta fork later for 
 // env command with return value)
-int	run_env_command(t_shell *shell, t_command *cmd)
+int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 {
 	char	*cmd_path;
 	int		i;
@@ -114,7 +114,7 @@ int	run_env_command(t_shell *shell, t_command *cmd)
 		cmd_path = ft_strjoin(shell->env[i], "/");
 		if (!cmd_path)
 			return (0);
-		cmd_path = ft_strjoin(cmd_path, cmd->command);
+		cmd_path = ft_strjoin(cmd_path, cmd->value);
 		if (!cmd_path)
 		{
 			free(cmd_path);
@@ -122,7 +122,7 @@ int	run_env_command(t_shell *shell, t_command *cmd)
 		}
 		if (access(cmd_path, F_OK) == 0 && access(cmd_path, X_OK) == 0)
 		{
-			if (execute(cmd_path, cmd->args, cmd->command, shell) == 0)
+			if (execute(cmd_path, cmd->args, cmd->value, shell) == 0)
 				break ;
 			ran = 1;
 			break ;

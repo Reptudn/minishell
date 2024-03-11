@@ -6,7 +6,11 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/03/06 23:24:16 by jkauker          ###   ########.fr       */
+=======
 /*   Updated: 2024/03/11 10:21:19 by jkauker          ###   ########.fr       */
+>>>>>>> 0561abd691d02b948ef172efeee9764ad311dacd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +84,10 @@ t_command	*make_cmds(char *line, t_shell *shell, int i)
 		return (NULL);
 	}
 	free_split(split);
-	shunting_yard_create(split_2);
+	for (i = 0; split_2[i]; i++)
+		printf("token[%d] = %s\n", i, split_2[i]);
+	shunting_yard(split_2);
+	return (NULL);
 	current = malloc(sizeof(t_command));
 	if (!current)
 		return (free_split(split_2));
