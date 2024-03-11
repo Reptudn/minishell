@@ -6,34 +6,34 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/04 13:42:10 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:08:23 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
 #include "../../include/minishell.h"
 
-char *create_split_string(const char *str, int start, int len)
+char	*create_split_string(const char *str, int start, int len)
 {
-	char *result;
-	
+	char	*result;
+
 	result = (char *)malloc((len + 1) * sizeof(char));
 	ft_strncpy(result, &str[start], len);
 	result[len] = '\0';
 	return (result);
 }
 
-char *create_operator_string(const char *str, int len)
+char	*create_operator_string(const char *str, int len)
 {
-	char *result;
-	
+	char	*result;
+
 	result = malloc((len + 1) * sizeof(char));
 	ft_strncpy(result, &str[0], len);
 	result[len] = '\0';
-	return result;
+	return (result);
 }
 
-void update_indices(int *i, int *start, int len, int op_len)
+void	update_indices(int *i, int *start, int len, int op_len)
 {
 	if (op_len > 0)
 	{
@@ -49,17 +49,20 @@ void update_indices(int *i, int *start, int len, int op_len)
 		(*i)++;
 }
 
-void process_string(const char *str, char **result, int *res_i)
+void	process_string(const char *str, char **result, int *res_i)
 {
-	char *shell_op[] = {"||", "&&", "<<", "<", ">>", ">", " ", "(", ")"};
-	int i = 0;
-	int start = 0;
-	int op_len;
-	int len;
+	char	*shell_op[] = {"||", "&&", "<<", "<", ">>", ">", " ", "(", ")"};
+	int		i;
+	int		start;
+	int		op_len;
+	int		len;
 
+	i = 0;
+	start = 0;
 	while (str[i] != '\0')
 	{
-		op_len = is_shell_op((char *) &str[i], shell_op, sizeof(shell_op) / sizeof(shell_op[0]));
+		op_len = is_shell_op((char *) &str[i], shell_op,
+				sizeof(shell_op) / sizeof(shell_op[0]));
 		if (op_len > 0)
 			len = i - start;
 		else if (str[i + 1] == '\0')
@@ -80,17 +83,18 @@ void process_string(const char *str, char **result, int *res_i)
 	}
 }
 
-char **ft_split_shell(const char *str)
+char	**ft_split_shell(const char *str)
 {
-	char **temp;
-	int res_i = 0;
-	char **result;
+	char	**temp;
+	int		res_i;
+	char	**result;
 
+	res_i = 0;
 	temp = (char **)malloc((strlen(str) + 1) * sizeof(char *));
 	result = (char **)malloc((strlen(str) + 1) * sizeof(char *));
 	process_string(str, temp, &res_i);
 	temp[res_i] = NULL;
 	result = clean_data(temp, result);
 	free(temp);
-	return result;
+	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/26 09:56:59 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:21:17 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 int	command_loop(t_shell *shell)
 {
-	char		*line;
-	t_command	*commands;
+	char			*line;
+	t_command		*commands;
+	t_shunting_node	*shunting;
+	int				i;
 
 	line = readline(PROMPT);
-	// line = readline(PROMPT); //hier liegt das Problem teste es mit NULL du wirst sehen fast keine leaks mehr
 	if (!line)
 		return (0);
 	while (shell->run)
@@ -30,13 +31,13 @@ int	command_loop(t_shell *shell)
 			free(line);
 			line = readline(PROMPT);
 			if (!line)
-				break;
+				break ;
 			continue ;
 		}
 		printf("%s", COLOR_RESET);
 		if (ft_strlen(line) > 0)
 			add_history(line);
-		commands = make_cmds(line, shell);
+		commands = make_cmds(line, shell, i);
 		if (!commands)
 		{
 			printf("cmd failed\n");
@@ -54,7 +55,7 @@ int	command_loop(t_shell *shell)
 			break ;
 		line = readline(PROMPT);
 		if (!line)
-			break;
+			break ;
 	}
 	clear_history();
 	if (line)

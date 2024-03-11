@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 08:56:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/05 14:46:11 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:06:59 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 char	*ft_strncpy(char *dest, const char *src, size_t n)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < n && src[i])
@@ -31,12 +31,12 @@ char	*ft_strncpy(char *dest, const char *src, size_t n)
 	return (dest);
 }
 
-int is_shell_op(char *str, char *shell_op[], int size)
+int	is_shell_op(char *str, char *shell_op[], int size)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (i < size) 
+	while (i < size)
 	{
 		if (ft_strncmp(str, shell_op[i], ft_strlen(shell_op[i])) == 0)
 			return (ft_strlen(shell_op[i]));
@@ -45,10 +45,10 @@ int is_shell_op(char *str, char *shell_op[], int size)
 	return (0);
 }
 
-char	**clean_data(char **temp, char ** result)
+char	**clean_data(char **temp, char **result)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
