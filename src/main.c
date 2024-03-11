@@ -6,7 +6,11 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/06 18:38:08 by jkauker          ###   ########.fr       */
+=======
+/*   Updated: 2024/03/11 09:14:08 by jkauker          ###   ########.fr       */
+>>>>>>> 0561abd691d02b948ef172efeee9764ad311dacd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +19,29 @@
 void	print_start_logo(t_shell *shell)
 {
 	printf("\033[H\033[J%s%s", COLOR_BG_GREEN, COLOR_MAGENTA);
-	printf(" __    __     __     __   __     __     ______     __  __     ______     __         __ \n");
-	printf("/\\ '-./  \\   /\\ \\   /\\ '-.\\ \\   /\\ \\   /\\  ___\\   /\\ \\_\\ \\   /\\  ___\\   /\\ \\       /\\ \\       \n");
-	printf("\\ \\ \\-./\\ \\  \\ \\ \\  \\ \\ \\-.  \\  \\ \\ \\  \\ \\___  \\  \\ \\  __ \\  \\ \\  __\\   \\ \\ \\____  \\ \\ \\____  \n");
-	printf(" \\ \\_\\ \\ \\_\\  \\ \\_\\  \\ \\_\\\\'\\_\\  \\ \\_\\  \\/\\_____\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_____\\  \\ \\_____\\ \n");
-	printf("  \\/_/  \\/_/   \\/_/   \\/_/ \\/_/   \\/_/   \\/_____/   \\/_/\\/_/   \\/_____/   \\/_____/   \\/_____/ \n\n");
-	printf("                                 by %s\033]8;;https://profile.intra.42.fr/users/jkauker\ajkauker\033]8;;\a%s and %s\033]8;;https://profile.intra.42.fr/users/nsabia\ansabia\033]8;;\a%s\n\n", COLOR_RED, COLOR_MAGENTA, COLOR_RED, COLOR_RESET);
+	printf(" __    __     __     __   __     __     "
+		"______     __  __     ______     __         __ \n");
+	printf("/\\ '-./  \\   /\\ \\   /\\ '-.\\ \\   /"
+		"\\ \\   /\\  ___\\   /\\ \\_\\ \\   /\\  ___\\   /\\ \\"
+		"       /\\ \\       \n");
+	printf("\\ \\ \\-./\\ \\  \\ \\ \\  \\ \\ \\-.  "
+		"\\  \\ \\ \\  \\ \\___  \\  \\ \\  __ \\  \\ \\  __\\   "
+		"\\ \\ \\____  \\ \\ \\____  \n");
+	printf(" \\ \\_\\ \\ \\_\\  \\ \\_\\  \\ \\_\\\\'"
+		"\\_\\  \\ \\_\\  \\/\\_____\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\ "
+		"\\_____\\  \\ \\_____\\ \n");
+	printf("  \\/_/  \\/_/   \\/_/   \\/_/ \\/_/   "
+		"\\/_/   \\/_____/   \\/_/\\/_/   \\/_____/   \\/_____/   "
+		"\\/_____/ \n\n");
+	printf("                                 "
+		"by %s\033]8;;https://profile.intra.42.fr/users/jkauker\ajkauker\033]8;"
+		";\a%s and"
+		"%s\033]8;;https://profile.intra.42.fr/users/nsabia\ansabia\033]8;"
+		";\a%s\n\n",
+		COLOR_RED, COLOR_MAGENTA, COLOR_RED, COLOR_RESET);
 	printf("%s", COLOR_RESET);
-	printf("\n%sWelcome %s✨ %s ✨%s\n\n", COLOR_MAGENTA, COLOR_GREEN , getenv("USER"), COLOR_RESET);
+	printf("\n%sWelcome %s✨ %s ✨%s\n\n", COLOR_MAGENTA, COLOR_GREEN,
+		getenv("USER"), COLOR_RESET);
 }
 
 char	**get_env(void)

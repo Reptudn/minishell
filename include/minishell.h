@@ -6,7 +6,11 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/11 10:19:53 by jkauker          ###   ########.fr       */
+=======
+/*   Updated: 2024/03/11 10:21:10 by jkauker          ###   ########.fr       */
+>>>>>>> 0561abd691d02b948ef172efeee9764ad311dacd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +139,7 @@ void		print_invalid_cmd(char *command);
 char		**ft_split_shell(const char *str);
 t_command	*free_split(char **split);
 int			is_operator(char *str);
-t_command	*make_cmds(char *line, t_shell *shell);
+t_command	*make_cmds(char *line, t_shell *shell, int i);
 char		**filter_variables(char **split, t_shell *shell);
 void		free_cmds(t_command *cmds);
 void		free_cmds_helper(t_variable *cmds);

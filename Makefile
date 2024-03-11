@@ -1,6 +1,6 @@
 NAME	:= minishell
 
-CFLAGS	:= -Wextra -Wall -gdwarf-4 -g
+CFLAGS	:= -Wextra -Wall #-Werror
 
 HEADERS	:= -I ./include
 

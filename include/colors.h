@@ -6,14 +6,12 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:49:40 by jkauker           #+#    #+#             */
-/*   Updated: 2024/01/29 11:58:07 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 08:57:20 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLORS_H
 # define COLORS_H
-
-// https://www.codeproject.com/Articles/5329247/How-to-Change-Text-Color-in-a-Linux-Terminal
 
 // Foreground colors
 # define COLOR_BLACK "\033[0;30m"

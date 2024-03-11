@@ -6,7 +6,11 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:17:34 by jkauker           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/06 23:24:16 by jkauker          ###   ########.fr       */
+=======
+/*   Updated: 2024/03/11 10:21:19 by jkauker          ###   ########.fr       */
+>>>>>>> 0561abd691d02b948ef172efeee9764ad311dacd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +18,9 @@
 
 t_shunting_yard	*shunting_yard_create(char	**tokens);
 
-int allocate_cmd(t_command *cmd, char **split, int i)
+int	allocate_cmd(t_command *cmd, char **split, int i)
 {
-	int arg_count;
+	int	arg_count;
 
 	arg_count = 0;
 	cmd->command = ft_strdup(split[i]);
@@ -38,7 +42,7 @@ int allocate_cmd(t_command *cmd, char **split, int i)
 		cmd->args[arg_count] = ft_strdup(split[i]);
 		if (!cmd->args[arg_count])
 		{
-			while(arg_count > 0)
+			while (arg_count > 0)
 				free(cmd->args[--arg_count]);
 			free(cmd->args);
 			break ;
@@ -59,11 +63,10 @@ int allocate_cmd(t_command *cmd, char **split, int i)
 	return (i);
 }
 
-t_command	*make_cmds(char *line, t_shell *shell)
+t_command	*make_cmds(char *line, t_shell *shell, int i)
 {
 	char		**split;
 	char		**split_2;
-	int			i;
 	t_command	*current;
 	t_command	*new_cmd;
 	t_command	*prev;
@@ -112,4 +115,3 @@ t_command	*make_cmds(char *line, t_shell *shell)
 	free_split(split_2);
 	return (current);
 }
-
