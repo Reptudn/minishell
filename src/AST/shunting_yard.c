@@ -6,12 +6,13 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:40:50 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 15:47:51 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:07:53 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/*
 void	print_shunting_node(t_shunting_node *node, int a)
 {
 	if (!node)
@@ -19,13 +20,16 @@ void	print_shunting_node(t_shunting_node *node, int a)
 	printf("-- Node: %d\n", a);
 	printf("value: %s\n", node->value);
 	printf("args:\n");
-	if (node->args && node->args[0]) for (int i = 0; node->args[i]; i++) printf("  %s\n", node->args[i]);
+	if (node->args && node->args[0]) for (int i = 0; node->args[i]; i++)
+		printf("  %s\n", node->args[i]);
 	else printf("  NULL\n");
 	printf("type: %d\n", *node->type);
 	printf("priority: %d\n", *node->priority);
 	printf("----------\n");
 	print_shunting_node(node->next, ++a);
 }
+*/
+
 
 t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 {
@@ -64,6 +68,11 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	return (node);
 }
 
+/*
+	nicht vergesse ueber return noch
+	// print_shunting_node(yard->output, 0); hinzuzufuegen
+*/
+
 t_shunting_yard	*shunting_yard_create(char	**tokens)
 {
 	t_shunting_yard	*yard;
@@ -91,6 +100,5 @@ t_shunting_yard	*shunting_yard_create(char	**tokens)
 	while (yard->output->prev)
 		yard->output = yard->output->prev;
 	yard->stack = NULL;
-	print_shunting_node(yard->output, 0);
 	return (yard);
 }

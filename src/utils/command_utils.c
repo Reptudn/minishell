@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:41:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 15:29:23 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 09:37:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ int	str_is_equal(char *str1, char *str2)
 	return (1);
 }
 
-int	is_env_command(t_shell *shell, char *str)
+int	is_env_command(t_shell *shell, char *str, int i)
 {
-	int		i;
 	char	*cmd_path;
 	char	*tmp;
 
@@ -86,6 +85,8 @@ int	is_env_command(t_shell *shell, char *str)
 
 int	is_command(char *str, t_shell *shell)
 {
+	int	i;
+
 	if (str_is_equal("echo", str) == 1)
 		return (1);
 	if (str_is_equal("pwd", str) == 1)
@@ -104,7 +105,7 @@ int	is_command(char *str, t_shell *shell)
 		return (1);
 	if (str_is_equal("exit", str) == 1)
 		return (1);
-	if (is_env_command(shell, str) == 1)
+	if (is_env_command(shell, str, i) == 1)
 		return (1);
 	return (0);
 }

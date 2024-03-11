@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:07:17 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/20 13:02:33 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:21:21 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,5 @@ char	**filter_variables(char **split, t_shell *shell)
 		i++;
 	}
 	result = clean_data(split, test);
-	// for (i = 0; result[i] != NULL; i++)
-	// 	printf("(makecmds) result[%d] = %s\n", i, result[i]);
 	return (result);
 }
