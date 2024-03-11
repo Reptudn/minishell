@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:35:51 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/16 10:07:22 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 11:06:17 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 int	ft_clear(void)
 {
 	printf("\033[H\033[J");
-	return (1);
+	return (CMD_SUCCESS);
 }
