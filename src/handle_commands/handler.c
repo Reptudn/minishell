@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 10:34:49 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 16:29:42 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,10 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 	int				operator_count;
 	int				index;
 
-	printf("Executing commands\n");
 	index = -1;
 	if (!yard || !yard->output || !shell)
 		return (CMD_FAILURE);
 	operator_count = get_operator_count(yard->output);
-	printf("Operator count: %d\n", operator_count);
 	if (operator_count == 0)
 		return (run_command(shell, yard->output));
 	if (operator_count != get_command_count(yard->output) - 1)

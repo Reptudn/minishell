@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 11:57:33 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 16:28:44 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_start_logo(t_shell *shell)
 		"\\/_____/ \n\n");
 	printf("                                 "
 		"by %s\033]8;;https://profile.intra.42.fr/users/jkauker\ajkauker\033]8;"
-		";\a%s and"
+		";\a%s and "
 		"%s\033]8;;https://profile.intra.42.fr/users/nsabia\ansabia\033]8;"
 		";\a%s\n\n",
 		COLOR_RED, COLOR_MAGENTA, COLOR_RED, COLOR_RESET);

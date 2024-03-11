@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:32:55 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 09:54:01 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:06:00 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	run_path_command(t_shell *shell, t_shunting_node *cmd)
 {
 	if (access(cmd->value, F_OK) != 0)
 	{
-		printf("minishell: %s: No such file or directory\n", cmd->value);
+		// printf("minishell: %s: No such file or directory\n", cmd->value);
 		return (CMD_FAILURE);
 	}
 	if (access(cmd->value, X_OK) != 0)
