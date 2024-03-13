@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 08:57:43 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 09:39:14 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/13 11:02:39 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	signal_handler(int signum)
 {
 	if (signum == SIGTERM)
 	{
-		exit(0);
+		*g_run = false;
+		return ;
 	}
 	if (signum == SIGINT)
 	{
