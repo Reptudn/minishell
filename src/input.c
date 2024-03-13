@@ -76,7 +76,6 @@ int	command_loop(t_shell *shell)
 			status = CMD_FAILURE;
 		else
 			status = CMD_SUCCESS;
-		// free the shunting yard
 		free_split(split_2);
 		free(line);
 		line = NULL;

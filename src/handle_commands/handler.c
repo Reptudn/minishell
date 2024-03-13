@@ -131,8 +131,8 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 		cmd1 = cmd2->prev;
 		if (!cmd1)
 			return (CMD_FAILURE);
-		printf("Running: %s and ", cmd1->value);
-		printf("%s with %s\n", cmd2->value, operator->value);
+		// printf("Running: %s and ", cmd1->value);
+		// printf("%s with %s\n", cmd2->value, operator->value);
 		if (execution_manager(cmd1, cmd2, *operator->type, shell) == CMD_FAILURE)
 			return (CMD_FAILURE);
 	}

@@ -152,7 +152,7 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 			{
 				tmp->prev->next = NULL;
 			}
-			get_last_node(yard->stack);
+			tmp = get_last_node(yard->stack);
 		}
 		else
 			printf("ERROR: Unbalanced Parens\n");
@@ -207,6 +207,6 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	}
 	while (yard->stack)
 		stack_to_output_end(yard);
-	// print_all_stacks(yard);
+	print_all_stacks(yard);
 	return (yard);
 }

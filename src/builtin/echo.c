@@ -17,6 +17,8 @@ int	ft_echo(t_shunting_node *cmd)
 	int	i;
 
 	i = -1;
+	if (!cmd)
+		return (CMD_FAILURE);
 	if (ft_strncmp(cmd->value, "echo", ft_strlen(cmd->value)) != 0)
 		return (1);
 	while (cmd->args[++i])
@@ -24,8 +26,7 @@ int	ft_echo(t_shunting_node *cmd)
 		printf("%s", cmd->args[i]);
 		if (cmd->args[i + 1])
 			printf(" ");
-		i++;
 	}
 	printf("\n");
-	return (0);
+	return (CMD_SUCCESS);
 }
