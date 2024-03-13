@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:40:50 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/13 10:21:00 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:50:06 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	if (is_operator(tokens[0]) != NONE)
 	{
 		node->value = ft_strdup(tokens[0]);
+		printf("im here");
 		node->args = NULL;
 		node->next = NULL;
 		node->prev = NULL;
@@ -67,6 +68,7 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	}
 	i = 0;
 	node->value = ft_strdup(tokens[i++]);
+	printf("im down here");
 	while (tokens[i] && is_operator(tokens[i]) == NONE)
 		i++;
 	node->args = malloc(sizeof(char *) * i);

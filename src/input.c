@@ -6,23 +6,29 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/13 11:08:04 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:53:54 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
 void	shunting_yard_destroy(t_shunting_yard *yard)
 {
 	t_shunting_node	*node;
 	t_shunting_node	*next_node;
+	int				i;
 
 	node = yard->output;
+	i = 0;
 	while (node)
 	{
 		free(node->value);
-		free_split(node->args);
+		while (node->args[i])
+		{
+			free(node->args[i]);
+			i++;
+		}
+		free(node->args);
 		free(node->type);
 		free(node->priority);
 		free(node->fd);

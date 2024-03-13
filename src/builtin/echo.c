@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:36:09 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 09:53:00 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/13 11:15:17 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_echo(t_shunting_node *cmd)
 		printf("%s", cmd->args[i]);
 		if (cmd->args[i + 1])
 			printf(" ");
-		i++;
 	}
 	printf("\n");
 	return (0);
