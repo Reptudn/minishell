@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 11:57:40 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/13 15:03:44 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	command_loop(t_shell *shell)
 		{
 			free(line);
 			line = readline(PROMPT_FAILURE);
+			status = CMD_FAILURE;
 			continue ;
 		}
 		split = ft_split_shell(line);
@@ -52,6 +53,7 @@ int	command_loop(t_shell *shell)
 		{
 			free(line);
 			line = readline(PROMPT_FAILURE);
+			status = CMD_FAILURE;
 			continue ;
 		}
 		split_2 = filter_variables(split, shell);
@@ -59,6 +61,7 @@ int	command_loop(t_shell *shell)
 		{
 			free_split(split);
 			free(line);
+			status = CMD_FAILURE;
 			line = readline(PROMPT_FAILURE);
 		}
 		free_split(split);
@@ -69,6 +72,7 @@ int	command_loop(t_shell *shell)
 			free_split(split_2);
 			free(line);
 			line = readline(PROMPT_FAILURE);
+			status = CMD_FAILURE;
 			continue ;
 		}
 		printf("%s", COLOR_YELLOW);

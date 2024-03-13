@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/13 11:17:25 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/13 14:56:35 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 	int				operator_count;
 	int				index;
 
+	printf("Executing commands\n");
 	index = -1;
 	if (!yard || !yard->output || !shell)
 		return (CMD_FAILURE);

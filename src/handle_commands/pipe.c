@@ -20,10 +20,10 @@ int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell)
 
 	status = CMD_SUCCESS;
 	if (pipe(fd) == -1)
-		return (0);
+		return (CMD_FAILURE);
 	pid = fork();
 	if (pid < 0)
-		return (0);
+		return (CMD_FAILURE);
 	else if (pid == 0)
 	{
 		dup2(fd[1], 1);
