@@ -6,11 +6,33 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 12:44:15 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/13 10:47:45 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+
+void	shunting_yard_destroy(t_shunting_yard *yard)
+{
+	t_shunting_node	*node;
+	t_shunting_node	*next_node;
+
+	node = yard->output;
+	while (node)
+	{
+		free(node->value);
+		free_split(node->args);
+		free(node->type);
+		free(node->priority);
+		free(node->fd);
+		free(node->exit_status);
+		next_node = node->next;
+		free(node);
+		node = next_node;
+	}
+	free(yard);
+}
 
 int	command_loop(t_shell *shell)
 {
@@ -73,7 +95,7 @@ int	command_loop(t_shell *shell)
 			status = CMD_FAILURE;
 		else
 			status = CMD_SUCCESS;
-		// free the shunting yard
+		shunting_yard_destroy(yard);
 		free_split(split_2);
 		free(line);
 		line = NULL;

@@ -1,0 +1,2 @@
+==6514==    definitely lost: 114 bytes in 4 blocks
+==6514==    indirectly lost: 107 bytes in 8 blocks
