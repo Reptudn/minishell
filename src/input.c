@@ -71,6 +71,7 @@ int	command_loop(t_shell *shell)
 			line = readline(PROMPT_FAILURE);
 			continue ;
 		}
+		printf("%s", COLOR_YELLOW);
 		if (execute_commands(yard, shell) == CMD_FAILURE)
 			status = CMD_FAILURE;
 		else

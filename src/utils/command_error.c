@@ -18,8 +18,13 @@ void	print_invalid_cmd(char *command)
 	int		i;
 
 	args = ft_split(command, ' ');
+	if (!args)
+	{
+		printf("%sminishell: command not found\n%s", COLOR_RED, COLOR_RESET);
+		return ;
+	}
 	i = -1;
-	printf("%scommand not found: %s%s\n%s", COLOR_RED,
+	printf("%sminishell: command not found: %s%s\n%s", COLOR_RED,
 		COLOR_MAGENTA, args[0], COLOR_RESET);
 	while (args[++i])
 		free(args[i]);

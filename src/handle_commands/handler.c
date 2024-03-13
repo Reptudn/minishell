@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 16:29:42 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/13 11:17:25 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,16 @@ int	get_command_count(t_shunting_node *nodes)
 
 t_shunting_node	*get_operator_with_index(t_shunting_node *nodes, int index)
 {
-	int	total;
-
-	total = get_operator_count(nodes);
-	if (index < 0 || index >= total)
+	if (index < 1 || index > get_operator_count(nodes))
 		return (NULL);
 	while (nodes)
 	{
 		if (*nodes->type != NONE)
 		{
-			if (!index)
+			if (index == 1)
+			{
 				return (nodes);
+			}
 			index--;
 		}
 		nodes = nodes->next;
@@ -89,15 +88,15 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 {
 	if (!cmd1 || !cmd2 || !shell)
 		return (CMD_FAILURE);
-	if (operator == OR && run_or(shell, cmd1, cmd2))
+	if (operator == OR && run_or(shell, cmd1, cmd2) == CMD_FAILURE)
 		return (CMD_FAILURE);
-	else if (operator == AND && run_and(shell, cmd1, cmd2))
+	else if (operator == AND && run_and(shell, cmd1, cmd2) == CMD_FAILURE)
 		return (CMD_FAILURE);
-	else if (operator == PIPE && run_pipe_cmd(cmd1, cmd2, shell))
+	else if (operator == PIPE && run_pipe_cmd(cmd1, cmd2, shell) == CMD_FAILURE)
 		return (CMD_FAILURE);
-	else if (operator == REDIRECT_IN && redirect_in(cmd1, shell))
+	else if (operator == REDIRECT_IN && redirect_in(cmd1, shell) == CMD_FAILURE)
 		return (CMD_FAILURE);
-	else if (operator == REDIRECT_OUT && redirect_out(cmd1, shell))
+	else if (operator == REDIRECT_OUT && redirect_out(cmd1, shell) == CMD_FAILURE)
 		return (CMD_FAILURE);
 	return (CMD_SUCCESS);
 }
@@ -123,17 +122,18 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 	}
 	while (++index < operator_count) // this aint working yet
 	{
-		printf("Try executing (%d)\n", index);
-		operator = get_operator_with_index(yard->output, index);
+		operator = get_operator_with_index(yard->output, index + 1);
 		if (!operator)
 			return (CMD_FAILURE);
-		cmd1 = operator->prev;
-		if (!cmd1)
-			return (CMD_FAILURE);
-		cmd2 = cmd1->prev;
+		cmd2 = operator->prev;
 		if (!cmd2)
 			return (CMD_FAILURE);
-		if (!execution_manager(cmd1, cmd2, *operator->type, shell))
+		cmd1 = cmd2->prev;
+		if (!cmd1)
+			return (CMD_FAILURE);
+		printf("Running: %s and ", cmd1->value);
+		printf("%s with %s\n", cmd2->value, operator->value);
+		if (execution_manager(cmd1, cmd2, *operator->type, shell) == CMD_FAILURE)
 			return (CMD_FAILURE);
 	}
 	// free_shunting_yard(yard);
