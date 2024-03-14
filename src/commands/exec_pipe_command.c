@@ -19,7 +19,7 @@ int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell)
 	char	*cmd_path;
 	char	*cmd_path2;
 
-	printf("running pipe\n");
+	// printf("running pipe\n");
 	if (pipe(fd) == -1)
 		return (0);
 	pid = fork();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shunting_yard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/13 13:49:41 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:18:55 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 			{
 				tmp->prev->next = NULL;
 			}
-			get_last_node(yard->stack);
+			tmp = get_last_node(yard->stack);
 		}
 		else
 			printf("ERROR: Unbalanced Parens\n");

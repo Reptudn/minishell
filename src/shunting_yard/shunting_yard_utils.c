@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:40:50 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/13 13:50:06 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:05:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,20 @@ void	print_shunting_node(t_shunting_node *node, int a)
 	}
 	printf("-- Node: %d\n", a);
 	printf("value: %s\n", node->value);
-	// printf("args:\n");
-	// if (node->args && node->args[0])
-	// 	while (node->args[++i] && node->args[0])
-	// 		printf("  %s\n", node->args[i]);
-	// else
-	// 	printf("  NULL\n");
-	printf("type: %d\n", node->type ? *node->type : -1);
-	printf("priority: %d\n", node->priority ? *node->priority : -1);
+	printf("args:\n");
+	if (node->args && node->args[0])
+		while (node->args[++i] && node->args[0])
+			printf("  %s\n", node->args[i]);
+	else
+		printf("  NULL\n");
+	if (node->type)
+		printf("type: %d\n", *node->type);
+	else
+		printf("type: -1\n");
+	if (node->priority)
+		printf("priority: %d\n", *node->priority);
+	else
+		printf("priority: -1\n");
 	printf("----------\n");
 	print_shunting_node(node->next, ++a);
 }
@@ -71,7 +77,7 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	printf("im down here");
 	while (tokens[i] && is_operator(tokens[i]) == NONE)
 		i++;
-	node->args = malloc(sizeof(char *) * i);
+	node->args = malloc(sizeof(char *) * i - 1);
 	node->args[i - 1] = NULL;
 	*step += i;
 	while (--i > 0)

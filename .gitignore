@@ -5,3 +5,5 @@
 .obsidian/
 /obj
 minishell
+minishell.dSYM
+*.py
