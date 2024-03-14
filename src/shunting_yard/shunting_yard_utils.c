@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:40:50 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 17:05:16 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/14 09:19:22 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	if (is_operator(tokens[0]) != NONE)
 	{
 		node->value = ft_strdup(tokens[0]);
-		printf("im here");
 		node->args = NULL;
 		node->next = NULL;
 		node->prev = NULL;
@@ -74,7 +73,6 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	}
 	i = 0;
 	node->value = ft_strdup(tokens[i++]);
-	printf("im down here");
 	while (tokens[i] && is_operator(tokens[i]) == NONE)
 		i++;
 	node->args = malloc(sizeof(char *) * i - 1);
@@ -86,11 +84,6 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	node->prev = NULL;
 	return (node);
 }
-
-/*
-	nicht vergesse ueber return noch
-	// print_shunting_node(yard->output, 0); hinzuzufuegen
-*/
 
 t_shunting_yard	*shunting_yard_create(char	**tokens)
 {
