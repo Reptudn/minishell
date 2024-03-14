@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 09:05:55 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/14 09:48:59 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 			{
 				tmp->prev->next = NULL;
 			}
-			get_last_node(yard->stack);
+			tmp = get_last_node(yard->stack);
 		}
 		else
 			printf("ERROR: Unbalanced Parens\n");

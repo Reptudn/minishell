@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:40:50 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/14 09:14:43 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/14 09:48:45 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,20 @@ void	print_shunting_node(t_shunting_node *node, int a)
 	}
 	printf("-- Node: %d\n", a);
 	printf("value: %s\n", node->value);
-	// printf("args:\n");
-	// if (node->args && node->args[0])
-	// 	while (node->args[++i] && node->args[0])
-	// 		printf("  %s\n", node->args[i]);
-	// else
-	// 	printf("  NULL\n");
-	printf("type: %d\n", node->type ? *node->type : -1);
-	printf("priority: %d\n", node->priority ? *node->priority : -1);
+	printf("args:\n");
+	if (node->args && node->args[0])
+		while (node->args[++i] && node->args[0])
+			printf("  %s\n", node->args[i]);
+	else
+		printf("  NULL\n");
+	if (node->type)
+		printf("type: %d\n", *node->type);
+	else
+		printf("type: -1\n");
+	if (node->priority)
+		printf("priority: %d\n", *node->priority);
+	else
+		printf("priority: -1\n");
 	printf("----------\n");
 	print_shunting_node(node->next, ++a);
 }
@@ -69,8 +75,8 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	node->value = ft_strdup(tokens[i++]);
 	while (tokens[i] && is_operator(tokens[i]) == NONE)
 		i++;
-	node->args = malloc(sizeof(char *) * i - 1);
-	node->args[i] = NULL;
+	node->args = malloc(sizeof(char *) * i);
+	node->args[i - 1] = NULL;
 	*step += i;
 	while (--i > 0)
 		node->args[i - 1] = ft_strdup(tokens[i]);
@@ -78,11 +84,6 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	node->prev = NULL;
 	return (node);
 }
-
-/*
-	nicht vergesse ueber return noch
-	// print_shunting_node(yard->output, 0); hinzuzufuegen
-*/
 
 t_shunting_yard	*shunting_yard_create(char	**tokens)
 {
@@ -92,6 +93,11 @@ t_shunting_yard	*shunting_yard_create(char	**tokens)
 
 	step = 0;
 	yard = (t_shunting_yard *)malloc(sizeof(t_shunting_yard));
+	if (!yard || !tokens || !*tokens)
+		return (NULL);
+	yard->output = NULL;
+	yard->stack = NULL;
+	yard->input = NULL;
 	if (!yard || !tokens || !*tokens)
 		return (NULL);
 	while (tokens + step)

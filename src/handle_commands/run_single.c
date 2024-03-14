@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_single.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:27:22 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 10:32:54 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/13 14:59:18 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 {
 	int	status;
 
-	printf("run_command\n");
 	if (!cmd || !shell)
 		return (CMD_FAILURE);
-	printf("run_command2\n");
 	status = CMD_SUCCESS;
 	if (str_is_equal(cmd->value, "history"))
 		display_history();
