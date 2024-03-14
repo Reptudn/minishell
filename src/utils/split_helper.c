@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 08:56:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 10:06:59 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/13 10:20:05 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char	**clean_data(char **temp, char **result)
 			result[j] = ft_strdup(temp[i]);
 			j++;
 		}
+		free(temp[i]);
+		temp[i] = NULL;
 		i++;
 	}
 	result[j] = NULL;

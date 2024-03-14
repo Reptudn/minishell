@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 11:57:40 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:53:54 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	shunting_yard_destroy(t_shunting_yard *yard)
+{
+	t_shunting_node	*node;
+	t_shunting_node	*next_node;
+	int				i;
+
+	node = yard->output;
+	i = 0;
+	while (node)
+	{
+		free(node->value);
+		while (node->args[i])
+		{
+			free(node->args[i]);
+			i++;
+		}
+		free(node->args);
+		free(node->type);
+		free(node->priority);
+		free(node->fd);
+		free(node->exit_status);
+		next_node = node->next;
+		free(node);
+		node = next_node;
+	}
+	free(yard);
+}
 
 int	command_loop(t_shell *shell)
 {
@@ -21,7 +49,6 @@ int	command_loop(t_shell *shell)
 	char			**split_2;
 
 	line = readline(PROMPT_HELLO);
-	// line = readline(PROMPT); //hier liegt das Problem teste es mit NULL du wirst sehen fast keine leaks mehr
 	if (!line)
 		return (0);
 	status = -1;
@@ -43,7 +70,6 @@ int	command_loop(t_shell *shell)
 		line = is_valid_input(line);
 		if (!line)
 		{
-			free(line);
 			line = readline(PROMPT_FAILURE);
 			continue ;
 		}
@@ -65,7 +91,7 @@ int	command_loop(t_shell *shell)
 		yard = shunting_yard(split_2);
 		if (!yard)
 		{
-			printf("Shtunting yard failed\n");
+			printf("Shunting yard failed\n");
 			free_split(split_2);
 			free(line);
 			line = readline(PROMPT_FAILURE);
@@ -75,7 +101,7 @@ int	command_loop(t_shell *shell)
 			status = CMD_FAILURE;
 		else
 			status = CMD_SUCCESS;
-		// free the shunting yard
+		shunting_yard_destroy(yard);
 		free_split(split_2);
 		free(line);
 		line = NULL;
