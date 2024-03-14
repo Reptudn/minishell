@@ -6,13 +6,13 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:22:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 12:34:13 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/14 10:36:24 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	get_quote_cout(char *str)
+int	get_quote_cout(char *str, char quote)
 {
 	int	quote_count;
 	int	i;
@@ -21,7 +21,7 @@ int	get_quote_cout(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '"')
+		if (str[i] == quote)
 			quote_count++;
 		i++;
 	}
@@ -34,9 +34,9 @@ char	*handle_missing(char *line, char missing)
 	char	*temp;
 	char	*new_line;
 
-	if (ft_strchr(line, missing) != 0 && get_quote_cout(line) % 2 != 0)
+	if (ft_strchr(line, missing) != 0 && get_quote_cout(line, missing) % 2 != 0)
 	{
-		while (get_quote_cout(line) % 2 != 0)
+		while (get_quote_cout(line, missing) % 2 != 0)
 		{
 			tmp = readline("\033[0;31mquote> \033[0m");
 			if (!tmp)
@@ -58,6 +58,9 @@ char	*handle_missing(char *line, char missing)
 char	*is_valid_input(char *line)
 {
 	line = handle_missing(line, '"');
+	if (!line)
+		return (0);
+	line = handle_missing(line, '\'');
 	if (!line)
 		return (0);
 	return (line);

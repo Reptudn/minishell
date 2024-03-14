@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:36:09 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/14 09:47:05 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/14 10:33:21 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,26 @@
 int	ft_echo(t_shunting_node *cmd)
 {
 	int	i;
+	int	nl;
 
 	i = -1;
+	nl = 1;
 	if (!cmd)
 		return (CMD_FAILURE);
 	if (ft_strncmp(cmd->value, "echo", ft_strlen(cmd->value)) != 0)
 		return (1);
+	if (str_is_equal(cmd->args[0], "-n"))
+	{
+		nl = 0;
+		i++;
+	}
 	while (cmd->args[++i])
 	{
 		printf("%s", cmd->args[i]);
 		if (cmd->args[i + 1])
 			printf(" ");
 	}
-	printf("\n");
+	if (nl)
+		printf("\n");
 	return (CMD_SUCCESS);
 }

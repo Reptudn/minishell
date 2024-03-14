@@ -31,41 +31,18 @@ Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von
 		#define REDIRECT_OUT 5 ( > )
 		#define REDIRECT_OUT_APPEND 6 ( >> )
 		#define REDIRECT_IN_DELIMITER 7 ( << )
-
-		typedef struct s_variable
-		{
-			char				*name;
-			char				*value;
-			struct s_variable	*next;
-			struct s_variable	*prev;
-		}			t_variable;
-
-		typedef struct s_shell
-		{
-			bool		run;
-			char		*path;
-			char		**env;
-			char		**envp;
-			t_variable	*variables;
-		}			t_shell;
-
-		typedef struct s_command
-		{
-			char				*command;
-			char				**args;
-			int					*operator_type;
-			int					priority;
-			struct s_command	*next;
-			struct s_command	*prev;
-			t_shell				*shell;
-		}			t_command;
 		```
-	- [x]  ft_split
-		- split after operator
-		- if no quote found let the user finish it
-	- [x] malloc for struct and when splitting just copy the content from old split pointer into the new struct pointer then free the split so that all thats malloc after parsing is the pointers in the struct
-        - [x] filter out the arguments and put them into the argument linked list
 
+# ToDo
+## Mandartory
+- [ ] Handle single and double quotes that all that is inside them is one argv
+- [ ] Redirections ( > <  >> << )
+- [ ] Make Pipes and redirections not stop the parent process aka the actual minishell
+- [ ] Env variables (with $ and unset function which removes one of them)
+- [ ] cd work with `cd -` which is the same as `cd ..`?
+- [ ] Command handler and reverse runnign the shunting yard algo (probably insert smaller node after execution of three nodes)
+## Bonus
+- [ ] wildcards ( aka * for directories)
 
 # Components
 ## Command Handler
