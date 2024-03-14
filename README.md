@@ -36,6 +36,7 @@ Die Ausführung kann auch die Ausgabe von Text auf dem Bildschirm, das Lesen von
 # ToDo
 ## Mandartory
 - [ ] Handle single and double quotes that all that is inside them is one argv
+- [ ] Make variables and after makign the shunting yard nodes try looking for that var inside any of the commands argv's and replace it with the actual variable thats inside the var linked list inside the sell struct and if the var is not inside the array just remove that single argv
 - [ ] Redirections ( > <  >> << )
 - [ ] Make Pipes and redirections not stop the parent process aka the actual minishell
 - [ ] Env variables (with $ and unset function which removes one of them)
