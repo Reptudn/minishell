@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/13 14:56:35 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/14 09:04:01 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,16 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 	else if (operator == AND && run_and(shell, cmd1, cmd2) == CMD_FAILURE)
 		return (CMD_FAILURE);
 	else if (operator == PIPE && run_pipe_cmd(cmd1, cmd2, shell) == CMD_FAILURE)
+	{
+		printf("pipe failed manager\n");
 		return (CMD_FAILURE);
+	}
 	else if (operator == REDIRECT_IN && redirect_in(cmd1, shell) == CMD_FAILURE)
 		return (CMD_FAILURE);
-	else if (operator == REDIRECT_OUT && redirect_out(cmd1, shell) == CMD_FAILURE)
+	else if (operator == REDIRECT_OUT
+		&& redirect_out(cmd1, shell) == CMD_FAILURE)
 		return (CMD_FAILURE);
+	printf("Running: %s and %s succesful\n", cmd1->value, cmd2->value);
 	return (CMD_SUCCESS);
 }
 
@@ -109,7 +114,6 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 	int				operator_count;
 	int				index;
 
-	printf("Executing commands\n");
 	index = -1;
 	if (!yard || !yard->output || !shell)
 		return (CMD_FAILURE);
