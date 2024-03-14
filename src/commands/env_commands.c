@@ -104,6 +104,7 @@ char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 {
 	char	*cmd_path;
+	char	*temp;
 	int		i;
 	int		ran;
 
@@ -111,15 +112,13 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 	ran = 0;
 	while (shell->env[++i])
 	{
-		cmd_path = ft_strjoin(shell->env[i], "/");
+		temp = ft_strjoin(shell->env[i], "/");
+		if (!temp)
+			return (CMD_FAILURE);
+		cmd_path = ft_strjoin(temp, cmd->value);
+		free(temp);
 		if (!cmd_path)
-			return (0);
-		cmd_path = ft_strjoin(cmd_path, cmd->value);
-		if (!cmd_path)
-		{
-			free(cmd_path);
-			return (0);
-		}
+			return (CMD_FAILURE);
 		if (access(cmd_path, F_OK) == 0 && access(cmd_path, X_OK) == 0)
 		{
 			if (execute(cmd_path, cmd->args, cmd->value, shell) == 0)

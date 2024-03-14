@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
 /*   Updated: 2024/03/11 16:28:44 by jkauker          ###   ########.fr       */
@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+bool	*g_run = NULL;
 
 void	print_start_logo(t_shell *shell)
 {
@@ -63,6 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**temp;
 
 	shell.run = true;
+	g_run = &(shell.run);
 	shell.path = getcwd(NULL, 0);
 	shell.envp = envp;
 	argc++;

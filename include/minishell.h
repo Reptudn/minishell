@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
 /*   Updated: 2024/03/11 16:35:39 by jkauker          ###   ########.fr       */
@@ -50,6 +50,8 @@
 # define CMD_SUCCESS 0
 # define CMD_FAILURE 1
 # define INVLAID_TOKEN 2
+
+extern bool *g_run;
 
 typedef struct s_variable
 {
