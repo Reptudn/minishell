@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 10:18:56 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:33:38 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 
 	i = -1;
 	ran = 0;
-	while (shell->env[++i])
+	while (shell->envp[++i])
 	{
-		temp = ft_strjoin(shell->env[i], "/");
+		temp = ft_strjoin(shell->envp[i], "/");
 		if (!temp)
 			return (CMD_FAILURE);
 		cmd_path = ft_strjoin(temp, cmd->value);

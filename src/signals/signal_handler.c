@@ -12,12 +12,6 @@
 
 #include "../../include/minishell.h"
 
-/* In signum == SIGTERM muss noch alles gefreed werden etc pp:
-		//freen(alles);
-		// make_cmds(NULL, NULL);
-		// command_handler(NULL, NULL);
-*/
-
 void	signal_handler(int signum)
 {
 	if (signum == SIGTERM)

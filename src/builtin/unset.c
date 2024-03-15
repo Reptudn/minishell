@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:35:08 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 12:26:14 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:36:18 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,19 @@
 int	ft_unset(t_shunting_node *cmd, t_shell *shell)
 {
 	int	i;
+	int	found;
 
 	i = -1;
+	found = CMD_FAILURE;
 	while (shell->envp[++i])
 	{
-		if (str_is_equal(shell->envp[i], cmd->args[1]))
+		if (ft_strncmp(shell->envp[i], cmd->args[0],
+				ft_strlen(cmd->args[0])) == 0)
 		{
-			free(shell->envp[i]);
-			while (shell->envp[i])
-			{
-				shell->envp[i] = shell->envp[i + 1];
-				i++;
-			}
+			shell->envp[i] = "\033[0;31mhas been unset\033[0m";
+			found = CMD_SUCCESS;
 			break ;
 		}
 	}
-	return (0);
+	return (found);
 }
