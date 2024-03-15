@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 16:35:39 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 10:12:27 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,13 @@ typedef struct s_shell
 	t_variable	*variables;
 }			t_shell;
 
-typedef struct s_command
+typedef struct s_env_var
 {
-	char				*command;
-	char				**args;
-	int					*operator_type;
-	int					priority;
-	struct s_command	*next;
-	struct s_command	*prev;
-	t_shell				*shell;
-}			t_command;
+	char				*name;
+	char				*value;
+	struct s_env_var	*next;
+	struct s_env_var	*prev;
+}			t_env_var;
 
 typedef struct s_shunting_node
 {
@@ -101,57 +98,58 @@ typedef struct s_shunting_yard
 }	t_shunting_yard;
 
 // command hanling
-int			run_command(t_shell *shell, t_shunting_node *cmd);
-int			run_path_command(t_shell *shell, t_shunting_node *cmd);
-int			execute_commands(t_shunting_yard *yard, t_shell *shell);
+int				run_command(t_shell *shell, t_shunting_node *cmd);
+int				run_path_command(t_shell *shell, t_shunting_node *cmd);
+int				execute_commands(t_shunting_yard *yard, t_shell *shell);
 
 // old
-int			command_loop(t_shell *shell);
-int			command_handler(t_shell *shell, char *line);
+int				command_loop(t_shell *shell);
+int				command_handler(t_shell *shell, char *line);
 
 // Parsing
-char		*ft_strncpy(char *dest, const char *src, size_t n);
-int			is_shell_op(char *str, char *shell_op[], int size);
+char			*ft_strncpy(char *dest, const char *src, size_t n);
+int				is_shell_op(char *str, char *shell_op[], int size);
 t_shunting_yard	*shunting_yard_create(char	**tokens);
 t_shunting_yard	*shunting_yard(char **tokens);
-void	print_all_stacks(t_shunting_yard *yard);
+void			print_all_stacks(t_shunting_yard *yard);
 
 // builtins
-int			ft_cd(t_shunting_node *cmd, t_shell *shell);
-int			pwd(void);
-int			ft_export(t_shell *shell);
-int			ft_unset(void);
-int			ft_env(t_shell *shell);
-int			ft_exit(t_shell *shell);
-int			ft_echo(t_shunting_node *cmd);
+int				ft_cd(t_shunting_node *cmd, t_shell *shell);
+int				pwd(void);
+int				ft_export(t_shell *shell);
+int				ft_unset(void);
+int				ft_env(t_shell *shell);
+int				ft_exit(t_shell *shell);
+int				ft_echo(t_shunting_node *cmd);
 
 // exec env commands
-int			run_env_command(t_shell *shell, t_shunting_node *cmd);
+int				run_env_command(t_shell *shell, t_shunting_node *cmd);
 
 //our commands
-int			display_history(void);
-int			ft_clear(void);
+int				display_history(void);
+int				ft_clear(void);
 
 //utils
-void		print_invalid_cmd(char *command);
-char		**ft_split_shell(const char *str);
-t_command	*free_split(char **split);
-int			is_operator(char *str);
-t_command	*make_cmds(char *line, t_shell *shell, int i);
-char		**filter_variables(char **split, t_shell *shell);
-void		free_cmds(t_command *cmds);
-void		free_cmds_helper(t_variable *cmds);
-char		**clean_data(char **temp, char **result);
-int			str_is_equal(char *str1, char *str2);
-char		*is_valid_input(char *line);
+void			print_invalid_cmd(char *command);
+char			**ft_split_shell(const char *str);
+void			*free_split(char **split);
+int				is_operator(char *str);
+void			*make_cmds(char *line, t_shell *shell, int i);
+char			**filter_variables(char **split, t_shell *shell);
+void			free_cmds_helper(t_variable *cmds);
+char			**clean_data(char **temp, char **result);
+int				str_is_equal(char *str1, char *str2);
+char			*is_valid_input(char *line);
+char			**doublestrdup(char **str);
 
 // pipes
-int			run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell);
+int				run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
+					t_shell *shell);
 
-char		**make_env_args(char *cmd, char **args);
-char		*get_env_path_to_cmd(t_shell *shell, char *cmd);
+char			**make_env_args(char *cmd, char **args);
+char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
 
 //signals
-void		signal_handler(int signum);
+void			signal_handler(int signum);
 
 #endif

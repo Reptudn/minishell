@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:45:05 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/06 09:44:04 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 09:02:31 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	redirect_in(t_command *cmd, t_shell *shell)
+int	redirect_in(t_shunting_node *cmd, t_shell *shell)
 {
 	int	fd;
 

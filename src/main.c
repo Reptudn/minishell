@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 16:28:44 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 10:14:23 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	main(int argc, char **argv, char **envp)
 	g_run = &(shell.run);
 	shell.path = getcwd(NULL, 0);
 	shell.envp = envp;
+	shell.env = doublestrdup(envp);
 	argc++;
 	argv = 0;
 	if (!shell.path)
@@ -91,12 +92,6 @@ int	main(int argc, char **argv, char **envp)
 	print_start_logo(&shell);
 	command_loop(&shell);
 	free(shell.path);
-	temp = shell.env;
-	while (*temp != NULL)
-	{
-		free(*temp);
-		temp++;
-	}
-	free(shell.env);
+	free_split(shell.env);
 	return (0);
 }

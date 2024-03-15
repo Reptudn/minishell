@@ -16,6 +16,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/free_split_cmds.c \
 			$(SRCDIR)utils/command_utils.c \
 			$(SRCDIR)utils/input_validation.c \
+			$(SRCDIR)utils/environment.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \
