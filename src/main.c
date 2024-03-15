@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 10:14:23 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:55:40 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_putstr_fd("Error: current working directory\n", STDERR_FILENO);
 		return (1);
 	}
-	shell.env = get_env();
+
+	shell.envp = get_env(); // this has to be the structs later
 	if (!shell.env)
 	{
 		ft_putstr_fd("Error: environment\n", STDERR_FILENO);

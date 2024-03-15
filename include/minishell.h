@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 13:13:59 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:56:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,20 @@
 
 extern bool *g_run;
 
-typedef struct s_variable
+typedef struct s_env_var
 {
 	char				*name;
 	char				*value;
-	struct s_variable	*next;
-	struct s_variable	*prev;
-}			t_variable;
+	struct s_env_var	*next;
+	struct s_env_var	*prev;
+}			t_env_var;
 
 typedef struct s_shell
 {
 	bool		run;
 	char		*path;
-	char		**env;
-	char		**envp;
-	t_variable	*variables;
+	char		**env;	//this should be removed
+	char		**envp;	// this should be replaced with a t_env_var linked list
 }			t_shell;
 
 typedef struct s_env_var
