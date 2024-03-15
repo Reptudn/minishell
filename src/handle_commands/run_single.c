@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:27:22 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/13 14:59:18 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 12:25:54 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 	else if (str_is_equal(cmd->value, "env"))
 		status = ft_env(shell);
 	else if (str_is_equal(cmd->value, "unset"))
-		status = ft_unset();
+		status = ft_unset(shell, cmd);
 	else if (str_is_equal(cmd->value, "cd"))
 		status = ft_cd(cmd, shell);
 	else

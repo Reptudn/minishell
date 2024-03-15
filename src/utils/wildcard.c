@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:30:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 11:00:15 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 11:05:22 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*get_matching_files(char *pattern)
 	d = opendir(".");
 	match = malloc(sizeof(char));
 	match[0] = '\0';
+	temp = NULL;
 	if (d && match)
 	{
 		dir = readdir(d);
@@ -64,5 +65,7 @@ char	*get_matching_files(char *pattern)
 		}
 		closedir(d);
 	}
+	if (temp)
+		free(temp);
 	return (match);
 }

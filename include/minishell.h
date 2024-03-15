@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 10:39:19 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 12:26:13 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void			print_all_stacks(t_shunting_yard *yard);
 int				ft_cd(t_shunting_node *cmd, t_shell *shell);
 int				pwd(void);
 int				ft_export(t_shell *shell);
-int				ft_unset(void);
+int				ft_unset(t_shunting_node *cmd, t_shell *shell);
 int				ft_env(t_shell *shell);
 int				ft_exit(t_shell *shell);
 int				ft_echo(t_shunting_node *cmd);
