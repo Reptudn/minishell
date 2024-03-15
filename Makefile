@@ -17,6 +17,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/command_utils.c \
 			$(SRCDIR)utils/input_validation.c \
 			$(SRCDIR)utils/environment.c \
+			$(SRCDIR)utils/wildcard.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \

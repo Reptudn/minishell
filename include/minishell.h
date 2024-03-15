@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 10:12:27 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 10:39:19 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ char			**clean_data(char **temp, char **result);
 int				str_is_equal(char *str1, char *str2);
 char			*is_valid_input(char *line);
 char			**doublestrdup(char **str);
+char			*get_matching_files(char *pattern);
 
 // pipes
 int				run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
