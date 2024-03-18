@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 10:30:42 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:57:34 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,43 +62,88 @@ void	process_string(const char *str, char **result, int *res_i)
 	start = 0;
 	while (str[i] != '\0')
 	{
-		if ((str[i] == '"' || str[i] == '\''))
+		if ((str[i] == '"' || str[i] == '\'') && (str[i - 1] && str[i - 1] == ' '))
 		{
 			quote = str[i];
 			start = i + 1;
 			i++;
-			while (str[i] != quote && str[i] != '\0')
+			while (str[i] && str[i] != quote)
 				i++;
-			len = i - start;
+			if (str[i + 1] && str[i + 1] != ' ' && str[i + 1] != '\0')
+				i++;
+			else
+			{
+				len = i - start;
+				if (len > 0)
+				{
+					result[*res_i] = create_split_string(str, start, len);
+					(*res_i)++;
+				}
+				if (str[i] != '\0')
+					i++;
+				start = i;
+			}
+		}
+		else
+		{
+			op_len = is_shell_op((char *) &str[i], shell_op,
+					sizeof(shell_op) / sizeof(shell_op[0]));
+			if (op_len > 0)
+				len = i - start;
+			else if (str[i + 1] == '\0')
+				len = i - start + 1;
+			else
+				len = 0;
 			if (len > 0)
 			{
 				result[*res_i] = create_split_string(str, start, len);
 				(*res_i)++;
 			}
-			if (str[i] != '\0')
-				i++;
-			start = i;
+			if (op_len > 0)
+			{
+				result[*res_i] = create_operator_string(&str[i], op_len);
+				(*res_i)++;
+			}
+			update_indices(&i, &start, len, op_len);
 		}
-		op_len = is_shell_op((char *) &str[i], shell_op,
-				sizeof(shell_op) / sizeof(shell_op[0]));
-		if (op_len > 0)
-			len = i - start;
-		else if (str[i + 1] == '\0')
-			len = i - start + 1;
-		else
-			len = 0;
-		if (len > 0)
-		{
-			result[*res_i] = create_split_string(str, start, len);
-			(*res_i)++;
-		}
-		if (op_len > 0)
-		{
-			result[*res_i] = create_operator_string(&str[i], op_len);
-			(*res_i)++;
-		}
-		update_indices(&i, &start, len, op_len);
 	}
+}
+
+char	**clean_quotes(char **temp)
+{
+	char	**result;
+	int		i;
+	int		j;
+	int		m;
+
+	if (!temp || !result)
+		return (NULL);
+	i = 0;
+	while (temp[i])
+		i++;
+	result = (char **)malloc((i + 1) * sizeof(char *));
+	if (!result)
+		return (NULL);
+	i = -1;
+	while (temp[++i])
+	{
+		result[i] = malloc(sizeof(char) * ft_strlen(temp[i])
+				- get_quote_cout(temp[i], '"')
+				- get_quote_cout(temp[i], '\'') + 1);
+		if (!result[i])
+			return (NULL);
+		j = -1;
+		m = -1;
+		while (temp[i][++j])
+		{
+			if (temp[i][j] != '"' && temp[i][j] != '\'')
+			{
+				result[i][++m] = temp[i][j];
+			}
+		}
+		result[i][++m] = '\0';
+	}
+	return (result);
 }
 
 char	**ft_split_shell(const char *str)
@@ -109,12 +154,18 @@ char	**ft_split_shell(const char *str)
 	int		i;
 
 	res_i = 0;
-	i = 0;
+	i = -1;
 	temp = (char **)malloc((strlen(str) + 1) * sizeof(char *));
-	result = (char **)malloc((strlen(str) + 1) * sizeof(char *));
 	process_string(str, temp, &res_i);
 	temp[res_i] = NULL;
+	result = (char **)malloc((res_i + 1) * sizeof(char *));
+	while (++i < res_i)
+		result[i] = (char *)malloc((strlen(temp[i]) + 1) * sizeof(char));
+	result[res_i] = NULL;
 	result = clean_data(temp, result);
+	free(temp);
+	temp = result;
+	result = clean_quotes(temp);
 	free(temp);
 	temp = NULL;
 	return (result);

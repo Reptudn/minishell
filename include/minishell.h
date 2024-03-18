@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 10:17:10 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:43:28 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ char			*is_valid_input(char *line);
 char			**doublestrdup(char **str);
 char			*get_matching_files(char *pattern);
 char			**split_first_occ(char *str, char c);
+int				get_quote_cout(char *str, char quote);
 
 // pipes
 int				run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
