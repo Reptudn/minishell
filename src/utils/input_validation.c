@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:22:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/14 10:36:24 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:47:33 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,14 @@ char	*handle_missing(char *line, char missing)
 
 char	*is_valid_input(char *line)
 {
-	line = handle_missing(line, '"');
-	if (!line)
-		return (0);
-	line = handle_missing(line, '\'');
-	if (!line)
-		return (0);
+	while (get_quote_cout(line, '"') % 2 != 0 && get_quote_cout(line, '"') % 2 != 0)
+	{
+		line = handle_missing(line, '"');
+		if (!line)
+			return (0);
+		line = handle_missing(line, '\'');
+		if (!line)
+			return (0);
+	}
 	return (line);
 }
