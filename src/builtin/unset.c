@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:35:08 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 13:36:18 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:06:13 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,13 @@
 
 int	ft_unset(t_shunting_node *cmd, t_shell *shell)
 {
-	int	i;
-	int	found;
+	t_env_var	*found;
 
-	i = -1;
-	found = CMD_FAILURE;
-	while (shell->envp[++i])
-	{
-		if (ft_strncmp(shell->envp[i], cmd->args[0],
-				ft_strlen(cmd->args[0])) == 0)
-		{
-			shell->envp[i] = "\033[0;31mhas been unset\033[0m";
-			found = CMD_SUCCESS;
-			break ;
-		}
-	}
-	return (found);
+	if (!cmd->args[0])
+		return (CMD_FAILURE);
+	found = env_get_by_name(shell->env_vars, cmd->args[0]);
+	if (!found)
+		return (CMD_FAILURE);
+	env_pop(shell->env_vars, found);
+	return (CMD_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:41:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 12:00:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 09:38:35 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,21 @@ int	str_is_equal(char *str1, char *str2)
 
 int	is_env_command(t_shell *shell, char *str, int i)
 {
-	char	*cmd_path;
-	char	*tmp;
+	char		*cmd_path;
+	char		*tmp;
+	t_env_var	*path;
+	char		**split;
 
 	i = -1;
-	while (shell->env[++i])
+	path = env_get_by_name(shell->env_vars, "PATH");
+	if (!path)
+		return (0);
+	split = ft_split(path->value, ':');
+	if (!split)
+		return (0);
+	while (split[++i])
 	{
-		cmd_path = ft_strjoin(shell->env[i], "/");
+		cmd_path = ft_strjoin(split[i], "/");
 		if (!cmd_path)
 			return (0);
 		tmp = ft_strjoin(cmd_path, str);

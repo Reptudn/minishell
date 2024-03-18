@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:34:36 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 10:20:16 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:07:24 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	ft_env(t_shell *shell)
 {
-	int	i;
+	t_env_var	*env;
 
-	i = 0;
-	while (shell->envp[i])
+	env = shell->env_vars;
+	while (env)
 	{
-		ft_putstr_fd(shell->envp[i], STDOUT_FILENO);
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		i++;
+		if (env->value)
+			printf("%s=%s\n", env->name, env->value);
+		env = env->next;
 	}
-	return (0);
+	return (CMD_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_single.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:27:22 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 13:14:02 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:18:06 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 	else if (str_is_equal(cmd->value, "clear"))
 		status = ft_clear();
 	else if (str_is_equal(cmd->value, "export"))
-		status = ft_export(shell);
+		status = ft_export(shell, cmd);
 	else if (str_is_equal(cmd->value, "env"))
 		status = ft_env(shell);
 	else if (str_is_equal(cmd->value, "unset"))

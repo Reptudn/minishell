@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 08:58:59 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:17:10 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void			print_all_stacks(t_shunting_yard *yard);
 // builtins
 int				ft_cd(t_shunting_node *cmd, t_shell *shell);
 int				pwd(void);
-int				ft_export(t_shell *shell);
+int				ft_export(t_shell *shell, t_shunting_node *cmd);
 int				ft_unset(t_shunting_node *cmd, t_shell *shell);
 int				ft_env(t_shell *shell);
 int				ft_exit(t_shell *shell);
@@ -115,7 +115,13 @@ int				ft_echo(t_shunting_node *cmd);
 
 // exec env commands
 int				run_env_command(t_shell *shell, t_shunting_node *cmd);
-t_env_var		*make_env_vars(char **envp);
+void			env_pop(t_env_var *vars, t_env_var *pop);
+void			env_push(t_env_var *vars, t_env_var *new_var);
+char			**env_to_envp(t_env_var *var);
+char			**env_get_path(t_env_var *vars);
+t_env_var		*env_get_by_name(t_env_var *vars, char *name);
+t_env_var		*env_create_var(char *name, char *value, bool is_envp);
+t_env_var		*env_make_vars(char **envp, t_shell *shell);
 
 //our commands
 int				display_history(void);
@@ -134,6 +140,7 @@ int				str_is_equal(char *str1, char *str2);
 char			*is_valid_input(char *line);
 char			**doublestrdup(char **str);
 char			*get_matching_files(char *pattern);
+char			**split_first_occ(char *str, char c);
 
 // pipes
 int				run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 13:33:38 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:01:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,19 @@ int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
 	pid_t	pid;
 	int		status;
 	char	**env_args;
+	char	**envp;
 
 	pid = fork();
 	if (pid < 0)
 		return (0);
 	else if (pid == 0)
 	{
+		envp = env_to_envp(shell->env_vars);
+		if (!envp)
+			return (0);
 		if (args[0] == NULL)
 		{
-			if (execve(cmd_path, (char *[]){command, NULL}, shell->env) == -1)
+			if (execve(cmd_path, (char *[]){command, NULL}, envp) == -1)
 				return (0);
 		}
 		else
@@ -57,7 +61,7 @@ int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
 			env_args = make_env_args(command, args);
 			if (!env_args)
 				return (0);
-			if (execve(cmd_path, env_args, shell->env) == -1)
+			if (execve(cmd_path, env_args, envp) == -1)
 			{
 				perror("\033[0;31mCommand failed to execute");
 				return (-1);
@@ -72,13 +76,19 @@ int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
 // TODO: check for leaks
 char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 {
-	int		i;
-	char	*cmd_path;
+	int			i;
+	char		*cmd_path;
+	t_env_var	*path;
+	char		**split;
 
 	i = -1;
-	while (shell->env[++i])
+	path = env_get_by_name(shell->env_vars, "PATH");
+	if (!path)
+		return (0);
+	split = ft_split(path->value, ':');
+	while (split[++i])
 	{
-		cmd_path = ft_strjoin(shell->env[i], "/");
+		cmd_path = ft_strjoin(split[i], "/");
 		if (!cmd_path)
 			return (0);
 		cmd_path = ft_strjoin(cmd_path, cmd);
@@ -107,12 +117,16 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 	char	*temp;
 	int		i;
 	int		ran;
+	char	**path;
 
 	i = -1;
 	ran = 0;
-	while (shell->envp[++i])
+	path = env_get_path(shell->env_vars);
+	if (!path)
+		return (0);
+	while (path[++i])
 	{
-		temp = ft_strjoin(shell->envp[i], "/");
+		temp = ft_strjoin(path[i], "/");
 		if (!temp)
 			return (CMD_FAILURE);
 		cmd_path = ft_strjoin(temp, cmd->value);

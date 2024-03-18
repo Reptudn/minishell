@@ -3,34 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:35:05 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/16 15:04:33 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:17:12 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_export(t_shell *shell)
+int	ft_export(t_shell *shell, t_shunting_node *cmd)
 {
-	int	i;
+	int			i;
+	t_env_var	*env;
+	char		**split;
 
 	i = -1;
-	if (!shell->envp)
-	{
-		printf("no envp\n");
-		return (1);
-	}
-	while (shell->envp[++i])
-	{
-		if (!shell->envp[i])
-		{
-			printf("no envp arg\n");
-			continue ;
-		}
-		ft_putstr_fd(shell->envp[i], STDOUT_FILENO);
-		ft_putstr_fd("\n", STDOUT_FILENO);
-	}
-	return (0);
+	split = split_first_occ(cmd->args[0], '=');
+	if (!split)
+		return (CMD_FAILURE);
+	env = env_create_var(split[0], split[1], true);
+	if (!env)
+		return (CMD_FAILURE);
+	env_push(shell->env_vars, env);
+	return (CMD_SUCCESS);
 }

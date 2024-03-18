@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 08:59:02 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 09:33:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	*g_run = NULL;
 
-void	print_start_logo(t_shell *shell)
+void	print_start_logo()
 {
 	printf("\033[H\033[J%s%s", COLOR_BG_GREEN, COLOR_MAGENTA);
 	printf(" __    __     __     __   __     __     "
@@ -62,7 +62,6 @@ char	**get_env(void)
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
-	char	**temp;
 
 	shell.run = true;
 	g_run = &(shell.run);
@@ -74,8 +73,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_putstr_fd("Error: current working directory\n", STDERR_FILENO);
 		return (1);
 	}
-
-	shell.env_vars = make_env_vars(envp); // this has to be the structs later
+	shell.env_vars = env_make_vars(envp, &shell);
 	if (!shell.env_vars)
 	{
 		ft_putstr_fd("Error: environment\n", STDERR_FILENO);
@@ -91,6 +89,6 @@ int	main(int argc, char **argv, char **envp)
 	print_start_logo(&shell);
 	command_loop(&shell);
 	free(shell.path);
-	free_split(shell.env);
+	// free_split(shell.env);
 	return (0);
 }
