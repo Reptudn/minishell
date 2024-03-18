@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 14:43:00 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 14:49:26 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ char	**ft_split_shell(const char *str)
 		result[i] = (char *)malloc((strlen(temp[i]) + 1) * sizeof(char));
 	result[res_i] = NULL;
 	result = clean_data(temp, result);
+	return (result);
 	free(temp);
 	temp = result;
 	result = clean_quotes(temp);
