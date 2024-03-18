@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 13:55:40 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 08:59:02 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ int	main(int argc, char **argv, char **envp)
 	shell.run = true;
 	g_run = &(shell.run);
 	shell.path = getcwd(NULL, 0);
-	shell.envp = envp;
-	shell.env = doublestrdup(envp);
 	argc++;
 	argv = 0;
 	if (!shell.path)
@@ -77,8 +75,8 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 
-	shell.envp = get_env(); // this has to be the structs later
-	if (!shell.env)
+	shell.env_vars = make_env_vars(envp); // this has to be the structs later
+	if (!shell.env_vars)
 	{
 		ft_putstr_fd("Error: environment\n", STDERR_FILENO);
 		return (1);

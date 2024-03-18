@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 08:51:01 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 13:57:09 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 08:54:15 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_env_var	*create_env_var(char *name, char *value)
+t_env_var	*create_env_var(char *name, char *value, bool is_envp)
 {
 	t_env_var	*env_var;
 
@@ -21,9 +21,11 @@ t_env_var	*create_env_var(char *name, char *value)
 	env_var = malloc(sizeof(t_env_var));
 	if (!env_var)
 		return (NULL);
-	env_var->name = name;
-	env_var->value = value;
+	env_var->name = ft_strdup(name);
+	env_var->value = ft_strdup(value);
+	env_var->is_envp = is_envp;
 	env_var->next = NULL;
+	env_var->prev = NULL;
 	return (env_var);
 }
 

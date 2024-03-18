@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 08:46:45 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 08:58:59 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_env_var
 {
 	char				*name;
 	char				*value;
+	bool				is_envp;
 	struct s_env_var	*next;
 	struct s_env_var	*prev;
 }			t_env_var;
@@ -65,8 +66,6 @@ typedef struct s_shell
 {
 	bool		run;
 	char		*path;
-	char		**env;	//this should be removed
-	char		**envp;	// this should be replaced with a t_env_var linked list
 	t_env_var	*env_vars;
 }			t_shell;
 
@@ -116,6 +115,7 @@ int				ft_echo(t_shunting_node *cmd);
 
 // exec env commands
 int				run_env_command(t_shell *shell, t_shunting_node *cmd);
+t_env_var		*make_env_vars(char **envp);
 
 //our commands
 int				display_history(void);
