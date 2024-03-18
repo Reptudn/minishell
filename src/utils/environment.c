@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 08:51:01 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 09:59:30 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:22:43 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ char	**split_first_occ(char *str, char c)
 
 t_env_var	*env_make_vars(char **envp, t_shell *shell)
 {
-	t_env_var	*frist;
+	t_env_var	*first;
 	t_env_var	*temp;
 	int			i;
 	char		**split;
@@ -162,6 +162,7 @@ t_env_var	*env_make_vars(char **envp, t_shell *shell)
 	i = -1;
 	while (envp[++i])
 	{
+		printf("envp[%d]: %s\n", i, envp[i]);
 		split = split_first_occ(envp[i], '=');
 		if (!split)
 			return (NULL);
@@ -173,14 +174,16 @@ t_env_var	*env_make_vars(char **envp, t_shell *shell)
 			shell->env_vars = temp;
 		else
 		{
-			frist = shell->env_vars;
-			while (frist->next)
-				frist = frist->next;
-			frist->next = temp;
-			temp->prev = frist;
+			first = shell->env_vars;
+			while (first->next)
+				first = first->next;
+			first->next = temp;
+			temp->prev = first;
 		}
 	}
-	return (NULL);
+	while (first->prev)
+		first = first->prev;
+	return (first);
 }
 
 char	**doublestrdup(char **str)

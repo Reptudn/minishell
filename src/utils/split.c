@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/14 14:38:27 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:30:42 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	process_string(const char *str, char **result, int *res_i)
 	start = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '"' || str[i] == '\'')
+		if ((str[i] == '"' || str[i] == '\''))
 		{
 			quote = str[i];
 			start = i + 1;
