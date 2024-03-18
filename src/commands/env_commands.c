@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/14 09:09:41 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:33:38 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
 	{
 		if (args[0] == NULL)
 		{
-			if (execve(cmd_path, (char *[]){command, NULL}, shell->envp) == -1)
+			if (execve(cmd_path, (char *[]){command, NULL}, shell->env) == -1)
 				return (0);
 		}
 		else
@@ -57,7 +57,7 @@ int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
 			env_args = make_env_args(command, args);
 			if (!env_args)
 				return (0);
-			if (execve(cmd_path, env_args, shell->envp) == -1)
+			if (execve(cmd_path, env_args, shell->env) == -1)
 			{
 				perror("\033[0;31mCommand failed to execute");
 				return (-1);
@@ -110,9 +110,9 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 
 	i = -1;
 	ran = 0;
-	while (shell->env[++i])
+	while (shell->envp[++i])
 	{
-		temp = ft_strjoin(shell->env[i], "/");
+		temp = ft_strjoin(shell->envp[i], "/");
 		if (!temp)
 			return (CMD_FAILURE);
 		cmd_path = ft_strjoin(temp, cmd->value);

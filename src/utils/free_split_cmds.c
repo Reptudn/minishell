@@ -6,13 +6,13 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:05:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/13 14:10:57 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 08:46:25 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_command	*free_split(char **split)
+void	*free_split(char **split)
 {
 	int	i;
 
@@ -23,9 +23,9 @@ t_command	*free_split(char **split)
 	return (0);
 }
 
-void	free_cmds_helper(t_variable *cmds)
+void	free_cmds_helper(t_env_var *cmds)
 {
-	t_variable	*tmp;
+	t_env_var	*tmp;
 
 	while (cmds)
 	{
@@ -38,18 +38,18 @@ void	free_cmds_helper(t_variable *cmds)
 	cmds = NULL;
 }
 
-void	free_cmds(t_command *cmds)
-{
-	t_command	*tmp;
+// void	free_cmds(t_command *cmds)
+// {
+// 	t_command	*tmp;
 
-	while (cmds)
-	{
-		tmp = cmds->next;
-		free(cmds->command);
-		free(cmds->args);
-		free(cmds->operator_type);
-		free(cmds);
-		cmds = tmp;
-	}
-	cmds = NULL;
-}
+// 	while (cmds)
+// 	{
+// 		tmp = cmds->next;
+// 		free(cmds->command);
+// 		free(cmds->args);
+// 		free(cmds->operator_type);
+// 		free(cmds);
+// 		cmds = tmp;
+// 	}
+// 	cmds = NULL;
+// }

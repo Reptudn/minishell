@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shunting_yard_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:40:50 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/14 09:48:45 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/15 10:40:54 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,12 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	node->args[i - 1] = NULL;
 	*step += i;
 	while (--i > 0)
-		node->args[i - 1] = ft_strdup(tokens[i]);
+	{
+		if (get_matching_files(tokens[i]))
+			node->args[i - 1] = get_matching_files(tokens[i]);
+		else
+			node->args[i - 1] = ft_strdup(tokens[i]);
+	}
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);

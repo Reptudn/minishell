@@ -5,6 +5,10 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 	"dockerFile": "Dockerfile",
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached"
+	],
 	"customizations": {
 		"vscode": {
 			"settings": { 
@@ -12,7 +16,7 @@
 				"editor.renderWhitespace": "all",
 				"editor.insertSpaces": false,
 				"debug.onTaskErrors": "debugAnyway",
-				"42header.email": "jkauker@student.42.fr",
+				"42header.email": "jkauker@student.42heilbronn.de",
 				"42header.username": "jkauker"
 			},
 			"extensions": [
