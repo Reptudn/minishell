@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 08:51:01 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 10:22:43 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 11:02:39 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	**env_to_envp(t_env_var *var)
 		split[i] = ft_strjoin(var->name, "=");
 		split[i] = ft_strjoin(split[i], var->value);
 		var = var->next;
+		i++;
 	}
 	return (split);
 }
@@ -162,7 +163,6 @@ t_env_var	*env_make_vars(char **envp, t_shell *shell)
 	i = -1;
 	while (envp[++i])
 	{
-		printf("envp[%d]: %s\n", i, envp[i]);
 		split = split_first_occ(envp[i], '=');
 		if (!split)
 			return (NULL);
