@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 13:57:34 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 14:43:00 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char	**clean_quotes(char **temp)
 	int		j;
 	int		m;
 
-	if (!temp || !result)
+	if (!temp)
 		return (NULL);
 	i = 0;
 	while (temp[i])
@@ -127,22 +127,18 @@ char	**clean_quotes(char **temp)
 	i = -1;
 	while (temp[++i])
 	{
-		result[i] = malloc(sizeof(char) * ft_strlen(temp[i])
-				- get_quote_cout(temp[i], '"')
-				- get_quote_cout(temp[i], '\'') + 1);
+		result[i] = malloc(sizeof(char) * (ft_strlen(temp[i]) + 1));
 		if (!result[i])
 			return (NULL);
 		j = -1;
 		m = -1;
 		while (temp[i][++j])
-		{
 			if (temp[i][j] != '"' && temp[i][j] != '\'')
-			{
 				result[i][++m] = temp[i][j];
-			}
-		}
-		result[i][++m] = '\0';
+		m++;
+		result[i][m] = '\0';
 	}
+	result[i] = NULL;
 	return (result);
 }
 
