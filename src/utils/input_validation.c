@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:22:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 10:47:33 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:50:55 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ char	*handle_missing(char *line, char missing)
 	{
 		while (get_quote_cout(line, missing) % 2 != 0)
 		{
-			tmp = readline("\033[0;31mquote> \033[0m");
+			if (missing == '"')
+				tmp = readline("\033[0;31mdquote> \033[0m");
+			else
+				tmp = readline("\033[0;31msquote> \033[0m");
 			if (!tmp)
 				return (0);
 			new_line = ft_strjoin(line, "\n");
@@ -57,7 +60,8 @@ char	*handle_missing(char *line, char missing)
 
 char	*is_valid_input(char *line)
 {
-	while (get_quote_cout(line, '"') % 2 != 0 && get_quote_cout(line, '"') % 2 != 0)
+	while (get_quote_cout(line, '"') % 2 != 0
+		&& get_quote_cout(line, '"') % 2 != 0)
 	{
 		line = handle_missing(line, '"');
 		if (!line)
