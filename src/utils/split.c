@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:06:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/13 10:18:19 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/14 14:38:27 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,29 @@ void	process_string(const char *str, char **result, int *res_i)
 	int		start;
 	int		op_len;
 	int		len;
+	char	quote;
 
 	i = 0;
 	start = 0;
 	while (str[i] != '\0')
 	{
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			quote = str[i];
+			start = i + 1;
+			i++;
+			while (str[i] != quote && str[i] != '\0')
+				i++;
+			len = i - start;
+			if (len > 0)
+			{
+				result[*res_i] = create_split_string(str, start, len);
+				(*res_i)++;
+			}
+			if (str[i] != '\0')
+				i++;
+			start = i;
+		}
 		op_len = is_shell_op((char *) &str[i], shell_op,
 				sizeof(shell_op) / sizeof(shell_op[0]));
 		if (op_len > 0)
