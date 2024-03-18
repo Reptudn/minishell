@@ -6,14 +6,14 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:07:17 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/11 12:19:56 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 08:47:20 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lib/libft/libft.h"
 #include "../../include/minishell.h"
 
-void	is_var(char *str, t_variable *var)
+void	is_var(char *str, t_env_var *var)
 {
 	char	*name;
 	char	*value;
@@ -46,9 +46,9 @@ void	is_var(char *str, t_variable *var)
 
 char	**filter_variables(char **split, t_shell *shell)
 {
-	t_variable	*var;
-	t_variable	*new_var;
-	t_variable	*prev;
+	t_env_var	*var;
+	t_env_var	*new_var;
+	t_env_var	*prev;
 	char		**result;
 	char		**test = malloc(100 * sizeof(char *));
 	int			i;
@@ -58,7 +58,7 @@ char	**filter_variables(char **split, t_shell *shell)
 	{
 		if (ft_strchr(split[i], '=') != NULL)
 		{
-			new_var = malloc(sizeof(t_variable));
+			new_var = malloc(sizeof(t_env_var));
 			if (!new_var)
 			{
 				while (var != NULL)
@@ -70,8 +70,8 @@ char	**filter_variables(char **split, t_shell *shell)
 				return (NULL);
 			}
 			is_var(split[i], var);
-			if (shell->variables == NULL)
-				shell->variables = var;
+			if (shell->env_vars == NULL)
+				shell->env_vars = var;
 			var->next = new_var;
 			new_var->prev = var;
 			var = new_var;

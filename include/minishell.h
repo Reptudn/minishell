@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 13:56:16 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 08:46:45 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,8 @@ typedef struct s_shell
 	char		*path;
 	char		**env;	//this should be removed
 	char		**envp;	// this should be replaced with a t_env_var linked list
+	t_env_var	*env_vars;
 }			t_shell;
-
-typedef struct s_env_var
-{
-	char				*name;
-	char				*value;
-	struct s_env_var	*next;
-	struct s_env_var	*prev;
-}			t_env_var;
 
 typedef struct s_shunting_node
 {
@@ -135,7 +128,7 @@ void			*free_split(char **split);
 int				is_operator(char *str);
 void			*make_cmds(char *line, t_shell *shell, int i);
 char			**filter_variables(char **split, t_shell *shell);
-void			free_cmds_helper(t_variable *cmds);
+void			free_cmds_helper(t_env_var *cmds);
 char			**clean_data(char **temp, char **result);
 int				str_is_equal(char *str1, char *str2);
 char			*is_valid_input(char *line);

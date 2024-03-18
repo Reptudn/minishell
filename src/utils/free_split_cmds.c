@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:05:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 09:01:44 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/18 08:46:25 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	*free_split(char **split)
 	return (0);
 }
 
-void	free_cmds_helper(t_variable *cmds)
+void	free_cmds_helper(t_env_var *cmds)
 {
-	t_variable	*tmp;
+	t_env_var	*tmp;
 
 	while (cmds)
 	{
