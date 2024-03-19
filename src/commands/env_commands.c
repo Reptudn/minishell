@@ -123,7 +123,7 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 	ran = 0;
 	path = env_get_path(shell->env_vars);
 	if (!path)
-		return (0);
+		return (CMD_FAILURE);
 	while (path[++i])
 	{
 		temp = ft_strjoin(path[i], "/");

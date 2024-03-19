@@ -180,9 +180,6 @@ t_env_var	*env_make_vars(char **envp, t_shell *shell)
 			first->next = temp;
 			temp->prev = first;
 		}
-		free(temp->name);
-		free(temp->value);
-		free(temp);
 	}
 	while (first->prev)
 		first = first->prev;

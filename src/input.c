@@ -101,7 +101,7 @@ int	command_loop(t_shell *shell)
 			status = CMD_FAILURE;
 			continue ;
 		}
-		printf("%s", COLOR_YELLOW);
+		printf("%s", COLOR_RESET);
 		if (execute_commands(yard, shell) == CMD_FAILURE)
 			status = CMD_FAILURE;
 		else
@@ -112,7 +112,7 @@ int	command_loop(t_shell *shell)
 		line = NULL;
 		if (!shell->run)
 			break ;
-		if (status == 1)
+		if (status == CMD_FAILURE)
 			line = readline(PROMPT_FAILURE);
 		else
 			line = readline(PROMPT_SUCCESS);
