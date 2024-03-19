@@ -90,7 +90,6 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	shell.env_vars = env_make_vars(envp, &shell);
-	printf("starting minishell\n");
 	if (!shell.env_vars)
 	{
 		ft_putstr_fd("Error: environment\n", STDERR_FILENO);
