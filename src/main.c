@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 10:45:03 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/19 12:44:35 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,22 @@ char	**get_env(void)
 	return (envp);
 }
 
+void	env_destroy(t_env_var *env)
+{
+	t_env_var	*temp;
+
+	if (!env)
+		return ;
+	while (env)
+	{
+		free(env->name);
+		free(env->value);
+		temp = env->next;
+		free(env);
+		env = temp;
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
@@ -89,6 +105,6 @@ int	main(int argc, char **argv, char **envp)
 	print_start_logo();
 	command_loop(&shell);
 	free(shell.path);
-	// free_split(shell.env);
+	env_destroy(shell.env_vars);
 	return (0);
 }
