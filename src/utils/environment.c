@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 08:51:01 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 11:02:39 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/19 10:55:05 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,9 @@ t_env_var	*env_make_vars(char **envp, t_shell *shell)
 			first->next = temp;
 			temp->prev = first;
 		}
+		free(temp->name);
+		free(temp->value);
+		free(temp);
 	}
 	while (first->prev)
 		first = first->prev;

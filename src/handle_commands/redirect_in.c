@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:45:05 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 09:02:31 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/19 10:31:20 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@ int	redirect_in(t_shunting_node *cmd, t_shell *shell)
 {
 	int	fd;
 
-	fd = open(cmd->args[0], O_RDONLY);
-	if (fd == -1)
+	printf("cmd->value: %s\n", cmd->next->value);
+	printf("cmd->args[0]: %s\n", cmd->args[0]);
+	fd = open(cmd->next->value, O_RDONLY);
+	if (fd < 0)
 	{
-		printf("minishell: %s: %s\n", cmd->args[0], strerror(errno));
+		ft_printf("dsf: %s: %s\n", cmd->args[0], strerror(errno));
 		return (CMD_FAILURE);
 	}
-	dup2(fd, 0);
+	dup2(fd, STDIN_FILENO);
 	close(fd);
-	return (run_command(shell, cmd->next));
+	return (CMD_SUCCESS);
 }

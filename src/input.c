@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/14 09:42:55 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/19 10:19:48 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 	int				i;
 
 	node = yard->output;
-	i = 0;
+	if (!node)
+		return ;
 	while (node)
 	{
 		free(node->value);
-		while (node->args[i])
-		{
-			free(node->args[i]);
-			i++;
-		}
+		i = 0;
+		if (node->args && node->args[0])
+			while (node->args[++i])
+				free(node->args[i]);
 		free(node->args);
 		free(node->type);
 		free(node->priority);
