@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 13:51:03 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:04:45 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 	else if (operator == REDIRECT_OUT
 		&& redirect_out(cmd1, shell) == CMD_FAILURE)
 		return (CMD_FAILURE);
-	printf("execution manager success\n");
 	return (CMD_SUCCESS);
 }
 
