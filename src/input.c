@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 14:16:35 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:59:34 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 	{
 		free(node->value);
 		i = -1;
-		// if (node->args && node->args[0])
-		// 	while (node->args[++i])
-		// 		free(node->args[i]);
+		if (node->args && node->args[0])
+			while (node->args[++i])
+				free(node->args[i]);
 		free(node->args);
 		free(node->type);
 		free(node->priority);
@@ -46,7 +46,7 @@ int	command_loop(t_shell *shell)
 	char			*line;
 	t_shunting_yard	*yard;
 	char			**split;
-	char			**split_2;
+	int				i;
 
 	line = readline(PROMPT_HELLO);
 	status = 0;
@@ -82,12 +82,15 @@ int	command_loop(t_shell *shell)
 		if (!yard)
 		{
 			printf("Shunting yard failed\n");
-			free_split(split_2);
 			free(line);
 			line = readline(PROMPT_FAILURE);
 			status = CMD_FAILURE;
 			continue ;
 		}
+		i = -1;
+		while (split[++i])
+			free(split[i]);
+		free(split);
 		printf("%s", COLOR_RESET);
 		status = execute_commands(yard, shell, status);
 		shunting_yard_destroy(yard);

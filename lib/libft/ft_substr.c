@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbrnn.de>    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 17:14:09 by jonask            #+#    #+#             */
-/*   Updated: 2023/10/17 13:29:07 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 15:14:39 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	if (!sub)
 		return (0);
 	makesub(sub, s + start, len + 1);
-	sub[len + 1] = 0;
+	sub[len] = 0;
 	return (sub);
 }
