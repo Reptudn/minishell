@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 10:37:30 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 10:44:54 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	command_loop(t_shell *shell)
 		printf("%s", COLOR_RESET);
 		status = execute_commands(yard, shell, status);
 		shunting_yard_destroy(yard);
-		free_split(split_2);
+		// free_split(split_2);
 		free(line);
 		line = NULL;
 		if (!shell->run)
