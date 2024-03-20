@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/19 10:19:48 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 09:57:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 	node = yard->output;
 	if (!node)
 		return ;
-	while (node)
-	{
-		free(node->value);
-		i = 0;
-		if (node->args && node->args[0])
-			while (node->args[++i])
-				free(node->args[i]);
-		free(node->args);
-		free(node->type);
-		free(node->priority);
-		free(node->fd);
-		free(node->exit_status);
-		next_node = node->next;
-		free(node);
-		node = next_node;
-	}
+	// while (node)
+	// {
+	// 	free(node->value);
+	// 	i = -1;
+	// 	// if (node->args && node->args[0])
+	// 	// 	while (node->args[++i])
+	// 	// 		free(node->args[i]);
+	// 	free(node->args);
+	// 	free(node->type);
+	// 	free(node->priority);
+	// 	free(node->fd);
+	// 	free(node->exit_status);
+	// 	next_node = node->next;
+	// 	free(node);
+	// 	node = next_node;
+	// }
 	free(yard);
 }
 
@@ -51,7 +51,7 @@ int	command_loop(t_shell *shell)
 	line = readline(PROMPT_HELLO);
 	if (!line)
 		return (0);
-	status = -1;
+	status = 0;
 	while (shell->run)
 	{
 		if (!line)
@@ -102,17 +102,14 @@ int	command_loop(t_shell *shell)
 			continue ;
 		}
 		printf("%s", COLOR_RESET);
-		if (execute_commands(yard, shell) == CMD_FAILURE)
-			status = CMD_FAILURE;
-		else
-			status = CMD_SUCCESS;
+		status = execute_commands(yard, shell, status);
 		shunting_yard_destroy(yard);
 		free_split(split_2);
 		free(line);
 		line = NULL;
 		if (!shell->run)
 			break ;
-		if (status == CMD_FAILURE)
+		if (status == CMD_FAILURE || status == CMD_NOT_FOUND)
 			line = readline(PROMPT_FAILURE);
 		else
 			line = readline(PROMPT_SUCCESS);

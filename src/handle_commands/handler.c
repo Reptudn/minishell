@@ -6,17 +6,20 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/19 09:47:47 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 09:56:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
-int	run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
-int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell);
-int	redirect_in(t_shunting_node *cmd, t_shell *shell);
-int	redirect_out(t_shunting_node *cmd, t_shell *shell);
+int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
+int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
+int		run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
+			t_shell *shell);
+int		redirect_in(t_shunting_node *cmd, t_shell *shell);
+int		redirect_out(t_shunting_node *cmd, t_shell *shell);
+
+void	replace_variable(char **args, t_shell *shell, int status);
 
 // int	execute_commands(t_shell *shell, t_command *cmd1, t_command *cmd2)
 // {
@@ -105,7 +108,7 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 	return (CMD_SUCCESS);
 }
 
-int	execute_commands(t_shunting_yard *yard, t_shell *shell)
+int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 {
 	t_shunting_node	*operator;
 	t_shunting_node	*cmd1;
@@ -118,7 +121,10 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 		return (CMD_FAILURE);
 	operator_count = get_operator_count(yard->output);
 	if (operator_count == 0)
+	{
+		replace_variable(yard->output->args, shell, status);
 		return (run_command(shell, yard->output));
+	}
 	if (operator_count != get_command_count(yard->output) - 1)
 	{
 		printf("Invalid operator count\n");
@@ -135,8 +141,8 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 		cmd1 = cmd2->prev;
 		if (!cmd1)
 			return (CMD_FAILURE);
-		// printf("Running: %s and ", cmd1->value);
-		// printf("%s with %s\n", cmd2->value, operator->value);
+		replace_variable(cmd1->args, shell, status);
+		replace_variable(cmd2->args, shell, status);
 		if (execution_manager(cmd1, cmd2, *operator->type, shell) == CMD_FAILURE)
 			return (CMD_FAILURE);
 	}

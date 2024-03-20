@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 13:43:28 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 09:54:42 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@
 
 # define CMD_SUCCESS 0
 # define CMD_FAILURE 1
-# define INVLAID_TOKEN 2
+# define CMD_IMPROP 2
+# define CMD_NOT_FOUND 127
 
 extern bool *g_run;
 
@@ -91,7 +92,8 @@ typedef struct s_shunting_yard
 // command hanling
 int				run_command(t_shell *shell, t_shunting_node *cmd);
 int				run_path_command(t_shell *shell, t_shunting_node *cmd);
-int				execute_commands(t_shunting_yard *yard, t_shell *shell);
+int				execute_commands(t_shunting_yard *yard, t_shell *shell,
+					int status);
 
 // old
 int				command_loop(t_shell *shell);
