@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 10:28:24 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 10:01:15 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,10 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 		free(cmd_path);
 		cmd_path = NULL;
 	}
+	i = -1;
+	while (path[++i])
+		free(path[i]);
+	free(path);
 	if (cmd_path)
 		free(cmd_path);
 	if (ran)

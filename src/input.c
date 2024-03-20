@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 10:29:11 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 10:37:30 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,16 @@ int	command_loop(t_shell *shell)
 			status = CMD_FAILURE;
 			continue ;
 		}
-		split_2 = filter_variables(split, shell);
-		if (!split_2)
-		{
-			free_split(split);
-			free(line);
-			status = CMD_FAILURE;
-			line = readline(PROMPT_FAILURE);
-		}
-		free_split(split);
-		yard = shunting_yard(split_2);
+		// split_2 = filter_variables(split, shell);
+		// if (!split_2)
+		// {
+		// 	free_split(split);
+		// 	free(line);
+		// 	status = CMD_FAILURE;
+		// 	line = readline(PROMPT_FAILURE);
+		// }
+		// free_split(split);
+		yard = shunting_yard(split);
 		if (!yard)
 		{
 			printf("Shunting yard failed\n");
