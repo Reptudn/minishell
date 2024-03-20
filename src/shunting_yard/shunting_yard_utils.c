@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:40:50 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 09:30:07 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:15:20 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	node->type = malloc(sizeof(int));
 	node->priority = malloc(sizeof(int));
 	node->fd = malloc(sizeof(int));
-	node->exit_status = malloc(sizeof(int));
+	node->exit_status = calloc(2 ,sizeof(int));
 	*node->fd = 1;
 	*node->exit_status = -1;
 	*node->type = is_operator(tokens[0]);
