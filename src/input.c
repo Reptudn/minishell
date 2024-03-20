@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 09:57:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 10:29:11 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	command_loop(t_shell *shell)
 		line = NULL;
 		if (!shell->run)
 			break ;
-		if (status == CMD_FAILURE || status == CMD_NOT_FOUND)
+		if (status == CMD_FAILURE || status == CMD_NOT_FOUND || status == 2)
 			line = readline(PROMPT_FAILURE);
 		else
 			line = readline(PROMPT_SUCCESS);
