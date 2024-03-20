@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 09:56:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 13:51:03 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 	else if (operator == REDIRECT_OUT
 		&& redirect_out(cmd1, shell) == CMD_FAILURE)
 		return (CMD_FAILURE);
+	printf("execution manager success\n");
 	return (CMD_SUCCESS);
 }
 
@@ -146,6 +147,5 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		if (execution_manager(cmd1, cmd2, *operator->type, shell) == CMD_FAILURE)
 			return (CMD_FAILURE);
 	}
-	// free_shunting_yard(yard);
 	return (CMD_SUCCESS);
 }

@@ -22,7 +22,6 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \
-			$(SRCDIR)commands/exec_pipe_command.c \
 			$(SRCDIR)builtin/unset.c \
 			$(SRCDIR)builtin/exit.c \
 			$(SRCDIR)builtin/echo.c \
@@ -32,6 +31,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)builtin/cd.c \
 			$(SRCDIR)signals/signal_handler.c \
 			$(SRCDIR)handle_commands/and.c \
+			$(SRCDIR)handle_commands/pipe.c \
 			$(SRCDIR)handle_commands/or.c \
 			$(SRCDIR)handle_commands/redirect_in.c \
 			$(SRCDIR)handle_commands/redirect_out.c \

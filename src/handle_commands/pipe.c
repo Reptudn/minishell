@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:20:58 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/14 09:02:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:01:33 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell)
 	int		fd[2];
 	pid_t	pid;
 	int		status;
+	int		original_stdin;
 
+	original_stdin = dup(0);
 	status = CMD_SUCCESS;
 	if (pipe(fd) == -1)
 		return (CMD_FAILURE);
@@ -32,8 +34,9 @@ int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell)
 		if (run_command(shell, cmd1) == CMD_FAILURE)
 		{
 			printf("pipe1: %s: %s\n", cmd1->args[0], strerror(errno));
-			return (CMD_FAILURE);
+			exit(CMD_FAILURE);
 		}
+		exit(CMD_SUCCESS);
 	}
 	else
 	{
@@ -47,6 +50,7 @@ int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell)
 			return (CMD_FAILURE);
 		}
 	}
-	printf("pipe succesful\n");
+	dup2(original_stdin, 0);
+	close(original_stdin);
 	return (CMD_SUCCESS);
 }
