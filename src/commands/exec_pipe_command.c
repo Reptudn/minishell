@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:05:29 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 12:48:00 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:05:49 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell)
 	// 	if (execve(cmd_path2, make_env_args(cmd2->value, cmd2->args), envp) == -1)
 	// 		return (0);
 	// }
-	// return (1);
+	return (1);
 }
