@@ -36,10 +36,10 @@ char	**make_env_args(char *cmd, char **args)
 	return (env_args);
 }
 
-int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
+int	execute(char *cmd_path, char **args, char *command, t_shell *shell,
+	int *exit_status)
 {
 	pid_t	pid;
-	int		status;
 	char	**env_args;
 	char	**envp;
 
@@ -69,7 +69,7 @@ int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
 		}
 	}
 	else
-		waitpid(pid, &status, 0);
+		waitpid(pid, exit_status, 0);
 	return (1);
 }
 
@@ -118,6 +118,7 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 	int		i;
 	int		ran;
 	char	**path;
+	int		exit_status;
 
 	i = -1;
 	ran = 0;
@@ -135,7 +136,8 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 			return (CMD_FAILURE);
 		if (access(cmd_path, F_OK) == 0 && access(cmd_path, X_OK) == 0)
 		{
-			if (execute(cmd_path, cmd->args, cmd->value, shell) == 0)
+			if (execute(cmd_path, cmd->args, cmd->value, shell,
+					&exit_status) == 0)
 				break ;
 			ran = 1;
 			break ;
@@ -150,6 +152,10 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 	if (cmd_path)
 		free(cmd_path);
 	if (ran)
+	{
+		if (exit_status == 512)
+			return (2);
 		return (CMD_SUCCESS);
+	}
 	return (CMD_FAILURE);
 }

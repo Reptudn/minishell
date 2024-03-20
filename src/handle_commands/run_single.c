@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:27:22 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 10:59:28 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 09:32:39 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,13 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 		{
 			status = run_path_command(shell, cmd);
 			if (status == CMD_FAILURE)
+			{
 				print_invalid_cmd(cmd->value);
+				status = CMD_NOT_FOUND;
+			}
+			else if (status == CMD_IMPROP)
+				printf("%sminishell: No permission\n%s",
+					COLOR_RED, COLOR_RESET);
 		}
 	}
 	*cmd->exit_status = status;
