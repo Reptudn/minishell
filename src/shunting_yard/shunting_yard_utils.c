@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:40:50 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/19 12:40:40 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/19 12:50:52 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 		*step += 1;
 		return (node);
 	}
-	i = 0;
-	node->value = ft_strdup(tokens[i++]);
+	i = -1;
+	node->value = ft_strdup(tokens[++i]);
 	while (tokens[i] && is_operator(tokens[i]) == NONE)
 		i++;
 	node->args = malloc(sizeof(char *) * i);
