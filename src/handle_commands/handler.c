@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 09:08:59 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/21 10:28:49 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		printf("Invalid operator count\n");
 		return (CMD_FAILURE);
 	}
-	while (++index < operator_count) // this aint working yet
+	while (++index < operator_count) // TODO:this aint working yet
 	{
 		operator = get_operator_with_index(yard->output, index + 1);
 		if (!operator)
