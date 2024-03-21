@@ -31,16 +31,18 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)builtin/cd.c \
 			$(SRCDIR)signals/signal_handler.c \
 			$(SRCDIR)handle_commands/and.c \
+			$(SRCDIR)handle_commands/append.c \
+			$(SRCDIR)handle_commands/delimiter.c \
+			$(SRCDIR)handle_commands/handler.c \
 			$(SRCDIR)handle_commands/pipe.c \
 			$(SRCDIR)handle_commands/or.c \
+			$(SRCDIR)handle_commands/path_cmd.c \
 			$(SRCDIR)handle_commands/redirect_in.c \
 			$(SRCDIR)handle_commands/redirect_out.c \
-			$(SRCDIR)handle_commands/path_cmd.c \
-			$(SRCDIR)handle_commands/handler.c \
 			$(SRCDIR)handle_commands/run_single.c \
 			$(SRCDIR)shunting_yard/shunting_yard.c \
 			$(SRCDIR)shunting_yard/shunting_yard_utils.c \
-			$(SRCDIR)shunting_yard/ast_utils.c \
+			$(SRCDIR)shunting_yard/ast_utils.c
 
 OBJDIR := ./obj/
 OBJS	:= $(SRCS:.c=.o)

@@ -3,20 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:29:24 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/20 12:35:55 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:22:56 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	run_append(t_shell *shell, t_command *cmd1, t_command *cmd2)
+int	run_append(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 {
 	int	status;
+	int	fd;
+	int	i;
 
 	status = CMD_SUCCESS;
-	printf("append aka heredoc\n");
+	if (!cmd1 || !cmd2 || !shell)
+		return (CMD_FAILURE);
+	fd = open(cmd2->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	if (fd < 0)
+	{
+		perror("Failed to open file");
+		return (CMD_FAILURE);
+	}
+	i = -1;
+	while (cmd1->args[++i])
+	{
+		if (write(fd, cmd1->args[i], ft_strlen(cmd1->args[i])) < 0)
+		{
+			perror("Failed to write to file");
+			close(fd);
+			return (CMD_FAILURE);
+		}
+		if (write(fd, " ", 1) < 0)
+		{
+			perror("Failed to write to file");
+			close(fd);
+			return (CMD_FAILURE);
+		}
+	}
+	close(fd);
 	return (status);
 }
