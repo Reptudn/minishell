@@ -158,6 +158,5 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		if (execution_manager(cmd1, cmd2, *operator->type, shell) == CMD_FAILURE)
 			return (CMD_FAILURE);
 	}
-	// free_shunting_yard(yard);
 	return (CMD_SUCCESS);
 }

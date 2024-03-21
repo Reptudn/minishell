@@ -21,22 +21,22 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 	node = yard->output;
 	if (!node)
 		return ;
-	// while (node)
-	// {
-	// 	free(node->value);
-	// 	i = -1;
-	// 	// if (node->args && node->args[0])
-	// 	// 	while (node->args[++i])
-	// 	// 		free(node->args[i]);
-	// 	free(node->args);
-	// 	free(node->type);
-	// 	free(node->priority);
-	// 	free(node->fd);
-	// 	free(node->exit_status);
-	// 	next_node = node->next;
-	// 	free(node);
-	// 	node = next_node;
-	// }
+	while (node)
+	{
+		free(node->value);
+		i = -1;
+		if (node->args && node->args[0])
+			while (node->args[++i])
+				free(node->args[i]);
+		free(node->args);
+		free(node->type);
+		free(node->priority);
+		free(node->fd);
+		free(node->exit_status);
+		next_node = node->next;
+		free(node);
+		node = next_node;
+	}
 	free(yard);
 }
 
@@ -46,16 +46,12 @@ int	command_loop(t_shell *shell)
 	char			*line;
 	t_shunting_yard	*yard;
 	char			**split;
-	char			**split_2;
+	int				i;
 
 	line = readline(PROMPT_HELLO);
-	if (!line)
-		return (0);
 	status = 0;
-	while (shell->run)
+	while (shell->run && line)
 	{
-		if (!line)
-			break ;
 		if (ft_strlen(line) == 0)
 		{
 			free(line);
@@ -86,16 +82,18 @@ int	command_loop(t_shell *shell)
 		if (!yard)
 		{
 			printf("Shunting yard failed\n");
-			free_split(split_2);
 			free(line);
 			line = readline(PROMPT_FAILURE);
 			status = CMD_FAILURE;
 			continue ;
 		}
+		i = -1;
+		while (split[++i])
+			free(split[i]);
+		free(split);
 		printf("%s", COLOR_RESET);
 		status = execute_commands(yard, shell, status);
 		shunting_yard_destroy(yard);
-		// free_split(split_2);
 		free(line);
 		line = NULL;
 		if (!shell->run)
@@ -104,8 +102,6 @@ int	command_loop(t_shell *shell)
 			line = readline(PROMPT_FAILURE);
 		else
 			line = readline(PROMPT_SUCCESS);
-		if (!line)
-			break ;
 	}
 	clear_history();
 	if (line)
