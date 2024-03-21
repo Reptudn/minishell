@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:45:05 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 09:03:03 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/21 09:42:15 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell)
 		perror("dup2");
 		return (CMD_FAILURE);
 	}
-	execute_command(cmd, shell);
+	run_command(shell, cmd);
 	dup2(saved_stdin, 0);
 	close(fd);
 	return (CMD_SUCCESS);
