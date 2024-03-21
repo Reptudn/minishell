@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 12:00:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 08:43:11 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/21 09:04:23 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 
 	heredoc = malloc(sizeof(char));
 	heredoc[0] = '\0';
-	printf("cmd2->value: %s\n", cmd2->value);
 	while (1)
 	{
 		temp = readline("heredoc> ");
@@ -36,20 +35,23 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 			break ;
 		}
 		heredoc = ft_strjoin(heredoc, temp);
-		free(temp);
 		heredoc = ft_strjoin(heredoc, "\n");
+		free(temp);
 	}
-	status = CMD_SUCCESS;
 	if (status == CMD_SUCCESS)
 	{
 		t_shunting_node *echo = malloc(sizeof(t_shunting_node));
 		echo->value = ft_strdup("echo");
 		echo->args = malloc(sizeof(char *) * 2);
+		char *nl = ft_strrchr(heredoc, '\n'); //TODO: temp fix
+		*nl = '\0';
 		echo->args[0] = heredoc;
 		echo->args[1] = NULL;
 		status = run_pipe_cmd(echo, cmd1, shell);
 		free(echo->value);
-		free_split(echo->args);
+		free(echo->args[0]);
+		free(echo->args[1]);
+		free(echo->args);
 		free(echo);
 	}
 	free(heredoc);
