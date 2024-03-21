@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 09:56:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/21 08:45:53 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,14 @@ int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
 			t_shell *shell);
-int		redirect_in(t_shunting_node *cmd, t_shell *shell);
-int		redirect_out(t_shunting_node *cmd, t_shell *shell);
+int		redirect_in(t_shunting_node *cmd,
+			t_shunting_node *cmd2, t_shell *shell);
+int		redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2,
+			t_shell *shell);
+int		run_append(t_shell *shell, t_shunting_node *cmd1,
+			t_shunting_node *cmd2);
+int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
+			t_shunting_node *cmd2);
 
 void	replace_variable(char **args, t_shell *shell, int status);
 
@@ -91,21 +97,27 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 {
 	if (!cmd1 || !cmd2 || !shell)
 		return (CMD_FAILURE);
-	if (operator == OR && run_or(shell, cmd1, cmd2) == CMD_FAILURE)
-		return (CMD_FAILURE);
-	else if (operator == AND && run_and(shell, cmd1, cmd2) == CMD_FAILURE)
-		return (CMD_FAILURE);
-	else if (operator == PIPE && run_pipe_cmd(cmd1, cmd2, shell) == CMD_FAILURE)
-	{
-		printf("pipe failed manager\n");
-		return (CMD_FAILURE);
-	}
-	else if (operator == REDIRECT_IN && redirect_in(cmd1, shell) == CMD_FAILURE)
-		return (CMD_FAILURE);
+	if (operator == OR && run_or(shell, cmd1, cmd2) == CMD_SUCCESS)
+		return (CMD_SUCCESS);
+	else if (operator == AND && run_and(shell, cmd1, cmd2) == CMD_SUCCESS)
+		return (CMD_SUCCESS);
+	else if (operator == PIPE && run_pipe_cmd(cmd1, cmd2, shell) == CMD_SUCCESS)
+		return (CMD_SUCCESS);
+	else if (operator == REDIRECT_IN && redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
+		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT
-		&& redirect_out(cmd1, shell) == CMD_FAILURE)
-		return (CMD_FAILURE);
-	return (CMD_SUCCESS);
+		&& redirect_out(cmd1, cmd2, shell) == CMD_SUCCESS)
+		return (CMD_SUCCESS);
+	else if (operator == REDIRECT_OUT_APPEND
+		&& run_append(shell, cmd1, cmd2) == CMD_SUCCESS)
+		return (CMD_SUCCESS);
+	else if (operator == REDIRECT_IN_DELIMITER
+		&& run_delimiter(shell, cmd1, cmd2) == CMD_SUCCESS)
+		return (CMD_SUCCESS);
+	printf("REDIRECT_OUT_APPEND = %d\n", REDIRECT_OUT_APPEND);
+	printf("operator = %d\n", operator);
+	printf("Invalid operator\n");
+	return (CMD_FAILURE);
 }
 
 int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
