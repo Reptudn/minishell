@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 08:51:01 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 09:39:45 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/22 13:31:01 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,10 +157,12 @@ t_env_var	*env_make_vars(char **envp, t_shell *shell)
 {
 	t_env_var	*first;
 	t_env_var	*temp;
+	t_env_var	*current;
 	int			i;
 	char		**split;
 
 	i = -1;
+	first = NULL;
 	while (envp[++i])
 	{
 		split = split_first_occ(envp[i], '=');
@@ -170,15 +172,15 @@ t_env_var	*env_make_vars(char **envp, t_shell *shell)
 		free_split(split);
 		if (!temp)
 			return (NULL);
-		if (!shell->env_vars)
-			shell->env_vars = temp;
+		if (!first)
+			first = temp; //TODO: changed !shell->env_vars to !first. Everything works but was it still important i dont think so or?
 		else
 		{
-			first = shell->env_vars;
-			while (first->next)
-				first = first->next;
-			first->next = temp;
-			temp->prev = first;
+			current = first;
+			while (current->next)
+				current = current->next;
+			current->next = temp;
+			temp->prev = current;
 		}
 	}
 	while (first->prev)
