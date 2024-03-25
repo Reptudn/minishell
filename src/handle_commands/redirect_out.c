@@ -12,17 +12,13 @@
 
 #include "../../include/minishell.h"
 
-<<<<<<< HEAD
-int	redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2)
-=======
 void	redirect_out_error(t_shunting_node *cmd2, int fd)
 {
 	printf("minishell: %s: %s\n", cmd2->value, strerror(errno));
 	close(fd);
 }
 
-int	redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell)
->>>>>>> 50be4c796ffe3cb5b821bc6229677ade0cda7d50
+int	redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2)
 {
 	int	fd;
 	int	i;
