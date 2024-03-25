@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 12:09:43 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/25 11:31:47 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int		run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
 			t_shell *shell);
 int		redirect_in(t_shunting_node *cmd,
 			t_shunting_node *cmd2, t_shell *shell);
-int		redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2,
-			t_shell *shell);
+int		redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2);
 int		run_append(t_shell *shell, t_shunting_node *cmd1,
 			t_shunting_node *cmd2);
 int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
@@ -110,7 +109,7 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 	else if (operator == REDIRECT_IN && redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT
-		&& redirect_out(cmd1, cmd2, shell) == CMD_SUCCESS)
+		&& redirect_out(cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT_APPEND
 		&& run_append(shell, cmd1, cmd2) == CMD_SUCCESS)
@@ -118,9 +117,6 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 	else if (operator == REDIRECT_IN_DELIMITER
 		&& run_delimiter(shell, cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
-	printf("REDIRECT_OUT_APPEND = %d\n", REDIRECT_OUT_APPEND);
-	printf("operator = %d\n", operator);
-	printf("Invalid operator\n");
 	return (CMD_FAILURE);
 }
 
@@ -166,9 +162,8 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 			== CMD_FAILURE)
 			return (CMD_FAILURE);
 		// TODO: this is supposed to pop 2 of the 3 nodes form the stack and for testing replace one with just an echo for testing
-		cmd1->type = ft_strdup("echo");
 		cmd1->args = ft_split("executed 2 commands", ' ');
-		cmd1->type = ft_atoi("0");
+		*cmd1->type = ft_atoi("0");
 		yard_pop(operator, yard);
 		yard_pop(cmd2, yard);
 		print_all_stacks(yard);

@@ -16,11 +16,9 @@ int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell)
 {
 	int		fd[2];
 	pid_t	pid;
-	int		status;
 	int		original_stdin;
 
 	original_stdin = dup(0);
-	status = CMD_SUCCESS;
 	if (pipe(fd) == -1)
 		return (CMD_FAILURE);
 	pid = fork();

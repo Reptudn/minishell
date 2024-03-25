@@ -58,8 +58,6 @@ char	**env_to_envp(t_env_var *var)
 
 void	env_pop(t_env_var *vars, t_env_var *pop)
 {
-	t_env_var	*temp;
-
 	if (!pop)
 		return ;
 	if (pop->prev)
@@ -153,7 +151,7 @@ char	**split_first_occ(char *str, char c)
 	return (split);
 }
 
-t_env_var	*env_make_vars(char **envp, t_shell *shell)
+t_env_var	*env_make_vars(char **envp)
 {
 	t_env_var	*first;
 	t_env_var	*temp;
