@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shunting_yard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 11:06:39 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/21 11:50:33 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,8 +188,7 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 	}
 }
 
-// when something is after a bracket it end up in an endless loop or whatever
-// return NULL if something fails else return a pointer to a t_shunting_yard
+// TODO: check if this is really doing hte yard correctly
 t_shunting_yard	*shunting_yard(char **tokens)
 {
 	t_shunting_yard	*yard;
