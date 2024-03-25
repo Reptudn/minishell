@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 12:09:43 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/25 11:31:47 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,8 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 			== CMD_FAILURE)
 			return (CMD_FAILURE);
 		// TODO: this is supposed to pop 2 of the 3 nodes form the stack and for testing replace one with just an echo for testing
-		cmd1->type = ft_strdup("echo");
 		cmd1->args = ft_split("executed 2 commands", ' ');
-		cmd1->type = ft_atoi("0");
+		*cmd1->type = ft_atoi("0");
 		yard_pop(operator, yard);
 		yard_pop(cmd2, yard);
 		print_all_stacks(yard);
