@@ -3,19 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_out.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:45:05 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 08:54:32 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/21 10:26:28 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+void	redirect_out_error(t_shunting_node *cmd2, int fd)
+{
+	printf("minishell: %s: %s\n", cmd2->value, strerror(errno));
+	close(fd);
+}
+
 int	redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell)
 {
-	int fd;
-	int i;
+	int	fd;
+	int	i;
 
 	fd = open(cmd2->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
@@ -28,14 +34,12 @@ int	redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell)
 	{
 		if (write(fd, cmd->args[i], ft_strlen(cmd->args[i])) < 0)
 		{
-			printf("minishell: %s: %s\n", cmd2->value, strerror(errno));
-			close(fd);
+			redirect_out_error(cmd2, fd);
 			return (CMD_FAILURE);
 		}
 		if (write(fd, " ", 1) < 0)
 		{
-			printf("minishell: %s: %s\n", cmd2->value, strerror(errno));
-			close(fd);
+			redirect_out_error(cmd2, fd);
 			return (CMD_FAILURE);
 		}
 	}
