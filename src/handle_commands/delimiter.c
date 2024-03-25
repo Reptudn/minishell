@@ -43,7 +43,7 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 		t_shunting_node *echo = malloc(sizeof(t_shunting_node));
 		echo->value = ft_strdup("echo");
 		echo->args = malloc(sizeof(char *) * 2);
-		char *nl = ft_strrchr(heredoc, '\n'); //TODO: temp fix
+		char *nl = ft_strrchr(heredoc, '\n'); // TODO: temp fix
 		*nl = '\0';
 		echo->args[0] = heredoc;
 		echo->args[1] = NULL;
