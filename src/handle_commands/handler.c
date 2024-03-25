@@ -18,8 +18,7 @@ int		run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
 			t_shell *shell);
 int		redirect_in(t_shunting_node *cmd,
 			t_shunting_node *cmd2, t_shell *shell);
-int		redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2,
-			t_shell *shell);
+int		redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2);
 int		run_append(t_shell *shell, t_shunting_node *cmd1,
 			t_shunting_node *cmd2);
 int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
@@ -106,7 +105,7 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 	else if (operator == REDIRECT_IN && redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT
-		&& redirect_out(cmd1, cmd2, shell) == CMD_SUCCESS)
+		&& redirect_out(cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT_APPEND
 		&& run_append(shell, cmd1, cmd2) == CMD_SUCCESS)
@@ -114,9 +113,6 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 	else if (operator == REDIRECT_IN_DELIMITER
 		&& run_delimiter(shell, cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
-	printf("REDIRECT_OUT_APPEND = %d\n", REDIRECT_OUT_APPEND);
-	printf("operator = %d\n", operator);
-	printf("Invalid operator\n");
 	return (CMD_FAILURE);
 }
 

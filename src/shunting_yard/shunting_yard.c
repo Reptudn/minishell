@@ -87,7 +87,6 @@ int	stack_to_output_end(t_shunting_yard *yard)
 {
 	t_shunting_node	*last_stack;
 	t_shunting_node	*last_output;
-	t_shunting_node	*tmp;
 
 	if (!yard || !yard->stack)
 		return (0);

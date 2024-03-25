@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int	redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell)
+int	redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2)
 {
 	int fd;
 	int i;

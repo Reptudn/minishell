@@ -58,12 +58,13 @@ int	str_is_equal(char *str1, char *str2)
 	return (1);
 }
 
-int	is_env_command(t_shell *shell, char *str, int i)
+int	is_env_command(t_shell *shell, char *str)
 {
 	char		*cmd_path;
 	char		*tmp;
 	t_env_var	*path;
 	char		**split;
+	int			i;
 
 	i = -1;
 	path = env_get_by_name(shell->env_vars, "PATH");
@@ -97,8 +98,6 @@ int	is_env_command(t_shell *shell, char *str, int i)
 
 int	is_command(char *str, t_shell *shell)
 {
-	int	i;
-
 	if (str_is_equal("echo", str) == 1)
 		return (1);
 	if (str_is_equal("pwd", str) == 1)
@@ -117,7 +116,7 @@ int	is_command(char *str, t_shell *shell)
 		return (1);
 	if (str_is_equal("exit", str) == 1)
 		return (1);
-	if (is_env_command(shell, str, i) == 1)
+	if (is_env_command(shell, str) == 1)
 		return (1);
 	return (0);
 }

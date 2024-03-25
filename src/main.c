@@ -83,13 +83,13 @@ int	main(int argc, char **argv, char **envp)
 	g_run = &(shell.run);
 	shell.path = getcwd(NULL, 0);
 	argc++;
-	argv = 0;
+	(void)argv;
 	if (!shell.path)
 	{
 		ft_putstr_fd("Error: current working directory\n", STDERR_FILENO);
 		return (1);
 	}
-	shell.env_vars = env_make_vars(envp, &shell);
+	shell.env_vars = env_make_vars(envp);
 	if (!shell.env_vars)
 	{
 		ft_putstr_fd("Error: environment\n", STDERR_FILENO);
