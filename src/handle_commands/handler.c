@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 12:09:43 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/25 11:41:35 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,14 @@ t_shunting_node	*get_operator_with_index(t_shunting_node *nodes, int index)
 		{
 			if (index == 1)
 			{
-				printf("operator = %s\n", nodes->value);
+				// printf("operator = %s\n", nodes->value);
 				return (nodes);
 			}
 			index--;
 		}
 		nodes = nodes->next;
 	}
-	printf("no operator found\n");
+	// printf("no operator found\n");
 	return (NULL);
 }
 
@@ -146,20 +146,22 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		printf("Invalid operator count\n");
 		return (CMD_FAILURE);
 	}
-	while (++index < operator_count) // TODO: fix this that it works correctly
+	int	t = 0;
+	while (++index < operator_count && yard->output) // TODO: fix this that it works correctly
 	{
+		// print_all_stacks(yard);
 		operator = get_operator_with_index(yard->output, 1);
 		if (!operator)
 			return (CMD_FAILURE);
-		printf("operator = %s\n", operator->value);
+		// printf("operator = %s\n", operator->value);
 		cmd2 = operator->prev;
 		if (!cmd2)
 			return (CMD_FAILURE);
-		printf("cmd2 = %s\n", cmd2->value);
+		// printf("cmd2 = %s\n", cmd2->value);
 		cmd1 = cmd2->prev;
 		if (!cmd1)
 			return (CMD_FAILURE);
-		printf("cmd1 = %s\n", cmd1->value);
+		// printf("cmd1 = %s\n", cmd1->value);
 		replace_variable(cmd1->args, shell, status);
 		replace_variable(cmd2->args, shell, status);
 		if (execution_manager(cmd1, cmd2, *operator->type, shell)
@@ -168,11 +170,13 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		// TODO: this is supposed to pop 2 of the 3 nodes form the stack and for testing replace one with just an echo for testing
 		cmd1->type = ft_strdup("echo");
 		cmd1->args = ft_split("executed 2 commands", ' ');
-		cmd1->type = ft_atoi("0");
+		cmd1->type = malloc(sizeof(int));
+		*cmd1->type = NONE;
 		yard_pop(operator, yard);
 		yard_pop(cmd2, yard);
-		print_all_stacks(yard);
+		// printf("Loop %d\n", t++);
 	}
-	exit (0);
 	return (CMD_SUCCESS);
 }
+
+// echo hi && echo hello || echo world && echo bye
