@@ -139,7 +139,8 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		printf("Invalid operator count\n");
 		return (CMD_FAILURE);
 	}
-	while (++index < operator_count) // TODO: fix this that it works correctly
+	print_all_stacks(yard);
+	while (++index < operator_count && yard->output) // TODO: fix this that it works correctly
 	{
 		operator = get_operator_with_index(yard->output, 1);
 		if (!operator)
@@ -155,13 +156,15 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		if (execution_manager(cmd1, cmd2, *operator->type, shell)
 			== CMD_FAILURE)
 			return (CMD_FAILURE);
-		// TODO: this is supposed to pop 2 of the 3 nodes form the stack and for testing replace one with just an echo for testing
-		free(cmd1->args);
-		cmd1->args = ft_split("executed 2 commands", ' ');
-		*cmd1->type = ft_atoi("0");
+		cmd1->args = ft_split("-n <OUTPUT FROM LAST TWO COMMANDS HERE>", ' ');
+		cmd1->value = ft_strdup("echo");
+		cmd1->type = malloc(sizeof(int));
+		*cmd1->type = NONE;
 		yard_pop(operator, yard);
 		yard_pop(cmd2, yard);
-		// print_all_stacks(yard);
+
 	}
 	return (CMD_SUCCESS);
 }
+
+// echo hi && echo hello || echo world && echo bye
