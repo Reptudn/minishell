@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 12:00:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 09:04:23 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/25 18:05:15 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 {
 	char	*heredoc;
+	char	*new_heredoc;
 	char	*temp;
 	int		status;
 
@@ -32,10 +33,13 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 		if (str_is_equal(temp, cmd2->value))
 		{
 			status = CMD_SUCCESS;
+			free(temp);
 			break ;
 		}
-		heredoc = ft_strjoin(heredoc, temp);
-		heredoc = ft_strjoin(heredoc, "\n");
+		new_heredoc = ft_strjoin(heredoc, temp);
+		free(heredoc);
+		heredoc = ft_strjoin(new_heredoc, "\n");
+		free(new_heredoc);
 		free(temp);
 	}
 	if (status == CMD_SUCCESS)
