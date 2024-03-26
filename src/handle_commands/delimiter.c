@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 12:00:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/26 10:53:01 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/26 10:57:57 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 		// free(echo->args[0]);	//TODO: 2DArray and the Arrays inside of the array musnt be freed? tf? SUS
 		// free(echo->args[1]);
 		free(echo->args);
+		free(echo->exit_status);
 		free(echo);
 	}
 	free(heredoc);
