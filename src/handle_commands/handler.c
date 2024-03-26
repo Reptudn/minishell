@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/25 16:57:10 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/26 09:53:33 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ t_shunting_node	*get_operator_with_index(t_shunting_node *nodes, int index)
 	return (NULL);
 }
 
-int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator,
-	t_shell *shell)
+int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2,
+	int operator, t_shell *shell)
 {
 	if (!cmd1 || !cmd2 || !shell)
 		return (CMD_FAILURE);
@@ -102,7 +102,8 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 		return (CMD_SUCCESS);
 	else if (operator == PIPE && run_pipe_cmd(cmd1, cmd2, shell) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
-	else if (operator == REDIRECT_IN && redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
+	else if (operator == REDIRECT_IN
+		&& redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT
 		&& redirect_out(cmd1, cmd2) == CMD_SUCCESS)

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:36:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/25 17:57:04 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/26 09:57:20 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,8 @@
 // removed one node from the stack and changes the pointers so everything is connected again even if the node was in the middle of the stack
 // only for output
 
-
-
 void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard)
 {
-	// int	i;
-
 	if (!pop)
 		return ;
 	if (pop->prev)
@@ -30,7 +26,6 @@ void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard)
 	if (yard->output == pop)
 		yard->output = pop->next;
 	free(pop->value);
-	// i = 0;
 	// while (pop->args[i]) //TODO: seems like there are no leaks even though the args are not freed. SUS
 	// 	free(pop->args[i]);
 	free(pop->args);
