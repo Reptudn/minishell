@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 08:49:20 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/25 17:36:18 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int				ft_clear(void);
 void			print_invalid_cmd(char *command);
 char			**ft_split_shell(const char *str);
 void			*free_split(char **split);
+void			free_node(t_shunting_node *node);
 int				is_operator(char *str);
 void			*make_cmds(char *line, t_shell *shell, int i);
 char			**filter_variables(char **split, t_shell *shell);
