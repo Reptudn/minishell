@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:36:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/25 11:05:40 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/26 11:16:31 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard)
 		yard->output = pop->next;
 		if (yard->output)
 			yard->output->prev = NULL;
+	}
 	free(pop->value);
 	// while (pop->args[i]) //TODO: seems like there are no leaks even though the args are not freed. SUS
 	// 	free(pop->args[i]);
