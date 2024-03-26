@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_single.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:27:22 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 09:32:39 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/26 10:08:45 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 					COLOR_RED, COLOR_RESET);
 		}
 	}
+	if (cmd->exit_status == NULL)
+		cmd->exit_status = malloc(sizeof(int));
 	*cmd->exit_status = status;
 	return (status);
 }

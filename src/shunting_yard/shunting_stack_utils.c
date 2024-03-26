@@ -28,12 +28,13 @@ void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard)
 		yard->output = pop->next;
 		if (yard->output)
 			yard->output->prev = NULL;
-	}
-	// free(pop->value);
-	// free_split(pop->args);
-	// free(pop->type);
-	// free(pop->priority);
-	// free(pop->fd);
-	// free(pop->exit_status);
-	// free(pop);
+	free(pop->value);
+	// while (pop->args[i]) //TODO: seems like there are no leaks even though the args are not freed. SUS
+	// 	free(pop->args[i]);
+	free(pop->args);
+	free(pop->type);
+	free(pop->priority);
+	free(pop->fd);
+	free(pop->exit_status);
+	free(pop);
 }

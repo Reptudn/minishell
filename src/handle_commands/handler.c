@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/25 11:41:35 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/26 09:53:33 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int		run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
 			t_shell *shell);
 int		redirect_in(t_shunting_node *cmd,
 			t_shunting_node *cmd2, t_shell *shell);
-int		redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2,
-			t_shell *shell);
+int		redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2);
 int		run_append(t_shell *shell, t_shunting_node *cmd1,
 			t_shunting_node *cmd2);
 int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
@@ -84,20 +83,16 @@ t_shunting_node	*get_operator_with_index(t_shunting_node *nodes, int index)
 		if (*nodes->type != NONE)
 		{
 			if (index == 1)
-			{
-				// printf("operator = %s\n", nodes->value);
 				return (nodes);
-			}
 			index--;
 		}
 		nodes = nodes->next;
 	}
-	// printf("no operator found\n");
 	return (NULL);
 }
 
-int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator,
-	t_shell *shell)
+int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2,
+	int operator, t_shell *shell)
 {
 	if (!cmd1 || !cmd2 || !shell)
 		return (CMD_FAILURE);
@@ -107,10 +102,11 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 		return (CMD_SUCCESS);
 	else if (operator == PIPE && run_pipe_cmd(cmd1, cmd2, shell) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
-	else if (operator == REDIRECT_IN && redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
+	else if (operator == REDIRECT_IN
+		&& redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT
-		&& redirect_out(cmd1, cmd2, shell) == CMD_SUCCESS)
+		&& redirect_out(cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT_APPEND
 		&& run_append(shell, cmd1, cmd2) == CMD_SUCCESS)
@@ -118,9 +114,6 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 	else if (operator == REDIRECT_IN_DELIMITER
 		&& run_delimiter(shell, cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
-	printf("REDIRECT_OUT_APPEND = %d\n", REDIRECT_OUT_APPEND);
-	printf("operator = %d\n", operator);
-	printf("Invalid operator\n");
 	return (CMD_FAILURE);
 }
 
@@ -169,6 +162,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		*cmd1->type = NONE;
 		yard_pop(operator, yard);
 		yard_pop(cmd2, yard);
+
 	}
 	return (CMD_SUCCESS);
 }

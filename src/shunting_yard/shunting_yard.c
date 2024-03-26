@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 11:50:33 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/25 14:58:33 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	stack_to_output_end(t_shunting_yard *yard)
 {
 	t_shunting_node	*last_stack;
 	t_shunting_node	*last_output;
-	t_shunting_node	*tmp;
 
 	if (!yard || !yard->stack)
 		return (0);

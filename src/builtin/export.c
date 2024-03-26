@@ -15,11 +15,9 @@
 // TODO: Isnt quite like the original bash export command
 int	ft_export(t_shell *shell, t_shunting_node *cmd)
 {
-	int			i;
 	t_env_var	*env;
 	char		**split;
 
-	i = -1;
 	split = split_first_occ(cmd->args[0], '=');
 	if (!split)
 		return (CMD_FAILURE);

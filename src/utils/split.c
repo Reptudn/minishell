@@ -174,11 +174,9 @@ char	**ft_split_shell(const char *str)
 	char	**temp;
 	int		res_i;
 	char	**result;
-	int		i;
 	int		k;
 
 	res_i = 0;
-	i = -1;
 	k = -1;
 	temp = (char **)malloc((strlen(str) + 1) * sizeof(char *));
 	process_string(str, temp, &res_i);
