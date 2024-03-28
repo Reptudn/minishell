@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/26 09:53:33 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/28 15:06:38 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 	t_shunting_node	*cmd2;
 	int				operator_count;
 	int				index;
+	int				k;
 
 	index = -1;
 	if (!yard || !yard->output || !shell)
@@ -139,7 +140,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		printf("Invalid operator count\n");
 		return (CMD_FAILURE);
 	}
-	print_all_stacks(yard);
+	// print_all_stacks(yard);
 	while (++index < operator_count && yard->output) // TODO: fix this that it works correctly
 	{
 		operator = get_operator_with_index(yard->output, 1);
@@ -156,13 +157,16 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		if (execution_manager(cmd1, cmd2, *operator->type, shell)
 			== CMD_FAILURE)
 			return (CMD_FAILURE);
+		k = -1;
+		while (cmd1->args[++k])
+			free(cmd1->args[k]);
+		free(cmd1->args);
 		cmd1->args = ft_split("-n <OUTPUT FROM LAST TWO COMMANDS HERE>", ' ');
+		free(cmd1->value);
 		cmd1->value = ft_strdup("echo");
-		cmd1->type = malloc(sizeof(int));
 		*cmd1->type = NONE;
 		yard_pop(operator, yard);
 		yard_pop(cmd2, yard);
-
 	}
 	return (CMD_SUCCESS);
 }

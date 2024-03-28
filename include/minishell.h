@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/25 17:36:18 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/28 12:16:10 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,6 @@ int				get_quote_cout(char *str, char quote);
 // pipes
 int				run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
 					t_shell *shell);
-
 char			**make_env_args(char *cmd, char **args);
 char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
 
