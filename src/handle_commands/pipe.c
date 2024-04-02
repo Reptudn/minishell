@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:20:58 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 14:01:33 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 09:03:12 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell)
+int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell, int in_fd)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -25,12 +25,20 @@ int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell)
 		return (CMD_FAILURE);
 	pid = fork();
 	if (pid < 0)
+	{
+		printf("pipe: %s\n", strerror(errno));
 		return (CMD_FAILURE);
+	}
 	else if (pid == 0)
 	{
 		dup2(fd[1], 1);
 		close(fd[0]);
 		close(fd[1]);
+		if (in_fd != -1)
+		{
+			dup2(in_fd, 0);
+			close(in_fd);
+		}
 		if (run_command(shell, cmd1) == CMD_FAILURE)
 		{
 			printf("pipe1: %s: %s\n", cmd1->args[0], strerror(errno));

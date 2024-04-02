@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 10:34:00 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 08:53:05 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ int	command_loop(t_shell *shell)
 			continue ;
 		}
 		split = ft_split_shell(line);
-		for (int i = 0; split[i]; i++)
-			printf("split[%d]: %s\n", i, split[i]);
 		if (!split)
 		{
 			free(line);
@@ -81,8 +79,6 @@ int	command_loop(t_shell *shell)
 			continue ;
 		}
 		yard = shunting_yard(split);
-		printf("yard->args[0]: %s\n", yard->output->args[0]);
-		printf("yard->args[1]: %s\n", yard->output->args[1]);
 		if (!yard)
 		{
 			printf("Shunting yard failed\n");

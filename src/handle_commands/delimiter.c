@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 12:00:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 09:04:23 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 09:37:54 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 		*nl = '\0';
 		echo->args[0] = heredoc;
 		echo->args[1] = NULL;
-		status = run_pipe_cmd(echo, cmd1, shell);
+		status = run_pipe_cmd(echo, cmd1, shell, -1);
 		free(echo->value);
-		free(echo->args[0]);
-		free(echo->args[1]);
+		// free(echo->args[0]);	//TODO: temp fix for double free
+		// free(echo->args[1]);
 		free(echo->args);
 		free(echo);
 	}

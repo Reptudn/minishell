@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 10:28:49 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 09:58:52 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
-			t_shell *shell);
+			t_shell *shell, int in_fd);
 int		redirect_in(t_shunting_node *cmd,
 			t_shunting_node *cmd2, t_shell *shell);
 int		redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2,
@@ -101,7 +101,7 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 		return (CMD_SUCCESS);
 	else if (operator == AND && run_and(shell, cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
-	else if (operator == PIPE && run_pipe_cmd(cmd1, cmd2, shell) == CMD_SUCCESS)
+	else if (operator == PIPE && run_pipe_cmd(cmd1, cmd2, shell, 0) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_IN && redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
