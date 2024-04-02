@@ -5,6 +5,9 @@ The objective of this project is for you to create a simple shell.
 - [pipes](https://reactive.so/post/42-a-comprehensive-guide-to-pipex)
 - [minishell guide](https://achrafbelarif.medium.com/42cursus-minishell-29cd25f972e6)
 
+# Tester
+ - https://github.com/zstenger93/42_minishell_tester
+
 # Overview
 ## Parsing
 Parsing bezieht sich auf den Prozess des Zerlegens oder Analysierens einer Eingabezeile oder eines Befehls in seine Bestandteile, um deren Struktur und Bedeutung zu verstehen.
