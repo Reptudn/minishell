@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:14:28 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/26 09:31:52 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 10:33:46 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,5 @@ int	command_loop(t_shell *shell)
 	clear_history();
 	if (line)
 		free(line);
-	return (0);
+	return (*shell->exit_status);
 }

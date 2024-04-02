@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/27 15:37:09 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 10:33:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,29 +82,31 @@ int	main(int argc, char **argv, char **envp)
 	shell.run = true;
 	g_run = &(shell.run);
 	shell.path = getcwd(NULL, 0);
+	shell.exit_status = malloc(sizeof(int));
+	*shell.exit_status = CMD_SUCCESS;
 	argc++;
 	(void)argv;
 	if (!shell.path)
 	{
 		ft_putstr_fd("Error: current working directory\n", STDERR_FILENO);
-		return (1);
+		return (CMD_FAILURE);
 	}
 	shell.env_vars = env_make_vars(envp);
 	if (!shell.env_vars)
 	{
 		ft_putstr_fd("Error: environment\n", STDERR_FILENO);
-		return (1);
+		return (CMD_FAILURE);
 	}
 	if (signal(SIGINT, signal_handler) == SIG_ERR
 		|| signal(SIGQUIT, signal_handler) == SIG_ERR)
 	{
 		ft_putstr_fd("Error: signal handler\n", STDERR_FILENO);
 		free(shell.path);
-		return (1);
+		return (CMD_FAILURE);
 	}
-	// print_start_logo();
+	print_start_logo();
 	command_loop(&shell);
 	free(shell.path);
 	env_destroy(shell.env_vars);
-	return (0);
+	return (*shell.exit_status);
 }
