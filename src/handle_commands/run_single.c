@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:27:22 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/26 10:08:45 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 10:37:01 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 		return (CMD_FAILURE);
 	status = CMD_SUCCESS;
 	if (str_is_equal(cmd->value, "history"))
-		display_history();
+		status = display_history();
 	else if (str_is_equal(cmd->value, "exit"))
-		shell->run = false;
+		status = ft_exit(shell, cmd);
 	else if (str_is_equal(cmd->value, "echo"))
 		status = ft_echo(cmd);
 	else if (str_is_equal(cmd->value, "pwd"))
@@ -56,5 +56,6 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 	if (cmd->exit_status == NULL)
 		cmd->exit_status = malloc(sizeof(int));
 	*cmd->exit_status = status;
+	*shell->exit_status = status;
 	return (status);
 }

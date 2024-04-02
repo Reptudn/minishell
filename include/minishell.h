@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/28 12:16:10 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/27 16:05:00 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_shell
 	bool		run;
 	char		*path;
 	t_env_var	*env_vars;
+	int			*exit_status;
 }			t_shell;
 
 typedef struct s_shunting_node
@@ -112,7 +113,7 @@ int				pwd(void);
 int				ft_export(t_shell *shell, t_shunting_node *cmd);
 int				ft_unset(t_shunting_node *cmd, t_shell *shell);
 int				ft_env(t_shell *shell);
-int				ft_exit(t_shell *shell);
+int				ft_exit(t_shell *shell, t_shunting_node *cmd);
 int				ft_echo(t_shunting_node *cmd);
 
 // exec env commands

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/28 15:06:38 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 10:59:02 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 	t_shunting_node	*cmd2;
 	int				operator_count;
 	int				index;
+	int				exit_status;
 	int				k;
 
 	index = -1;
@@ -154,21 +155,21 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 			return (CMD_FAILURE);
 		replace_variable(cmd1->args, shell, status);
 		replace_variable(cmd2->args, shell, status);
-		if (execution_manager(cmd1, cmd2, *operator->type, shell)
-			== CMD_FAILURE)
-			return (CMD_FAILURE);
+		exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
+		if (exit_status > CMD_SUCCESS)
+			return (exit_status);
+		cmd1->args = ft_split("-n    ", ' ');
 		k = -1;
 		while (cmd1->args[++k])
 			free(cmd1->args[k]);
 		free(cmd1->args);
-		cmd1->args = ft_split("-n <OUTPUT FROM LAST TWO COMMANDS HERE>", ' ');
 		free(cmd1->value);
 		cmd1->value = ft_strdup("echo");
 		*cmd1->type = NONE;
 		yard_pop(operator, yard);
 		yard_pop(cmd2, yard);
 	}
-	return (CMD_SUCCESS);
+	return (exit_status);
 }
 
 // echo hi && echo hello || echo world && echo bye
