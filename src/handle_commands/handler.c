@@ -6,11 +6,13 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 09:58:52 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 10:06:58 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	yard_pop(t_shunting_node *node, t_shunting_yard *yard);
 
 int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
@@ -18,8 +20,7 @@ int		run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
 			t_shell *shell, int in_fd);
 int		redirect_in(t_shunting_node *cmd,
 			t_shunting_node *cmd2, t_shell *shell);
-int		redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2,
-			t_shell *shell);
+int		redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2);
 int		run_append(t_shell *shell, t_shunting_node *cmd1,
 			t_shunting_node *cmd2);
 int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
@@ -82,9 +83,7 @@ t_shunting_node	*get_operator_with_index(t_shunting_node *nodes, int index)
 		if (*nodes->type != NONE)
 		{
 			if (index == 1)
-			{
 				return (nodes);
-			}
 			index--;
 		}
 		nodes = nodes->next;
@@ -92,8 +91,8 @@ t_shunting_node	*get_operator_with_index(t_shunting_node *nodes, int index)
 	return (NULL);
 }
 
-int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator,
-	t_shell *shell)
+int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2,
+	int operator, t_shell *shell)
 {
 	if (!cmd1 || !cmd2 || !shell)
 		return (CMD_FAILURE);
@@ -103,10 +102,11 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 		return (CMD_SUCCESS);
 	else if (operator == PIPE && run_pipe_cmd(cmd1, cmd2, shell, 0) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
-	else if (operator == REDIRECT_IN && redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
+	else if (operator == REDIRECT_IN
+		&& redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT
-		&& redirect_out(cmd1, cmd2, shell) == CMD_SUCCESS)
+		&& redirect_out(cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT_APPEND
 		&& run_append(shell, cmd1, cmd2) == CMD_SUCCESS)
@@ -114,9 +114,6 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2, int operator
 	else if (operator == REDIRECT_IN_DELIMITER
 		&& run_delimiter(shell, cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
-	printf("REDIRECT_OUT_APPEND = %d\n", REDIRECT_OUT_APPEND);
-	printf("operator = %d\n", operator);
-	printf("Invalid operator\n");
 	return (CMD_FAILURE);
 }
 
@@ -127,6 +124,8 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 	t_shunting_node	*cmd2;
 	int				operator_count;
 	int				index;
+	int				exit_status;
+	int				k;
 
 	index = -1;
 	if (!yard || !yard->output || !shell)
@@ -142,9 +141,10 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		printf("Invalid operator count\n");
 		return (CMD_FAILURE);
 	}
-	while (++index < operator_count) // TODO:this aint working yet
+	// print_all_stacks(yard);
+	while (++index < operator_count && yard->output) // TODO: fix this that it works correctly
 	{
-		operator = get_operator_with_index(yard->output, index + 1);
+		operator = get_operator_with_index(yard->output, 1);
 		if (!operator)
 			return (CMD_FAILURE);
 		cmd2 = operator->prev;
@@ -155,8 +155,22 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 			return (CMD_FAILURE);
 		replace_variable(cmd1->args, shell, status);
 		replace_variable(cmd2->args, shell, status);
-		if (execution_manager(cmd1, cmd2, *operator->type, shell) == CMD_FAILURE)
-			return (CMD_FAILURE);
+		exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
+		if (exit_status > CMD_SUCCESS)
+			return (exit_status);
+		cmd1->args = ft_split("-n    ", ' ');
+		k = -1;
+		// TODO: this was here so we might need to put this somewhere else
+		// while (cmd1->args[++k])
+		// 	free(cmd1->args[k]);
+		// free(cmd1->args);
+		// free(cmd1->value);
+		cmd1->value = ft_strdup("echo");
+		*cmd1->type = NONE;
+		yard_pop(operator, yard);
+		yard_pop(cmd2, yard);
 	}
-	return (CMD_SUCCESS);
+	return (exit_status);
 }
+
+// echo hi && echo hello || echo world && echo bye

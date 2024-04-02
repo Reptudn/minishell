@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:29:24 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 14:22:56 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/28 12:28:10 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	run_append(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 			close(fd);
 			return (CMD_FAILURE);
 		}
-		if (write(fd, " ", 1) < 0)
+		if (write(fd, "\n", 1) < 0)
 		{
 			perror("Failed to write to file");
 			close(fd);

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:20:58 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 09:03:12 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 10:02:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell, i
 {
 	int		fd[2];
 	pid_t	pid;
-	int		status;
 	int		original_stdin;
 
 	original_stdin = dup(0);
-	status = CMD_SUCCESS;
 	if (pipe(fd) == -1)
 		return (CMD_FAILURE);
 	pid = fork();

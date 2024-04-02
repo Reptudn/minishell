@@ -1,6 +1,6 @@
 NAME	:= minishell
 
-CFLAGS	:= -Wextra -Wall #-Werror
+CFLAGS	:= -Wextra -Wall -Werror
 
 HEADERS	:= -I ./include
 
@@ -42,6 +42,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)handle_commands/run_single.c \
 			$(SRCDIR)shunting_yard/shunting_yard.c \
 			$(SRCDIR)shunting_yard/shunting_yard_utils.c \
+			$(SRCDIR)shunting_yard/shunting_stack_utils.c \
 			$(SRCDIR)shunting_yard/ast_utils.c
 
 OBJDIR := ./obj/
