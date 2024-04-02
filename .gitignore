@@ -8,3 +8,5 @@
 minishell
 minishell.dSYM
 *.py
+minishell_tester
+*.sh
