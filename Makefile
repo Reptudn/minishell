@@ -40,6 +40,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)handle_commands/redirect_in.c \
 			$(SRCDIR)handle_commands/redirect_out.c \
 			$(SRCDIR)handle_commands/run_single.c \
+			$(SRCDIR)handle_commands/execute_pipe_chain.c \
 			$(SRCDIR)shunting_yard/shunting_yard.c \
 			$(SRCDIR)shunting_yard/shunting_yard_utils.c \
 			$(SRCDIR)shunting_yard/shunting_stack_utils.c \
@@ -61,21 +62,26 @@ libft:
 ft_printf:
 	@make -C ./lib/ft_printf
 
+get_next_line:
+	@make -C ./lib/get_next_line
+
 $(OBJDIR)%.o: %.c
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
-$(NAME): $(OBJS) libft ft_printf
-	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/ft_printf/libftprintf.a $(HEADERS) -lreadline -o $(NAME) && printf "\n\nCompilation finished!\n"
+$(NAME): $(OBJS) libft ft_printf get_next_line
+	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/get_next_line/get_next_line.a ./lib/ft_printf/libftprintf.a $(HEADERS) -lreadline -o $(NAME) && printf "\n\nCompilation finished!\n"
 
 clean:
 	@make -C ./lib/libft clean
 	@make -C ./lib/ft_printf clean
+	@make -C ./lib/get_next_line clean
 	@rm -rf $(OBJDIR)
 
 fclean: clean
 	@make -C ./lib/libft fclean
 	@make -C ./lib/ft_printf fclean
+	@make -C ./lib/get_next_line fclean
 	@rm -rf $(NAME)
 
 re: fclean all
