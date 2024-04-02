@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:00:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 10:34:20 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 12:14:24 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ int	ft_exit(t_shell *shell, t_shunting_node *cmd)
 		return (CMD_FAILURE);
 	}
 	exit_code = ft_atoi(cmd->args[0]);
-	*shell->exit_status = exit_code % 255;
-	return (exit_code % 255);
+	*shell->exit_status = exit_code % 256;
+	return (exit_code % 256);
 }

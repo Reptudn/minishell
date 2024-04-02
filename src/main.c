@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 10:33:16 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 12:13:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	main(int argc, char **argv, char **envp)
 		free(shell.path);
 		return (CMD_FAILURE);
 	}
-	print_start_logo();
+	// print_start_logo();
 	command_loop(&shell);
 	free(shell.path);
 	env_destroy(shell.env_vars);

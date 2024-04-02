@@ -6,12 +6,15 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/25 14:58:33 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 12:31:20 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include <stdio.h>
+
+int	get_operator_count(t_shunting_node *nodes);
+int	get_command_count(t_shunting_node *nodes);
 
 void	print_shunting_node(t_shunting_node *node, int a);
 
@@ -119,44 +122,44 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 
 	if (!node)
 		return ;
-	if (*node->type == OPEN_PAREN)
-	{
-		if (!yard->stack)
-		{
-			yard->stack = node;
-			node->prev = NULL;
-			node->next = NULL;
-		}
-		else
-		{
-			tmp = yard->stack;
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = node;
-			node->prev = tmp;
-			node->next = NULL;
-		}
-	}
-	else if (*node->type == CLOSE_PAREN)
-	{
-		while (yard->stack && *yard->stack->type != OPEN_PAREN)
-			if (!stack_to_output_end(yard))
-				break ;
-		tmp = get_last_node(yard->stack);
-		if (yard->stack && tmp && *tmp->type == OPEN_PAREN)
-		{
-			if (!tmp->prev)
-				yard->stack = NULL;
-			else
-			{
-				tmp->prev->next = NULL;
-			}
-			tmp = get_last_node(yard->stack);
-		}
-		else
-			printf("ERROR: Unbalanced Parens\n");
-	}
-	else if (*node->type != NONE)
+	// if (*node->type == OPEN_PAREN)
+	// {
+	// 	if (!yard->stack)
+	// 	{
+	// 		yard->stack = node;
+	// 		node->prev = NULL;
+	// 		node->next = NULL;
+	// 	}
+	// 	else
+	// 	{
+	// 		tmp = yard->stack;
+	// 		while (tmp->next)
+	// 			tmp = tmp->next;
+	// 		tmp->next = node;
+	// 		node->prev = tmp;
+	// 		node->next = NULL;
+	// 	}
+	// }
+	// else if (*node->type == CLOSE_PAREN)
+	// {
+	// 	while (yard->stack && *yard->stack->type != OPEN_PAREN)
+	// 		if (!stack_to_output_end(yard))
+	// 			break ;
+	// 	tmp = get_last_node(yard->stack);
+	// 	if (yard->stack && tmp && *tmp->type == OPEN_PAREN)
+	// 	{
+	// 		if (!tmp->prev)
+	// 			yard->stack = NULL;
+	// 		else
+	// 		{
+	// 			tmp->prev->next = NULL;
+	// 		}
+	// 		tmp = get_last_node(yard->stack);
+	// 	}
+	// 	else
+	// 		printf("ERROR: Unbalanced Parens\n");
+	// }
+	if (*node->type != NONE)
 	{
 		if (!yard->stack)
 			yard->stack = node;
@@ -196,8 +199,14 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	yard = shunting_yard_create(tokens);
 	if (!yard)
 		return (NULL);
+	if (get_operator_count(yard->output) != get_command_count(yard->output) - 1)
+	{
+		printf("Unbalanced Commands and Operators\n");
+		return (NULL);
+	}
 	while (yard->input)
 	{
+		print_all_stacks(yard);
 		node = get_first_input(yard);
 		if (!node)
 			break ;
@@ -205,6 +214,6 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	}
 	while (yard->stack)
 		stack_to_output_end(yard);
-	// print_all_stacks(yard);
+	print_all_stacks(yard);
 	return (yard);
 }
