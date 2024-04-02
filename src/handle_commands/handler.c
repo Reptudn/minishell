@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 10:59:02 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 11:54:25 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,11 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 			return (exit_status);
 		cmd1->args = ft_split("-n    ", ' ');
 		k = -1;
-		while (cmd1->args[++k])
-			free(cmd1->args[k]);
-		free(cmd1->args);
-		free(cmd1->value);
+		// TODO: this was here so we might need to put this somewhere else
+		// while (cmd1->args[++k])
+		// 	free(cmd1->args[k]);
+		// free(cmd1->args);
+		// free(cmd1->value);
 		cmd1->value = ft_strdup("echo");
 		*cmd1->type = NONE;
 		yard_pop(operator, yard);
