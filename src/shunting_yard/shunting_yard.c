@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 12:31:20 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 13:59:19 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int	get_operator_count(t_shunting_node *nodes);
 int	get_command_count(t_shunting_node *nodes);
+int	yard_len(t_shunting_node *stack);
 
 void	print_shunting_node(t_shunting_node *node, int a);
 
@@ -199,7 +200,8 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	yard = shunting_yard_create(tokens);
 	if (!yard)
 		return (NULL);
-	if (get_operator_count(yard->output) != get_command_count(yard->output) - 1)
+	if (get_operator_count(yard->input)
+		!= get_command_count(yard->input) - 1)
 	{
 		printf("Unbalanced Commands and Operators\n");
 		return (NULL);

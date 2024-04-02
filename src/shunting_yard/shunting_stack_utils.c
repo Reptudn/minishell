@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:36:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/26 11:16:31 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/02 13:53:01 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,19 @@ void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard)
 	free(pop->fd);
 	free(pop->exit_status);
 	free(pop);
+}
+
+int	yard_len(t_shunting_node *stack)
+{
+	t_shunting_node	*node;
+	int				len;
+
+	len = 0;
+	node = stack;
+	while (node)
+	{
+		len++;
+		node = node->next;
+	}
+	return (len);
 }
