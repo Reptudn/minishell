@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:45:05 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/21 10:26:28 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/28 12:20:53 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2)
 			redirect_out_error(cmd2, fd);
 			return (CMD_FAILURE);
 		}
-		if (write(fd, " ", 1) < 0)
+		if (write(fd, "\n", 1) < 0)
 		{
 			redirect_out_error(cmd2, fd);
 			return (CMD_FAILURE);

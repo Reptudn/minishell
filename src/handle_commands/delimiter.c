@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 12:00:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/26 10:57:57 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/03/28 12:20:05 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 	char	*temp;
 	int		status;
 
-	heredoc = malloc(sizeof(char));
+	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
 	while (1)
 	{
@@ -42,20 +42,20 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 		free(new_heredoc);
 		free(temp);
 	}
+	printf("cmd1: %s\n", cmd1->value);
+	printf("cmd2: %s\n", cmd2->value);
 	if (status == CMD_SUCCESS)
 	{
 		t_shunting_node *echo = malloc(sizeof(t_shunting_node));
 		echo->value = ft_strdup("echo");
 		echo->args = malloc(sizeof(char *) * 2);
 		echo->exit_status = malloc(sizeof(int));
-		char *nl = ft_strrchr(heredoc, '\n'); // TODO: temp fix
+		char *nl = ft_strrchr(heredoc, '\n');
 		*nl = '\0';
 		echo->args[0] = heredoc;
 		echo->args[1] = NULL;
 		status = run_pipe_cmd(echo, cmd1, shell);
 		free(echo->value);
-		// free(echo->args[0]);	//TODO: 2DArray and the Arrays inside of the array musnt be freed? tf? SUS
-		// free(echo->args[1]);
 		free(echo->args);
 		free(echo->exit_status);
 		free(echo);

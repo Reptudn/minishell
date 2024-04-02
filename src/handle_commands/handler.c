@@ -125,6 +125,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 	int				operator_count;
 	int				index;
 	int				exit_status;
+	int				k;
 
 	index = -1;
 	if (!yard || !yard->output || !shell)
@@ -158,12 +159,15 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		if (exit_status > CMD_SUCCESS)
 			return (exit_status);
 		cmd1->args = ft_split("-n    ", ' ');
+		k = -1;
+		while (cmd1->args[++k])
+			free(cmd1->args[k]);
+		free(cmd1->args);
+		free(cmd1->value);
 		cmd1->value = ft_strdup("echo");
-		cmd1->type = malloc(sizeof(int));
 		*cmd1->type = NONE;
 		yard_pop(operator, yard);
 		yard_pop(cmd2, yard);
-
 	}
 	return (exit_status);
 }

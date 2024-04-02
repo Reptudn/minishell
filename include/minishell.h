@@ -150,7 +150,6 @@ int				get_quote_cout(char *str, char quote);
 // pipes
 int				run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
 					t_shell *shell);
-
 char			**make_env_args(char *cmd, char **args);
 char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
 
