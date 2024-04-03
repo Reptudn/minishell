@@ -6,11 +6,13 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:21:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/03 12:24:47 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:20:09 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard);
 
 t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type)
 {
@@ -24,9 +26,10 @@ t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type)
 			return (last);
 		node = node->next;
 	}
-	return (node);
+	return (last);
 }
 
+// TODO it is not correctly adding the pointers in the chain
 t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 {
 	t_shunting_node	**chain;
@@ -34,27 +37,37 @@ t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 	t_shunting_node	*last;
 	int				i;
 
-	if (*start->type == NONE)
-		return (NULL);
+	while (start && *start->type == NONE)
+		start = start->next;
 	*type = *start->type;
 	*len = 0;
+	printf("type: %d\n", *type);
 	node = start;
-	last = get_last_opeartor(start, *type);
-	while (node && node != last)
+	last = get_last_opeartor(node, *type);
+	printf("last: %s\n", last ? last->value : "NULL");
+	while (node && node->prev != last)
 	{
-		if (*node->type != *type)
+		if (*node->type == *type)
 			*len += 1;
 		node = node->next;
 	}
+	*len += 1;
+	printf("len: %d\n", *len);
 	chain = (t_shunting_node **)malloc(sizeof(t_shunting_node *) * (*len + 1));
 	if (!chain)
 		return (NULL);
 	chain[*len] = NULL;
 	node = start;
 	i = -1;
-	while (node && *node->type == *type)
+	while (node && node->prev != last)
 	{
-		chain[++i] = node;
+		printf("Node is %s\n", node->value);
+		if (*node->type != *type)
+		{
+			chain[++i] = node;
+			printf(" added chain[%d]: %s\n", i, node->value);
+		}
+		else printf("skipped: %s\n", node->value);
 		node = node->next;
 	}
 	return (chain);
@@ -73,8 +86,14 @@ void	print_cmd_chain(t_shunting_node **chain, int len)
 	int	i;
 
 	i = -1;
+	printf("Command Chain:\n");
+	if (!chain)
+	{
+		printf("  No chain\n");
+		return ;
+	}
 	while (++i < len && chain[i])
-		printf("chain[%d]: %s\n", i, chain[i]->value);
+		printf("chain[%d]: %s\n", i, (chain[i])->value);
 }
 
 int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *yard)
@@ -82,17 +101,17 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	t_shunting_node	**chain;
 	int				len;
 	int				type;
-	int				status;
-	char			*out;
+	// int				status;
+	// char			*out;
 
+	(void)shell;
 	chain = get_cmd_chain(start, &len, &type);
+	print_cmd_chain(chain, len);
 	if (!chain)
 		return (CMD_FAILURE);
-	print_cmd_chain(chain, len);
-	exit(0);
 	if (type == PIPE)
 	{
-		printf("PIPE\n");
+		printf("-> PIPE\n");
 	}
 	else if (type == REDIRECT_IN)
 	{
@@ -117,7 +136,8 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 		yard_pop(*chain, yard);
 		free(chain);
 	}
-	pop_cmd_chain(chain, yard, len);
+	pop_cmd_chain(yard, chain, len);
 	free(chain);
+	exit(0);
 	return (CMD_SUCCESS);
 }
