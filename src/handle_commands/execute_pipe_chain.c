@@ -6,106 +6,118 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:21:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 15:15:18 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/03 12:24:47 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_shunting_node	*get_operator_with_index(t_shunting_node *nodes, int index);
-
-void			yard_pop(t_shunting_node *node, t_shunting_yard *yard);
-
-int				run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
-					t_shell *shell, int in_fd);
-int				redirect_in(t_shunting_node *cmd,
-					t_shunting_node *cmd2, t_shell *shell, int fd);
-int				redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2,
-					int fd);
-int				run_append(t_shell *shell, t_shunting_node *cmd1,
-					t_shunting_node *cmd2, int fd);
-int				run_delimiter(t_shell *shell, t_shunting_node *cmd1,
-					t_shunting_node *cmd2, int fd);
-
-void			replace_variable(char **args, t_shell *shell, int status);
-
-int	select_runner(t_shunting_node *operator, t_shell *shell, int fd)
+t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type)
 {
-	t_shunting_node	*cmd1;
-	t_shunting_node	*cmd2;
+	t_shunting_node	*last;
 
-	if (!operator)
-		return (CMD_FAILURE);
-	cmd2 = operator->prev;
-	if (!cmd2)
-		return (CMD_FAILURE);
-	cmd1 = cmd2->prev;
-	if (!cmd1)
-		return (CMD_FAILURE);
-	if (*operator->type == PIPE)
-		return (run_pipe_cmd(cmd1, cmd2, shell, fd));
-	else if (*operator->type == REDIRECT_IN)
-		return (redirect_in(cmd1, cmd2, shell, fd));
-	else if (*operator->type == REDIRECT_OUT)
-		return (redirect_out(cmd1, cmd2, fd));
-	else if (*operator->type == REDIRECT_OUT_APPEND)
-		return (run_append(shell, cmd1, cmd2, fd));
-	else if (*operator->type == REDIRECT_IN_DELIMITER)
-		return (run_delimiter(shell, cmd1, cmd2, fd));
-	return (CMD_SUCCESS);
-}
-
-char	*get_temp_file_content(int fd)
-{
-	char	*line;
-	char	*content;
-
-	content = ft_strdup("");
-	line = get_next_line(fd);
-	while (line)
+	while (node)
 	{
-		content = ft_strjoin(content, line);
-		content = ft_strjoin(content, "\n");
-		free(line);
-		line = get_next_line(fd);
+		if (*node->type == type)
+			last = node;
+		else if (*node->type != type && *node->type != NONE)
+			return (last);
+		node = node->next;
 	}
-	get_next_line(-1);
-	close(fd);
-	printf("Temp file content: %s\n", content);
-	return (content);
+	return (node);
 }
 
-// TODO: Implement pipe_chain function into the handler
-int	pipe_chain(t_shunting_yard *yard, t_shunting_node *stack, t_shell *shell)
+t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 {
-	int				fd;
-	t_shunting_node	*operator;
+	t_shunting_node	**chain;
+	t_shunting_node	*node;
+	t_shunting_node	*last;
+	int				i;
+
+	if (*start->type == NONE)
+		return (NULL);
+	*type = *start->type;
+	*len = 0;
+	node = start;
+	last = get_last_opeartor(start, *type);
+	while (node && node != last)
+	{
+		if (*node->type != *type)
+			*len += 1;
+		node = node->next;
+	}
+	chain = (t_shunting_node **)malloc(sizeof(t_shunting_node *) * (*len + 1));
+	if (!chain)
+		return (NULL);
+	chain[*len] = NULL;
+	node = start;
+	i = -1;
+	while (node && *node->type == *type)
+	{
+		chain[++i] = node;
+		node = node->next;
+	}
+	return (chain);
+}
+
+// after calling this the first one of the chain can still be used as echo and save
+// the output there
+void	pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain, int len)
+{
+	while (len-- > 1)
+		yard_pop(chain[len], yard);
+}
+
+void	print_cmd_chain(t_shunting_node **chain, int len)
+{
+	int	i;
+
+	i = -1;
+	while (++i < len && chain[i])
+		printf("chain[%d]: %s\n", i, chain[i]->value);
+}
+
+int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *yard)
+{
+	t_shunting_node	**chain;
+	int				len;
+	int				type;
 	int				status;
-	t_shunting_node	*echo;
+	char			*out;
 
-	if (!stack)
+	chain = get_cmd_chain(start, &len, &type);
+	if (!chain)
 		return (CMD_FAILURE);
-	operator = get_operator_with_index(stack, 0);
-	if (!operator)
-		return (CMD_SUCCESS);
-	fd = open("/tmp/minishell.tmp", O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (fd < 0)
-		return (CMD_FAILURE);
-	while (operator && (*operator->type == PIPE
-			|| *operator->type >= REDIRECT_IN))
+	print_cmd_chain(chain, len);
+	exit(0);
+	if (type == PIPE)
 	{
-		status = select_runner(operator, shell, fd);
-		if (status > CMD_SUCCESS)
-			return (status);
-		yard_pop(operator->prev->prev, yard);
-		echo = operator->prev;
-		echo->value = ft_strdup("echo");
-		echo->args = ft_split("-n  ", ' ');
-		echo->type = NONE;
-		yard_pop(operator, yard);
-		operator = get_operator_with_index(operator->next, 0);
+		printf("PIPE\n");
 	}
-	echo->args = ft_split(get_temp_file_content(fd), ' ');
-	close(fd);
+	else if (type == REDIRECT_IN)
+	{
+		printf("REDIRECT_IN\n");
+	}
+	else if (type == REDIRECT_OUT)
+	{
+		printf("REDIRECT_OUT\n");
+	}
+	else if (type == REDIRECT_OUT_APPEND)
+	{
+		printf("APPEND\n");
+	}
+	else if (type == REDIRECT_IN_DELIMITER)
+	{
+		printf("DELIMITER\n");
+	}
+	else
+	{
+		printf("no chain needed\n");
+		pop_cmd_chain(yard, chain, len);
+		yard_pop(*chain, yard);
+		free(chain);
+	}
+	pop_cmd_chain(chain, yard, len);
+	free(chain);
 	return (CMD_SUCCESS);
 }
