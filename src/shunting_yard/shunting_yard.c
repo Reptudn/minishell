@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/03 15:18:51 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 10:29:54 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,6 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	}
 	while (yard->stack)
 		stack_to_output_end(yard);
-	print_all_stacks(yard);
+	// print_all_stacks(yard);
 	return (yard);
 }

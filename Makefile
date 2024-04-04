@@ -84,4 +84,7 @@ fclean: clean
 	@make -C ./lib/get_next_line fclean
 	@rm -rf $(NAME)
 
+debug: CFLAGS += -g -O0
+debug: $(NAME)
+
 re: fclean all
