@@ -6,14 +6,13 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 09:09:14 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:40:33 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include <stdio.h>
 
-// TODO: this will cause lots of leaks, but for now it's just a test
 char	**make_env_args(char *cmd, char **args)
 {
 	int		len;
@@ -73,7 +72,6 @@ int	execute(char *cmd_path, char **args, char *command, t_shell *shell,
 	return (1);
 }
 
-// TODO: check for leaks
 char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 {
 	int			i;

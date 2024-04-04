@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 08:51:01 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/22 13:31:01 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:41:11 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ t_env_var	*env_make_vars(char **envp)
 		if (!temp)
 			return (NULL);
 		if (!first)
-			first = temp; //TODO: changed !shell->env_vars to !first. Everything works but was it still important i dont think so or?
+			first = temp;
 		else
 		{
 			current = first;

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:21:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 11:43:53 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:39:50 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type)
 	return (last);
 }
 
-// TODO it is not correctly adding the pointers in the chain
 t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 {
 	t_shunting_node	**chain;
