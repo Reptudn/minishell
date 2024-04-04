@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:21:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 09:26:09 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 09:47:32 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 	printf("start: %s\n", start->value);
 	printf("last: %s\n", last ? last->value : "NULL");
 	int l = 0;
-	while (node && node->prev != last)
+	while (node && node->prev != last && node->next)
 	{
 		if (*node->type == *type)
 			*len += 1;
 		node = node->next;
 		printf("l: %d", l++);
 	}
-	while (node->prev)
+	while (node && node->prev)
 		node = node->prev;
 	*len += 1;
 	printf("len: %d\n", *len);
