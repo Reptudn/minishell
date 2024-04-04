@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 09:07:09 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 11:34:32 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "colors.h"
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
+# include "../lib/get_next_line/get_next_line.h"
 
 # include <stdio.h>
 # include <stdlib.h>

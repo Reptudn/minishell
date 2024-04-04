@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/03 12:50:47 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 11:37:13 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
 			t_shunting_node *cmd2);
 
 void	replace_variable(char **args, t_shell *shell, int status);
+
+int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *yard);
 
 // int	execute_commands(t_shell *shell, t_command *cmd1, t_command *cmd2)
 // {
@@ -151,24 +153,12 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		cmd1 = cmd2->prev;
 		if (!cmd1)
 			return (CMD_FAILURE);
+		execute_cmd_chain(shell, cmd1, yard);
 		replace_variable(cmd1->args, shell, status);
 		replace_variable(cmd2->args, shell, status);
 		exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
 		if (exit_status > CMD_SUCCESS)
 			return (exit_status);
-		cmd1->args = ft_split("-n    ", ' ');
-		// k = -1;
-		// TODO: this was here so we might need to put this somewhere else
-		// while (cmd1->args[++k])
-		// 	free(cmd1->args[k]);
-		// free(cmd1->args);
-		// free(cmd1->value);
-		cmd1->value = ft_strdup("echo");
-		*cmd1->type = NONE;
-		yard_pop(operator, yard);
-		yard_pop(cmd2, yard);
 	}
 	return (exit_status);
 }
-
-// echo hi && echo hello || echo world && echo bye

@@ -1,0 +1,34 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Minishell: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/minishell",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "minishell prelaunch",
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/jkauker/Documents/minishell/src/handle_commands",
+      "program": "/Users/jkauker/Documents/minishell/src/handle_commands/build/Debug/outDebug"
+    }
+  ]
+}
