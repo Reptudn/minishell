@@ -4,7 +4,7 @@
         {
             "type": "shell",
             "label": "minishell prelaunch",
-            "command": "make fclean debug",
+            "command": "make debug",
             "options": {
                 "cwd": "${workspaceFolder}"
             },

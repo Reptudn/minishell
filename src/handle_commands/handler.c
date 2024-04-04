@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 11:37:13 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 11:23:07 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
 
 void	replace_variable(char **args, t_shell *shell, int status);
 
-int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *yard);
+int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *yard, int *status);
 
 // int	execute_commands(t_shell *shell, t_command *cmd1, t_command *cmd2)
 // {
@@ -153,10 +153,13 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		cmd1 = cmd2->prev;
 		if (!cmd1)
 			return (CMD_FAILURE);
-		execute_cmd_chain(shell, cmd1, yard);
-		replace_variable(cmd1->args, shell, status);
-		replace_variable(cmd2->args, shell, status);
-		exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
+		if(!execute_cmd_chain(shell, cmd1, yard, &status))
+		{
+			replace_variable(cmd1->args, shell, status);
+			replace_variable(cmd2->args, shell, status);
+			exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
+		}
+		
 		if (exit_status > CMD_SUCCESS)
 			return (exit_status);
 	}

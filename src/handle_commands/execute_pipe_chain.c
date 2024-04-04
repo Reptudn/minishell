@@ -6,11 +6,25 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:21:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 09:26:09 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 11:43:53 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	yard_pop(t_shunting_node *node, t_shunting_yard *yard);
+
+int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
+int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
+char	*run_pipe(t_shell *shell, t_shunting_node **chain, int counter, int pipe_amount, char *str);
+int		redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell);
+int		redirect_out(t_shell *shell, t_shunting_node *cmd, t_shunting_node *cmd2, int in_fd);
+int		run_append(t_shell *shell, t_shunting_node *cmd1,
+			t_shunting_node *cmd2);
+int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
+			t_shunting_node *cmd2);
+
+void	replace_variable(char **args, t_shell *shell, int status);
 
 void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard);
 
@@ -47,28 +61,22 @@ t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 	printf("type: %d\n", *type);
 	node = start;
 	last = get_last_opeartor(node, *type);
-	printf("start: %s\n", start->value);
-	printf("last: %s\n", last ? last->value : "NULL");
-	int l = 0;
-	while (node && node->prev != last)
+	while (node && node->prev != last && node->next)
 	{
 		if (*node->type == *type)
 			*len += 1;
 		node = node->next;
-		printf("l: %d", l++);
 	}
-	while (node->prev)
+	while (node && node->prev)
 		node = node->prev;
-	*len += 1;
-	printf("len: %d\n", *len);
-	printf("start: %s\n", start->value);
+	*len += 2; // TODO: this is sus and i might need to fix the while loop above
 	chain = (t_shunting_node **)malloc(sizeof(t_shunting_node *) * (*len + 1));
 	if (!chain)
 		return (NULL);
 	chain[*len] = NULL;
 	printf("start: %s\n", start->value);
 	i = -1;
-	while (node && node->prev != last)
+	while (node && node->prev != last && node->next)
 	{
 		printf("Node is %s\n", node->value);
 		if (*node->type != *type && *node->type == NONE)
@@ -90,7 +98,7 @@ void	pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain, int len)
 		yard_pop(chain[len], yard);
 }
 
-void	print_cmd_chain(t_shunting_node **chain, int len)
+void	print_cmd_chain(t_shunting_node **chain)
 {
 	int	i;
 
@@ -101,27 +109,31 @@ void	print_cmd_chain(t_shunting_node **chain, int len)
 		printf("  No chain\n");
 		return ;
 	}
-	while (++i < len && chain[i])
-		printf("chain[%d]: %s\n", i, (chain[i])->value);
+	while (chain[++i])
+		printf("  chain[%d]: %s\n", i, (chain[i])->value);
 }
 
-int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *yard)
+int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *yard, int *status)
 {
 	t_shunting_node	**chain;
 	int				len;
 	int				type;
-	// int				status;
-	// char			*out;
+	int				i;
+	char			*out;
 
-	(void)shell;
+	out = ft_strdup("");
 	chain = get_cmd_chain(start, &len, &type);
-	printf("pipe chain made function returned");
-	print_cmd_chain(chain, len);
+	i = -1;
+	print_cmd_chain(chain);
 	if (!chain)
 		return (CMD_FAILURE);
+	while (++i < len && chain[i])
+		replace_variable(chain[i]->args, shell, *status);
 	if (type == PIPE)
 	{
 		printf("-> PIPE\n");
+		run_pipe(shell, chain, 0, len, out);
+		printf("out: %s\n", out);
 	}
 	else if (type == REDIRECT_IN)
 	{
@@ -134,6 +146,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	else if (type == REDIRECT_OUT_APPEND)
 	{
 		printf("APPEND\n");
+		run_append(shell, chain[0], chain[1]);
 	}
 	else if (type == REDIRECT_IN_DELIMITER)
 	{
@@ -148,6 +161,5 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	}
 	pop_cmd_chain(yard, chain, len);
 	free(chain);
-	exit(0);
 	return (CMD_SUCCESS);
 }
