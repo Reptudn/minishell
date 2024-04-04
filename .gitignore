@@ -9,7 +9,7 @@ minishell.dSYM
 *.py
 minishell_tester
 *.sh
-
+.idea/
 
 # Not ignore debug settings files
 .vscode/*
