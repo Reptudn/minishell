@@ -6,57 +6,53 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:20:58 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 10:02:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 09:15:08 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2, t_shell *shell, int in_fd)
+char	*run_pipe(t_shell *shell, t_shunting_node **chain, int counter,
+	int pipe_amount, char *str)
 {
-	int		fd[2];
+	int		pipefd[2];
 	pid_t	pid;
-	int		original_stdin;
+	int		status;
+	char	buffer[10000];
+	int		numread;
+	char	*result;
+	char	*recursive_result;
 
-	original_stdin = dup(0);
-	if (pipe(fd) == -1)
-		return (CMD_FAILURE);
+	if (counter == pipe_amount)
+		return (str);
+	if (pipe(pipefd) == -1)
+		return (NULL);
 	pid = fork();
-	if (pid < 0)
+	if (pid == -1)
+		return (NULL);
+	if (pid == 0)
 	{
-		printf("pipe: %s\n", strerror(errno));
-		return (CMD_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		dup2(fd[1], 1);
-		close(fd[0]);
-		close(fd[1]);
-		if (in_fd != -1)
-		{
-			dup2(in_fd, 0);
-			close(in_fd);
-		}
-		if (run_command(shell, cmd1) == CMD_FAILURE)
-		{
-			printf("pipe1: %s: %s\n", cmd1->args[0], strerror(errno));
-			exit(CMD_FAILURE);
-		}
-		exit(CMD_SUCCESS);
+		dup2(pipefd[1], STDOUT_FILENO);
+		run_command(shell, chain[counter]);
+		close(pipefd[0]);
+		close(pipefd[1]);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		waitpid(pid, NULL, 0);
-		dup2(fd[0], 0);
-		close(fd[0]);
-		close(fd[1]);
-		if (run_command(shell, cmd2) == CMD_FAILURE)
-		{
-			printf("pipe2: %s: %s\n", cmd2->args[0], strerror(errno));
-			return (CMD_FAILURE);
-		}
+		waitpid(pid, &status, 0);
+		numread = read(pipefd[0], buffer, sizeof(buffer) - 1);
+		if (numread >= 0)
+			buffer[numread] = '\0';
+		close(pipefd[0]);
+		close(pipefd[1]);
+		result = malloc(strlen(str) + strlen(buffer) + 1);
+		ft_strncpy(result, str, ft_strlen(str));
+		ft_strlcat(result, buffer, sizeof(result) + sizeof(buffer) + 1);
+		recursive_result = run_pipe(shell, chain, counter + 1, pipe_amount,
+				result);
+		free(result);
+		return (recursive_result);
 	}
-	dup2(original_stdin, 0);
-	close(original_stdin);
-	return (CMD_SUCCESS);
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 12:00:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 10:06:51 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 09:13:03 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 // heredoc
 int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 {
-	char	*heredoc;
-	char	*new_heredoc;
-	char	*temp;
-	int		status;
+	char			*heredoc;
+	char			*new_heredoc;
+	char			*temp;
+	int				status;
+	char			*nl;
+	t_shunting_node	*echo;
 
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
@@ -46,18 +48,16 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 	printf("cmd2: %s\n", cmd2->value);
 	if (status == CMD_SUCCESS)
 	{
-		t_shunting_node *echo = malloc(sizeof(t_shunting_node));
+		echo = malloc(sizeof(t_shunting_node));
 		echo->value = ft_strdup("echo");
 		echo->args = malloc(sizeof(char *) * 2);
 		echo->exit_status = malloc(sizeof(int));
-		char *nl = ft_strrchr(heredoc, '\n');
+		nl = ft_strrchr(heredoc, '\n');
 		*nl = '\0';
 		echo->args[0] = heredoc;
 		echo->args[1] = NULL;
-		status = run_pipe_cmd(echo, cmd1, shell, -1);
+		(void)shell;
 		free(echo->value);
-		// free(echo->args[0]);	//TODO: temp fix for double free
-		// free(echo->args[1]);
 		free(echo->args);
 		free(echo->exit_status);
 		free(echo);

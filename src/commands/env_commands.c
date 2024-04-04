@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:49:54 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 10:01:15 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 09:09:14 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include <stdio.h>
 
-// this will cause lots of leaks, but for now it's just a test
+// TODO: this will cause lots of leaks, but for now it's just a test
 char	**make_env_args(char *cmd, char **args)
 {
 	int		len;

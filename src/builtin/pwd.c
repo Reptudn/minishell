@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:35:39 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/15 08:59:52 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 09:07:53 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	pwd(void)
 	path = getcwd(NULL, 0);
 	if (!path)
 		return (1);
-	// printf("ABSOLUTE: %s\n", path);
-	// printf("RELATIVE: %s\n", path + ft_strlen(getenv("HOME")));
 	ft_printf("%s\n", path);
 	free(path);
 	return (0);

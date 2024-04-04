@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_split_cmds.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:05:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/18 08:46:25 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 09:20:39 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,3 @@ void	free_cmds_helper(t_env_var *cmds)
 	}
 	cmds = NULL;
 }
-
-// void	free_cmds(t_command *cmds)
-// {
-// 	t_command	*tmp;
-
-// 	while (cmds)
-// 	{
-// 		tmp = cmds->next;
-// 		free(cmds->command);
-// 		free(cmds->args);
-// 		free(cmds->operator_type);
-// 		free(cmds);
-// 		cmds = tmp;
-// 	}
-// 	cmds = NULL;
-// }
