@@ -10,6 +10,7 @@ minishell.dSYM
 minishell_tester
 *.sh
 
+
 # Not ignore debug settings files
 .vscode/*
 !.vscode/launch.json
