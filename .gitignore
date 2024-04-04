@@ -2,7 +2,6 @@
 *.a
 *.txt
 .DS_Store
-.vscode/
 .obsidian/
 /obj
 minishell
@@ -12,5 +11,6 @@ minishell_tester
 *.sh
 
 # Not ignore debug settings files
-!/.vscode/launch.json
-!/.vscode/tasks.json
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
