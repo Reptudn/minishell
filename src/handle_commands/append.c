@@ -6,14 +6,13 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:29:24 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 09:11:15 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 15:22:21 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	run_append(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2,
-	int append_amount)
+int	run_append(t_shell *shell, t_shunting_node **chain, int append_amount)
 {
 	int	fd;
 	int	i;
@@ -21,29 +20,21 @@ int	run_append(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2,
 
 	i = 1;
 	saved_stdout = dup(STDOUT_FILENO);
-	while (i <= append_amount)
+	while (chain[i] && i < append_amount - 1)
 	{
-		if (ft_strncmp(cmd2->value, ">>", 1) == 0)
-		{
-			i++;
-			cmd2 = cmd2->next;
-			continue ;
-		}
-		fd = open(cmd2->value, O_CREAT, 0644);
+		fd = open(chain[i++]->value, O_CREAT, 0644);
 		if (fd == -1)
 			return (CMD_FAILURE);
 		close(fd);
-		cmd2 = cmd2->next;
 	}
-	if (i == append_amount)
+	if (chain[i] && i == append_amount - 1)
 	{
-		fd = open(cmd2->value, O_WRONLY | O_CREAT, 0644);
+		fd = open(chain[i]->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
 			return (CMD_FAILURE);
 		if (dup2(fd, STDOUT_FILENO) == -1)
 			return (CMD_FAILURE);
-		run_command(shell, cmd1);
-		printf("\n");
+		run_command(shell, chain[0]);
 		close(fd);
 	}
 	if (dup2(saved_stdout, STDOUT_FILENO) == -1)

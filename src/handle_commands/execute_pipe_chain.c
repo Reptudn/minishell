@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:21:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 11:43:53 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 15:05:36 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 char	*run_pipe(t_shell *shell, t_shunting_node **chain, int counter, int pipe_amount, char *str);
 int		redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell);
-int		redirect_out(t_shell *shell, t_shunting_node *cmd, t_shunting_node *cmd2, int in_fd);
-int		run_append(t_shell *shell, t_shunting_node *cmd1,
-			t_shunting_node *cmd2);
+int		redirect_out(t_shell *shell, t_shunting_node **chain, int redirection_amout);
+int		run_append(t_shell *shell, t_shunting_node **chain, int append_amount);
 int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
 			t_shunting_node *cmd2);
 
@@ -141,12 +140,11 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	}
 	else if (type == REDIRECT_OUT)
 	{
-		printf("REDIRECT_OUT\n");
+		redirect_out(shell, chain, len);
 	}
 	else if (type == REDIRECT_OUT_APPEND)
 	{
-		printf("APPEND\n");
-		run_append(shell, chain[0], chain[1]);
+		run_append(shell, chain, len);
 	}
 	else if (type == REDIRECT_IN_DELIMITER)
 	{
