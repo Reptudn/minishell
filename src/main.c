@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:03:48 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 09:27:09 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 11:41:49 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,3 +110,5 @@ int	main(int argc, char **argv, char **envp)
 	env_destroy(shell.env_vars);
 	return (*shell.exit_status);
 }
+
+// TODO: echo '"$USER"' has to print "$USER" and not the user

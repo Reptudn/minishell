@@ -84,6 +84,6 @@ fclean: clean
 	@rm -rf $(NAME)
 
 debug: CFLAGS += -g -O0
-debug: $(NAME)
+debug: fclean $(NAME)
 
 re: fclean all

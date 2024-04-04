@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 11:34:32 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 11:23:59 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,8 @@ char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
 
 //signals
 void			signal_handler(int signum);
+
+// var utils
+void			replace_variable(char **args, t_shell *shell, int status);
 
 #endif
