@@ -6,17 +6,16 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 13:59:19 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 09:18:08 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include <stdio.h>
 
-int	get_operator_count(t_shunting_node *nodes);
-int	get_command_count(t_shunting_node *nodes);
-int	yard_len(t_shunting_node *stack);
-
+int		get_operator_count(t_shunting_node *nodes);
+int		get_command_count(t_shunting_node *nodes);
+int		yard_len(t_shunting_node *stack);
 void	print_shunting_node(t_shunting_node *node, int a);
 
 t_shunting_node	*get_last_node(t_shunting_node *node)
@@ -123,43 +122,6 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 
 	if (!node)
 		return ;
-	// if (*node->type == OPEN_PAREN)
-	// {
-	// 	if (!yard->stack)
-	// 	{
-	// 		yard->stack = node;
-	// 		node->prev = NULL;
-	// 		node->next = NULL;
-	// 	}
-	// 	else
-	// 	{
-	// 		tmp = yard->stack;
-	// 		while (tmp->next)
-	// 			tmp = tmp->next;
-	// 		tmp->next = node;
-	// 		node->prev = tmp;
-	// 		node->next = NULL;
-	// 	}
-	// }
-	// else if (*node->type == CLOSE_PAREN)
-	// {
-	// 	while (yard->stack && *yard->stack->type != OPEN_PAREN)
-	// 		if (!stack_to_output_end(yard))
-	// 			break ;
-	// 	tmp = get_last_node(yard->stack);
-	// 	if (yard->stack && tmp && *tmp->type == OPEN_PAREN)
-	// 	{
-	// 		if (!tmp->prev)
-	// 			yard->stack = NULL;
-	// 		else
-	// 		{
-	// 			tmp->prev->next = NULL;
-	// 		}
-	// 		tmp = get_last_node(yard->stack);
-	// 	}
-	// 	else
-	// 		printf("ERROR: Unbalanced Parens\n");
-	// }
 	if (*node->type != NONE)
 	{
 		if (!yard->stack)

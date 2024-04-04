@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 10:11:15 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/03 12:50:47 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ void	yard_pop(t_shunting_node *node, t_shunting_yard *yard);
 
 int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
-int		run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
-			t_shell *shell, int in_fd);
-int		redirect_in(t_shunting_node *cmd,
-			t_shunting_node *cmd2, t_shell *shell);
-int		redirect_out(t_shunting_node *cmd, t_shunting_node *cmd2);
+char	*run_pipe(t_shell *shell, t_shunting_node **chain, int counter, int pipe_amount, char *str);
+int		redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell);
+int		redirect_out(t_shell *shell, t_shunting_node *cmd, t_shunting_node *cmd2, int in_fd);
 int		run_append(t_shell *shell, t_shunting_node *cmd1,
 			t_shunting_node *cmd2);
 int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
@@ -100,13 +98,13 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2,
 		return (CMD_SUCCESS);
 	else if (operator == AND && run_and(shell, cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
-	else if (operator == PIPE && run_pipe_cmd(cmd1, cmd2, shell, 0) == CMD_SUCCESS)
+	else if (operator == PIPE)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_IN
 		&& redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT
-		&& redirect_out(cmd1, cmd2) == CMD_SUCCESS)
+		&& redirect_out(shell, cmd1, cmd2, 1) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	else if (operator == REDIRECT_OUT_APPEND
 		&& run_append(shell, cmd1, cmd2) == CMD_SUCCESS)
