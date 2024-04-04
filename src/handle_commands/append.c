@@ -6,43 +6,48 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:29:24 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/28 12:28:10 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 09:11:15 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	run_append(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
+int	run_append(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2,
+	int append_amount)
 {
-	int	status;
 	int	fd;
 	int	i;
+	int	saved_stdout;
 
-	status = CMD_SUCCESS;
-	if (!cmd1 || !cmd2 || !shell)
-		return (CMD_FAILURE);
-	fd = open(cmd2->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	if (fd < 0)
+	i = 1;
+	saved_stdout = dup(STDOUT_FILENO);
+	while (i <= append_amount)
 	{
-		perror("Failed to open file");
-		return (CMD_FAILURE);
+		if (ft_strncmp(cmd2->value, ">>", 1) == 0)
+		{
+			i++;
+			cmd2 = cmd2->next;
+			continue ;
+		}
+		fd = open(cmd2->value, O_CREAT, 0644);
+		if (fd == -1)
+			return (CMD_FAILURE);
+		close(fd);
+		cmd2 = cmd2->next;
 	}
-	i = -1;
-	while (cmd1->args[++i])
+	if (i == append_amount)
 	{
-		if (write(fd, cmd1->args[i], ft_strlen(cmd1->args[i])) < 0)
-		{
-			perror("Failed to write to file");
-			close(fd);
+		fd = open(cmd2->value, O_WRONLY | O_CREAT, 0644);
+		if (fd == -1)
 			return (CMD_FAILURE);
-		}
-		if (write(fd, "\n", 1) < 0)
-		{
-			perror("Failed to write to file");
-			close(fd);
+		if (dup2(fd, STDOUT_FILENO) == -1)
 			return (CMD_FAILURE);
-		}
+		run_command(shell, cmd1);
+		printf("\n");
+		close(fd);
 	}
-	close(fd);
-	return (status);
+	if (dup2(saved_stdout, STDOUT_FILENO) == -1)
+		return (CMD_FAILURE);
+	close(saved_stdout);
+	return (CMD_SUCCESS);
 }

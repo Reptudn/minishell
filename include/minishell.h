@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:47:18 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 15:05:31 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 11:34:32 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 # define CMD_IMPROP 2
 # define CMD_NOT_FOUND 127
 
-extern bool *g_run;
+extern bool	*g_run;
 
 typedef struct s_env_var
 {
@@ -79,7 +79,7 @@ typedef struct s_shunting_node
 	int						*type;
 	int						*priority;
 	int						*fd;
-	int						*exit_status; // 0 = success, 1 = failure, -1 = not ran yet
+	int						*exit_status;
 	struct s_shunting_node	*next;
 	struct s_shunting_node	*prev;
 }	t_shunting_node;

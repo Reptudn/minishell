@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_cmds_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 14:07:17 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 10:35:54 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 09:22:08 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 void	is_var(char *str, t_env_var *var)
 {
-	if (!str || !var)
-		return ;
-
 	char	*name;
 	char	*value;
 	int		i;
@@ -25,6 +22,8 @@ void	is_var(char *str, t_env_var *var)
 
 	i = 0;
 	m = 0;
+	if (!str || !var)
+		return ;
 	name = malloc(strlen(str) + 1);
 	if (!name)
 		return ;
@@ -60,7 +59,7 @@ char	**filter_variables(char **split, t_shell *shell)
 	t_env_var	*new_var;
 	t_env_var	*prev;
 	char		**result;
-	char		**test = malloc(100 * sizeof(char *));
+	char		**test = malloc(10000 * sizeof(char *));
 	int			i;
 
 	i = 0;
