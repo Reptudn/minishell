@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 08:57:43 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/13 11:02:39 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 14:27:10 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	signal_handler(int signum)
 		*g_run = false;
 		return ;
 	}
-	if (signum == SIGINT)
+	if (signum == SIGINT) // TODO: handle sigint correctly to end curr task
 	{
 		printf("\n");
 	}

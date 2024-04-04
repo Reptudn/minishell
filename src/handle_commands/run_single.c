@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:27:22 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 10:37:01 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:37:10 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 				print_invalid_cmd(cmd->value);
 				status = CMD_NOT_FOUND;
 			}
-			else if (status == CMD_IMPROP)
+			else if (status == CMD_IMPROP) // TODO: print error in std error
 				printf("%sminishell: No permission\n%s",
 					COLOR_RED, COLOR_RESET);
 		}

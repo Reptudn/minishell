@@ -6,12 +6,13 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:58:11 by jkauker           #+#    #+#             */
-/*   Updated: 2024/02/02 14:00:16 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:36:58 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+// TODO: print errors in std error
 void	print_invalid_cmd(char *command)
 {
 	char	**args;
