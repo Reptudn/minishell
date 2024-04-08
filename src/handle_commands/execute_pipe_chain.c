@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:21:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/08 08:33:13 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/08 09:18:43 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,16 @@ t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type)
 {
 	t_shunting_node	*last;
 
-	while (node)
+	last = NULL;
+	while (node && node != last && node->next
+		&& (*node->type == type || *node->type == NONE))
 	{
+		// if the last node is the operator we want and the current and next are both Commands (NONE Type) we know there was an AND or OR inbetween
+		if (node->prev && *node->prev->type == type && *node->type == NONE
+			&& node->next && *node->next->type == NONE)
+			break ;
 		if (*node->type == type)
 			last = node;
-		else if (*node->type != type && *node->type != NONE)
-			return (last);
 		node = node->next;
 	}
 	return (last);
@@ -58,27 +62,25 @@ t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 	*len = 0;
 	node = start;
 	last = get_last_opeartor(node, *type);
-	while (node && node->prev != last && node->next)
+	printf("last: %s\n", last->value);
+	while (node && node != last && node->next
+		&& (*node->type == *type || *node->type == NONE))
 	{
-		if (*node->type == *type)
+		if (*node->type != *type)
 			*len += 1;
 		node = node->next;
 	}
-	while (node && node->prev)
-		node = node->prev;
-	*len += 2; // TODO: this is sus and i might need to fix the while loop above
 	chain = (t_shunting_node **)malloc(sizeof(t_shunting_node *) * (*len + 1));
 	if (!chain)
 		return (NULL);
 	chain[*len] = NULL;
 	i = -1;
-	while (node && node->prev != last && node->next)
+	while (start && start != last && start->next
+		&& (*start->type == *type || *start->type == NONE))
 	{
-		if (*node->type != *type && *node->type == NONE)
-		{
-			chain[++i] = node;
-		}
-		node = node->next;
+		if (*start->type != *type && *start->type == NONE)
+			chain[++i] = start;
+		start = start->next;
 	}
 	return (chain);
 }
@@ -119,7 +121,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 
 	static int chain_count = 0;
 	printf("Chain count: %d\n", chain_count++);
-
+	print_all_stacks(yard);
 	out = ft_strdup("");
 	chain = get_cmd_chain(start, &len, &type);
 	i = -1;

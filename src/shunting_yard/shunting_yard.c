@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:03:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 13:39:27 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/08 08:39:11 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,6 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	}
 	while (yard->input)
 	{
-		print_all_stacks(yard);
 		node = get_first_input(yard);
 		if (!node)
 			break ;
@@ -178,6 +177,5 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	}
 	while (yard->stack)
 		stack_to_output_end(yard);
-	print_all_stacks(yard);
 	return (yard);
 }
