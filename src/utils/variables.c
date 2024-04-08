@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 09:05:49 by jkauker           #+#    #+#             */
-/*   Updated: 2024/03/20 10:00:09 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/08 09:40:01 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,16 @@ void	is_variable(char **arg, t_shell *shell, int status)
 	return ;
 }
 
+// FIXME: For some reason args or *args is nothing anymore so this segv
 void	replace_variable(char **args, t_shell *shell, int status)
 {
 	int	i;
 
 	i = -1;
-	while (args[++i])
+	return ;
+	if (!args && *args == NULL)
+		return ;
+	printf("args is not null\n");
+	while (args && args[++i])
 		is_variable(&args[i], shell, status);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:21:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/08 09:18:43 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/08 09:31:25 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,18 @@ t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 	return (chain);
 }
 
-// after calling this the first one of the chain can still be used as echo and save
-// the output there
+// after calling this the first one of the chain can still be used
+// as echo and save the output there
 void	pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain, int len)
 {
 	if (!chain)
 		return ;
-	while (len-- > 1)
+	while (--len > 0)
+	{
+		printf("pop: %s\n", chain[len]->value);
 		yard_pop(chain[len], yard);
+	}
+	printf("all popped\n");
 }
 
 void	print_cmd_chain(t_shunting_node **chain)
@@ -132,7 +136,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 		replace_variable(chain[i]->args, shell, *status);
 	if (type == PIPE)
 	{
-		(*chain)->args = ft_split(run_pipe(shell, chain, 0, len, out), ' ');
+		chain[0]->args = ft_split(run_pipe(shell, chain, 0, len, out), ' ');
 	}
 	else if (type == REDIRECT_IN)
 	{
@@ -141,7 +145,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	else if (type == REDIRECT_OUT)
 	{
 		redirect_out(shell, chain, len);
-		(*chain)->args = ft_split("-n  ", ' ');
+		chain[0]->args = ft_split("-n  ", ' ');
 	}
 	else if (type == REDIRECT_OUT_APPEND)
 	{
@@ -159,7 +163,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 		yard_pop(*chain, yard);
 		free(chain);
 	}
-	(*chain)->value = ft_strdup("echo");
+	chain[0]->value = ft_strdup("echo");
 	pop_cmd_chain(yard, chain, len);
 	free(chain);
 	return (CMD_SUCCESS);
