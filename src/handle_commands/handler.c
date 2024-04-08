@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/08 13:24:53 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/08 14:50:20 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,15 +127,17 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		printf("Invalid operator count\n");
 		return (CMD_FAILURE);
 	}
-	while (++index < operator_count && yard->output) // TODO: fix this that it works correctly
+	while (++index < operator_count && yard->output)
 	{
 		operator = get_operator_with_index(yard->output, 1);
-		if (!operator)
+		if (!operator && !yard->output->next && !yard->output->prev) // COMMAND: echo hi && echo bye && ls && echo hi && echo bye && ls && echo test > eins > zwei && echo ende
+			break ;
+		else if (!operator)
 			return (CMD_FAILURE);
 		cmd2 = operator->prev;
 		if (!cmd2)
 			return (CMD_FAILURE);
-		cmd1 = cmd2->prev;
+		cmd1 = cmd2->prev; // FIXME: the problem we encounter is that after a long cmd chain there is just one command left in the end and that will fail
 		if (!cmd1)
 			return (CMD_FAILURE);
 		exit_status = execute_cmd_chain(shell, cmd1, yard, &status);

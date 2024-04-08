@@ -18,11 +18,11 @@
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         },
-        {
-          "description": "Do not detach on fork",
-          "text": "set detach-on-fork off",
-          "ignoreFailures": true
-        }
+        // {
+        //   "description": "Do not detach on fork",
+        //   "text": "set detach-on-fork off",
+        //   "ignoreFailures": true
+        // }
       ],
       "preLaunchTask": "minishell prelaunch",
       "miDebuggerPath": "/usr/bin/gdb"

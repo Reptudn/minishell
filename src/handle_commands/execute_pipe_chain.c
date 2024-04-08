@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:21:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/08 13:26:43 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/08 14:50:46 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type)
 	while (node && node != last && node->next
 		&& (*node->type == type || *node->type == NONE))
 	{
-		// if the last node is the operator we want and the current and next are both Commands (NONE Type) we know there was an AND or OR inbetween
 		if (node->prev && *node->prev->type == type && *node->type == NONE
 			&& node->next && *node->next->type == NONE)
 			break ;
@@ -66,7 +65,6 @@ t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 	last = get_last_opeartor(node, *type);
 	if (!last)
 		return (NULL);
-	printf("last: %s\n", last->value);
 	while (node && node != last && node->next
 		&& (*node->type == *type || *node->type == NONE))
 	{
@@ -91,16 +89,18 @@ t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 
 // after calling this the first one of the chain can still be used
 // as echo and save the output there
-void	pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain, int len)
+void	pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain, int len, int type)
 {
 	if (!chain)
 		return ;
 	while (--len > 0)
 	{
-		printf("pop: %s\n", chain[len]->value);
+		if (chain[len]->next && *chain[len]->next->type == type)
+			yard_pop(chain[len]->next, yard);
+		if (chain[len]->prev && *chain[len]->prev->type == type)
+			yard_pop(chain[len]->prev, yard);
 		yard_pop(chain[len], yard);
 	}
-	printf("all popped\n");
 }
 
 void	print_cmd_chain(t_shunting_node **chain)
@@ -130,14 +130,16 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	out = ft_strdup("");
 	chain = get_cmd_chain(start, &len, &type);
 	i = -1;
-	// print_cmd_chain(chain);
 	if (!chain)
 		return (-1);
+	// print_cmd_chain(chain);
 	while (++i < len && chain[i])
 		replace_variable(chain[i]->args, shell, *status);
 	if (type == PIPE)
 	{
 		chain[0]->args = ft_split(run_pipe(shell, chain, 0, len, out), ' ');
+		if (!chain[0]->args)
+			return (CMD_FAILURE);
 	}
 	else if (type == REDIRECT_IN)
 	{
@@ -147,25 +149,22 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	{
 		redirect_out(shell, chain, len);
 		chain[0]->args = ft_split("-n  ", ' ');
+		if (!chain[0]->args)
+			return (CMD_FAILURE);
 	}
 	else if (type == REDIRECT_OUT_APPEND)
 	{
 		run_append(shell, chain, len);
 		(*chain)->args = ft_split("-n  ", ' ');
+		if (!(*chain)->args)
+			return (CMD_FAILURE);
 	}
 	else if (type == REDIRECT_IN_DELIMITER)
 	{
 		printf("DELIMITER\n");
 	}
-	else
-	{
-		printf("no chain needed\n");
-		pop_cmd_chain(yard, chain, len);
-		yard_pop(*chain, yard);
-		free(chain);
-	}
 	chain[0]->value = ft_strdup("echo");
-	pop_cmd_chain(yard, chain, len);
+	pop_cmd_chain(yard, chain, len, type);
 	free(chain);
 	return (CMD_SUCCESS);
 }
