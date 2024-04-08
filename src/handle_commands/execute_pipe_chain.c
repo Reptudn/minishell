@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:21:25 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/08 09:31:25 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/08 13:26:43 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,13 @@ t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 	while (node && *node->type == NONE)
 		node = node->next;
 	*type = *node->type;
+	if (*type == NONE || *type == AND || *type == OR)
+		return (NULL);
 	*len = 0;
 	node = start;
 	last = get_last_opeartor(node, *type);
+	if (!last)
+		return (NULL);
 	printf("last: %s\n", last->value);
 	while (node && node != last && node->next
 		&& (*node->type == *type || *node->type == NONE))
@@ -123,15 +127,12 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	int				i;
 	char			*out;
 
-	static int chain_count = 0;
-	printf("Chain count: %d\n", chain_count++);
-	print_all_stacks(yard);
 	out = ft_strdup("");
 	chain = get_cmd_chain(start, &len, &type);
 	i = -1;
-	print_cmd_chain(chain);
+	// print_cmd_chain(chain);
 	if (!chain)
-		return (CMD_FAILURE);
+		return (-1);
 	while (++i < len && chain[i])
 		replace_variable(chain[i]->args, shell, *status);
 	if (type == PIPE)

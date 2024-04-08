@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/08 08:31:30 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/08 13:24:53 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,20 +100,6 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2,
 		return (CMD_SUCCESS);
 	else if (operator == AND && run_and(shell, cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
-	else if (operator == PIPE)
-		return (CMD_SUCCESS);
-	else if (operator == REDIRECT_IN
-		&& redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
-		return (CMD_SUCCESS);
-	else if (operator == REDIRECT_OUT
-		&& redirect_out(shell, cmd1, cmd2, 1) == CMD_SUCCESS)
-		return (CMD_SUCCESS);
-	else if (operator == REDIRECT_OUT_APPEND
-		&& run_append(shell, cmd1, cmd2) == CMD_SUCCESS)
-		return (CMD_SUCCESS);
-	else if (operator == REDIRECT_IN_DELIMITER
-		&& run_delimiter(shell, cmd1, cmd2) == CMD_SUCCESS)
-		return (CMD_SUCCESS);
 	return (CMD_FAILURE);
 }
 
@@ -152,13 +138,17 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		cmd1 = cmd2->prev;
 		if (!cmd1)
 			return (CMD_FAILURE);
-		if(!execute_cmd_chain(shell, cmd1, yard, &status))
+		exit_status = execute_cmd_chain(shell, cmd1, yard, &status);
+		if (exit_status == -1)
 		{
 			replace_variable(cmd1->args, shell, status);
 			replace_variable(cmd2->args, shell, status);
 			exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
+			yard_pop(operator, yard);
+			yard_pop(cmd1, yard);
+			cmd2->value = ft_strdup("echo");
+			cmd2->args = ft_split("-n", ' ');
 		}
-		
 		if (exit_status > CMD_SUCCESS)
 			return (exit_status);
 	}
