@@ -87,3 +87,8 @@ debug: CFLAGS += -g -O0
 debug: fclean $(NAME)
 
 re: fclean all
+
+run: all
+	./$(NAME)
+
+rerun: re run

@@ -18,19 +18,11 @@
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         },
-        {
-<<<<<<< HEAD
-=======
-          "description": "Follow child on fork",
-          "text": "set follow-fork-mode child",
-          "ignoreFailures": true
-        },
-        {
->>>>>>> 2f5cb34afa9a838ab2446510303cb870e19fdc00
-          "description": "Do not detach on fork",
-          "text": "set detach-on-fork off",
-          "ignoreFailures": true
-        }
+        // {
+        //   "description": "Do not detach on fork",
+        //   "text": "set detach-on-fork off",
+        //   "ignoreFailures": true
+        // }
       ],
       "preLaunchTask": "minishell prelaunch",
       "miDebuggerPath": "/usr/bin/gdb"

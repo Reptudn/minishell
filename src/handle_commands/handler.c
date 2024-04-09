@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:21:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 11:23:07 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/08 14:50:20 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,20 +100,6 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2,
 		return (CMD_SUCCESS);
 	else if (operator == AND && run_and(shell, cmd1, cmd2) == CMD_SUCCESS)
 		return (CMD_SUCCESS);
-	else if (operator == PIPE)
-		return (CMD_SUCCESS);
-	else if (operator == REDIRECT_IN
-		&& redirect_in(cmd1, cmd2, shell) == CMD_SUCCESS)
-		return (CMD_SUCCESS);
-	else if (operator == REDIRECT_OUT
-		&& redirect_out(shell, cmd1, cmd2, 1) == CMD_SUCCESS)
-		return (CMD_SUCCESS);
-	else if (operator == REDIRECT_OUT_APPEND
-		&& run_append(shell, cmd1, cmd2) == CMD_SUCCESS)
-		return (CMD_SUCCESS);
-	else if (operator == REDIRECT_IN_DELIMITER
-		&& run_delimiter(shell, cmd1, cmd2) == CMD_SUCCESS)
-		return (CMD_SUCCESS);
 	return (CMD_FAILURE);
 }
 
@@ -141,25 +127,30 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		printf("Invalid operator count\n");
 		return (CMD_FAILURE);
 	}
-	// print_all_stacks(yard);
-	while (++index < operator_count && yard->output) // TODO: fix this that it works correctly
+	while (++index < operator_count && yard->output)
 	{
 		operator = get_operator_with_index(yard->output, 1);
-		if (!operator)
+		if (!operator && !yard->output->next && !yard->output->prev) // COMMAND: echo hi && echo bye && ls && echo hi && echo bye && ls && echo test > eins > zwei && echo ende
+			break ;
+		else if (!operator)
 			return (CMD_FAILURE);
 		cmd2 = operator->prev;
 		if (!cmd2)
 			return (CMD_FAILURE);
-		cmd1 = cmd2->prev;
+		cmd1 = cmd2->prev; // FIXME: the problem we encounter is that after a long cmd chain there is just one command left in the end and that will fail
 		if (!cmd1)
 			return (CMD_FAILURE);
-		if(!execute_cmd_chain(shell, cmd1, yard, &status))
+		exit_status = execute_cmd_chain(shell, cmd1, yard, &status);
+		if (exit_status == -1)
 		{
 			replace_variable(cmd1->args, shell, status);
 			replace_variable(cmd2->args, shell, status);
 			exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
+			yard_pop(operator, yard);
+			yard_pop(cmd1, yard);
+			cmd2->value = ft_strdup("echo");
+			cmd2->args = ft_split("-n", ' ');
 		}
-		
 		if (exit_status > CMD_SUCCESS)
 			return (exit_status);
 	}
