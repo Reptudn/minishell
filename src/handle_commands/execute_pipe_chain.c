@@ -6,11 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:21:25 by jkauker           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/04 15:05:36 by jkauker          ###   ########.fr       */
-=======
-/*   Updated: 2024/04/04 13:39:50 by jkauker          ###   ########.fr       */
->>>>>>> 2f5cb34afa9a838ab2446510303cb870e19fdc00
+/*   Updated: 2024/04/08 08:52:25 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +16,7 @@ void	yard_pop(t_shunting_node *node, t_shunting_yard *yard);
 
 int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
-char	*run_pipe(t_shell *shell, t_shunting_node **chain, int counter, int pipe_amount, char *str);
+char	*run_pipe(t_shell *shell, t_shunting_node **chain);
 int		redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell);
 int		redirect_out(t_shell *shell, t_shunting_node **chain, int redirection_amout);
 int		run_append(t_shell *shell, t_shunting_node **chain, int append_amount);
@@ -134,7 +130,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	if (type == PIPE)
 	{
 		printf("-> PIPE\n");
-		run_pipe(shell, chain, 0, len, out);
+		run_pipe(shell, chain);
 		printf("out: %s\n", out);
 	}
 	else if (type == REDIRECT_IN)
