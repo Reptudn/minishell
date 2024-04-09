@@ -140,6 +140,9 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		cmd1 = cmd2->prev; // FIXME: the problem we encounter is that after a long cmd chain there is just one command left in the end and that will fail
 		if (!cmd1)
 			return (CMD_FAILURE);
+		// printf("cmd1: %s\n", cmd1->value);
+		// printf("cmd2: %s\n", cmd2->value);
+		// printf("operator: %s\n", operator->value);
 		exit_status = execute_cmd_chain(shell, cmd1, yard, &status);
 		if (exit_status == -1)
 		{

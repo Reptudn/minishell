@@ -12,40 +12,32 @@
 
 #include "../../include/minishell.h"
 
-int	fuck_around_and_find_out_how_many_pipes(t_shunting_node **chain)
+void	print_cmd_chain(t_shunting_node **chain);
+
+int	get_chain_len(t_shunting_node **chain)
 {
 	int				pipe_amount;
-	t_shunting_node	*current;
 
-	current = *chain;
 	pipe_amount = 0;
-	while (current->next != NULL)
-	{
+	while (chain[pipe_amount])
 		pipe_amount++;
-		current = current->next;
-	}
-	while (current->prev != NULL)
-		current = current->prev;
 	return (pipe_amount);
 }
 
+// TODO: return NULL when failed and empty string when success but no cmd output
+// FIXME: exit status doesnt work correctly yet cuz i think this always succeeds here
 char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 {
-	int				pipe_amount = fuck_around_and_find_out_how_many_pipes(chain);
+	int				pipe_amount = get_chain_len(chain);
 	int				fd[pipe_amount][2];
 	int 			counter;
 	pid_t 			pid;
-	t_shunting_node *current = *chain;
-	for (; current != NULL; current = current->next) {
-		printf("chain->value: %s", current->value);
-	}
 
 	//fd[0] == read end
 	//fd[1] == write end
 	//dup2(to where, from where);
-	counter = 0;
-	current = *chain;
-	while (counter <= pipe_amount)
+	counter = -1;
+	while (chain[++counter] && counter <= pipe_amount)
 	{
 		if (pipe(fd[counter]) == -1)
 			return (NULL);
@@ -64,12 +56,12 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 				close(fd[counter][0]); // Close the read end of the current pipe
 				dup2(fd[counter][1], STDOUT_FILENO); // Redirect stdout to the write end of the current pipe
 			}
-			run_command(shell, current);
-			exit(CMD_SUCCESS);
+			exit(run_command(shell, chain[counter]));
 		}
 		else
 		{
-			if (counter == pipe_amount) // last cmd can read from it
+			// FIXME: once we get into this if we are stuck here
+			if (counter == pipe_amount || (chain[counter] && !chain[counter + 1])) // last cmd can read from it
 			{
 				char *temp = malloc(1000);
 				int worked = 0;
@@ -78,15 +70,16 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 					printf("error\n");
 				temp[1000] = '\0';
 				printf("temp: %s\n", temp);
+				break ;
 			}
 		}
-		counter++;
-		current = current->next;
 	}
 	// close the read and write ends of the last pipe in the parent process
 	close(fd[pipe_amount][0]);
 	close(fd[pipe_amount][1]);
-	return (NULL);
+	printf("Shell exit status: %d\n", *shell->exit_status);
+	// return (NULL);
+	return ("<PIPE OUTPUT HERE>");
 }
 
 /*

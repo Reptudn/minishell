@@ -21,14 +21,12 @@ int	ft_echo(t_shunting_node *cmd)
 	nl = 1;
 	if (!cmd)
 		return (CMD_FAILURE);
-	if (ft_strncmp(cmd->value, "echo", ft_strlen(cmd->value)) != 0)
-		return (1);
-	if (str_is_equal(cmd->args[0], "-n"))
+	if (cmd->args && str_is_equal(cmd->args[0], "-n"))
 	{
 		nl = 0;
 		i++;
 	}
-	while (cmd->args[++i])
+	while (cmd->args && cmd->args[++i])
 	{
 		printf("%s", cmd->args[i]);
 		if (cmd->args[i + 1])

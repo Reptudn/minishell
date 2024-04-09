@@ -125,9 +125,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	int				len;
 	int				type;
 	int				i;
-	char			*out;
 
-	out = ft_strdup("");
 	chain = get_cmd_chain(start, &len, &type);
 	i = -1;
 	if (!chain)
@@ -137,7 +135,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 		replace_variable(chain[i]->args, shell, *status);
 	if (type == PIPE)
 	{
-		chain[0]->args = ft_split(run_pipe(shell, chain, 0, len, out), ' ');
+		chain[0]->args = ft_split(run_pipe(shell, chain), ' ');
 		if (!chain[0]->args)
 			return (CMD_FAILURE);
 	}
@@ -166,5 +164,6 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	chain[0]->value = ft_strdup("echo");
 	pop_cmd_chain(yard, chain, len, type);
 	free(chain);
+	// print_all_stacks(yard);
 	return (CMD_SUCCESS);
 }

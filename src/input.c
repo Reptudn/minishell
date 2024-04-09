@@ -46,7 +46,6 @@ int	command_loop(t_shell *shell)
 	char			*line;
 	t_shunting_yard	*yard;
 	char			**split;
-	int				i;
 
 	line = readline(PROMPT_HELLO);
 	status = 0;
@@ -87,10 +86,7 @@ int	command_loop(t_shell *shell)
 			status = CMD_FAILURE;
 			continue ;
 		}
-		i = -1;
-		while (split[++i])
-			free(split[i]);
-		free(split);
+		free_split(split);
 		printf("%s", COLOR_RESET);
 		status = execute_commands(yard, shell, status);
 		shunting_yard_destroy(yard);
