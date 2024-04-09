@@ -16,7 +16,7 @@ void	yard_pop(t_shunting_node *node, t_shunting_yard *yard);
 
 int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
-char	*run_pipe(t_shell *shell, t_shunting_node **chain, int counter, int pipe_amount, char *str);
+char	*run_pipe(t_shell *shell, t_shunting_node **chain);
 int		redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell);
 int		redirect_out(t_shell *shell, t_shunting_node **chain, int redirection_amout);
 int		run_append(t_shell *shell, t_shunting_node **chain, int append_amount);
