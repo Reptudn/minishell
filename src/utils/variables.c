@@ -45,16 +45,14 @@ void	is_variable(char **arg, t_shell *shell, int status)
 	return ;
 }
 
-// FIXME: For some reason args or *args is nothing anymore so this segv
+// FIXME: echo '"$USER"' should display "$USER" and not the value of the variable
 void	replace_variable(char **args, t_shell *shell, int status)
 {
 	int	i;
 
 	i = -1;
-	return ;
 	if (!args && *args == NULL)
 		return ;
-	printf("args is not null\n");
 	while (args && args[++i])
 		is_variable(&args[i], shell, status);
 }

@@ -51,7 +51,7 @@ void	update_indices(int *i, int *start, int len, int op_len)
 
 void	process_string(const char *str, char **result, int *res_i)
 {
-	char	*shell_op[] = {"||", "&&", "<<", "<", ">>", ">", " ", "(", ")", "|"};
+	char	*shell_op[] = {"||", "&&", "<<", " < ", ">>", " > ", " ", "(", ")", "|"};
 	int		i;
 	int		start;
 	int		op_len;
