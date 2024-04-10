@@ -59,7 +59,7 @@ int	command_loop(t_shell *shell)
 				break ;
 			continue ;
 		}
-		printf("%s", COLOR_RESET);
+		color_black();
 		if (ft_strlen(line) > 0)
 			add_history(line);
 		line = is_valid_input(line);
@@ -87,7 +87,7 @@ int	command_loop(t_shell *shell)
 			continue ;
 		}
 		free_split(split);
-		printf("%s", COLOR_RESET);
+		color_black();
 		status = execute_commands(yard, shell, status);
 		shunting_yard_destroy(yard);
 		free(line);
