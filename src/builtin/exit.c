@@ -12,9 +12,6 @@
 
 #include "../../include/minishell.h"
 
-// TODO: this has to take an argument which is the exit code the user wants to
-// exit the shell
-
 int	get_str_arr_len(char **arr)
 {
 	int	i;

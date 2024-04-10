@@ -81,6 +81,6 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 			}
 		}
 	}
-	printf("Shell exit status: %d\n", *shell->exit_status); // This is cmd success even if one cmd fails idk if it should be like that?
+	// printf("Shell exit status: %d\n", *shell->exit_status); // This is cmd success even if one cmd fails idk if it should be like that?
 	return (temp);
 }

@@ -48,9 +48,9 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 				print_invalid_cmd(cmd->value);
 				status = CMD_NOT_FOUND;
 			}
-			else if (status == CMD_IMPROP) // TODO: print error in std error
-				printf("%sminishell: No permission\n%s",
-					COLOR_RED, COLOR_RESET);
+			else if (status == CMD_IMPROP)
+				ft_putstr_fd(COLOR_RED "minishell: No\
+				permission\n" COLOR_RESET, 2);
 		}
 	}
 	if (cmd->exit_status == NULL)

@@ -12,7 +12,8 @@
 
 #include "../../include/minishell.h"
 
-// heredoc
+// TODO: make heredoc run with any amount of args like: echo << EOF << POG -> this should only escape when EOF and POG are written in order
+// FIXME: it segv when the escape sequence is the first thats given in the heredoc
 int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 {
 	char			*heredoc;
@@ -24,9 +25,10 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
+	(void)cmd1;
 	while (1)
 	{
-		temp = readline("heredoc> ");
+		temp = readline(COLOR_BLACK "heredoc> ");
 		if (!temp)
 		{
 			status = CMD_FAILURE;
@@ -44,8 +46,6 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 		free(new_heredoc);
 		free(temp);
 	}
-	printf("cmd1: %s\n", cmd1->value);
-	printf("cmd2: %s\n", cmd2->value);
 	if (status == CMD_SUCCESS)
 	{
 		echo = malloc(sizeof(t_shunting_node));

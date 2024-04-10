@@ -24,6 +24,7 @@ void	print_export(t_env_var *env)
 	}
 }
 
+// TODO: check if this is really like in bash now
 int	ft_export(t_shell *shell, t_shunting_node *cmd)
 {
 	t_env_var	*env;
@@ -81,7 +82,6 @@ int	ft_export(t_shell *shell, t_shunting_node *cmd)
 	return (CMD_SUCCESS);
 }
 
-// TODO: Isnt quite like the original bash export command
 // int	ft_export(t_shell *shell, t_shunting_node *cmd)
 // {
 // 	t_env_var	*env;

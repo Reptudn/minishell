@@ -19,7 +19,7 @@ void	signal_handler(int signum)
 		*g_run = false;
 		return ;
 	}
-	if (signum == SIGINT) // TODO: handle sigint correctly to end curr task
+	if (signum == SIGINT)
 	{
 		printf("\n");
 	}

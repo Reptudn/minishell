@@ -132,7 +132,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 
 	chain = get_cmd_chain(start, &len, &type);
 	i = -1;
-	print_cmd_chain(chain);
+	// print_cmd_chain(chain);
 	if (!chain)
 		return (-1);
 	while (++i < len && chain[i])
@@ -143,9 +143,10 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 		if (!chain[0]->args)
 			return (CMD_FAILURE);
 	}
-	else if (type == REDIRECT_IN)
+	else if (type == REDIRECT_IN) // TODO: add redirect in
 	{
 		printf("REDIRECT_IN\n");
+		redirect_in(chain[0], chain[1], shell);
 	}
 	else if (type == REDIRECT_OUT)
 	{
@@ -161,9 +162,11 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 		if (!(*chain)->args)
 			return (CMD_FAILURE);
 	}
-	else if (type == REDIRECT_IN_DELIMITER)
+	else if (type == REDIRECT_IN_DELIMITER) // TODO: add delimiter
 	{
 		printf("DELIMITER\n");
+		run_delimiter(shell, chain[0], chain[1]);
+		(*chain)->args = ft_split("-n  ", ' ');
 	}
 	chain[0]->value = ft_strdup("echo");
 	pop_cmd_chain(yard, chain, len, type);
