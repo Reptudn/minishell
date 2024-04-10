@@ -12,13 +12,15 @@
 
 #include "../../include/minishell.h"
 
+// TODO: echo '$ANTHING' should display $ANTHING and not the value of the variable
+
 void	is_variable(char **arg, t_shell *shell, int status)
 {
 	char		*var;
 	char		*a_status;
 	t_env_var	*env_var;
 
-	if (!arg || !*arg || *arg[0] != '$')
+	if (!arg || !*arg || *arg[0] != '$' || ft_strlen(*arg) == 1)
 		return ;
 	if (ft_strncmp(*arg, "$?", 2) == 0)
 	{
@@ -42,7 +44,6 @@ void	is_variable(char **arg, t_shell *shell, int status)
 		return ;
 	free(*arg);
 	*arg = var;
-	return ;
 }
 
 // FIXME: echo '"$USER"' should display "$USER" and not the value of the variable

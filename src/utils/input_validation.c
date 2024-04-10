@@ -14,29 +14,51 @@
 
 int	get_quote_cout(char *str, char quote)
 {
-	int	quote_count;
-	int	i;
+	int		quote_count;
+	int		i;
 
 	quote_count = 0;
-	i = 0;
-	while (str[i])
-	{
+	i = -1;
+	while (str[++i])
 		if (str[i] == quote)
 			quote_count++;
-		i++;
-	}
 	return (quote_count);
 }
 
+bool	is_valid_quotes(char *line, char *missing)
+{
+	char	current_quote;
+	int		i;
+
+	current_quote = 0;
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i] == '\'' || line[i] == '"')
+		{
+			if (current_quote == 0)
+				current_quote = line[i];
+			else if (current_quote == line[i])
+				current_quote = 0;
+		}
+	}
+	if (current_quote != 0)
+		*missing = current_quote;
+	printf("missing: %c\n", *missing);
+	printf("current_quote: %c\n", current_quote == 0 ? '0' : current_quote);
+	return (current_quote == 0);
+}
+
+// TODO: echo "aspas ->'" should display "aspas ->'" and not ask for the missing quote
 char	*handle_missing(char *line, char missing)
 {
 	char	*tmp;
 	char	*temp;
 	char	*new_line;
 
-	if (ft_strchr(line, missing) != 0 && get_quote_cout(line, missing) % 2 != 0)
+	if (ft_strchr(line, missing) != 0 && is_valid_quotes(line, &missing))
 	{
-		while (get_quote_cout(line, missing) % 2 != 0)
+		while (!is_valid_quotes(line, &missing))
 		{
 			if (missing == '"')
 				tmp = readline("\033[0;31mdquote> \033[0m");
@@ -58,15 +80,19 @@ char	*handle_missing(char *line, char missing)
 	return (line);
 }
 
+// FIXME: correctly check for valid quotes
 char	*is_valid_input(char *line)
 {
-	while (get_quote_cout(line, '"') % 2 != 0
-		|| get_quote_cout(line, '\'') % 2 != 0)
+	char	missing;
+
+	return (line);
+
+	missing = 0;
+	if (!line)
+		return (0);
+	while (!is_valid_quotes(line, &missing))
 	{
-		line = handle_missing(line, '"');
-		if (!line)
-			return (0);
-		line = handle_missing(line, '\'');
+		line = handle_missing(line, missing);
 		if (!line)
 			return (0);
 	}

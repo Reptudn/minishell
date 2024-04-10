@@ -30,18 +30,22 @@ void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard);
 t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type)
 {
 	t_shunting_node	*last;
+	t_shunting_node	*start;
 
 	last = NULL;
+	start = node;
 	while (node && node != last && node->next
 		&& (*node->type == type || *node->type == NONE))
 	{
-		if (node->prev && *node->prev->type == type && *node->type == NONE
-			&& node->next && *node->next->type == NONE)
+		if (node != start && node->prev && *node->prev->type == type
+			&& *node->type == NONE && node->next && *node->next->type == NONE)
 			break ;
 		if (*node->type == type)
 			last = node;
 		node = node->next;
 	}
+	if (node && *node->type == type)
+		last = node;
 	return (last);
 }
 
@@ -128,9 +132,9 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 
 	chain = get_cmd_chain(start, &len, &type);
 	i = -1;
+	print_cmd_chain(chain);
 	if (!chain)
 		return (-1);
-	// print_cmd_chain(chain);
 	while (++i < len && chain[i])
 		replace_variable(chain[i]->args, shell, *status);
 	if (type == PIPE)

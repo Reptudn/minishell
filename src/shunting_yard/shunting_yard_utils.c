@@ -25,7 +25,7 @@ void	print_shunting_node(t_shunting_node *node, int a)
 		return ;
 	}
 	printf("-- Node: %d\n", a);
-	printf("value: %s\n", node->value);
+	printf("value: %s (%p)\n", node->value, node->value);
 	printf("args:\n");
 	if (node->args && node->args[0])
 		while (node->args[++i] && node->args[0])
