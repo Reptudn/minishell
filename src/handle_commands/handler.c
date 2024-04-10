@@ -116,7 +116,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 	index = -1;
 	if (!yard || !yard->output || !shell)
 		return (CMD_FAILURE);
-	print_all_stacks(yard);
+	// print_all_stacks(yard);
 	operator_count = get_operator_count(yard->output);
 	if (operator_count == 0)
 	{
