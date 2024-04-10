@@ -141,6 +141,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 		chain[0]->args = ft_split(run_pipe(shell, chain), ' ');
 		if (!chain[0]->args)
 			return (CMD_FAILURE);
+		printf("%s", chain[0]->args[0]);
 	}
 	else if (type == REDIRECT_IN) // TODO: add redirect in
 	{

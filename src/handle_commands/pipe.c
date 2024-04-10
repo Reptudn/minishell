@@ -72,8 +72,6 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 					ft_putstr_fd("No output from last command\n", 1);
 					return (NULL);
 				}
-				else
-					printf("temp: %s\n", temp);
 				close(fd[counter][0]);
 				break;
 			}
