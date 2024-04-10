@@ -24,8 +24,6 @@ int	get_chain_len(t_shunting_node **chain)
 	return (pipe_amount);
 }
 
-// TODO: return NULL when failed and empty string when success but no cmd output
-// FIXME: exit status doesnt work correctly yet cuz i think this always succeeds here (or the problem is not here but in the run_command function)
 char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 {
 	int				pipe_amount = get_chain_len(chain);
@@ -33,7 +31,7 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 	int 			counter;
 	pid_t 			pid;
 	int				exit_code;
-	char			*temp = ft_calloc(1000, sizeof(char));
+	char			*temp = ft_calloc(100000, sizeof(char));
 
 	counter = -1;
 	while (chain[++counter] && counter <= pipe_amount)
@@ -65,8 +63,8 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 			waitpid(pid, &status, 0);
 			if (counter == pipe_amount - 1)
 			{
-				int worked = read(fd[counter][0], temp, 999);
-				temp[999] = '\0';
+				int worked = read(fd[counter][0], temp, 99999);
+				temp[100000] = '\0';
 				if (worked == -1)
 					ft_putstr_fd("error\n", 1);
 				else if (worked == 0)

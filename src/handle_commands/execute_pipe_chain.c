@@ -18,10 +18,9 @@ int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 char	*run_pipe(t_shell *shell, t_shunting_node **chain);
 int		redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell);
-int		redirect_out(t_shell *shell, t_shunting_node **chain, int redirection_amout);
+int		redirect_out(t_shell *shell, t_shunting_node **chain, int redirection_amout);	
 int		run_append(t_shell *shell, t_shunting_node **chain, int append_amount);
-int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
-			t_shunting_node *cmd2);
+int		run_delimiter(t_shell *shell, t_shunting_node **chain);
 
 void	replace_variable(char **args, t_shell *shell, int status);
 
@@ -164,8 +163,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	}
 	else if (type == REDIRECT_IN_DELIMITER) // TODO: add delimiter
 	{
-		printf("DELIMITER\n");
-		run_delimiter(shell, chain[0], chain[1]);
+		run_delimiter(shell, chain);
 		(*chain)->args = ft_split("-n  ", ' ');
 	}
 	chain[0]->value = ft_strdup("echo");

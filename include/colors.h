@@ -43,6 +43,4 @@ static inline const char	*color_black(void)
 	return ("");
 }
 
-// TODO: add te static inline functon for all the colors
-
 #endif

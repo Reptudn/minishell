@@ -5,16 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 12:00:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/04 09:13:03 by jkauker          ###   ########.fr       */
+/*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
+/*   Updated: 2024/04/10 16:47:34 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+void	print_cmd_chain(t_shunting_node **chain);
+
 // TODO: make heredoc run with any amount of args like: echo << EOF << POG -> this should only escape when EOF and POG are written in order
 // FIXME: it segv when the escape sequence is the first thats given in the heredoc
-int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
+//TODO: listen to "fuck me gently", not a banger but still culture or so the people say
+int	run_delimiter(t_shell *shell, t_shunting_node **chain)
 {
 	char			*heredoc;
 	char			*new_heredoc;
@@ -22,10 +25,12 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 	int				status;
 	char			*nl;
 	t_shunting_node	*echo;
+	int				counter;
 
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
-	(void)cmd1;
+	counter = 1;
+	print_cmd_chain(chain);
 	while (1)
 	{
 		temp = readline(COLOR_BLACK "heredoc> ");
@@ -34,7 +39,9 @@ int	run_delimiter(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 			status = CMD_FAILURE;
 			break ;
 		}
-		if (str_is_equal(temp, cmd2->value))
+		if (chain[counter] && str_is_equal(temp, (chain[counter])->value))
+			counter++;
+		if (chain[counter] == NULL)
 		{
 			status = CMD_SUCCESS;
 			free(temp);

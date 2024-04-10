@@ -56,6 +56,12 @@ int	ft_exit(t_shell *shell, t_shunting_node *cmd)
 	}
 	if (!arg_is_numerical(cmd->args[0]))
 	{
+		if (cmd->args[0])
+		{
+			ft_putstr_fd("minishell: exit: ", 1);
+			ft_putstr_fd(cmd->args[0], 1);
+			ft_putstr_fd(": numeric argument required\n", 1);
+		}
 		*shell->exit_status = CMD_FAILURE;
 		return (CMD_FAILURE);
 	}
