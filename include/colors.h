@@ -13,6 +13,8 @@
 #ifndef COLORS_H
 # define COLORS_H
 
+# include <unistd.h>
+
 // Foreground colors
 # define COLOR_BLACK "\033[0;30m"
 # define COLOR_RED "\033[0;31m"
@@ -33,5 +35,14 @@
 # define COLOR_BG_WHITE "\033[47m"
 
 # define COLOR_RESET "\033[0m"
+
+static inline const char	*color_black(void)
+{
+	if (isatty(STDOUT_FILENO))
+		return (COLOR_BLACK);
+	return ("");
+}
+
+// TODO: add te static inline functon for all the colors
 
 #endif
