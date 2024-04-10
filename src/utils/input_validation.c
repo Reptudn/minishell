@@ -44,19 +44,16 @@ bool	is_valid_quotes(char *line, char *missing)
 	}
 	if (current_quote != 0)
 		*missing = current_quote;
-	printf("missing: %c\n", *missing);
-	printf("current_quote: %c\n", current_quote == 0 ? '0' : current_quote);
 	return (current_quote == 0);
 }
 
-// TODO: echo "aspas ->'" should display "aspas ->'" and not ask for the missing quote
 char	*handle_missing(char *line, char missing)
 {
 	char	*tmp;
 	char	*temp;
 	char	*new_line;
 
-	if (ft_strchr(line, missing) != 0 && is_valid_quotes(line, &missing))
+	if (ft_strchr(line, missing) != 0 && !is_valid_quotes(line, &missing))
 	{
 		while (!is_valid_quotes(line, &missing))
 		{
@@ -80,12 +77,9 @@ char	*handle_missing(char *line, char missing)
 	return (line);
 }
 
-// FIXME: correctly check for valid quotes
 char	*is_valid_input(char *line)
 {
 	char	missing;
-
-	return (line);
 
 	missing = 0;
 	if (!line)
