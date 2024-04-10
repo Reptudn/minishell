@@ -33,10 +33,8 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 	int 			counter;
 	pid_t 			pid;
 	int				exit_code;
+	char			*temp = ft_calloc(1000, sizeof(char));
 
-	//fd[0] == read end
-	//fd[1] == write end
-	//dup2(to where, from where);
 	counter = -1;
 	while (chain[++counter] && counter <= pipe_amount)
 	{
@@ -52,7 +50,7 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 				close(fd[counter - 1][1]); // Close the write end of the previous pipe
 				dup2(fd[counter - 1][0], STDIN_FILENO); // Redirect stdin to the read end of the previous pipe
 			}
-			if (counter != pipe_amount || (chain[counter] && chain[counter + 1])) // not the last command
+			if (counter != pipe_amount) // not the last command
 			{
 				close(fd[counter][0]); // Close the read end of the current pipe
 				dup2(fd[counter][1], STDOUT_FILENO); // Redirect stdout to the write end of the current pipe
@@ -62,39 +60,24 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 		}
 		else
 		{
-			// FIXME: once we get into this if we are stuck here
-			if (counter == pipe_amount || (chain[counter] && !chain[counter + 1])) // last cmd can read from it
+			close(fd[counter][1]);
+			int status;
+			waitpid(pid, &status, 0);
+			if (counter == pipe_amount - 1)
 			{
-				char *temp = ft_calloc(1000, sizeof(char));
-				int worked = 0;
-				worked = read(fd[counter][0], temp, 998);
+				int worked = read(fd[counter][0], temp, 999);
+				temp[999] = '\0';
 				if (worked == -1)
 					ft_putstr_fd("error\n", 1);
-				if (!temp) ft_putstr_fd("temp is null\n", 1);
-				else printf("temp: %s\n", temp);
-				break ;
+				else if (worked == 0)
+					ft_putstr_fd("No output from last command\n", 1);
+				else
+					printf("temp: %s\n", temp);
+				close(fd[counter][0]);
+				break;
 			}
 		}
 	}
-	// close the read and write ends of the last pipe in the parent process
-	close(fd[pipe_amount][0]);
-	close(fd[pipe_amount][1]);
 	printf("Shell exit status: %d\n", *shell->exit_status); // This is cmd success even if one cmd fails idk if it should be like that?
-	// return (NULL);
-	return ("<PIPE OUTPUT HERE>");
+	return (temp);
 }
-
-/*
-
-
-	echo hello         dup2(pipefd[0], STDIN_FILENO);  close(pipefd[0]); close(pipefd[1]);
-
-
-	wc -l              dup2(pipefd[1], 1); close(pipefd[0]); close(pipefd[1]);
-
-
-
-
-
-
-*/
