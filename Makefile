@@ -92,3 +92,6 @@ run: all
 	./$(NAME)
 
 rerun: re run
+
+norm:
+	@cd src && norminette | grep "Error:" | wc -l

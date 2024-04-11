@@ -53,7 +53,7 @@
 # define CMD_IMPROP 2
 # define CMD_NOT_FOUND 127
 
-extern bool	*g_run;
+extern int	g_run;
 
 typedef struct s_env_var
 {

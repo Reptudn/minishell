@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-bool	*g_run = NULL;
+int	g_run = 1;
 
 void	print_start_logo(void)
 {
@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 
 	shell.run = true;
-	g_run = &(shell.run);
+	g_run = 1;
 	shell.path = getcwd(NULL, 0);
 	shell.exit_status = malloc(sizeof(int));
 	*shell.exit_status = CMD_SUCCESS;
