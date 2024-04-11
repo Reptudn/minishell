@@ -112,7 +112,4 @@ int	main(int argc, char **argv, char **envp)
 }
 
 // TODO: echo '"$USER"' has to print "$USER" and not the user
-// TODO: sometimes when running pipes or redirections or anything like that that write into a file there will be written stupid stuff aka color codes
-// FIXME: color codes are being printed into the pipe too which shouldnt happen
-
-// FIXME: Pipes only on their own dont really work and print nothing
+// TODO: Pipes and so on print a nl too much

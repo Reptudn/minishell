@@ -136,29 +136,18 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	while (++i < len && chain[i])
 		replace_variable(chain[i]->args, shell, *status);
 	if (type == PIPE)
-	{
 		chain[0]->args = ft_split(run_pipe(shell, chain), ' ');
-	}
 	else if (type == REDIRECT_IN)
-	{
 		redirect_in(chain[0], chain[1], shell);
-		(*chain)->args = ft_split("-n  ", ' ');
-	}
 	else if (type == REDIRECT_OUT)
-	{
 		redirect_out(shell, chain, len);
-		chain[0]->args = ft_split("-n  ", ' ');
-	}
 	else if (type == REDIRECT_OUT_APPEND)
-	{
 		run_append(shell, chain, len);
-		(*chain)->args = ft_split("-n  ", ' ');
-	}
 	else if (type == REDIRECT_IN_DELIMITER)
-	{
 		run_delimiter(shell, chain);
-		(*chain)->args = ft_split("-n  ", ' ');
-	}
+	if (type == REDIRECT_IN || type == REDIRECT_OUT
+		|| type == REDIRECT_OUT_APPEND || type == REDIRECT_IN_DELIMITER)
+		chain[0]->args = ft_split("-n  ", ' ');
 	if (!(*chain)->args)
 		return (CMD_FAILURE);
 	chain[0]->value = ft_strdup("echo");
