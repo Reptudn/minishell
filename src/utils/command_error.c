@@ -22,13 +22,14 @@ void	print_invalid_cmd(char *command)
 	args = ft_split(command, ' ');
 	if (!args)
 	{
-		printf("%sminishell: command not found\n%s", COLOR_RED, COLOR_RESET);
+		printf("%sminishell: command not found\n%s", color_red(), color_reset());
 		// ft_putstr_fd("minishell: command not found\n", 2);
 		return ;
 	}
 	i = -1;
-	printf("%sminishell: command not found: %s%s\n%s", COLOR_RED,
-		COLOR_MAGENTA, args[0], COLOR_RESET);
+	printf("%sminishell: command not found: %s%s\n%s", color_red(),
+		color_magenta(), args[0], color_reset());
+
 	// ft_putstr_fd("minishell: command not found\n", 2);
 	while (args[++i])
 		free(args[i]);

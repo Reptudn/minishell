@@ -49,8 +49,8 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 				status = CMD_NOT_FOUND;
 			}
 			else if (status == CMD_IMPROP)
-				ft_putstr_fd(COLOR_RED "minishell: No\
-				permission\n" COLOR_RESET, 2);
+				ft_putstr_fd("minishell: No\
+				permission\n", 2);
 		}
 	}
 	if (cmd->exit_status == NULL)

@@ -16,7 +16,7 @@ bool	*g_run = NULL;
 
 void	print_start_logo(void)
 {
-	printf("\033[H\033[J%s%s", COLOR_BG_GREEN, COLOR_MAGENTA);
+	printf("\033[H\033[J%s", color_magenta());
 	printf(" __    __     __     __   __     __     "
 		"______     __  __     ______     __         __ \n");
 	printf("/\\ '-./  \\   /\\ \\   /\\ '-.\\ \\   /"
@@ -36,10 +36,10 @@ void	print_start_logo(void)
 		";\a%s and "
 		"%s\033]8;;https://profile.intra.42.fr/users/nsabia\ansabia\033]8;"
 		";\a%s\n\n",
-		COLOR_RED, COLOR_MAGENTA, COLOR_RED, COLOR_RESET);
-	printf("%s", COLOR_RESET);
-	printf("\n%sWelcome %s✨ %s ✨%s\n\n", COLOR_MAGENTA, COLOR_GREEN,
-		getenv("USER"), COLOR_RESET);
+		color_red(), color_magenta(), color_red(), color_reset());
+	printf("%s", color_reset());
+	printf("\n%sWelcome %s✨ %s ✨%s\n\n", color_magenta(), color_green(),
+		getenv("USER"), color_reset());
 }
 
 char	**get_env(void)
