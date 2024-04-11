@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/11 14:43:27 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/11 14:45:45 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	print_cmd_chain(t_shunting_node **chain);
 
-// TODO: make heredoc run with any amount of args like: echo << EOF << POG -> this should only escape when EOF and POG are written in order
-// FIXME: it segv when the escape sequence is the first thats given in the heredoc
+// FIXME: it segfaults when the first arg in the heredoc is the stopping sequence
 char	*run_delimiter(t_shunting_node **chain)
 {
 	char			*heredoc;
