@@ -27,6 +27,7 @@ bool	wildcard_match(char *pattern, char *str)
 	return (false);
 }
 
+// TODO: echo * is like the normal ls
 char	*get_matching_files(char *pattern)
 {
 	DIR				*d;

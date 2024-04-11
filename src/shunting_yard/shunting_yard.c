@@ -153,7 +153,7 @@ void	place_node(t_shunting_node *node, t_shunting_yard *yard)
 	}
 }
 
-// FIXME: when having bracktes it breaks
+// TODO: Add working brackets support
 t_shunting_yard	*shunting_yard(char **tokens)
 {
 	t_shunting_yard	*yard;
