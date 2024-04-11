@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/10 16:47:34 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/11 08:00:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	run_delimiter(t_shell *shell, t_shunting_node **chain)
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
 	counter = 1;
-	print_cmd_chain(chain);
+	// print_cmd_chain(chain);
 	while (1)
 	{
 		temp = readline(COLOR_BLACK "heredoc> ");
