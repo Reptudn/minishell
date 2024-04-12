@@ -77,5 +77,7 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 			}
 		}
 	}
+	if (temp[ft_strlen(temp) - 1] == '\n')
+		temp[ft_strlen(temp) - 1] = '\0';
 	return (temp);
 }
