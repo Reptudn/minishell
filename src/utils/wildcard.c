@@ -27,7 +27,7 @@ bool	wildcard_match(char *pattern, char *str)
 	return (false);
 }
 
-// TODO: echo * is like the normal ls
+// TODO: for example echo * is like the normal ls -> * wildcard is every file
 char	*get_matching_files(char *pattern)
 {
 	DIR				*d;
@@ -46,7 +46,8 @@ char	*get_matching_files(char *pattern)
 		dir = readdir(d);
 		while (dir != NULL)
 		{
-			if (wildcard_match(pattern, dir->d_name))
+			if (str_is_equal(pattern, "*")
+				|| wildcard_match(pattern, dir->d_name))
 			{
 				temp = match;
 				match = ft_strjoin(match, " ");

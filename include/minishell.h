@@ -112,6 +112,18 @@ typedef struct s_shunting_yard
 	t_shunting_node			*stack;
 }	t_shunting_yard;
 
+typedef struct s_temps
+{
+	int		int_i;
+	int		int_j;
+	int		int_k;
+	int		int_l;
+	char	*charp_i;
+	char	*charp_j;
+	char	*charp_k;
+	char	*charp_l;
+}	t_temps;
+
 // command hanling
 int				run_command(t_shell *shell, t_shunting_node *cmd);
 int				run_path_command(t_shell *shell, t_shunting_node *cmd);
