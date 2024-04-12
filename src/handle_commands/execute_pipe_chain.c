@@ -20,7 +20,7 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain);
 int		redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell);
 int		redirect_out(t_shell *shell, t_shunting_node **chain, int redirection_amout);	
 int		run_append(t_shell *shell, t_shunting_node **chain, int append_amount);
-int		run_delimiter(t_shell *shell, t_shunting_node **chain);
+char	*run_delimiter(t_shunting_node **chain);
 
 void	replace_variable(char **args, t_shell *shell, int status);
 
@@ -131,45 +131,27 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 
 	chain = get_cmd_chain(start, &len, &type);
 	i = -1;
-	// print_cmd_chain(chain);
 	if (!chain)
 		return (-1);
 	while (++i < len && chain[i])
 		replace_variable(chain[i]->args, shell, *status);
 	if (type == PIPE)
-	{
 		chain[0]->args = ft_split(run_pipe(shell, chain), ' ');
-		if (!chain[0]->args)
-			return (CMD_FAILURE);
-		// printf("%s", chain[0]->args[0]);
-	}
-	else if (type == REDIRECT_IN) // TODO: add redirect in
-	{
-		// printf("REDIRECT_IN\n");
+	else if (type == REDIRECT_IN)
 		redirect_in(chain[0], chain[1], shell);
-	}
 	else if (type == REDIRECT_OUT)
-	{
 		redirect_out(shell, chain, len);
-		chain[0]->args = ft_split("-n  ", ' ');
-		if (!chain[0]->args)
-			return (CMD_FAILURE);
-	}
 	else if (type == REDIRECT_OUT_APPEND)
-	{
 		run_append(shell, chain, len);
-		(*chain)->args = ft_split("-n  ", ' ');
-		if (!(*chain)->args)
-			return (CMD_FAILURE);
-	}
-	else if (type == REDIRECT_IN_DELIMITER) // TODO: add delimiter
-	{
-		run_delimiter(shell, chain);
-		(*chain)->args = ft_split("-n  ", ' ');
-	}
+	else if (type == REDIRECT_IN_DELIMITER)
+		chain[0]->args = ft_split(run_delimiter(chain), ' ');
+	if (type == REDIRECT_IN || type == REDIRECT_OUT
+		|| type == REDIRECT_OUT_APPEND)
+		chain[0]->args = ft_split("-n  ", ' ');
+	if (!(*chain)->args)
+		return (CMD_FAILURE);
 	chain[0]->value = ft_strdup("echo");
 	pop_cmd_chain(yard, chain, len, type);
 	free(chain);
-	// print_all_stacks(yard);
 	return (CMD_SUCCESS);
 }

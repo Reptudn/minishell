@@ -47,14 +47,14 @@ int	command_loop(t_shell *shell)
 	t_shunting_yard	*yard;
 	char			**split;
 
-	line = readline(PROMPT_HELLO);
+	line = readline(prompt_hello());
 	status = 0;
 	while (shell->run && line)
 	{
 		if (ft_strlen(line) == 0)
 		{
 			free(line);
-			line = readline(PROMPT_SUCCESS);
+			line = readline(prompt_failure());
 			if (!line)
 				break ;
 			continue ;
@@ -65,7 +65,7 @@ int	command_loop(t_shell *shell)
 		line = is_valid_input(line);
 		if (!line)
 		{
-			line = readline(PROMPT_FAILURE);
+			line = readline(prompt_failure());
 			status = CMD_FAILURE;
 			continue ;
 		}
@@ -73,7 +73,7 @@ int	command_loop(t_shell *shell)
 		if (!split)
 		{
 			free(line);
-			line = readline(PROMPT_FAILURE);
+			line = readline(prompt_failure());
 			status = CMD_FAILURE;
 			continue ;
 		}
@@ -82,7 +82,7 @@ int	command_loop(t_shell *shell)
 		{
 			printf("Shunting yard failed\n");
 			free(line);
-			line = readline(PROMPT_FAILURE);
+			line = readline(prompt_failure());
 			status = CMD_FAILURE;
 			continue ;
 		}
@@ -95,9 +95,9 @@ int	command_loop(t_shell *shell)
 		if (!shell->run)
 			break ;
 		if (status == CMD_FAILURE || status == CMD_NOT_FOUND || status == 2)
-			line = readline(PROMPT_FAILURE);
+			line = readline(prompt_failure());
 		else
-			line = readline(PROMPT_SUCCESS);
+			line = readline(prompt_success());
 	}
 	clear_history();
 	if (line)

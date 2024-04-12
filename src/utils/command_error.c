@@ -12,25 +12,23 @@
 
 #include "../../include/minishell.h"
 
-// TODO: print errors in std error
-// FIXME: this should also print the error message when running || and the first cmd fails
 void	print_invalid_cmd(char *command)
 {
 	char	**args;
-	int		i;
 
 	args = ft_split(command, ' ');
 	if (!args)
 	{
-		printf("%sminishell: command not found\n%s", COLOR_RED, COLOR_RESET);
-		// ft_putstr_fd("minishell: command not found\n", 2);
+		ft_putstr_fd((char *)color_red(), 2);
+		ft_putstr_fd("minishell: command not found\n", 2);
+		ft_putstr_fd((char *)color_reset(), 2);
 		return ;
 	}
-	i = -1;
-	printf("%sminishell: command not found: %s%s\n%s", COLOR_RED,
-		COLOR_MAGENTA, args[0], COLOR_RESET);
-	// ft_putstr_fd("minishell: command not found\n", 2);
-	while (args[++i])
-		free(args[i]);
-	free(args);
+	ft_putstr_fd((char *)color_red(), 2);
+	ft_putstr_fd("minishell: command not found: ", 2);
+	ft_putstr_fd((char *)color_magenta(), 2);
+	ft_putstr_fd(args[0], 2);
+	ft_putstr_fd((char *)color_reset(), 2);
+	ft_putstr_fd("\n", 2);
+	free_split(args);
 }

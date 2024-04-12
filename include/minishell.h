@@ -55,6 +55,27 @@
 
 extern bool	*g_run;
 
+static inline const char	*prompt_success(void)
+{
+	if (!isatty(STDOUT_FILENO))
+		return ("🟢 minishell ➜ ");
+	return (PROMPT_SUCCESS);
+}
+
+static inline const char	*prompt_failure(void)
+{
+	if (!isatty(STDOUT_FILENO))
+		return ("🔴 minishell ➜ ");
+	return (PROMPT_FAILURE);
+}
+
+static inline const char	*prompt_hello(void)
+{
+	if (!isatty(STDOUT_FILENO))
+		return ("👋 minishell ➜ ");
+	return (PROMPT_HELLO);
+}
+
 typedef struct s_env_var
 {
 	char				*name;

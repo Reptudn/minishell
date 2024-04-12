@@ -16,7 +16,7 @@ bool	*g_run = NULL;
 
 void	print_start_logo(void)
 {
-	printf("\033[H\033[J%s%s", COLOR_BG_GREEN, COLOR_MAGENTA);
+	printf("\033[H\033[J%s", color_magenta());
 	printf(" __    __     __     __   __     __     "
 		"______     __  __     ______     __         __ \n");
 	printf("/\\ '-./  \\   /\\ \\   /\\ '-.\\ \\   /"
@@ -36,10 +36,10 @@ void	print_start_logo(void)
 		";\a%s and "
 		"%s\033]8;;https://profile.intra.42.fr/users/nsabia\ansabia\033]8;"
 		";\a%s\n\n",
-		COLOR_RED, COLOR_MAGENTA, COLOR_RED, COLOR_RESET);
-	printf("%s", COLOR_RESET);
-	printf("\n%sWelcome %s✨ %s ✨%s\n\n", COLOR_MAGENTA, COLOR_GREEN,
-		getenv("USER"), COLOR_RESET);
+		color_red(), color_magenta(), color_red(), color_reset());
+	printf("%s", color_reset());
+	printf("\n%sWelcome %s✨ %s ✨%s\n\n", color_magenta(), color_green(),
+		getenv("USER"), color_reset());
 }
 
 char	**get_env(void)
@@ -112,5 +112,4 @@ int	main(int argc, char **argv, char **envp)
 }
 
 // TODO: echo '"$USER"' has to print "$USER" and not the user
-// TODO: sometimes when running pipes or redirections or anything like that that write into a file there will be written stupid stuff aka color codes
-// FIXME: color codes are being printed into the pipe too which shouldnt happen
+// TODO: Pipes and so on print a nl too much

@@ -43,4 +43,60 @@ static inline const char	*color_black(void)
 	return ("");
 }
 
+static inline const char	*color_red(void)
+{
+	if (isatty(STDOUT_FILENO))
+		return (COLOR_RED);
+	return ("");
+}
+
+static inline const char	*color_green(void)
+{
+	if (isatty(STDOUT_FILENO))
+		return (COLOR_GREEN);
+	return ("");
+}
+
+static inline const char	*color_yellow(void)
+{
+	if (isatty(STDOUT_FILENO))
+		return (COLOR_YELLOW);
+	return ("");
+}
+
+static inline const char	*color_blue(void)
+{
+	if (isatty(STDOUT_FILENO))
+		return (COLOR_BLUE);
+	return ("");
+}
+
+static inline const char	*color_magenta(void)
+{
+	if (isatty(STDOUT_FILENO))
+		return (COLOR_MAGENTA);
+	return ("");
+}
+
+static inline const char	*color_cyan(void)
+{
+	if (isatty(STDOUT_FILENO))
+		return (COLOR_CYAN);
+	return ("");
+}
+
+static inline const char	*color_white(void)
+{
+	if (isatty(STDOUT_FILENO))
+		return (COLOR_WHITE);
+	return ("");
+}
+
+static inline const char	*color_reset(void)
+{
+	if (isatty(STDOUT_FILENO))
+		return (COLOR_RESET);
+	return ("");
+}
+
 #endif

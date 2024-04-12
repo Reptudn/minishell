@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/11 08:00:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/11 14:45:45 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,21 @@
 
 void	print_cmd_chain(t_shunting_node **chain);
 
-// TODO: make heredoc run with any amount of args like: echo << EOF << POG -> this should only escape when EOF and POG are written in order
-// FIXME: it segv when the escape sequence is the first thats given in the heredoc
-//TODO: listen to "fuck me gently", not a banger but still culture or so the people say
-int	run_delimiter(t_shell *shell, t_shunting_node **chain)
+// FIXME: it segfaults when the first arg in the heredoc is the stopping sequence
+char	*run_delimiter(t_shunting_node **chain)
 {
 	char			*heredoc;
 	char			*new_heredoc;
 	char			*temp;
 	int				status;
-	char			*nl;
-	t_shunting_node	*echo;
 	int				counter;
 
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
 	counter = 1;
-	// print_cmd_chain(chain);
 	while (1)
 	{
-		temp = readline(COLOR_BLACK "heredoc> ");
+		temp = readline("heredoc> ");
 		if (!temp)
 		{
 			status = CMD_FAILURE;
@@ -53,22 +48,7 @@ int	run_delimiter(t_shell *shell, t_shunting_node **chain)
 		free(new_heredoc);
 		free(temp);
 	}
-	if (status == CMD_SUCCESS)
-	{
-		echo = malloc(sizeof(t_shunting_node));
-		echo->value = ft_strdup("echo");
-		echo->args = malloc(sizeof(char *) * 2);
-		echo->exit_status = malloc(sizeof(int));
-		nl = ft_strrchr(heredoc, '\n');
-		*nl = '\0';
-		echo->args[0] = heredoc;
-		echo->args[1] = NULL;
-		(void)shell;
-		free(echo->value);
-		free(echo->args);
-		free(echo->exit_status);
-		free(echo);
-	}
-	free(heredoc);
-	return (status);
+	*chain[0]->exit_status = status;
+	return (heredoc);
 }
+// TODO: i think heredoc is not freed in the end
