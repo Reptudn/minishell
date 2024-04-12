@@ -137,6 +137,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 			yard_pop(cmd1, yard);
 			cmd2->value = ft_strdup("echo");
 			cmd2->args = ft_split("-n", ' ');
+			*cmd2->exit_status = exit_status;
 		}
 		if (exit_status > CMD_SUCCESS)
 			return (exit_status);

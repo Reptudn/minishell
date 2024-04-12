@@ -45,12 +45,11 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 			status = run_path_command(shell, cmd);
 			if (status == CMD_FAILURE)
 			{
-				print_invalid_cmd(cmd->value);
+				print_invalid_cmd(cmd->value, "FAILURE", CMD_NOT_FOUND);
 				status = CMD_NOT_FOUND;
 			}
 			else if (status == CMD_IMPROP)
-				ft_putstr_fd("minishell: No\
-				permission\n", 2);
+				print_invalid_cmd(cmd->value, "IMPROP", CMD_IMPROP);
 		}
 	}
 	if (cmd->exit_status == NULL)

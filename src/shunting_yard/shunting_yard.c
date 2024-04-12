@@ -162,7 +162,6 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	yard = shunting_yard_create(tokens);
 	if (!yard)
 		return (NULL);
-	print_all_stacks(yard);
 	if (get_operator_count(yard->input)
 		!= get_command_count(yard->input) - 1)
 	{

@@ -153,7 +153,7 @@ int				display_history(void);
 int				ft_clear(void);
 
 //utils
-void			print_invalid_cmd(char *command);
+void			print_invalid_cmd(char *command, char *error, int status);
 char			**ft_split_shell(const char *str);
 void			*free_split(char **split);
 void			free_node(t_shunting_node *node);
