@@ -112,4 +112,5 @@ int	main(int argc, char **argv, char **envp)
 }
 
 // TODO: echo '"$USER"' has to print "$USER" and not the user
-// TODO: Pipes and so on print a nl too much
+// TODO: when running: "echdsf hi && echo $? || echo ne" it should print that it didnt find the command echdsf and then print ne
+// TODO: exit codes are not passed to the next command correctly yet
