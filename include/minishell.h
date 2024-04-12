@@ -125,7 +125,7 @@ typedef struct s_temps
 }	t_temps;
 
 // command hanling
-int				run_command(t_shell *shell, t_shunting_node *cmd);
+int				run_command(t_shell *shell, t_shunting_node *cmd, bool update);
 int				run_path_command(t_shell *shell, t_shunting_node *cmd);
 int				execute_commands(t_shunting_yard *yard, t_shell *shell);
 

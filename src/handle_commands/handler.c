@@ -89,7 +89,7 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2,
 	return (CMD_FAILURE);
 }
 
-// TODO: rewrite this to only use *shell->exit_status as the exit status
+// TODO: the problem is that because we safe the output inside an echo and that is always successful we dont run some stuff after that echo was successful so probably just add a bool to the run_command function that tells the function not to update the shell exit status var
 int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 {
 	t_shunting_node	*operator;

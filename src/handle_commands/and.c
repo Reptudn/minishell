@@ -12,7 +12,6 @@
 
 #include "../../include/minishell.h"
 
-// TODO: make it work again
 int	run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 {
 	int	status;

@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int	run_command(t_shell *shell, t_shunting_node *cmd)
+int	run_command(t_shell *shell, t_shunting_node *cmd, bool update)
 {
 	int	status;
 
@@ -54,6 +54,8 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 	}
 	if (cmd->exit_status == NULL)
 		cmd->exit_status = malloc(sizeof(int));
+	if (!update)
+		return (status);
 	*cmd->exit_status = status;
 	*shell->exit_status = status;
 	return (status);
