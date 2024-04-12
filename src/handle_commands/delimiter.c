@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/11 14:45:45 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/12 08:48:36 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	print_cmd_chain(t_shunting_node **chain);
 
 // FIXME: it segfaults when the first arg in the heredoc is the stopping sequence
+// TODO: no matter what command we use the heredoc on it's being printed to the terminal even tho for echo it shouldnt but then for cat it should
 char	*run_delimiter(t_shunting_node **chain)
 {
 	char			*heredoc;
@@ -26,6 +27,7 @@ char	*run_delimiter(t_shunting_node **chain)
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
 	counter = 1;
+	print_cmd_chain(chain);
 	while (1)
 	{
 		temp = readline("heredoc> ");

@@ -50,6 +50,7 @@ void	update_indices(int *i, int *start, int len, int op_len)
 }
 
 // FIXME: This functin doesnt check if quotes are in the middle of the string aka inside other quotes and nt remove them
+// TODO: ignore open and close brackets
 void	process_string(const char *str, char **result, int *res_i)
 {
 	char	*shell_op[] = {"||", "&&", "<<", "<", ">>", ">", " ", "(", ")", "|"};

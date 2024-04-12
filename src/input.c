@@ -80,7 +80,6 @@ int	command_loop(t_shell *shell)
 		yard = shunting_yard(split);
 		if (!yard)
 		{
-			printf("Shunting yard failed\n");
 			free(line);
 			line = readline(prompt_failure());
 			status = CMD_FAILURE;

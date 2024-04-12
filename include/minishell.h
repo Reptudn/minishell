@@ -34,9 +34,9 @@
 # include <fcntl.h>
 # include <stdbool.h>
 
-# define PROMPT_SUCCESS "🟢 \033[0;36mminishell \033[0;31m➜ \033[0;33m"
-# define PROMPT_FAILURE "🔴 \033[0;36mminishell \033[0;31m➜ \033[0;33m"
-# define PROMPT_HELLO "👋 \033[0;36mminishell \033[0;31m➜ \033[0;33m"
+# define PROMPT_SUCCESS "🟢 \033[0;36mminishell \033[0;31m➜ \033[0m"
+# define PROMPT_FAILURE "🔴 \033[0;36mminishell \033[0;31m➜ \033[0m"
+# define PROMPT_HELLO "👋 \033[0;36mminishell \033[0;31m➜ \033[0m"
 # define NONE 0
 # define PIPE 1
 # define OR 2
@@ -116,7 +116,7 @@ typedef struct s_shunting_yard
 int				run_command(t_shell *shell, t_shunting_node *cmd);
 int				run_path_command(t_shell *shell, t_shunting_node *cmd);
 int				execute_commands(t_shunting_yard *yard, t_shell *shell,
-					int status);
+								int status);
 
 // old
 int				command_loop(t_shell *shell);
@@ -171,7 +171,7 @@ int				get_quote_cout(char *str, char quote);
 
 // pipes
 int				run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
-					t_shell *shell, int in_fd);
+								t_shell *shell, int in_fd);
 char			**make_env_args(char *cmd, char **args);
 char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
 

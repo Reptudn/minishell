@@ -39,8 +39,10 @@ int	get_operator_count(t_shunting_node *nodes)
 	count = 0;
 	while (nodes)
 	{
-		if (*nodes->type != NONE)
-			count++;
+		count++;
+		if (*nodes->type == NONE || *nodes->type == OPEN_PAREN
+			|| *nodes->type == CLOSE_PAREN)
+			count--;
 		nodes = nodes->next;
 	}
 	return (count);
