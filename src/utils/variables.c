@@ -12,9 +12,11 @@
 
 #include "../../include/minishell.h"
 
+char	*get_matching_files(char *pattern);
+
 // TODO: echo '$ANTHING' should display $ANTHING and not the value of the variable
 
-void	is_variable(char **arg, t_shell *shell, int status)
+void	is_variable(char **arg, t_shell *shell)
 {
 	char		*var;
 	char		*a_status;
@@ -24,7 +26,7 @@ void	is_variable(char **arg, t_shell *shell, int status)
 		return ;
 	if (ft_strncmp(*arg, "$?", 2) == 0)
 	{
-		a_status = ft_itoa(status);
+		a_status = ft_itoa(*shell->exit_status);
 		if (!a_status)
 			return ;
 		var = ft_strjoin(a_status, (*arg) + 2);
@@ -47,13 +49,22 @@ void	is_variable(char **arg, t_shell *shell, int status)
 }
 
 // FIXME: echo '"$USER"' should display "$USER" and not the value of the variable
-void	replace_variable(char **args, t_shell *shell, int status)
+void	replace_variable(char **args, t_shell *shell)
 {
-	int	i;
+	int		i;
+	char	*matching;
 
 	i = -1;
 	if (!args && *args == NULL)
 		return ;
 	while (args && args[++i])
-		is_variable(&args[i], shell, status);
+	{
+		is_variable(&args[i], shell);
+		matching = get_matching_files(args[i]);
+		if (matching)
+		{
+			free(args[i]);
+			args[i] = matching;
+		}
+	}
 }

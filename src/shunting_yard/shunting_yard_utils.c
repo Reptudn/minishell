@@ -56,9 +56,8 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 		return (NULL);
 	node->type = malloc(sizeof(int));
 	node->priority = malloc(sizeof(int));
-	node->fd = malloc(sizeof(int));
 	node->exit_status = malloc(sizeof(int));
-	*node->fd = 1;
+	node->update = 1;
 	*node->exit_status = -1;
 	*node->type = is_operator(tokens[0]);
 	*node->priority = get_operator_priority(tokens[0]);
@@ -79,13 +78,7 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	node->args[i - 1] = NULL;
 	*step += i;
 	while (--i > 0)
-	{
-		if (ft_strnstr(tokens[i], "*.", ft_strlen(tokens[i]))
-			&& get_matching_files(tokens[i]))
-			node->args[i - 1] = get_matching_files(tokens[i]);
-		else
 			node->args[i - 1] = ft_strdup(tokens[i]);
-	}
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);

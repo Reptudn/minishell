@@ -18,6 +18,7 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 
 	if (!cmd || !shell)
 		return (CMD_FAILURE);
+	replace_variable(cmd->args, shell);
 	status = CMD_SUCCESS;
 	if (str_is_equal(cmd->value, "history"))
 		status = display_history();
@@ -54,6 +55,8 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 	}
 	if (cmd->exit_status == NULL)
 		cmd->exit_status = malloc(sizeof(int));
+	if (!cmd->update)
+		return (status);
 	*cmd->exit_status = status;
 	*shell->exit_status = status;
 	return (status);

@@ -99,7 +99,7 @@ typedef struct s_shunting_node
 	char					**args;
 	int						*type;
 	int						*priority;
-	int						*fd;
+	int						update;
 	int						*exit_status;
 	struct s_shunting_node	*next;
 	struct s_shunting_node	*prev;
@@ -112,11 +112,22 @@ typedef struct s_shunting_yard
 	t_shunting_node			*stack;
 }	t_shunting_yard;
 
+typedef struct s_temps
+{
+	int		int_i;
+	int		int_j;
+	int		int_k;
+	int		int_l;
+	char	*charp_i;
+	char	*charp_j;
+	char	*charp_k;
+	char	*charp_l;
+}	t_temps;
+
 // command hanling
 int				run_command(t_shell *shell, t_shunting_node *cmd);
 int				run_path_command(t_shell *shell, t_shunting_node *cmd);
-int				execute_commands(t_shunting_yard *yard, t_shell *shell,
-								int status);
+int				execute_commands(t_shunting_yard *yard, t_shell *shell);
 
 // old
 int				command_loop(t_shell *shell);
@@ -179,6 +190,6 @@ char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
 void			signal_handler(int signum);
 
 // var utils
-void			replace_variable(char **args, t_shell *shell, int status);
+void			replace_variable(char **args, t_shell *shell);
 
 #endif

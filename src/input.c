@@ -31,7 +31,6 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 		free(node->args);
 		free(node->type);
 		free(node->priority);
-		free(node->fd);
 		free(node->exit_status);
 		next_node = node->next;
 		free(node);
@@ -87,7 +86,7 @@ int	command_loop(t_shell *shell)
 		}
 		free_split(split);
 		color_black();
-		status = execute_commands(yard, shell, status);
+		status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
 		free(line);
 		line = NULL;
