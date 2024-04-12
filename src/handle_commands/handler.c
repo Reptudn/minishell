@@ -27,10 +27,8 @@ int		run_append(t_shell *shell, t_shunting_node *cmd1,
 int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
 			t_shunting_node *cmd2);
 
-void	replace_variable(char **args, t_shell *shell, int status);
-
 int		execute_cmd_chain(t_shell *shell, t_shunting_node *start,
-			t_shunting_yard *yard, int *status);
+			t_shunting_yard *yard);
 
 int	get_operator_count(t_shunting_node *nodes)
 {
@@ -91,7 +89,8 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2,
 	return (CMD_FAILURE);
 }
 
-int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
+// TODO: rewrite this to only use *shell->exit_status as the exit status
+int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 {
 	t_shunting_node	*operator;
 	t_shunting_node	*cmd1;
@@ -106,7 +105,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 	operator_count = get_operator_count(yard->output);
 	if (operator_count == 0)
 	{
-		replace_variable(yard->output->args, shell, status);
+		replace_variable(yard->output->args, shell);
 		return (run_command(shell, yard->output));
 	}
 	if (operator_count != get_command_count(yard->output) - 1)
@@ -127,11 +126,11 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 		cmd1 = cmd2->prev;
 		if (!cmd1)
 			return (CMD_FAILURE);
-		exit_status = execute_cmd_chain(shell, cmd1, yard, &status);
+		exit_status = execute_cmd_chain(shell, cmd1, yard);
 		if (exit_status == -1)
 		{
-			replace_variable(cmd1->args, shell, status);
-			replace_variable(cmd2->args, shell, status);
+			replace_variable(cmd1->args, shell);
+			replace_variable(cmd2->args, shell);
 			exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
 			yard_pop(operator, yard);
 			yard_pop(cmd1, yard);
@@ -144,7 +143,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell, int status)
 	}
 	if (yard->output && !yard->output->next && !yard->output->prev)
 	{
-		replace_variable(yard->output->args, shell, status);
+		replace_variable(yard->output->args, shell);
 		exit_status = run_command(shell, yard->output);
 	}
 	else

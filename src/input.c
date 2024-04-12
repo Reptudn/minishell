@@ -87,7 +87,7 @@ int	command_loop(t_shell *shell)
 		}
 		free_split(split);
 		color_black();
-		status = execute_commands(yard, shell, status);
+		status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
 		free(line);
 		line = NULL;

@@ -19,6 +19,7 @@ int	run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2)
 
 	if (!cmd1 || !cmd2 || !shell)
 		return (CMD_FAILURE);
+	run_command(shell, cmd1);
 	if (*shell->exit_status == CMD_SUCCESS)
 		return (CMD_SUCCESS);
 	if (*shell->exit_status > CMD_SUCCESS)

@@ -115,8 +115,7 @@ typedef struct s_shunting_yard
 // command hanling
 int				run_command(t_shell *shell, t_shunting_node *cmd);
 int				run_path_command(t_shell *shell, t_shunting_node *cmd);
-int				execute_commands(t_shunting_yard *yard, t_shell *shell,
-								int status);
+int				execute_commands(t_shunting_yard *yard, t_shell *shell);
 
 // old
 int				command_loop(t_shell *shell);
@@ -179,6 +178,6 @@ char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
 void			signal_handler(int signum);
 
 // var utils
-void			replace_variable(char **args, t_shell *shell, int status);
+void			replace_variable(char **args, t_shell *shell);
 
 #endif

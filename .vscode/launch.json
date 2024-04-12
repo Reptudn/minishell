@@ -24,7 +24,7 @@
         //   "ignoreFailures": true
         // }
       ],
-      "preLaunchTask": "minishell prelaunch",
+      "preLaunchTask": "sudo minishell prelaunch",
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {

@@ -22,8 +22,6 @@ int		redirect_out(t_shell *shell, t_shunting_node **chain, int redirection_amout
 int		run_append(t_shell *shell, t_shunting_node **chain, int append_amount);
 char	*run_delimiter(t_shunting_node **chain);
 
-void	replace_variable(char **args, t_shell *shell, int status);
-
 void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard);
 
 t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type)
@@ -122,7 +120,7 @@ void	print_cmd_chain(t_shunting_node **chain)
 }
 
 // TODO: check funcitons for success and failure
-int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *yard, int *status)
+int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *yard)
 {
 	t_shunting_node	**chain;
 	int				len;
@@ -134,7 +132,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	if (!chain)
 		return (-1);
 	while (++i < len && chain[i])
-		replace_variable(chain[i]->args, shell, *status);
+		replace_variable(chain[i]->args, shell);
 	if (type == PIPE)
 		chain[0]->args = ft_split(run_pipe(shell, chain), ' ');
 	else if (type == REDIRECT_IN)
