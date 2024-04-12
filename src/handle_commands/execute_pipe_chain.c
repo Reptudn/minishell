@@ -149,6 +149,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	if (!(*chain)->args)
 		return (CMD_FAILURE);
 	chain[0]->value = ft_strdup("echo");
+	chain[0]->update = 0;
 	pop_cmd_chain(yard, chain, len, type);
 	free(chain);
 	return (CMD_SUCCESS);

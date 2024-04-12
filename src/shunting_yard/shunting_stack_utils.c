@@ -33,7 +33,6 @@ void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard)
 	free(pop->args);
 	free(pop->type);
 	free(pop->priority);
-	free(pop->fd);
 	free(pop->exit_status);
 	free(pop);
 }

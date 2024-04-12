@@ -104,13 +104,10 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 		return (CMD_FAILURE);
 	operator_count = get_operator_count(yard->output);
 	if (operator_count == 0)
-	{
-		replace_variable(yard->output->args, shell);
 		return (run_command(shell, yard->output));
-	}
 	if (operator_count != get_command_count(yard->output) - 1)
 	{
-		printf("Invalid operator count\n");
+		ft_putstr_fd("minishell: unbalanced tokens!", 2);
 		return (CMD_FAILURE);
 	}
 	while (++index < operator_count && yard->output)
@@ -129,23 +126,17 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 		exit_status = execute_cmd_chain(shell, cmd1, yard);
 		if (exit_status == -1)
 		{
-			replace_variable(cmd1->args, shell);
-			replace_variable(cmd2->args, shell);
 			exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
 			yard_pop(operator, yard);
 			yard_pop(cmd1, yard);
 			cmd2->value = ft_strdup("echo");
 			cmd2->args = ft_split("-n", ' ');
+			cmd2->update = 0;
 			*cmd2->exit_status = exit_status;
 		}
-		if (exit_status > CMD_SUCCESS)
-			return (exit_status);
 	}
 	if (yard->output && !yard->output->next && !yard->output->prev)
-	{
-		replace_variable(yard->output->args, shell);
 		exit_status = run_command(shell, yard->output);
-	}
 	else
 		printf("Last command error\n");
 	return (exit_status);

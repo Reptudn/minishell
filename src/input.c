@@ -31,7 +31,6 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 		free(node->args);
 		free(node->type);
 		free(node->priority);
-		free(node->fd);
 		free(node->exit_status);
 		next_node = node->next;
 		free(node);
