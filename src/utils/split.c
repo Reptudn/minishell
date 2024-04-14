@@ -164,7 +164,7 @@ char	**clean_quotes(char **temp)
 		j = -1;
 		m = -1;
 		while (temp[i][++j])
-			if (temp[i][j] != '"' && temp[i][j] != '\'')
+			if (temp[i][j] != '(' && temp[i][j] != ')')
 				result[i][++m] = temp[i][j];
 		m++;
 		result[i][m] = '\0';

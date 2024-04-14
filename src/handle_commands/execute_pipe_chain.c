@@ -20,7 +20,7 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain);
 int		redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell);
 int		redirect_out(t_shell *shell, t_shunting_node **chain, int redirection_amout);	
 int		run_append(t_shell *shell, t_shunting_node **chain, int append_amount);
-char	*run_delimiter(t_shunting_node **chain);
+char	*run_delimiter(t_shunting_node **chain, t_shell *shell);
 
 void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard);
 
@@ -142,7 +142,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	else if (type == REDIRECT_OUT_APPEND)
 		run_append(shell, chain, len);
 	else if (type == REDIRECT_IN_DELIMITER)
-		chain[0]->args = ft_split(run_delimiter(chain), ' ');
+		chain[0]->args = ft_split(run_delimiter(chain, shell), ' ');
 	if (type == REDIRECT_IN || type == REDIRECT_OUT
 		|| type == REDIRECT_OUT_APPEND)
 		chain[0]->args = ft_split("-n  ", ' ');
