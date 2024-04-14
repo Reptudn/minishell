@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/12 08:48:36 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/14 16:06:57 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 void	print_cmd_chain(t_shunting_node **chain);
 
-// FIXME: it segfaults when the first arg in the heredoc is the stopping sequence
-// TODO: no matter what command we use the heredoc on it's being printed to the terminal even tho for echo it shouldnt but then for cat it should
 char	*run_delimiter(t_shunting_node **chain)
 {
-	char			*heredoc;
-	char			*new_heredoc;
-	char			*temp;
-	int				status;
-	int				counter;
+	char	*heredoc;
+	char	*new_heredoc;
+	char	*temp;
+	int		status;
+	int		counter;
 
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';

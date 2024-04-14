@@ -24,8 +24,7 @@ int		redirect_out(t_shell *shell, t_shunting_node *cmd,
 			t_shunting_node *cmd2, int in_fd);
 int		run_append(t_shell *shell, t_shunting_node *cmd1,
 			t_shunting_node *cmd2);
-int		run_delimiter(t_shell *shell, t_shunting_node *cmd1,
-			t_shunting_node *cmd2);
+int		run_delimiter(t_shunting_node **chain, t_shell *shell);
 
 void	replace_variable(char **args, t_shell *shell, int status);
 
