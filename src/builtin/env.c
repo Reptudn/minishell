@@ -21,6 +21,8 @@ int	ft_env(t_shell *shell)
 	{
 		if (env->value)
 			printf("%s=%s\n", env->name, env->value);
+		else
+			printf("%s=\n", env->name);
 		env = env->next;
 	}
 	return (CMD_SUCCESS);

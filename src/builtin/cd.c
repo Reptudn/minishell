@@ -18,14 +18,14 @@ int	ft_cd(t_shunting_node *cmd, t_shell *shell)
 	char	*new_path;
 
 	if ((cmd->args)[1] != 0)
-	{
-		printf("cd: too many arguments\n");
 		return (1);
-	}
 	new_path = (cmd->args)[0];
 	if (chdir(new_path) == -1)
 	{
-		printf("cd: %s: %s\n", new_path, strerror(errno));
+		ft_putstr_fd("cd: ", STDERR_FILENO);
+		ft_putstr_fd(new_path, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 		return (1);
 	}
 	free(shell->path);

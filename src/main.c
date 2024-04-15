@@ -104,7 +104,7 @@ int	main(int argc, char **argv, char **envp)
 		free(shell.path);
 		return (CMD_FAILURE);
 	}
-	print_start_logo();
+	// print_start_logo();
 	command_loop(&shell);
 	free(shell.path);
 	env_destroy(shell.env_vars);

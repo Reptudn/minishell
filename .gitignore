@@ -7,7 +7,7 @@
 minishell
 minishell.dSYM
 *.py
-minishell_tester
+minishell_tester/
 *.sh
 .idea/
 
