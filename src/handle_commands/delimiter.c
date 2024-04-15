@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/14 21:24:52 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/15 08:14:27 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
 	counter = 1;
-	// print_cmd_chain(chain);
 	pipe(pipefd);
 	while (1)
 	{
@@ -70,7 +69,9 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 		read(pipefd[0], buffer, sizeof(buffer));
 	}
 	*chain[0]->exit_status = exit_status;
-	printf("buffer: %s\n", buffer);
+	printf("-- buffer --\n%s\n-- buffer --", buffer);
 	return (strdup(buffer));
 }
-// TODO: i think heredoc is not freed in the end
+// TODO: i think heredoc is not freed in the end <- YES THATS TRUE
+// FIXME: the buffer in the end has to be sent to chain[0] and be executed and that result has to be returned
+// -> the buffer needs to be reirected to stdin when the chain[0] cmd is executed

@@ -146,6 +146,8 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	if (type == REDIRECT_IN || type == REDIRECT_OUT
 		|| type == REDIRECT_OUT_APPEND)
 		chain[0]->args = ft_split("-n  ", ' ');
+	else if (type == REDIRECT_IN_DELIMITER)
+		chain[0]->args = ft_split("  ", ' ');
 	if (!(*chain)->args)
 		return (CMD_FAILURE);
 	chain[0]->value = ft_strdup("echo");
