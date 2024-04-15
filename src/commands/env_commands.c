@@ -103,12 +103,6 @@ char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 	return (NULL);
 }
 
-// this function will later be called when the builtin command
-// is not found in the command list and the shell will try to
-// execute it as an external command
-// if that fails, it return error so that it counts as invalid command
-// FOR NOW it just prints takes the cmd without args (gotta fork later for 
-// env command with return value)
 int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 {
 	char	*cmd_path;
