@@ -40,6 +40,14 @@ bool	arg_is_numerical(char *arg)
 	return (true);
 }
 
+void	error_exit(t_shell *shell, t_shunting_node *cmd)
+{
+	ft_putstr_fd("minishell: exit: ", 1);
+	ft_putstr_fd(cmd->args[0], 1);
+	ft_putstr_fd(": numeric argument required\n", 1);
+	*shell->exit_status = CMD_FAILURE;
+}
+
 int	ft_exit(t_shell *shell, t_shunting_node *cmd)
 {
 	int	exit_code;
@@ -57,15 +65,13 @@ int	ft_exit(t_shell *shell, t_shunting_node *cmd)
 	if (!arg_is_numerical(cmd->args[0]))
 	{
 		if (cmd->args[0])
-		{
-			ft_putstr_fd("minishell: exit: ", 1);
-			ft_putstr_fd(cmd->args[0], 1);
-			ft_putstr_fd(": numeric argument required\n", 1);
-		}
+			error_exit(shell, cmd);
 		*shell->exit_status = CMD_FAILURE;
 		return (CMD_FAILURE);
 	}
 	exit_code = ft_atoi(cmd->args[0]);
+	if (exit_code < 0)
+		exit_code = 256 + exit_code;
 	*shell->exit_status = exit_code % 256;
 	return (exit_code % 256);
 }

@@ -19,11 +19,7 @@ void	echo_err(char *new_path)
 		ft_putstr_fd("HOME not set", STDERR_FILENO);
 	else
 		ft_putstr_fd(new_path, STDERR_FILENO);
-	if (errno == ENOENT)
-		ft_putstr_fd(": no such file or directory", STDERR_FILENO);
-	else if (errno == EACCES)
-		ft_putstr_fd(": permission denied", STDERR_FILENO);
-	else if (new_path)
+	if (new_path)
 	{
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
@@ -31,7 +27,6 @@ void	echo_err(char *new_path)
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
-//FIXME: cd should go back to root if no arguments are passed
 int	ft_cd(t_shunting_node *cmd, t_shell *shell)
 {
 	char		*new_path;

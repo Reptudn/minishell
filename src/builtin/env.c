@@ -15,7 +15,6 @@
 int	ft_env(t_shell *shell)
 {
 	t_env_var	*env;
-	int i = 0;
 
 	env = shell->env_vars;
 	while (env)
@@ -25,8 +24,6 @@ int	ft_env(t_shell *shell)
 		else
 			printf("%s=\n", env->name);
 		env = env->next;
-		i++;
 	}
-	printf("amount: %d\n", i);
 	return (CMD_SUCCESS);
 }
