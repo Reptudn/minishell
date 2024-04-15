@@ -119,7 +119,6 @@ void	print_cmd_chain(t_shunting_node **chain)
 		printf("  chain[%d]: %s\n", i, (chain[i])->value);
 }
 
-// TODO: check funcitons for success and failure
 int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *yard)
 {
 	t_shunting_node	**chain;

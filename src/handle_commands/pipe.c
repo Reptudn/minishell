@@ -31,7 +31,8 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 	int				counter;
 	pid_t			pid;
 	int				exit_code;
-	char			*temp = ft_calloc(100000, sizeof(char)); // TODO: make this not a set size
+	char			*temp;
+	char			*line;
 
 	counter = -1;
 	while (chain[++counter] && counter <= pipe_amount)
@@ -53,24 +54,24 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 				close(fd[counter][0]);
 				dup2(fd[counter][1], STDOUT_FILENO);
 			}
-			exit_code = run_command(shell, chain[counter]); // TODO: we might need to handle the exit status here
+			exit_code = run_command(shell, chain[counter]);
 			exit(exit_code);
 		}
 		else
 		{
 			close(fd[counter][1]);
 			int status;
-			waitpid(pid, &status, 0);
+			waitpid(pid, &status, 0); //TODO: dont wait for blocking cmds
 			if (counter == pipe_amount - 1)
 			{
-				int worked = read(fd[counter][0], temp, 99999); // TODO: make this not a set size
-				temp[100000] = '\0';
-				if (worked == -1)
-					ft_putstr_fd("error\n", 1);
-				else if (worked == 0)
+				temp = NULL;
+				line = get_next_line(fd[counter][0]);
+				while (line) // TODO: check leaks cuz strjoin
 				{
-					ft_putstr_fd("No output from last command\n", 1);
-					return (NULL);
+					// char *temp2 = temp;
+					temp = ft_strjoin(temp, line);
+					// free(temp2);
+					line = get_next_line(fd[counter][0]);
 				}
 				close(fd[counter][0]);
 				break ;

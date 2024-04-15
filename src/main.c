@@ -111,9 +111,4 @@ int	main(int argc, char **argv, char **envp)
 	return (*shell.exit_status);
 }
 
-// XXX: WE DONT ADD BRACKETS SUPPORT 
-
 // TODO: Add support for variable declarations
-
-// TODO: echo '"$USER"' has to print "$USER" and not the user
-// TODO: when running: "echdsf hi && echo $? || echo ne" it should print that it didnt find the command echdsf and then print ne

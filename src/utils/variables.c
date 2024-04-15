@@ -48,7 +48,6 @@ void	is_variable(char **arg, t_shell *shell)
 	*arg = var;
 }
 
-// FIXME: echo '"$USER"' should display "$USER" and not the value of the variable
 void	replace_variable(char **args, t_shell *shell)
 {
 	int		i;

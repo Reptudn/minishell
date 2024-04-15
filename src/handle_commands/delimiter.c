@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/15 09:24:35 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/15 11:51:17 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,17 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 	char	*temp;
 	int		exit_status;
 	int		counter;
-	int		pipefd[2];
 	char	*buffer = ft_calloc(100000, sizeof(char));
 	pid_t	pid;
 	int		status;
+	int		pipefd[2];
+	int		pipefd_back[2];
 
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
 	counter = 1;
 	pipe(pipefd);
+	pipe(pipefd_back);
 	while (1)
 	{
 		temp = readline("heredoc> ");
@@ -58,20 +60,20 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 	pid = fork();
 	if (pid == 0)
 	{
+		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
-		exit_status = run_command(shell, chain[counter]);
-		close(pipefd[0]);
+		dup2(pipefd_back[1], STDOUT_FILENO);
+		exit_status = run_command(shell, chain[0]);
+		close(pipefd_back[0]);
 		exit(exit_status);
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
-		read(pipefd[0], buffer, 99999);
+		close(pipefd[1]);
+		read(pipefd_back[0], buffer, 99999);
 	}
 	*chain[0]->exit_status = exit_status;
-	printf("-- buffer --\n%s\n-- buffer --", buffer);
 	return (strdup(buffer));
 }
 // TODO: i think heredoc is not freed in the end <- YES THATS TRUE
-// FIXME: the buffer in the end has to be sent to chain[0] and be executed and that result has to be returned
-// -> the buffer needs to be reirected to stdin when the chain[0] cmd is executed

@@ -12,6 +12,7 @@
 
 #include "../../include/minishell.h"
 
+//TODO: echo '$ANTHING' should display $ANTHING and not the value of the variable
 int	ft_echo(t_shunting_node *cmd)
 {
 	int	i;
