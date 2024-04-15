@@ -27,6 +27,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)builtin/pwd.c \
 			$(SRCDIR)builtin/env.c \
 			$(SRCDIR)builtin/export.c \
+			$(SRCDIR)builtin/export_helper.c \
 			$(SRCDIR)builtin/cd.c \
 			$(SRCDIR)signals/signal_handler.c \
 			$(SRCDIR)handle_commands/and.c \
