@@ -35,6 +35,8 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 	char			*line;
 
 	counter = -1;
+	temp = NULL;
+	line = NULL;
 	while (chain[++counter] && counter <= pipe_amount)
 	{
 		if (pipe(fd[counter]) == -1)
