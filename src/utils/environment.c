@@ -166,7 +166,8 @@ t_env_var	*env_make_vars(char **envp)
 	first = NULL;
 	while (envp[++i])
 	{
-		printf("envp[%d]: %s\n", i , envp[i]);
+		if (ft_strchr(envp[i], '=') == NULL)
+			continue ;
 		split = split_first_occ(envp[i], '=');
 		if (!split)
 			return (NULL);
