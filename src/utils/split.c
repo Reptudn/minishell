@@ -144,7 +144,6 @@ char	**clean_quotes(char **temp)
 {
 	char	**result;
 	int		i;
-	int		j;
 	int		m;
 
 	if (!temp)
@@ -156,20 +155,16 @@ char	**clean_quotes(char **temp)
 	if (!result)
 		return (NULL);
 	i = -1;
+	m = -1;
 	while (temp[++i])
 	{
 		result[i] = malloc(sizeof(char) * (ft_strlen(temp[i]) + 1));
 		if (!result[i])
 			return (NULL);
-		j = -1;
-		m = -1;
-		while (temp[i][++j])
-			if (temp[i][j] != '(' && temp[i][j] != ')')
-				result[i][++m] = temp[i][j];
-		m++;
-		result[i][m] = '\0';
+		if (!str_is_equal(temp[i], "(") && !str_is_equal(temp[i], ")") && temp[i])
+			result[++m] = strdup(temp[i]);
 	}
-	result[i] = NULL;
+	result[++m] = NULL;
 	return (result);
 }
 

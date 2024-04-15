@@ -12,6 +12,7 @@
 
 #include "../../include/minishell.h"
 
+//FIXME: cd should go back to root if no arguments are passed
 int	ft_cd(t_shunting_node *cmd, t_shell *shell)
 {
 	char	*new_path;

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/15 08:14:27 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/15 09:24:35 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 	else
 	{
 		waitpid(pid, &status, 0);
-		read(pipefd[0], buffer, sizeof(buffer));
+		read(pipefd[0], buffer, 99999);
 	}
 	*chain[0]->exit_status = exit_status;
 	printf("-- buffer --\n%s\n-- buffer --", buffer);

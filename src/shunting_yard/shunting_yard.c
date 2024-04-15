@@ -176,5 +176,6 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	}
 	while (yard->stack)
 		stack_to_output_end(yard);
+	print_all_stacks(yard);
 	return (yard);
 }
