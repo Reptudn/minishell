@@ -35,43 +35,52 @@ char	**make_env_args(char *cmd, char **args)
 	return (env_args);
 }
 
-int	execute(char *cmd_path, char **args, char *command, t_shell *shell,
-	int *exit_status)
+int	execute_child_process(char *cmd_path, char **args,
+	char *command, t_shell *shell)
 {
-	pid_t	pid;
 	char	**env_args;
 	char	**envp;
+
+	envp = env_to_envp(shell->env_vars);
+	if (!envp)
+		return (0);
+	if (args[0] == NULL)
+	{
+		if (execve(cmd_path, (char *[]){command, NULL}, envp) == -1)
+			return (0);
+	}
+	else
+	{
+		env_args = make_env_args(command, args);
+		if (!env_args)
+			return (0);
+		if (execve(cmd_path, env_args, envp) == -1)
+		{
+			perror("Command failed to execute");
+			return (-1);
+		}
+	}
+	return (1);
+}
+
+int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
+{
+	pid_t	pid;
 
 	pid = fork();
 	if (pid < 0)
 		return (0);
 	else if (pid == 0)
 	{
-		envp = env_to_envp(shell->env_vars);
-		if (!envp)
-			return (0);
-		if (args[0] == NULL)
-		{
-			if (execve(cmd_path, (char *[]){command, NULL}, envp) == -1)
-				return (0);
-		}
-		else
-		{
-			env_args = make_env_args(command, args);
-			if (!env_args)
-				return (0);
-			if (execve(cmd_path, env_args, envp) == -1)
-			{
-				perror("\033[0;31mCommand failed to execute");
-				return (-1);
-			}
-		}
+		if (execute_child_process(cmd_path, args, command, shell) <= 0)
+			exit(EXIT_FAILURE);
 	}
 	else
-		waitpid(pid, exit_status, 0);
+		waitpid(pid, shell->exit_status, 0);
 	return (1);
 }
 
+// TODO: probably leaks here
 char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 {
 	int			i;
@@ -110,7 +119,6 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 	int		i;
 	int		ran;
 	char	**path;
-	int		exit_status;
 
 	i = -1;
 	ran = 0;
@@ -128,8 +136,7 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 			return (CMD_FAILURE);
 		if (access(cmd_path, F_OK) == 0 && access(cmd_path, X_OK) == 0)
 		{
-			if (execute(cmd_path, cmd->args, cmd->value, shell,
-					&exit_status) == 0)
+			if (execute(cmd_path, cmd->args, cmd->value, shell) == 0)
 				break ;
 			ran = 1;
 			break ;
@@ -137,15 +144,12 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 		free(cmd_path);
 		cmd_path = NULL;
 	}
-	i = -1;
-	while (path[++i])
-		free(path[i]);
-	free(path);
+	free_split(path);
 	if (cmd_path)
 		free(cmd_path);
 	if (ran)
 	{
-		if (exit_status == 512)
+		if (*shell->exit_status == 512)
 			return (2);
 		return (CMD_SUCCESS);
 	}

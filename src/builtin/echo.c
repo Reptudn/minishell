@@ -14,7 +14,7 @@
 
 void	remove_surrounding_singleq(char *str)
 {
-	if (str[0] != '\'' || str[ft_strlen(str) - 1] != '\'')
+	if (!str || str[0] != '\'' || str[ft_strlen(str) - 1] != '\'')
 		return ;
 	ft_memmove(str, str + 1, ft_strlen(str) - 2);
 	str[ft_strlen(str) - 2] = '\0';
