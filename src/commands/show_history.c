@@ -13,6 +13,7 @@
 #include "../../include/minishell.h"
 #include <readline/history.h>
 
+// TODO: do we really need this?
 int	display_history(void)
 {
 	int			i;

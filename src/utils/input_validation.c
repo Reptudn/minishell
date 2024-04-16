@@ -47,31 +47,40 @@ bool	is_valid_quotes(char *line, char *missing)
 	return (current_quote == 0);
 }
 
-char	*handle_missing(char *line, char missing)
+char	*read_and_append(char *line, char missing)
 {
 	char	*tmp;
 	char	*temp;
 	char	*new_line;
 
+	if (missing == '"')
+		tmp = readline(prompt_dquote());
+	else
+		tmp = readline(prompt_squote());
+	if (!tmp)
+		return (0);
+	new_line = ft_strjoin(line, "\n");
+	temp = new_line;
+	free(line);
+	new_line = ft_strjoin(temp, tmp);
+	free(temp);
+	if (!new_line)
+		return (0);
+	line = new_line;
+	free(tmp);
+
+	return (line);
+}
+
+char	*handle_missing(char *line, char missing)
+{
 	if (ft_strchr(line, missing) != 0 && !is_valid_quotes(line, &missing))
 	{
 		while (!is_valid_quotes(line, &missing))
 		{
-			if (missing == '"')
-				tmp = readline("\033[0;31mdquote> \033[0m");
-			else
-				tmp = readline("\033[0;31msquote> \033[0m");
-			if (!tmp)
+			line = read_and_append(line, missing);
+			if (!line)
 				return (0);
-			new_line = ft_strjoin(line, "\n");
-			temp = new_line;
-			free(line);
-			new_line = ft_strjoin(temp, tmp);
-			free(temp);
-			if (!new_line)
-				return (0);
-			line = new_line;
-			free(tmp);
 		}
 	}
 	return (line);
@@ -92,3 +101,12 @@ char	*is_valid_input(char *line)
 	}
 	return (line);
 }
+
+// TODO: when doing echo hi'
+// sdf
+// sf
+// dg
+// __glibc_fortify'
+//
+// it should print but without the quotes
+// -> we can just ignore that maybe cuz quote completion is not something to do

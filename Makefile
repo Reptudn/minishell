@@ -23,6 +23,10 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \
+			$(SRCDIR)commands/env_commands2.c \
+			$(SRCDIR)prompts/color.c \
+			$(SRCDIR)prompts/color2.c \
+			$(SRCDIR)prompts/readline_prompts.c \
 			$(SRCDIR)builtin/unset.c \
 			$(SRCDIR)builtin/exit.c \
 			$(SRCDIR)builtin/echo.c \

@@ -36,67 +36,14 @@
 
 # define COLOR_RESET "\033[0m"
 
-static inline const char	*color_black(void)
-{
-	if (isatty(STDOUT_FILENO))
-		return (COLOR_BLACK);
-	return ("");
-}
-
-static inline const char	*color_red(void)
-{
-	if (isatty(STDOUT_FILENO))
-		return (COLOR_RED);
-	return ("");
-}
-
-static inline const char	*color_green(void)
-{
-	if (isatty(STDOUT_FILENO))
-		return (COLOR_GREEN);
-	return ("");
-}
-
-static inline const char	*color_yellow(void)
-{
-	if (isatty(STDOUT_FILENO))
-		return (COLOR_YELLOW);
-	return ("");
-}
-
-static inline const char	*color_blue(void)
-{
-	if (isatty(STDOUT_FILENO))
-		return (COLOR_BLUE);
-	return ("");
-}
-
-static inline const char	*color_magenta(void)
-{
-	if (isatty(STDOUT_FILENO))
-		return (COLOR_MAGENTA);
-	return ("");
-}
-
-static inline const char	*color_cyan(void)
-{
-	if (isatty(STDOUT_FILENO))
-		return (COLOR_CYAN);
-	return ("");
-}
-
-static inline const char	*color_white(void)
-{
-	if (isatty(STDOUT_FILENO))
-		return (COLOR_WHITE);
-	return ("");
-}
-
-static inline const char	*color_reset(void)
-{
-	if (isatty(STDOUT_FILENO))
-		return (COLOR_RESET);
-	return ("");
-}
+char	*color_black(void);
+char	*color_red(void);
+char	*color_green(void);
+char	*color_yellow(void);
+char	*color_blue(void);
+char	*color_magenta(void);
+char	*color_cyan(void);
+char	*color_white(void);
+char	*color_reset(void);
 
 #endif

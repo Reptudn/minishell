@@ -14,29 +14,27 @@
 
 char	*get_matching_files(char *pattern);
 
-// TODO: echo '$ANTHING' should display $ANTHING and not the value of the variable
+void	handle_exit_status(char **arg, t_shell *shell)
+{
+	char	*a_status;
+	char	*var;
 
-void	is_variable(char **arg, t_shell *shell)
+	a_status = ft_itoa(*shell->exit_status);
+	if (!a_status)
+		return ;
+	var = ft_strjoin(a_status, (*arg) + 2);
+	free(a_status);
+	if (!var)
+		return ;
+	free(*arg);
+	*arg = var;
+}
+
+void	handle_env_var(char **arg, t_shell *shell)
 {
 	char		*var;
-	char		*a_status;
 	t_env_var	*env_var;
 
-	if (!arg || !*arg || *arg[0] != '$' || ft_strlen(*arg) == 1)
-		return ;
-	if (ft_strncmp(*arg, "$?", 2) == 0)
-	{
-		a_status = ft_itoa(*shell->exit_status);
-		if (!a_status)
-			return ;
-		var = ft_strjoin(a_status, (*arg) + 2);
-		free(a_status);
-		if (!var)
-			return ;
-		free(*arg);
-		*arg = var;
-		return ;
-	}
 	env_var = env_get_by_name(shell->env_vars, *arg + 1);
 	if (!env_var)
 		var = ft_strdup("");
@@ -46,6 +44,18 @@ void	is_variable(char **arg, t_shell *shell)
 		return ;
 	free(*arg);
 	*arg = var;
+}
+
+void	is_variable(char **arg, t_shell *shell)
+{
+	if (!arg || !*arg || *arg[0] != '$' || ft_strlen(*arg) == 1)
+		return ;
+	if (ft_strncmp(*arg, "$?", 2) == 0)
+	{
+		handle_exit_status(arg, shell);
+		return ;
+	}
+	handle_env_var(arg, shell);
 }
 
 void	replace_variable(char **args, t_shell *shell)

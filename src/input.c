@@ -26,7 +26,7 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 		free(node->value);
 		i = -1;
 		if (node->args && node->args[0])
-			while (node->args[++i])
+			while (node->args[++i]) // CAUSED DOUBLE FREE WHEN I RAN echo *.c but there was no .c file in dir
 				free(node->args[i]);
 		free(node->args);
 		free(node->type);

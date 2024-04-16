@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/15 11:51:17 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/16 19:29:40 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	print_cmd_chain(t_shunting_node **chain);
 
+// TODO: check if exit status is correct here
 char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 {
 	char	*heredoc;
@@ -73,7 +74,9 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 		close(pipefd[1]);
 		read(pipefd_back[0], buffer, 99999);
 	}
+	if (heredoc)
+		free(heredoc);
 	*chain[0]->exit_status = exit_status;
-	return (strdup(buffer));
+	return (ft_strdup(buffer));
 }
 // TODO: i think heredoc is not freed in the end <- YES THATS TRUE
