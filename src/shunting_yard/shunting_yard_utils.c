@@ -14,10 +14,9 @@
 
 int	get_operator_priority(char *operator);
 
-t_shunting_node	*shunting_node_new(char	**tokens, int *step)
+t_shunting_node	*shunting_node_init(char	**tokens)
 {
 	t_shunting_node	*node;
-	int				i;
 
 	if (!tokens || !*tokens)
 		return (NULL);
@@ -31,17 +30,27 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	*node->exit_status = -1;
 	*node->type = is_operator(tokens[0]);
 	*node->priority = get_operator_priority(tokens[0]);
+	node->value = ft_strdup(tokens[0]);
+	node->args = NULL;
+	node->next = NULL;
+	node->prev = NULL;
+	return (node);
+}
+
+t_shunting_node	*shunting_node_new(char	**tokens, int *step)
+{
+	t_shunting_node	*node;
+	int				i;
+
+	node = shunting_node_init(tokens);
+	if (!node)
+		return (NULL);
 	if (is_operator(tokens[0]) != NONE)
 	{
-		node->value = ft_strdup(tokens[0]);
-		node->args = NULL;
-		node->next = NULL;
-		node->prev = NULL;
 		*step += 1;
 		return (node);
 	}
-	i = -1;
-	node->value = ft_strdup(tokens[++i]);
+	i = 0;
 	while (tokens[i] && is_operator(tokens[i]) == NONE)
 		i++;
 	node->args = malloc(sizeof(char *) * i);
@@ -49,8 +58,6 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	*step += i;
 	while (--i > 0)
 		node->args[i - 1] = ft_strdup(tokens[i]);
-	node->next = NULL;
-	node->prev = NULL;
 	return (node);
 }
 
@@ -67,13 +74,14 @@ t_shunting_yard	*shunting_yard_init(char	**tokens)
 	return (yard);
 }
 
-void	finish_yard(t_shunting_yard *yard)
+t_shunting_yard	*finish_yard(t_shunting_yard *yard)
 {
 	while (yard->output && yard->output->prev)
 		yard->output = yard->output->prev;
 	yard->stack = NULL;
 	yard->input = yard->output;
 	yard->output = NULL;
+	return (yard);
 }
 
 t_shunting_yard	*shunting_yard_create(char	**tokens)
@@ -100,6 +108,5 @@ t_shunting_yard	*shunting_yard_create(char	**tokens)
 			yard->output = yard->output->next;
 		}
 	}
-	finish_yard(yard);
-	return (yard);
+	return (finish_yard(yard));
 }
