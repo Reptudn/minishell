@@ -101,3 +101,12 @@ char	*is_valid_input(char *line)
 	}
 	return (line);
 }
+
+// TODO: when doing echo hi'
+// sdf
+// sf
+// dg
+// __glibc_fortify'
+//
+// it should print but without the quotes
+// -> we can just ignore that maybe cuz quote completion is not something to do
