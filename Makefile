@@ -44,6 +44,8 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)handle_commands/run_single.c \
 			$(SRCDIR)handle_commands/execute_pipe_chain.c \
 			$(SRCDIR)shunting_yard/shunting_yard.c \
+			$(SRCDIR)shunting_yard/shunting_yard2.c \
+			$(SRCDIR)shunting_yard/shunting_yard_node.c \
 			$(SRCDIR)shunting_yard/shunting_yard_utils.c \
 			$(SRCDIR)shunting_yard/shunting_stack_utils.c \
 			$(SRCDIR)shunting_yard/shunting_print.c \

@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int	get_operator_priority(char *operator);
+int				get_operator_priority(char *operator);
 
 t_shunting_node	*shunting_node_init(char	**tokens)
 {
