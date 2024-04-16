@@ -55,26 +55,11 @@
 
 extern int	g_run;
 
-static inline const char	*prompt_success(void)
-{
-	if (!isatty(STDOUT_FILENO))
-		return ("");
-	return (PROMPT_SUCCESS);
-}
-
-static inline const char	*prompt_failure(void)
-{
-	if (!isatty(STDOUT_FILENO))
-		return ("");
-	return (PROMPT_FAILURE);
-}
-
-static inline const char	*prompt_hello(void)
-{
-	if (!isatty(STDOUT_FILENO))
-		return ("");
-	return (PROMPT_HELLO);
-}
+char	*prompt_success(void);
+char	*prompt_failure(void);
+char	*prompt_hello(void);
+char	*prompt_squote(void);
+char	*prompt_dquote(void);
 
 typedef struct s_env_var
 {

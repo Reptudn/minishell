@@ -58,9 +58,9 @@ char	*handle_missing(char *line, char missing)
 		while (!is_valid_quotes(line, &missing))
 		{
 			if (missing == '"')
-				tmp = readline("\033[0;31mdquote> \033[0m");
+				tmp = readline(prompt_dquote());
 			else
-				tmp = readline("\033[0;31msquote> \033[0m");
+				tmp = readline(prompt_squote());
 			if (!tmp)
 				return (0);
 			new_line = ft_strjoin(line, "\n");
