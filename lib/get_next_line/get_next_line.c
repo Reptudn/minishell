@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// TODO: REPLACE THIS WITH A NORM CONFORM GET NEXT LINE!!!!
+
 char	*read_file(int fd, char **str)
 {
 	char	buffer[BUFFER_SIZE + 1];
