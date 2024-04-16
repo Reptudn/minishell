@@ -13,74 +13,28 @@
 #include "../../include/minishell.h"
 #include <stdio.h>
 
-char	**make_env_args(char *cmd, char **args)
-{
-	int		len;
-	int		i;
-	char	**env_args;
-
-	len = 0;
-	if (!args)
-		return ((char *[]){cmd, NULL});
-	while (args[len] != NULL)
-		len++;
-	env_args = malloc((len + 2) * sizeof(char *));
-	if (!env_args)
-		return (NULL);
-	env_args[0] = strdup(cmd);
-	i = -1;
-	while (++i < len)
-		env_args[i + 1] = strdup(args[i]);
-	env_args[len + 1] = NULL;
-	return (env_args);
-}
-
-int	execute_child_process(char *cmd_path, char **args,
-	char *command, t_shell *shell)
-{
-	char	**env_args;
-	char	**envp;
-
-	envp = env_to_envp(shell->env_vars);
-	if (!envp)
-		return (0);
-	if (args[0] == NULL)
-	{
-		if (execve(cmd_path, (char *[]){command, NULL}, envp) == -1)
-			return (0);
-	}
-	else
-	{
-		env_args = make_env_args(command, args);
-		if (!env_args)
-			return (0);
-		if (execve(cmd_path, env_args, envp) == -1)
-		{
-			perror("Command failed to execute");
-			return (-1);
-		}
-	}
-	return (1);
-}
-
-int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-		return (0);
-	else if (pid == 0)
-	{
-		if (execute_child_process(cmd_path, args, command, shell) <= 0)
-			exit(EXIT_FAILURE);
-	}
-	else
-		waitpid(pid, shell->exit_status, 0);
-	return (1);
-}
+int		execute(char *cmd_path, char **args, char *command, t_shell *shell);
+int		execute_child_process(char *cmd_path, char **args, char *command,
+			t_shell *shell);
+char	**make_env_args(char *cmd, char **args);
 
 // TODO: probably leaks here
+char	*create_cmd_path(char *path, char *cmd)
+{
+	char	*cmd_path;
+
+	cmd_path = ft_strjoin(path, "/");
+	if (!cmd_path)
+		return (NULL);
+	cmd_path = ft_strjoin(cmd_path, cmd);
+	if (!cmd_path)
+	{
+		free(cmd_path);
+		return (NULL);
+	}
+	return (cmd_path);
+}
+
 char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 {
 	int			i;
@@ -91,19 +45,13 @@ char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 	i = -1;
 	path = env_get_by_name(shell->env_vars, "PATH");
 	if (!path)
-		return (0);
+		return (NULL);
 	split = ft_split(path->value, ':');
 	while (split[++i])
 	{
-		cmd_path = ft_strjoin(split[i], "/");
+		cmd_path = create_cmd_path(split[i], cmd);
 		if (!cmd_path)
-			return (0);
-		cmd_path = ft_strjoin(cmd_path, cmd);
-		if (!cmd_path)
-		{
-			free(cmd_path);
-			return (0);
-		}
+			return (NULL);
 		if (access(cmd_path, F_OK) == 0)
 			return (cmd_path);
 		free(cmd_path);
@@ -112,41 +60,22 @@ char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 	return (NULL);
 }
 
-int	run_env_command(t_shell *shell, t_shunting_node *cmd)
+int	execute_command(t_shell *shell, t_shunting_node *cmd, char *cmd_path)
 {
-	char	*cmd_path;
-	char	*temp;
-	int		i;
-	int		ran;
-	char	**path;
+	int	ran;
 
-	i = -1;
 	ran = 0;
-	path = env_get_path(shell->env_vars);
-	if (!path)
-		return (CMD_FAILURE);
-	while (path[++i])
+	if (access(cmd_path, F_OK) == 0 && access(cmd_path, X_OK) == 0)
 	{
-		temp = ft_strjoin(path[i], "/");
-		if (!temp)
+		if (execute(cmd_path, cmd->args, cmd->value, shell) == 0)
 			return (CMD_FAILURE);
-		cmd_path = ft_strjoin(temp, cmd->value);
-		free(temp);
-		if (!cmd_path)
-			return (CMD_FAILURE);
-		if (access(cmd_path, F_OK) == 0 && access(cmd_path, X_OK) == 0)
-		{
-			if (execute(cmd_path, cmd->args, cmd->value, shell) == 0)
-				break ;
-			ran = 1;
-			break ;
-		}
-		free(cmd_path);
-		cmd_path = NULL;
+		ran = 1;
 	}
-	free_split(path);
-	if (cmd_path)
-		free(cmd_path);
+	return (ran);
+}
+
+int	norm_conform_function_to_return_correct_val(int ran, t_shell *shell)
+{
 	if (ran)
 	{
 		if (*shell->exit_status == 512)
@@ -154,4 +83,30 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 		return (CMD_SUCCESS);
 	}
 	return (CMD_FAILURE);
+}
+
+int	run_env_command(t_shell *shell, t_shunting_node *cmd)
+{
+	char	*cmd_path;
+	int		i;
+	int		ran;
+	char	**path;
+
+	i = -1;
+	path = env_get_path(shell->env_vars);
+	if (!path)
+		return (CMD_FAILURE);
+	while (path[++i])
+	{
+		cmd_path = create_cmd_path(path[i], cmd->value);
+		if (!cmd_path)
+			return (CMD_FAILURE);
+		ran = execute_command(shell, cmd, cmd_path);
+		free(cmd_path);
+		cmd_path = NULL;
+		if (ran)
+			break ;
+	}
+	free_split(path);
+	return (norm_conform_function_to_return_correct_val(ran, shell));
 }

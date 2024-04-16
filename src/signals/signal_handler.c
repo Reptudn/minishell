@@ -12,6 +12,7 @@
 
 #include "../../include/minishell.h"
 
+// TODO: i think we peint one nl too much when pressing control + c
 void	signal_handler(int signum)
 {
 	if (signum == SIGTERM)

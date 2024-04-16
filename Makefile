@@ -23,6 +23,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \
+			$(SRCDIR)commands/env_commands2.c \
 			$(SRCDIR)builtin/unset.c \
 			$(SRCDIR)builtin/exit.c \
 			$(SRCDIR)builtin/echo.c \
