@@ -14,36 +14,6 @@
 
 int	get_operator_priority(char *operator);
 
-void	print_shunting_node(t_shunting_node *node, int a)
-{
-	int	i;
-
-	i = -1;
-	if (!node)
-	{
-		printf("=> Total Nodes: %d\n", a);
-		return ;
-	}
-	printf("-- Node: %d\n", a);
-	printf("value: %s (%p)\n", node->value, node->value);
-	printf("args:\n");
-	if (node->args && node->args[0])
-		while (node->args[++i] && node->args[0])
-			printf("  %s\n", node->args[i]);
-	else
-		printf("  NULL\n");
-	if (node->type)
-		printf("type: %d\n", *node->type);
-	else
-		printf("type: -1\n");
-	if (node->priority)
-		printf("priority: %d\n", *node->priority);
-	else
-		printf("priority: -1\n");
-	printf("----------\n");
-	print_shunting_node(node->next, ++a);
-}
-
 t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 {
 	t_shunting_node	*node;
@@ -78,10 +48,32 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	node->args[i - 1] = NULL;
 	*step += i;
 	while (--i > 0)
-			node->args[i - 1] = ft_strdup(tokens[i]);
+		node->args[i - 1] = ft_strdup(tokens[i]);
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);
+}
+
+t_shunting_yard	*shunting_yard_init(char	**tokens)
+{
+	t_shunting_yard	*yard;
+
+	yard = (t_shunting_yard *)malloc(sizeof(t_shunting_yard));
+	if (!yard || !tokens || !*tokens)
+		return (NULL);
+	yard->output = NULL;
+	yard->stack = NULL;
+	yard->input = NULL;
+	return (yard);
+}
+
+void	finish_yard(t_shunting_yard *yard)
+{
+	while (yard->output && yard->output->prev)
+		yard->output = yard->output->prev;
+	yard->stack = NULL;
+	yard->input = yard->output;
+	yard->output = NULL;
 }
 
 t_shunting_yard	*shunting_yard_create(char	**tokens)
@@ -91,15 +83,10 @@ t_shunting_yard	*shunting_yard_create(char	**tokens)
 	int				step;
 
 	step = 0;
-	yard = (t_shunting_yard *)malloc(sizeof(t_shunting_yard));
-	if (!yard || !tokens || !*tokens)
+	yard = shunting_yard_init(tokens);
+	if (!yard)
 		return (NULL);
-	yard->output = NULL;
-	yard->stack = NULL;
-	yard->input = NULL;
-	if (!yard || !tokens || !*tokens)
-		return (NULL);
-	while (tokens + step)
+	while (tokens[step])
 	{
 		temp = shunting_node_new(tokens + step, &step);
 		if (!temp)
@@ -113,29 +100,6 @@ t_shunting_yard	*shunting_yard_create(char	**tokens)
 			yard->output = yard->output->next;
 		}
 	}
-	while (yard->output->prev)
-		yard->output = yard->output->prev;
-	yard->stack = NULL;
-	yard->input = yard->output;
-	yard->output = NULL;
+	finish_yard(yard);
 	return (yard);
-}
-
-void	print_all_stacks(t_shunting_yard *yard)
-{
-	printf("\n\n>>>>>>>>\nInput:\n");
-	if (!yard->input)
-		printf("  NULL\n");
-	else
-		print_shunting_node(yard->input, 0);
-	printf("\nStack:\n");
-	if (!yard->stack)
-		printf("  NULL\n");
-	else
-		print_shunting_node(yard->stack, 0);
-	printf("\nOutput:\n");
-	if (!yard->output)
-		printf("  NULL\n");
-	else
-		print_shunting_node(yard->output, 0);
 }
