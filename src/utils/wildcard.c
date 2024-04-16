@@ -27,42 +27,63 @@ bool	wildcard_match(char *pattern, char *str)
 	return (false);
 }
 
+char	*append_match(char *match, char *dir_name)
+{
+	char	*temp;
+
+	temp = match;
+	match = ft_strjoin(match, " ");
+	if (!match)
+	{
+		free(temp);
+		return (NULL);
+	}
+	free(temp);
+	temp = match;
+	match = ft_strjoin(match, dir_name);
+	if (!match)
+	{
+		free(temp);
+		return (NULL);
+	}
+	return (match);
+}
+
+char	*read_directory(DIR *d, char *pattern, char *match)
+{
+	struct dirent	*dir;
+
+	dir = readdir(d);
+	while (dir != NULL)
+	{
+		if (str_is_equal(pattern, "*") || wildcard_match(pattern, dir->d_name))
+		{
+			match = append_match(match, dir->d_name);
+			if (!match)
+				return (NULL);
+		}
+		dir = readdir(d);
+	}
+	return (match);
+}
+
+// TODO: when a pattern return no result just return the pattern itself
 char	*get_matching_files(char *pattern)
 {
-	DIR				*d;
-	struct dirent	*dir;
-	char			*match;
-	char			*temp;
+	DIR		*d;
+	char	*match;
 
 	if (!pattern || ft_strchr(pattern, '*') == NULL)
 		return (NULL);
 	d = opendir(".");
 	match = malloc(sizeof(char));
 	match[0] = '\0';
-	temp = NULL;
 	if (d && match)
 	{
-		dir = readdir(d);
-		while (dir != NULL)
-		{
-			if (str_is_equal(pattern, "*")
-				|| wildcard_match(pattern, dir->d_name))
-			{
-				temp = match;
-				match = ft_strjoin(match, " ");
-				if (!match)
-					return (free(temp), NULL);
-				free(temp);
-				temp = match;
-				match = ft_strjoin(match, dir->d_name);
-				if (!match)
-					return (free(temp), NULL);
-			}
-			dir = readdir(d);
-		}
+		match = read_directory(d, pattern, match);
 		closedir(d);
 	}
-	if (temp)
-		free(temp);
+	if (str_is_equal(match, ""))
+		return (ft_strdup(pattern));
 	return (match);
 }
