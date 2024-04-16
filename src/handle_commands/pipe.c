@@ -26,17 +26,18 @@ int	get_chain_len(t_shunting_node **chain)
 
 char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 {
-	int				pipe_amount = get_chain_len(chain);
-	int				fd[pipe_amount][2];
-	int				counter;
-	pid_t			pid;
-	int				exit_code;
-	char			*temp;
-	char			*line;
+	int		pipe_amount = get_chain_len(chain);
+	int		fd[pipe_amount][2];
+	int		counter;
+	pid_t	pid;
+	pid_t	pids[pipe_amount];
+	int		exit_code;
+	char	*temp;
 
 	counter = -1;
 	temp = NULL;
-	line = NULL;
+
+	counter = -1;
 	while (chain[++counter] && counter <= pipe_amount)
 	{
 		if (pipe(fd[counter]) == -1)
@@ -61,26 +62,35 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 		}
 		else
 		{
-			close(fd[counter][1]);
-			int status;
-			waitpid(pid, &status, 0); //TODO: dont wait for blocking cmds
-			if (counter == pipe_amount - 1)
-			{
-				temp = NULL;
-				line = get_next_line(fd[counter][0]);
-				while (line) // TODO: check leaks cuz strjoin
-				{
-					// char *temp2 = temp;
-					temp = ft_strjoin(temp, line);
-					// free(temp2);
-					line = get_next_line(fd[counter][0]);
-				}
-				close(fd[counter][0]);
-				break ;
-			}
+			pids[counter] = pid;
+			if (counter != 0)
+				close(fd[counter - 1][0]);
 		}
 	}
-	if (temp[ft_strlen(temp) - 1] == '\n')
+	for (int i = 0; i < pipe_amount; i++)
+		close(fd[i][1]);
+	for (int i = 0; i <= counter; i++)
+	{
+		int status;
+		waitpid(pids[i], &status, 0);
+	}
+	char buffer[4096];
+	ssize_t bytes_read;
+	temp = NULL;
+	while ((bytes_read = read(fd[pipe_amount - 1][0], buffer, sizeof(buffer) - 1)) > 0)
+	{
+		buffer[bytes_read] = '\0';
+		if (temp != NULL)
+		{
+			char *old_temp = temp;
+			temp = ft_strjoin(temp, buffer);
+			free(old_temp);
+		}
+		else
+			temp = strdup(buffer);
+	}
+	close(fd[pipe_amount - 1][0]);
+	if (temp && temp[ft_strlen(temp) - 1] == '\n')
 		temp[ft_strlen(temp) - 1] = '\0';
 	return (temp);
 }
