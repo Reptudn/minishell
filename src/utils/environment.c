@@ -104,13 +104,16 @@ t_env_var	*env_create_var(char *name, char *value, bool is_envp)
 {
 	t_env_var	*env_var;
 
-	if (!name || !value)
+	if (!name)
 		return (NULL);
 	env_var = malloc(sizeof(t_env_var));
 	if (!env_var)
 		return (NULL);
 	env_var->name = ft_strdup(name);
-	env_var->value = ft_strdup(value);
+	if (value)
+		env_var->value = ft_strdup(value);
+	else
+		env_var->value = NULL;
 	env_var->is_envp = is_envp;
 	env_var->next = NULL;
 	env_var->prev = NULL;
@@ -163,6 +166,8 @@ t_env_var	*env_make_vars(char **envp)
 	first = NULL;
 	while (envp[++i])
 	{
+		if (ft_strchr(envp[i], '=') == NULL)
+			continue ;
 		split = split_first_occ(envp[i], '=');
 		if (!split)
 			return (NULL);
