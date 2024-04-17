@@ -78,6 +78,7 @@ void	env_destroy(t_env_var *env)
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
+	int		exit_status;
 
 	shell.run = true;
 	g_run = 1;
@@ -108,7 +109,9 @@ int	main(int argc, char **argv, char **envp)
 	command_loop(&shell);
 	free(shell.path);
 	env_destroy(shell.env_vars);
-	return (*shell.exit_status);
+	exit_status = *shell.exit_status;
+	free(shell.exit_status);
+	return (exit_status);
 }
 
 // TODO: Add support for variable declarations

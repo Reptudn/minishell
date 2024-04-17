@@ -160,7 +160,10 @@ char	**clean_quotes(char **temp)
 		if (!result[i])
 			return (NULL);
 		if (!str_is_equal(temp[i], "(") && !str_is_equal(temp[i], ")") && temp[i])
-			result[++m] = strdup(temp[i]);
+		{
+			free(result[++m]);
+			result[m] = ft_strdup(temp[i]);
+		}
 	}
 	result[++m] = NULL;
 	return (result);
