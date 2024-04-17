@@ -44,11 +44,15 @@ int	replace_existing_val(char **split, t_env_var *env)
 int	create_env_var(char **split, t_shell *shell)
 {
 	t_env_var	*env;
+	// int			i;
 
+	// i = 0;
 	if (split[1])
 		env = env_create_var(split[0], split[1], false);
 	else
 		env = env_create_var(split[0], ft_strdup(""), false);
+	free(split[0]);
+	free(split);
 	if (!env)
 		return (CMD_FAILURE);
 	env_push(shell->env_vars, env);
