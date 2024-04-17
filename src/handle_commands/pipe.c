@@ -31,11 +31,9 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 	int				counter;
 	pid_t			pid;
 	int				exit_code;
-	char			*temp;
 	char			*line;
 
 	counter = -1;
-	temp = NULL;
 	line = NULL;
 	while (chain[++counter] && counter <= pipe_amount)
 	{
@@ -63,24 +61,25 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 		{
 			close(fd[counter][1]);
 			int status;
-			waitpid(pid, &status, 0); //TODO: dont wait for blocking cmds
-			if (counter == pipe_amount - 1)
+			waitpid(pid, &status, 0); //TODO: fix cat | cat | ls
+			if (counter == pipe_amount - 1) //not conform in any way but works
 			{
-				temp = NULL;
-				line = get_next_line(fd[counter][0]);
-				while (line) // TODO: check leaks cuz strjoin
+				char buffer[4096]; // buffer to read data in chunks
+				ssize_t bytesRead;
+				line = malloc(1);  // start with 1 byte
+				line[0] = '\0';    // null terminate the string
+				while ((bytesRead = read(fd[counter][0], buffer, sizeof(buffer) - 1)) > 0)
 				{
-					// char *temp2 = temp;
-					temp = ft_strjoin(temp, line);
-					// free(temp2);
-					line = get_next_line(fd[counter][0]);
+					buffer[bytesRead] = '\0'; // null terminate the buffer
+					line = realloc(line, strlen(line) + bytesRead + 1); // expand line
+					strcat(line, buffer); // append buffer to line
 				}
 				close(fd[counter][0]);
-				break ;
+				break;
 			}
 		}
 	}
-	if (temp[ft_strlen(temp) - 1] == '\n')
-		temp[ft_strlen(temp) - 1] = '\0';
-	return (temp);
+	if (line[ft_strlen(line) - 1] == '\n')
+		line[ft_strlen(line) - 1] = '\0';
+	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/16 19:29:40 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/17 16:13:34 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,29 @@
 
 void	print_cmd_chain(t_shunting_node **chain);
 
-// TODO: check if exit status is correct here
-char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
+int	run_delimiter_helper(int pipefd[2], t_shunting_node **chain)
 {
 	char	*heredoc;
 	char	*new_heredoc;
 	char	*temp;
-	int		exit_status;
 	int		counter;
-	char	*buffer = ft_calloc(100000, sizeof(char));
-	pid_t	pid;
-	int		status;
-	int		pipefd[2];
-	int		pipefd_back[2];
+	int		exit_status;
 
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
 	counter = 1;
-	pipe(pipefd);
-	pipe(pipefd_back);
+	exit_status = CMD_SUCCESS;
 	while (1)
 	{
 		temp = readline("heredoc> ");
 		if (!temp)
-		{
-			exit_status = CMD_FAILURE;
-			break ;
-		}
+			return (CMD_FAILURE);
 		if (chain[counter] && str_is_equal(temp, (chain[counter])->value))
 			counter++;
 		if (chain[counter] == NULL)
 		{
-			exit_status = CMD_SUCCESS;
 			free(temp);
-			break ;
+			return (CMD_SUCCESS);
 		}
 		new_heredoc = ft_strjoin(heredoc, temp);
 		free(heredoc);
@@ -57,6 +46,22 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 		write(pipefd[1], "\n", 1);
 		free(temp);
 	}
+	if (heredoc)
+		free(heredoc);
+	return (exit_status);
+}
+
+char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
+{
+	char	*buffer = ft_calloc(100000, sizeof(char));
+	pid_t	pid;
+	int		status;
+	int		pipefd[2];
+	int		pipefd_back[2];
+
+	pipe(pipefd);
+	pipe(pipefd_back);
+	*chain[0]->exit_status = run_delimiter_helper(pipefd, chain);
 	close(pipefd[1]);
 	pid = fork();
 	if (pid == 0)
@@ -64,9 +69,9 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		dup2(pipefd_back[1], STDOUT_FILENO);
-		exit_status = run_command(shell, chain[0]);
+		*chain[0]->exit_status = run_command(shell, chain[0]);
 		close(pipefd_back[0]);
-		exit(exit_status);
+		exit(*chain[0]->exit_status);
 	}
 	else
 	{
@@ -74,9 +79,6 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 		close(pipefd[1]);
 		read(pipefd_back[0], buffer, 99999);
 	}
-	if (heredoc)
-		free(heredoc);
-	*chain[0]->exit_status = exit_status;
 	return (ft_strdup(buffer));
 }
-// TODO: i think heredoc is not freed in the end <- YES THATS TRUE
+// TODO: i think heredoc is not freed in the end <- YES THATS TRUE <- why we have a free call? need to check that again 
