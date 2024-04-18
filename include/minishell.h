@@ -151,7 +151,10 @@ int				ft_clear(void);
 //utils
 void			print_invalid_cmd(char *command, char *error, int status);
 char			**ft_split_shell(const char *str);
+void			process_string(const char *str, char **result, int *res_i);
+char			**fill_shell_op(void);
 void			*free_split(char **split);
+char			**clean_quotes(char **tmp);
 void			free_node(t_shunting_node *node);
 int				is_operator(char *str);
 void			*make_cmds(char *line, t_shell *shell, int i);
