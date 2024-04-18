@@ -112,9 +112,6 @@ t_env_var	*env_create_var(char *name, char *value, bool is_envp)
 	env_var->name = ft_strdup(name);
 	if (value)
 		env_var->value = ft_strdup(value);
-	// {
-	// 	free(value);
-	// }
 	else
 		env_var->value = NULL;
 	env_var->is_envp = is_envp;
