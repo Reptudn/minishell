@@ -155,7 +155,6 @@ void			*free_split(char **split);
 void			free_node(t_shunting_node *node);
 int				is_operator(char *str);
 void			*make_cmds(char *line, t_shell *shell, int i);
-char			**filter_variables(char **split, t_shell *shell);
 void			free_cmds_helper(t_env_var *cmds);
 char			**clean_data(char **temp, char **result);
 int				str_is_equal(char *str1, char *str2);
