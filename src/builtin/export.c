@@ -50,6 +50,7 @@ int	create_env_var(char **split, t_shell *shell)
 	else
 		env = env_create_var(split[0], ft_strdup(""), false);
 	free(split[0]);
+	free(split[1]);
 	free(split);
 	if (!env)
 		return (CMD_FAILURE);
