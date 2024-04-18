@@ -75,6 +75,38 @@ void	env_destroy(t_env_var *env)
 	}
 }
 
+void	handle_shell_depth(t_shell *shell)
+{
+	t_env_var	*depth;
+	char		*new_val;
+	int			val;
+
+	depth = env_get_by_name(shell->env_vars, "SHLVL");
+	if (!depth)
+	{
+		printf("Shell depth value not found\n");
+		depth = env_create_var("SHLVL", "1", true);
+		if (!depth)
+			printf("Failed to create shell depth value");
+	}
+	else
+	{
+		if (arg_is_numerical(depth->value))
+		{
+			val = ft_atoi(depth->value);
+			if (val < 1)
+				val = 1;
+			else
+				val++;
+		}
+		else
+			val = 1;
+		new_val = ft_itoa(val);
+		free(depth->value);
+		depth->value = new_val;
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
@@ -97,6 +129,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_putstr_fd("Error: environment\n", STDERR_FILENO);
 		return (CMD_FAILURE);
 	}
+	handle_shell_depth(&shell);
 	if (signal(SIGINT, signal_handler) == SIG_ERR
 		|| signal(SIGQUIT, signal_handler) == SIG_ERR)
 	{
@@ -110,5 +143,3 @@ int	main(int argc, char **argv, char **envp)
 	env_destroy(shell.env_vars);
 	return (*shell.exit_status);
 }
-
-// TODO: Add support for variable declarations
