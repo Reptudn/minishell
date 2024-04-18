@@ -26,15 +26,18 @@ int	get_chain_len(t_shunting_node **chain)
 
 char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 {
-	int				pipe_amount = get_chain_len(chain);
-	int				fd[pipe_amount][2];
-	int				counter;
-	pid_t			pid;
-	int				exit_code;
-	char			*line;
+	int		pipe_amount = get_chain_len(chain);
+	int		fd[pipe_amount][2];
+	int		counter;
+	pid_t	pid;
+	pid_t	pids[pipe_amount];
+	int		exit_code;
+	char	*temp;
 
 	counter = -1;
-	line = NULL;
+	temp = NULL;
+
+	counter = -1;
 	while (chain[++counter] && counter <= pipe_amount)
 	{
 		if (pipe(fd[counter]) == -1)
@@ -59,27 +62,35 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 		}
 		else
 		{
-			close(fd[counter][1]);
-			int status;
-			waitpid(pid, &status, 0); //TODO: fix cat | cat | ls
-			if (counter == pipe_amount - 1) //not conform in any way but works
-			{
-				char buffer[4096]; // buffer to read data in chunks
-				ssize_t bytesRead;
-				line = malloc(1);  // start with 1 byte
-				line[0] = '\0';    // null terminate the string
-				while ((bytesRead = read(fd[counter][0], buffer, sizeof(buffer) - 1)) > 0)
-				{
-					buffer[bytesRead] = '\0'; // null terminate the buffer
-					line = realloc(line, strlen(line) + bytesRead + 1); // expand line
-					strcat(line, buffer); // append buffer to line
-				}
-				close(fd[counter][0]);
-				break;
-			}
+			pids[counter] = pid;
+			if (counter != 0)
+				close(fd[counter - 1][0]);
 		}
 	}
-	if (line[ft_strlen(line) - 1] == '\n')
-		line[ft_strlen(line) - 1] = '\0';
-	return (line);
+	for (int i = 0; i < pipe_amount; i++)
+		close(fd[i][1]);
+	for (int i = 0; i <= counter; i++)
+	{
+		int status;
+		waitpid(pids[i], &status, 0);
+	}
+	char buffer[4096];
+	ssize_t bytes_read;
+	temp = NULL;
+	while ((bytes_read = read(fd[pipe_amount - 1][0], buffer, sizeof(buffer) - 1)) > 0)
+	{
+		buffer[bytes_read] = '\0';
+		if (temp != NULL)
+		{
+			char *old_temp = temp;
+			temp = ft_strjoin(temp, buffer);
+			free(old_temp);
+		}
+		else
+			temp = strdup(buffer);
+	}
+	close(fd[pipe_amount - 1][0]);
+	if (temp && temp[ft_strlen(temp) - 1] == '\n')
+		temp[ft_strlen(temp) - 1] = '\0';
+	return (temp);
 }
