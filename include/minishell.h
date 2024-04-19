@@ -143,6 +143,7 @@ char			**env_get_path(t_env_var *vars);
 t_env_var		*env_get_by_name(t_env_var *vars, char *name);
 t_env_var		*env_create_var(char *name, char *value, bool is_envp);
 t_env_var		*env_make_vars(char **envp);
+bool			arg_is_numerical(char *arg);
 
 //our commands
 int				display_history(void);

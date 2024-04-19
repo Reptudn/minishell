@@ -38,7 +38,8 @@
 				"Gruntfuggly.todo-tree",
 				"keyhr.42-c-format",
 				"vsls-contrib.codetour",
-				"mhutchie.git-graph"
+				"mhutchie.git-graph",
+				"oderwat.indent-rainbow"
 			]
 		}
 	},
@@ -49,7 +50,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "echo 'Container created. Happy coding!'"
+	"postCreateCommand": "bash -c '$(curl -fsSL https://raw.githubusercontent.com/zstenger93/42_minishell_tester/master/install.sh)' && echo 'Container created. Happy coding!'"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

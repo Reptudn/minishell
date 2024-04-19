@@ -6,13 +6,14 @@
 /*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/18 11:28:20 by nsabia           ###   ########.fr       */
+/*   Updated: 2024/04/19 11:19:13 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 void	print_cmd_chain(t_shunting_node **chain);
+
 
 int	run_delimiter_helper(int pipefd[2], t_shunting_node **chain)
 {

@@ -13,7 +13,7 @@
 #include "../../include/minishell.h"
 #include <readline/history.h>
 
-// TODO: do we really need this?
+// TODO: do we really need this? Bash here in 42 has this command already so probably not by yeye we gotta see
 int	display_history(void)
 {
 	int			i;

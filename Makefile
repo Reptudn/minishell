@@ -10,6 +10,7 @@ SRCDIR := ./src/
 
 SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)input.c \
+			$(SRCDIR)setup.c \
 			$(SRCDIR)utils/split.c \
 			$(SRCDIR)utils/split_helper.c \
 			$(SRCDIR)utils/split_helper_process_string.c \
@@ -21,6 +22,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/environment.c \
 			$(SRCDIR)utils/wildcard.c \
 			$(SRCDIR)utils/variables.c \
+			$(SRCDIR)utils/variables2.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \

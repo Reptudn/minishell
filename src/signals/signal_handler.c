@@ -27,3 +27,19 @@ void	signal_handler(int signum)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
+
+// TODO: implement all those functions down here
+
+// XXX: This function is being called when goign to a child process
+void	signal_ignore_parent(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+// XXX: This function is being called when going back to the parent process
+void	signal_restore_parent(void)
+{
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
+}
