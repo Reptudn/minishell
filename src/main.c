@@ -12,128 +12,68 @@
 
 #include "../include/minishell.h"
 
+void	handle_shell_depth(t_shell *shell);
+void	env_destroy(t_env_var *env);
+char	**get_env(void);
+void	print_start_logo(void);
+
 int	g_run = 1;
 
-void	print_start_logo(void)
+int	setup_environment(t_shell *shell, char **envp)
 {
-	printf("\033[H\033[J%s", color_magenta());
-	printf(" __    __     __     __   __     __     "
-		"______     __  __     ______     __         __ \n");
-	printf("/\\ '-./  \\   /\\ \\   /\\ '-.\\ \\   /"
-		"\\ \\   /\\  ___\\   /\\ \\_\\ \\   /\\  ___\\   /\\ \\"
-		"       /\\ \\       \n");
-	printf("\\ \\ \\-./\\ \\  \\ \\ \\  \\ \\ \\-.  "
-		"\\  \\ \\ \\  \\ \\___  \\  \\ \\  __ \\  \\ \\  __\\   "
-		"\\ \\ \\____  \\ \\ \\____  \n");
-	printf(" \\ \\_\\ \\ \\_\\  \\ \\_\\  \\ \\_\\\\'"
-		"\\_\\  \\ \\_\\  \\/\\_____\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\ "
-		"\\_____\\  \\ \\_____\\ \n");
-	printf("  \\/_/  \\/_/   \\/_/   \\/_/ \\/_/   "
-		"\\/_/   \\/_____/   \\/_/\\/_/   \\/_____/   \\/_____/   "
-		"\\/_____/ \n\n");
-	printf("                                 "
-		"by %s\033]8;;https://profile.intra.42.fr/users/jkauker\ajkauker\033]8;"
-		";\a%s and "
-		"%s\033]8;;https://profile.intra.42.fr/users/nsabia\ansabia\033]8;"
-		";\a%s\n\n",
-		color_red(), color_magenta(), color_red(), color_reset());
-	printf("%s", color_reset());
-	printf("\n%sWelcome %s✨ %s ✨%s\n\n", color_magenta(), color_green(),
-		getenv("USER"), color_reset());
+	shell->env_vars = env_make_vars(envp);
+	if (!shell->env_vars)
+	{
+		ft_putstr_fd("Error: environment\n", STDERR_FILENO);
+		return (CMD_FAILURE);
+	}
+	handle_shell_depth(shell);
+	return (CMD_SUCCESS);
 }
 
-char	**get_env(void)
+int	setup_signals(t_shell *shell)
 {
-	char	*env;
-	char	**envp;
-
-	env = getenv("PATH");
-	if (!env)
-		return (NULL);
-	envp = ft_split(env, ':');
-	if (!envp)
+	if (signal(SIGINT, signal_handler) == SIG_ERR
+		|| signal(SIGQUIT, signal_handler) == SIG_ERR)
 	{
-		free(envp);
-		return (NULL);
+		ft_putstr_fd("Error: signal handler\n", STDERR_FILENO);
+		free(shell->path);
+		return (CMD_FAILURE);
 	}
-	return (envp);
+	return (CMD_SUCCESS);
 }
 
-void	env_destroy(t_env_var *env)
+int	initialize_shell(t_shell *shell, int argc, char **argv, char **envp)
 {
-	t_env_var	*temp;
-
-	if (!env)
-		return ;
-	while (env)
-	{
-		free(env->name);
-		free(env->value);
-		temp = env->next;
-		free(env);
-		env = temp;
-	}
+	shell->run = true;
+	g_run = 1;
+	shell->path = getcwd(NULL, 0);
+	shell->exit_status = malloc(sizeof(int));
+	*shell->exit_status = CMD_SUCCESS;
+	argc++;
+	(void)argv;
+	if (!shell->path || setup_environment(shell, envp) == CMD_FAILURE
+		|| setup_signals(shell) == CMD_FAILURE || !shell->exit_status)
+		return (CMD_FAILURE);
+	return (CMD_SUCCESS);
 }
 
-void	handle_shell_depth(t_shell *shell)
+void	run_shell(t_shell *shell)
 {
-	t_env_var	*depth;
-	char		*new_val;
-
-	depth = env_get_by_name(shell->env_vars, "SHLVL");
-	if (!depth)
-	{
-		printf("Shell depth value not found\n");
-		depth = env_create_var("SHLVL", "1", true);
-		if (!depth)
-			printf("Failed to create shell depth value");
-		else
-			env_push(shell->env_vars, depth);
-	}
-	else
-	{
-		if (arg_is_numerical(depth->value) && ft_atoi(depth->value) > 0)
-			new_val = ft_itoa(ft_atoi(depth->value) + 1);
-		else
-			new_val = ft_strdup("1");
-		free(depth->value);
-		depth->value = new_val;
-	}
+	print_start_logo();
+	command_loop(shell);
+	free(shell->path);
+	env_destroy(shell->env_vars);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
+	int		init_status;
 
-	shell.run = true;
-	g_run = 1;
-	shell.path = getcwd(NULL, 0);
-	shell.exit_status = malloc(sizeof(int));
-	*shell.exit_status = CMD_SUCCESS;
-	argc++;
-	(void)argv;
-	if (!shell.path)
-	{
-		ft_putstr_fd("Error: current working directory\n", STDERR_FILENO);
+	init_status = initialize_shell(&shell, argc, argv, envp);
+	if (init_status == CMD_FAILURE)
 		return (CMD_FAILURE);
-	}
-	shell.env_vars = env_make_vars(envp);
-	if (!shell.env_vars)
-	{
-		ft_putstr_fd("Error: environment\n", STDERR_FILENO);
-		return (CMD_FAILURE);
-	}
-	handle_shell_depth(&shell);
-	if (signal(SIGINT, signal_handler) == SIG_ERR
-		|| signal(SIGQUIT, signal_handler) == SIG_ERR)
-	{
-		ft_putstr_fd("Error: signal handler\n", STDERR_FILENO);
-		free(shell.path);
-		return (CMD_FAILURE);
-	}
-	// print_start_logo();
-	command_loop(&shell);
-	free(shell.path);
-	env_destroy(shell.env_vars);
+	run_shell(&shell);
 	return (*shell.exit_status);
 }

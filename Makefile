@@ -10,6 +10,7 @@ SRCDIR := ./src/
 
 SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)input.c \
+			$(SRCDIR)setup.c \
 			$(SRCDIR)utils/split.c \
 			$(SRCDIR)utils/split_helper.c \
 			$(SRCDIR)utils/command_error.c \
