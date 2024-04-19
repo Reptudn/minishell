@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/16 19:29:40 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/19 11:19:13 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	print_cmd_chain(t_shunting_node **chain);
 
 // TODO: check if exit status is correct here
+// FIXME: heredoc works correctly with ctrl + c and ctrl + d when line was exited with ctrl + c exit heredoc with CMD_FAILURE
+// FIXME: when ctrl + c/d is pressed we are stuck in the heredoc
 char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 {
 	char	*heredoc;

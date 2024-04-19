@@ -77,3 +77,5 @@ int	main(int argc, char **argv, char **envp)
 	run_shell(&shell);
 	return (*shell.exit_status);
 }
+
+// TODO: when running anything with pipes make the parent process ignore SIGINT and SIGQUIT and after the child process is done, reset the signal handlers

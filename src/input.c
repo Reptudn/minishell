@@ -26,7 +26,7 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 		free(node->value);
 		i = -1;
 		if (node->args && node->args[0])
-			while (node->args[++i]) // CAUSED DOUBLE FREE WHEN I RAN echo *.c but there was no .c file in dir
+			while (node->args[++i])
 				free(node->args[i]);
 		free(node->args);
 		free(node->type);
@@ -41,10 +41,10 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 
 int	command_loop(t_shell *shell)
 {
-	int				status;
 	char			*line;
 	t_shunting_yard	*yard;
 	char			**split;
+	int				status;
 
 	line = readline(prompt_hello());
 	status = 0;
@@ -53,12 +53,11 @@ int	command_loop(t_shell *shell)
 		if (ft_strlen(line) == 0)
 		{
 			free(line);
-			line = readline(prompt_failure());
+			line = readline(prompt_success());
 			if (!line)
 				break ;
 			continue ;
 		}
-		color_black();
 		if (ft_strlen(line) > 0)
 			add_history(line);
 		line = is_valid_input(line);
@@ -85,14 +84,13 @@ int	command_loop(t_shell *shell)
 			continue ;
 		}
 		free_split(split);
-		color_black();
 		status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
 		free(line);
 		line = NULL;
 		if (!shell->run)
 			break ;
-		if (status == CMD_FAILURE || status == CMD_NOT_FOUND || status == 2)
+		if (*shell->exit_status != CMD_SUCCESS || status != CMD_SUCCESS)
 			line = readline(prompt_failure());
 		else
 			line = readline(prompt_success());
