@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int				get_operator_priority(char *operator);
+int			get_operator_priority(char *operator);
 
 t_shunting_node	*shunting_node_init(char	**tokens)
 {
@@ -30,7 +30,7 @@ t_shunting_node	*shunting_node_init(char	**tokens)
 	*node->exit_status = -1;
 	*node->type = is_operator(tokens[0]);
 	*node->priority = get_operator_priority(tokens[0]);
-	node->value = ft_strdup(tokens[0]);
+	node->value = ft_strdup(tokens[0]); //TODO: here is a leak
 	node->args = NULL;
 	node->next = NULL;
 	node->prev = NULL;
@@ -53,7 +53,7 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	i = 0;
 	while (tokens[i] && is_operator(tokens[i]) == NONE)
 		i++;
-	node->args = malloc(sizeof(char *) * i);
+	node->args = malloc(sizeof(char *) * i); // TODO: here is a leak
 	node->args[i - 1] = NULL;
 	*step += i;
 	while (--i > 0)
@@ -94,7 +94,7 @@ t_shunting_yard	*shunting_yard_create(char	**tokens)
 	yard = shunting_yard_init(tokens);
 	if (!yard)
 		return (NULL);
-	while (tokens[step])
+	while (tokens[step]) //TODO: somewhere in here the leaks are generated
 	{
 		temp = shunting_node_new(tokens + step, &step);
 		if (!temp)

@@ -51,7 +51,7 @@ void	update_indices(int *i, int *start, int len, int op_len)
 
 void	process_string(const char *str, char **result, int *res_i)
 {
-	char	*shell_op[] = {"||", "&&", "<<", "<", ">>", ">", " ", "(", ")", "|"};
+	char	**shell_op;
 	int		i;
 	int		start;
 	int		op_len;
@@ -60,36 +60,12 @@ void	process_string(const char *str, char **result, int *res_i)
 
 	i = 0;
 	start = 0;
+	shell_op = fill_shell_op();
 	while (str[i] != '\0')
 	{
 		if ((str[i] == '"')
 			&& (str[i - 1] && (str[i - 1] == '=')))
-		{
-			quote = str[i];
-			while (str[i - 1] && str[i] != ' ')
-				i--;
-			start = i + 1;
-			i++;
-			while (str[i] && str[i] != quote)
-				i++;
-			i++;
-			while (str[i] && str[i] != quote)
-				i++;
-			if (str[i + 1] && str[i + 1] != ' ' && str[i + 1] != '\0')
-				i++;
-			else
-			{
-				len = i - start;
-				if (len > 0)
-				{
-					result[*res_i] = create_split_string(str, start, len);
-					(*res_i)++;
-				}
-				if (str[i] != '\0')
-					i++;
-				start = i;
-			}
-		}
+			double_quotes(str, i, &start, result, res_i);
 		else if ((str[i] == '"')
 			&& (str[i - 1] && (str[i - 1] == ' ')))
 		{
@@ -115,8 +91,7 @@ void	process_string(const char *str, char **result, int *res_i)
 		}
 		else
 		{
-			op_len = is_shell_op((char *) &str[i], shell_op,
-					sizeof(shell_op) / sizeof(shell_op[0]));
+			op_len = is_shell_op((char *) &str[i], shell_op, 10);
 			if (op_len > 0)
 				len = i - start;
 			else if (str[i + 1] == '\0')
@@ -136,69 +111,38 @@ void	process_string(const char *str, char **result, int *res_i)
 			update_indices(&i, &start, len, op_len);
 		}
 	}
+	i = -1;
+	while (shell_op[++i])
+		free(shell_op[i]);
+	free(shell_op);
 }
 
-char	**clean_quotes(char **temp)
+char	**clean_quotes(char **tmp)
 {
 	char	**result;
 	int		i;
 	int		m;
 
-	if (!temp)
-		return (NULL);
 	i = 0;
-	while (temp[i])
+	while (tmp[i])
 		i++;
 	result = (char **)malloc((i + 1) * sizeof(char *));
-	if (!result)
+	if (!tmp || !result)
 		return (NULL);
 	i = -1;
 	m = -1;
-	while (temp[++i])
+	while (tmp[++i])
 	{
-		result[i] = malloc(sizeof(char) * (ft_strlen(temp[i]) + 1));
+		result[i] = malloc(sizeof(char) * (ft_strlen(tmp[i]) + 1));
 		if (!result[i])
 			return (NULL);
-		if (!str_is_equal(temp[i], "(") && !str_is_equal(temp[i], ")") && temp[i])
-			result[++m] = strdup(temp[i]);
+		if (tmp[i] && !str_is_equal(tmp[i], "(") && !str_is_equal(tmp[i], ")"))
+		{
+			free(result[++m]);
+			result[m] = ft_strdup(tmp[i]);
+		}
 	}
 	result[++m] = NULL;
 	return (result);
 }
 
-char	**ft_split_shell(const char *str)
-{
-	char	**temp;
-	int		res_i;
-	char	**result;
-	int		k;
-
-	res_i = 0;
-	k = -1;
-	temp = (char **)malloc((strlen(str) + 1) * sizeof(char *));
-	process_string(str, temp, &res_i);
-	temp[res_i] = NULL;
-	result = (char **)malloc((res_i + 1) * sizeof(char *));
-	result[res_i] = NULL;
-	result = clean_data(temp, result);
-	free(temp);
-	temp = result;
-	result = clean_quotes(temp);
-	while (temp[++k])
-		free(temp[k]);
-	free(temp);
-	temp = NULL;
-	return (result);
-}
-
-// TODO: when we just get a "" it just turns into a space but as single argument
-/*
-echo "" "" "" hi
-should print:
-   hi
-
-or
-echo "" "" hi "" hi
-should print:
-  hi  hi
-*/

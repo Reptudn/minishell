@@ -18,21 +18,22 @@ int		execute_child_process(char *cmd_path, char **args, char *command,
 			t_shell *shell);
 char	**make_env_args(char *cmd, char **args);
 
-// TODO: probably leaks here
 char	*create_cmd_path(char *path, char *cmd)
 {
 	char	*cmd_path;
+	char	*temp_cmd_path;
 
 	cmd_path = ft_strjoin(path, "/");
 	if (!cmd_path)
 		return (NULL);
-	cmd_path = ft_strjoin(cmd_path, cmd);
-	if (!cmd_path)
+	temp_cmd_path = ft_strjoin(cmd_path, cmd);
+	free(cmd_path);
+	if (!temp_cmd_path)
 	{
-		free(cmd_path);
+		free(temp_cmd_path);
 		return (NULL);
 	}
-	return (cmd_path);
+	return (temp_cmd_path);
 }
 
 char	*get_env_path_to_cmd(t_shell *shell, char *cmd)

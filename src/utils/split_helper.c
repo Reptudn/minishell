@@ -36,7 +36,8 @@ int	is_shell_op(char *str, char *shell_op[], int size)
 	int	i;
 
 	i = 0;
-	while (i < size)
+	(void)size;
+	while (shell_op[i] != NULL)
 	{
 		if (ft_strncmp(str, shell_op[i], ft_strlen(shell_op[i])) == 0)
 			return (ft_strlen(shell_op[i]));
@@ -67,4 +68,46 @@ char	**clean_data(char **temp, char **result)
 	return (result);
 }
 
-// XXX: cleaning out every space is not the way to go in every case. "" will be a space in echo
+char	**ft_split_shell(const char *str)
+{
+	char	**temp;
+	int		res_i;
+	char	**result;
+	int		k;
+
+	res_i = 0;
+	k = -1;
+	temp = (char **)malloc((strlen(str) + 1) * sizeof(char *));
+	process_string(str, temp, &res_i);
+	temp[res_i] = NULL;
+	result = (char **)malloc((res_i + 1) * sizeof(char *));
+	result[res_i] = NULL;
+	result = clean_data(temp, result);
+	free(temp);
+	temp = result;
+	result = clean_quotes(temp);
+	while (temp[++k])
+		free(temp[k]);
+	free(temp);
+	temp = NULL;
+	return (result);
+}
+
+char	**fill_shell_op(void)
+{
+	char	**shell_op;
+
+	shell_op = malloc(11 * sizeof(char *));
+	shell_op[0] = ft_strdup("||");
+	shell_op[1] = ft_strdup("&&");
+	shell_op[2] = ft_strdup("<<");
+	shell_op[3] = ft_strdup("<");
+	shell_op[4] = ft_strdup(">>");
+	shell_op[5] = ft_strdup(">");
+	shell_op[6] = ft_strdup(" ");
+	shell_op[7] = ft_strdup("(");
+	shell_op[8] = ft_strdup(")");
+	shell_op[9] = ft_strdup("|");
+	shell_op[10] = NULL;
+	return (shell_op);
+}

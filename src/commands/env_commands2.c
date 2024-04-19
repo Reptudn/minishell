@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 19:52:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/16 19:53:01 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/17 11:53:03 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ char	**make_env_args(char *cmd, char **args)
 	env_args = malloc((len + 2) * sizeof(char *));
 	if (!env_args)
 		return (NULL);
-	env_args[0] = strdup(cmd);
+	env_args[0] = ft_strdup(cmd);
 	i = -1;
 	while (++i < len)
-		env_args[i + 1] = strdup(args[i]);
+		env_args[i + 1] = ft_strdup(args[i]);
 	env_args[len + 1] = NULL;
 	return (env_args);
 }
