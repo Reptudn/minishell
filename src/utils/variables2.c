@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/19 14:03:34 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/19 14:41:31 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	insert_str_on_pos_w_len(char **str, char *insert, int pos, int len)
 	*str = new_str;
 }
 
-// TODO: it works kinda but its not returngin the correct str
+// FIXME: when defining ur as ec and mom as ho it ends up as ec$mom instead of echo
 char	*get_var_str(char *str, t_shell *shell)
 {
 	t_env_var	*env_var;
@@ -76,7 +76,7 @@ char	*get_var_str(char *str, t_shell *shell)
 					return (NULL);
 				insert_str_on_pos_w_len(&str, var_str, i, k);
 			}
-			i += k - 1;
+			i += k - 1; // i probably go too far here
 		}
 	}
 	return (str);

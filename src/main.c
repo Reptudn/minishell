@@ -80,4 +80,5 @@ int	main(int argc, char **argv, char **envp)
 	return (*shell.exit_status);
 }
 
+// XXX: We might be able to not use the global var at all and just use a func with a static int that holds the value of run inside
 // TODO: when running anything with pipes make the parent process ignore SIGINT and SIGQUIT and after the child process is done, reset the signal handlers
