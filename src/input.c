@@ -39,6 +39,27 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 	free(yard);
 }
 
+char	*get_input(char *prompt)
+{
+	char	*line;
+	char	*tmp;
+
+	if (isatty(fileno(stdin)))
+		line = readline(prompt);
+	else
+	{
+		line = get_next_line(fileno(stdin));
+		tmp = ft_strtrim(line, "\n");
+		free(line);
+		line = tmp;
+	}
+	if (line && ft_strlen(line) > 0)
+		add_history(line);
+	if (!line)
+		return (NULL);
+	return (line);
+}
+
 int	command_loop(t_shell *shell)
 {
 	int				status;
@@ -46,25 +67,22 @@ int	command_loop(t_shell *shell)
 	t_shunting_yard	*yard;
 	char			**split;
 
-	line = readline(prompt_hello());
+	line = get_input(prompt_hello());
 	status = 0;
 	while (shell->run && line)
 	{
 		if (ft_strlen(line) == 0)
 		{
 			free(line);
-			line = readline(prompt_failure());
+			line = get_input(prompt_failure());
 			if (!line)
 				break ;
 			continue ;
 		}
-		color_black();
-		if (ft_strlen(line) > 0)
-			add_history(line);
 		line = is_valid_input(line);
 		if (!line)
 		{
-			line = readline(prompt_failure());
+			line = get_input(prompt_failure());
 			status = CMD_FAILURE;
 			continue ;
 		}
@@ -72,7 +90,7 @@ int	command_loop(t_shell *shell)
 		if (!split)
 		{
 			free(line);
-			line = readline(prompt_failure());
+			line = get_input(prompt_failure());
 			status = CMD_FAILURE;
 			continue ;
 		}
@@ -80,12 +98,11 @@ int	command_loop(t_shell *shell)
 		if (!yard)
 		{
 			free(line);
-			line = readline(prompt_failure());
+			line = get_input(prompt_failure());
 			status = CMD_FAILURE;
 			continue ;
 		}
 		free_split(split);
-		color_black();
 		status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
 		free(line);
@@ -93,9 +110,9 @@ int	command_loop(t_shell *shell)
 		if (!shell->run)
 			break ;
 		if (status == CMD_FAILURE || status == CMD_NOT_FOUND || status == 2)
-			line = readline(prompt_failure());
+			line = get_input(prompt_failure());
 		else
-			line = readline(prompt_success());
+			line = get_input(prompt_success());
 	}
 	clear_history();
 	if (line)

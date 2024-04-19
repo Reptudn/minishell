@@ -23,4 +23,6 @@ RUN apt-get update && apt-get install -y \
 RUN python3 -m pip install --upgrade pip setuptools && \
     python3 -m pip install norminette
 
-CMD [ "zsh" ]
+# instal minishell tester
+RUN curl -fsSL -o install.sh https://raw.githubusercontent.com/zstenger93/42_minishell_tester/master/install.sh
+RUN bash install.sh

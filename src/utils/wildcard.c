@@ -67,7 +67,6 @@ char	*read_directory(DIR *d, char *pattern, char *match)
 	return (match);
 }
 
-// TODO: when a pattern return no result just return the pattern itself
 char	*get_matching_files(char *pattern)
 {
 	DIR		*d;

@@ -66,3 +66,5 @@ char	**clean_data(char **temp, char **result)
 	result[j] = NULL;
 	return (result);
 }
+
+// XXX: cleaning out every space is not the way to go in every case. "" will be a space in echo

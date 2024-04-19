@@ -121,8 +121,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 		cmd1 = cmd2->prev;
 		if (!cmd1)
 			return (CMD_FAILURE);
-		exit_status = execute_cmd_chain(shell, cmd1, yard);
-		if (exit_status == -1)
+		if (execute_cmd_chain(shell, cmd1, yard) == -1)
 		{
 			exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
 			yard_pop(operator, yard);

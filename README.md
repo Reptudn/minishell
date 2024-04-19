@@ -7,5 +7,5 @@ The objective of this project is for you to create a simple shell.
 - [shunting yard for the win](https://somethingorotherwhatever.com/shunting-yard-animation/)
 
 # Tester
- - https://github.com/zstenger93/42_minishell_tester
-
+- https://github.com/zstenger93/42_minishell_tester
+- run this command when wanting to use the tester: `bash -c "$(curl -fsSL https://raw.githubusercontent.com/zstenger93/42_minishell_tester/master/install.sh)"` 
