@@ -79,7 +79,6 @@ void	handle_shell_depth(t_shell *shell)
 {
 	t_env_var	*depth;
 	char		*new_val;
-	int			val;
 
 	depth = env_get_by_name(shell->env_vars, "SHLVL");
 	if (!depth)
@@ -88,20 +87,15 @@ void	handle_shell_depth(t_shell *shell)
 		depth = env_create_var("SHLVL", "1", true);
 		if (!depth)
 			printf("Failed to create shell depth value");
+		else
+			env_push(shell->env_vars, depth);
 	}
 	else
 	{
-		if (arg_is_numerical(depth->value))
-		{
-			val = ft_atoi(depth->value);
-			if (val < 1)
-				val = 1;
-			else
-				val++;
-		}
+		if (arg_is_numerical(depth->value) && ft_atoi(depth->value) > 0)
+			new_val = ft_itoa(ft_atoi(depth->value) + 1);
 		else
-			val = 1;
-		new_val = ft_itoa(val);
+			new_val = ft_strdup("1");
 		free(depth->value);
 		depth->value = new_val;
 	}
@@ -137,7 +131,7 @@ int	main(int argc, char **argv, char **envp)
 		free(shell.path);
 		return (CMD_FAILURE);
 	}
-	print_start_logo();
+	// print_start_logo();
 	command_loop(&shell);
 	free(shell.path);
 	env_destroy(shell.env_vars);
