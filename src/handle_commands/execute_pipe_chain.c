@@ -131,7 +131,7 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 	if (!chain)
 		return (-1);
 	while (++i < len && chain[i])
-		replace_variable(chain[i]->args, shell);
+		replace_variable(chain[i]->value, chain[i]->args, shell);
 	if (type == PIPE)
 		chain[0]->args = ft_split(run_pipe(shell, chain), ' ');
 	else if (type == REDIRECT_IN)

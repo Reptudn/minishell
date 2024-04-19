@@ -16,7 +16,7 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 {
 	t_shunting_node	*node;
 	t_shunting_node	*next_node;
-	int				i;
+	// int				i;
 
 	node = yard->output;
 	if (!node)
@@ -24,10 +24,10 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 	while (node)
 	{
 		free(node->value);
-		i = -1;
-		if (node->args && node->args[0])
-			while (node->args[++i]) // CAUSED DOUBLE FREE WHEN I RAN echo *.c but there was no .c file in dir
-				free(node->args[i]);
+		// i = -1;
+		// if (node->args && node->args[0])
+		// 	while (node->args[++i]) // CAUSED DOUBLE FREE WHEN I RAN echo *.c but there was no .c file in dir
+		// 		free(node->args[i]);
 		free(node->args);
 		free(node->type);
 		free(node->priority);

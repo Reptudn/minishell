@@ -13,6 +13,7 @@
 #include "../../include/minishell.h"
 
 char	*get_matching_files(char *pattern);
+char	*get_var_str(char *str, t_shell *shell);
 
 void	handle_exit_status(char **arg, t_shell *shell)
 {
@@ -46,6 +47,7 @@ void	handle_env_var(char **arg, t_shell *shell)
 	*arg = var;
 }
 
+// OBSOLETE
 void	is_variable(char **arg, t_shell *shell)
 {
 	if (!arg || !*arg || *arg[0] != '$' || ft_strlen(*arg) == 1)
@@ -58,17 +60,18 @@ void	is_variable(char **arg, t_shell *shell)
 	handle_env_var(arg, shell);
 }
 
-void	replace_variable(char **args, t_shell *shell)
+void	replace_variable(char *value, char **args, t_shell *shell)
 {
 	int		i;
 	char	*matching;
 
 	i = -1;
-	if (!args && *args == NULL)
+	if (!value || (!args && *args == NULL))
 		return ;
+	value = get_var_str(value, shell);
 	while (args && args[++i])
 	{
-		is_variable(&args[i], shell);
+		args[i] = get_var_str(args[i], shell);
 		matching = get_matching_files(args[i]);
 		if (matching)
 		{
