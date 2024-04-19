@@ -77,3 +77,5 @@ void	replace_variable(char **args, t_shell *shell)
 		}
 	}
 }
+
+// TODO: update that shi- so that $T$T$T$T$T$T$T$T$T also works 

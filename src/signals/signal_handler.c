@@ -28,7 +28,7 @@ void	signal_handler(int signum)
 	rl_redisplay();
 }
 
-// TODO: implement all those
+// TODO: implement all those functions down here
 
 // XXX: This function is being called when goign to a child process
 void	signal_ignore_parent(void)

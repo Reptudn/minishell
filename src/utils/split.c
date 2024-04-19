@@ -190,3 +190,15 @@ char	**ft_split_shell(const char *str)
 	temp = NULL;
 	return (result);
 }
+
+// TODO: when we just get a "" it just turns into a space but as single argument
+/*
+echo "" "" "" hi
+should print:
+   hi
+
+or
+echo "" "" hi "" hi
+should print:
+  hi  hi
+*/

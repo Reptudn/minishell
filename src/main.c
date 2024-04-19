@@ -75,6 +75,8 @@ int	main(int argc, char **argv, char **envp)
 	if (init_status == CMD_FAILURE)
 		return (CMD_FAILURE);
 	run_shell(&shell);
+	if (isatty(STDIN_FILENO))
+		printf("exit\n");
 	return (*shell.exit_status);
 }
 

@@ -26,7 +26,7 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 		free(node->value);
 		i = -1;
 		if (node->args && node->args[0])
-			while (node->args[++i])
+			while (node->args[++i]) // CAUSED DOUBLE FREE WHEN I RAN echo *.c but there was no .c file in dir
 				free(node->args[i]);
 		free(node->args);
 		free(node->type);
@@ -39,31 +39,50 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 	free(yard);
 }
 
+char	*get_input(char *prompt)
+{
+	char	*line;
+	char	*tmp;
+
+	if (isatty(fileno(stdin)))
+		line = readline(prompt);
+	else
+	{
+		line = get_next_line(fileno(stdin));
+		tmp = ft_strtrim(line, "\n");
+		free(line);
+		line = tmp;
+	}
+	if (line && ft_strlen(line) > 0)
+		add_history(line);
+	if (!line)
+		return (NULL);
+	return (line);
+}
+
 int	command_loop(t_shell *shell)
 {
+	int				status;
 	char			*line;
 	t_shunting_yard	*yard;
 	char			**split;
-	int				status;
 
-	line = readline(prompt_hello());
+	line = get_input(prompt_hello());
 	status = 0;
 	while (shell->run && line)
 	{
 		if (ft_strlen(line) == 0)
 		{
 			free(line);
-			line = readline(prompt_success());
+			line = get_input(prompt_failure());
 			if (!line)
 				break ;
 			continue ;
 		}
-		if (ft_strlen(line) > 0)
-			add_history(line);
 		line = is_valid_input(line);
 		if (!line)
 		{
-			line = readline(prompt_failure());
+			line = get_input(prompt_failure());
 			status = CMD_FAILURE;
 			continue ;
 		}
@@ -71,7 +90,7 @@ int	command_loop(t_shell *shell)
 		if (!split)
 		{
 			free(line);
-			line = readline(prompt_failure());
+			line = get_input(prompt_failure());
 			status = CMD_FAILURE;
 			continue ;
 		}
@@ -79,7 +98,7 @@ int	command_loop(t_shell *shell)
 		if (!yard)
 		{
 			free(line);
-			line = readline(prompt_failure());
+			line = get_input(prompt_failure());
 			status = CMD_FAILURE;
 			continue ;
 		}
@@ -90,10 +109,10 @@ int	command_loop(t_shell *shell)
 		line = NULL;
 		if (!shell->run)
 			break ;
-		if (*shell->exit_status != CMD_SUCCESS || status != CMD_SUCCESS)
-			line = readline(prompt_failure());
+		if (status == CMD_FAILURE || status == CMD_NOT_FOUND || status == 2)
+			line = get_input(prompt_failure());
 		else
-			line = readline(prompt_success());
+			line = get_input(prompt_success());
 	}
 	clear_history();
 	if (line)
