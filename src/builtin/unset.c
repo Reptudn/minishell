@@ -28,6 +28,7 @@ int	ft_unset(t_shunting_node *cmd, t_shell *shell)
 	{
 		free(found->value);
 		found->value = ft_strdup("0");
+		found->is_envp = false; // TODO: I dont know if this is needed because in bash for some reason when you unset SHLVL its not there when u run export but there and set as 0 when you run env
 	}
 	else
 		env_pop(shell->env_vars, found);
