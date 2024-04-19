@@ -153,7 +153,6 @@ void			print_invalid_cmd(char *command, char *error, int status);
 char			**ft_split_shell(const char *str);
 void			process_string(const char *str, char **result, int *res_i);
 void			double_quotes(const char *str, int i, int *start, char **result, int *res_i);
-void			single_quotes(const char *str, int i, int *start, char **result, int *res_i);
 char			*create_split_string(const char *str, int start, int len);
 char			**fill_shell_op(void);
 void			*free_split(char **split);
