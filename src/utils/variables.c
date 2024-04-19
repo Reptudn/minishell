@@ -60,7 +60,7 @@ void	is_variable(char **arg, t_shell *shell)
 	handle_env_var(arg, shell);
 }
 
-void	replace_variable(char *value, char **args, t_shell *shell)
+void	replace_variable(char **value, char **args, t_shell *shell)
 {
 	int		i;
 	char	*matching;
@@ -68,7 +68,7 @@ void	replace_variable(char *value, char **args, t_shell *shell)
 	i = -1;
 	if (!value || (!args && *args == NULL))
 		return ;
-	value = get_var_str(value, shell);
+	*value = get_var_str(*value, shell);
 	while (args && args[++i])
 	{
 		args[i] = get_var_str(args[i], shell);

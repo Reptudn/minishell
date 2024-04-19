@@ -180,6 +180,6 @@ char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
 void			signal_handler(int signum);
 
 // var utils
-void			replace_variable(char *value, char **args, t_shell *shell);
+void			replace_variable(char **value, char **args, t_shell *shell);
 
 #endif
