@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/19 14:41:31 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/20 01:14:54 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,9 @@ char	*get_var_str(char *str, t_shell *shell)
 					return (NULL);
 				insert_str_on_pos_w_len(&str, var_str, i, k);
 			}
-			i += k - 1; // i probably go too far here
+			i += k; // i probably go too far here
 		}
 	}
 	return (str);
 }
+// That shi not owkring for whatever reason
