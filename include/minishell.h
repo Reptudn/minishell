@@ -109,6 +109,10 @@ typedef struct s_temps
 	char	*charp_l;
 }	t_temps;
 
+
+t_shell	*get_shell(void);
+int		*get_run(void);
+
 // command hanling
 int				run_command(t_shell *shell, t_shunting_node *cmd);
 int				run_path_command(t_shell *shell, t_shunting_node *cmd);
