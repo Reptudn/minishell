@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/22 15:16:35 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:22:05 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 	{
 		waitpid(pid, &status, 0);
 		close(pipefd[1]);
-		printf("hello\n");
 		read(pipefd_back[0], buffer, 99999);
 	}
 	return (ft_strtrim(buffer, "\n"));
