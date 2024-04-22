@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/22 10:33:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/22 14:25:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,12 @@ char	*get_var_str(char *str, t_shell *shell)
 				var_str = ft_strdup(env_var->value);
 				if (!var_str)
 					return (NULL);
-				insert_str_on_pos_w_len(&str, var_str, i++, k);
+				insert_str_on_pos_w_len(&str, var_str, i, k);
 			}
 			else
-				insert_str_on_pos_w_len(&str, "", i--, k);
+				insert_str_on_pos_w_len(&str, "", i, k);
 			free(insert);
+			i = 0;
 		}
 	}
 	return (str);
