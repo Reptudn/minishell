@@ -14,6 +14,8 @@
 
 char	*get_matching_files(char *pattern);
 char	*get_var_str(char *str, t_shell *shell);
+char	*remove_surrounding_singleq(char *str, int *changed);
+char	*remove_surrounding_doubleq(char *str, int *changed);
 
 void	handle_exit_status(char **arg, t_shell *shell)
 {
@@ -47,17 +49,19 @@ void	handle_env_var(char **arg, t_shell *shell)
 	*arg = var;
 }
 
-// OBSOLETE
-void	is_variable(char **arg, t_shell *shell)
+char	*remove_surrounding_quotes(char *str)
 {
-	if (!arg || !*arg || *arg[0] != '$' || ft_strlen(*arg) == 1)
-		return ;
-	if (ft_strncmp(*arg, "$?", 2) == 0)
+	int		changed;
+
+	changed = 0;
+	while (str && ((str[0] == '\'' && str[ft_strlen(str) - 1] == '\'')
+			|| (str[0] == '\"' && str[ft_strlen(str) - 1] == '\"'))
+		&& !changed)
 	{
-		handle_exit_status(arg, shell);
-		return ;
+		str = remove_surrounding_doubleq(str, NULL);
+		str = remove_surrounding_singleq(str, &changed);
 	}
-	handle_env_var(arg, shell);
+	return (str);
 }
 
 void	replace_variable(char **value, char **args, t_shell *shell)
@@ -69,6 +73,7 @@ void	replace_variable(char **value, char **args, t_shell *shell)
 	if (!value || (!args && *args == NULL))
 		return ;
 	*value = get_var_str(*value, shell);
+	*value = remove_surrounding_quotes(*value);
 	while (args && args[++i])
 	{
 		args[i] = get_var_str(args[i], shell);
@@ -78,7 +83,6 @@ void	replace_variable(char **value, char **args, t_shell *shell)
 			free(args[i]);
 			args[i] = matching;
 		}
+		args[i] = remove_surrounding_quotes(args[i]);
 	}
 }
-
-// TODO: update that shi- so that $T$T$T$T$T$T$T$T$T also works and expands each variable

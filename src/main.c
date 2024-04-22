@@ -62,7 +62,8 @@ void	run_shell(t_shell *shell)
 {
 	print_start_logo();
 	command_loop(shell);
-	free(shell->path);
+	if (shell->path)
+		free(shell->path);
 	env_destroy(shell->env_vars);
 }
 

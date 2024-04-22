@@ -65,7 +65,32 @@ void	process_string(const char *str, char **result, int *res_i)
 	{
 		if ((str[i] == '"')
 			&& (str[i - 1] && (str[i - 1] == '=')))
-			double_quotes(str, i, &start, result, res_i);
+			{
+			quote = str[i];
+			while (str[i - 1] && str[i] != ' ')
+				i--;
+			start = i + 1;
+			i++;
+			while (str[i] && str[i] != quote)
+				i++;
+			i++;
+			while (str[i] && str[i] != quote)
+				i++;
+			if (str[i + 1] && str[i + 1] != ' ' && str[i + 1] != '\0')
+				i++;
+			else
+			{
+				len = i - start;
+				if (len > 0)
+				{
+					result[*res_i] = create_split_string(str, start, len);
+					(*res_i)++;
+				}
+				if (str[i] != '\0')
+					i++;
+				start = i;
+			}
+		}
 		else if ((str[i] == '"')
 			&& (str[i - 1] && (str[i - 1] == ' ')))
 		{

@@ -49,8 +49,11 @@ char	*get_input(char *prompt)
 	else
 	{
 		line = get_next_line(fileno(stdin));
+		if (!line)
+			return (NULL);
 		tmp = ft_strtrim(line, "\n");
-		free(line);
+		if (line)
+			free(line);
 		line = tmp;
 	}
 	if (line && ft_strlen(line) > 0)
