@@ -54,7 +54,7 @@ int	ft_exit(t_shell *shell, t_shunting_node *cmd)
 
 	exit_code = CMD_SUCCESS;
 	shell->run = false;
-	if (!cmd->args)
+	if (!cmd->args || !cmd->args[0])
 		return (exit_code);
 	if (get_str_arr_len(cmd->args) > 1)
 	{

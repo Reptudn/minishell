@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 08:11:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/19 08:21:13 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/22 08:16:47 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ void	handle_shell_depth(t_shell *shell)
 	}
 }
 
+void	welcome_user(void)
+{
+	char	*user;
+
+	user = getenv("USER");
+	if (user)
+	{
+		printf("\n%sWelcome %s✨ %s ✨%s\n\n", color_magenta(), color_green(),
+			user, color_reset());
+		return ;
+	}
+	printf("\n%sWelcome %s✨ user ✨ %sthat didn't set the USER var 😡%s\n\n",
+		color_magenta(), color_green(), color_red(), color_reset());
+}
+
 void	print_start_logo(void)
 {
 	printf("\033[H\033[J%s", color_magenta());
@@ -62,8 +77,7 @@ void	print_start_logo(void)
 		";\a%s\n\n",
 		color_red(), color_magenta(), color_red(), color_reset());
 	printf("%s", color_reset());
-	printf("\n%sWelcome %s✨ %s ✨%s\n\n", color_magenta(), color_green(),
-		getenv("USER"), color_reset());
+	welcome_user();
 }
 
 char	**get_env(void)

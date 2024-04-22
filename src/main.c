@@ -46,7 +46,7 @@ int	setup_signals(t_shell *shell)
 int	initialize_shell(t_shell *shell, int argc, char **argv, char **envp)
 {
 	shell->run = true;
-	g_run = 1;
+	*get_run() = 1;
 	shell->path = getcwd(NULL, 0);
 	shell->exit_status = malloc(sizeof(int));
 	*shell->exit_status = CMD_SUCCESS;
@@ -68,16 +68,18 @@ void	run_shell(t_shell *shell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
+	t_shell	*shell;
 	int		init_status;
 
-	init_status = initialize_shell(&shell, argc, argv, envp);
+	shell = get_shell();
+	init_status = initialize_shell(shell, argc, argv, envp);
 	if (init_status == CMD_FAILURE)
 		return (CMD_FAILURE);
-	run_shell(&shell);
+	run_shell(shell);
 	if (isatty(STDIN_FILENO))
 		printf("exit\n");
-	return (*shell.exit_status);
+	return (*shell->exit_status);
 }
 
+// XXX: We might be able to not use the global var at all and just use a func with a static int that holds the value of run inside
 // TODO: when running anything with pipes make the parent process ignore SIGINT and SIGQUIT and after the child process is done, reset the signal handlers

@@ -109,6 +109,10 @@ typedef struct s_temps
 	char	*charp_l;
 }	t_temps;
 
+
+t_shell	*get_shell(void);
+int		*get_run(void);
+
 // command hanling
 int				run_command(t_shell *shell, t_shunting_node *cmd);
 int				run_path_command(t_shell *shell, t_shunting_node *cmd);
@@ -180,6 +184,6 @@ char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
 void			signal_handler(int signum);
 
 // var utils
-void			replace_variable(char **args, t_shell *shell);
+void			replace_variable(char **value, char **args, t_shell *shell);
 
 #endif
