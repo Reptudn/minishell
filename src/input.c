@@ -72,7 +72,7 @@ int	command_loop(t_shell *shell)
 
 	line = get_input(prompt_hello());
 	status = 0;
-	while (shell->run && line)
+	while (*get_run() && line)
 	{
 		if (ft_strlen(line) == 0)
 		{
@@ -110,7 +110,7 @@ int	command_loop(t_shell *shell)
 		shunting_yard_destroy(yard);
 		free(line);
 		line = NULL;
-		if (!shell->run)
+		if (!*get_run())
 			break ;
 		if (status == CMD_FAILURE || status == CMD_NOT_FOUND || status == 2)
 			line = get_input(prompt_failure());

@@ -17,12 +17,11 @@ void	signal_handler(int signum)
 {
 	if (signum == SIGTERM)
 	{
-		g_run = 0;
+		*get_run() = 0;
 		return ;
 	}
 	if (signum == SIGINT)
 		printf("\n");
-	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

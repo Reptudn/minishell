@@ -53,8 +53,6 @@
 # define CMD_IMPROP 2
 # define CMD_NOT_FOUND 127
 
-extern int	g_run;
-
 char	*prompt_success(void);
 char	*prompt_failure(void);
 char	*prompt_hello(void);
@@ -72,7 +70,6 @@ typedef struct s_env_var
 
 typedef struct s_shell
 {
-	bool		run;
 	char		*path;
 	t_env_var	*env_vars;
 	int			*exit_status;
