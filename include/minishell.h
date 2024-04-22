@@ -110,8 +110,9 @@ typedef struct s_temps
 }	t_temps;
 
 
-t_shell	*get_shell(void);
-int		*get_run(void);
+t_shell			*get_shell(void);
+int				*get_run(void);
+char			*get_input(char *prompt);
 
 // command hanling
 int				run_command(t_shell *shell, t_shunting_node *cmd);
@@ -185,5 +186,6 @@ void			signal_handler(int signum);
 
 // var utils
 void			replace_variable(char **value, char **args, t_shell *shell);
+char			*get_var_str(char *str, t_shell *shell);
 
 #endif
