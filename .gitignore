@@ -11,6 +11,9 @@ minishell_tester/
 *.sh
 .idea/
 
+# Not ignore files in test folder
+!test/*
+
 # Not ignore debug settings files
 .vscode/*
 !.vscode/launch.json
