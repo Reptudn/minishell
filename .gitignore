@@ -12,7 +12,7 @@ minishell_tester/
 .idea/
 
 # Not ignore files in test folder
-!/tests/*.sh
+!/tests/**/*.sh
 
 # Not ignore debug settings files
 .vscode/*
