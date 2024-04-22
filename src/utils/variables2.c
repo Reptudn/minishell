@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/22 09:44:44 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/22 10:33:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	insert_str_on_pos_w_len(char **str, char *insert, int pos, int len)
 	int		i;
 	int		k;
 
-	printf("insert is: %s\n", insert);
 	new_str = malloc((ft_strlen(*str) + ft_strlen(insert) - len + 1)
 			* sizeof(char));
 	if (!new_str)
@@ -36,7 +35,6 @@ void	insert_str_on_pos_w_len(char **str, char *insert, int pos, int len)
 	new_str[k] = '\0';
 	free(*str);
 	*str = new_str;
-	printf("new_str: %s\n", new_str);
 }
 
 char	*get_var_str(char *str, t_shell *shell)
@@ -73,15 +71,11 @@ char	*get_var_str(char *str, t_shell *shell)
 				var_str = ft_strdup(env_var->value);
 				if (!var_str)
 					return (NULL);
-				insert_str_on_pos_w_len(&str, var_str, i, k);
+				insert_str_on_pos_w_len(&str, var_str, i++, k);
 			}
 			else
-			{
-				printf("env_var not found\n");
-				insert_str_on_pos_w_len(&str, "", i, k);
-			}
+				insert_str_on_pos_w_len(&str, "", i--, k);
 			free(insert);
-			i++;
 		}
 	}
 	return (str);
