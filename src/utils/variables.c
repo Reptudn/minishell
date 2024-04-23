@@ -87,6 +87,8 @@ char	*remove_surrounding_quotes(char *str)
 		&& !changed)
 	{
 		str = remove_surrounding_doubleq(str, NULL);
+		if (str_is_equal(str, ""))
+			break ;
 		str = remove_surrounding_singleq(str, &changed);
 	}
 	remove_closing_quotes(&str);
