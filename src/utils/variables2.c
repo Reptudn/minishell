@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/23 13:10:02 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/23 13:49:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,14 @@ char	*get_var_str(char *str, t_shell *shell)
 	int			k;
 	bool		is_quoted;
 	char		*last_quote;
+	int			j;
+	char		*new_str;
 
 	i = -1;
 	is_quoted = false;
 	last_quote = NULL;
+	j = 0;
+	new_str = malloc(strlen(str) + 1);
 	while (str[++i])
 	{
 		if (str[i] == '\'' && (last_quote < &str[i] || !last_quote))
@@ -57,8 +61,13 @@ char	*get_var_str(char *str, t_shell *shell)
 			last_quote = &str[i];
 			is_quoted = !is_quoted;
 		}
-		if (str[i] != '$' || !str[i + 1] || is_quoted)
+		else if (str[i] == '"')
 			continue ;
+		if (str[i] != '$' || !str[i + 1] || is_quoted)
+		{
+			new_str[j++] = str[i];
+			continue ;
+		}
 		if (str[i + 1] == '?')
 		{
 			insert = ft_itoa(*shell->exit_status);
@@ -88,5 +97,6 @@ char	*get_var_str(char *str, t_shell *shell)
 			i = 0;
 		}
 	}
+	new_str[j] = '\0';
 	return (str);
 }
