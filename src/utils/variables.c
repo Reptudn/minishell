@@ -61,7 +61,7 @@ void	remove_closing_quotes(char **str)
 	new_str = malloc(sizeof(char) * (ft_strlen(*str) + 1));
 	while (str && new_str && *str && (*str)[++i])
 	{
-		if ((*str)[i] != '\'' && (*str)[i] != '\"')
+		if ((*str)[i] != '\"')
 		{
 			new_str[j++] = (*str)[i];
 			continue ;
@@ -74,7 +74,6 @@ void	remove_closing_quotes(char **str)
 		free(*str);
 	if (new_str)
 		new_str[j] = '\0';
-	printf("new_str: %s\n", new_str);
 	*str = new_str;
 }
 
@@ -94,6 +93,7 @@ char	*remove_surrounding_quotes(char *str)
 	return (str);
 }
 
+// TODO: figure out how when to remove quotes and when not
 void	replace_variable(char **value, char **args, t_shell *shell)
 {
 	int		i;

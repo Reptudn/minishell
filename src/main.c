@@ -57,7 +57,7 @@ int	initialize_shell(t_shell *shell, int argc, char **argv, char **envp)
 
 void	run_shell(t_shell *shell)
 {
-	print_start_logo();
+	// print_start_logo();
 	command_loop(shell);
 	if (shell->path)
 		free(shell->path);
@@ -80,5 +80,5 @@ int	main(int argc, char **argv, char **envp)
 	return (*shell->exit_status);
 }
 
-// XXX: We might be able to not use the global var at all and just use a func with a static int that holds the value of run inside
+// TODO: the command /bin/echo -n test1		test2 prits the two tabs instead fo seperating them into two arguments
 // TODO: when running anything with pipes make the parent process ignore SIGINT and SIGQUIT and after the child process is done, reset the signal handlers
