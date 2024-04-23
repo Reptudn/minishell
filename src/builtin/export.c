@@ -63,7 +63,7 @@ int	handle_arg(t_shell *shell, char *arg)
 	char		**split;
 	t_env_var	*env;
 
-	if (arg[0] == '=')
+	if (arg[0] == '=' || !ft_isalpha(arg[0]))
 		return (export_error());
 	if (!ft_strchr(arg, '='))
 		return (handle_no_equal(shell, arg));

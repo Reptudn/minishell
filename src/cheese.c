@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_helper.c                                    :+:      :+:    :+:   */
+/*   cheese.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 14:55:29 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/23 09:38:57 by jkauker          ###   ########.fr       */
+/*   Created: 2024/04/22 09:37:05 by jkauker           #+#    #+#             */
+/*   Updated: 2024/04/22 16:10:57 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
-int	print_export(t_env_var *env)
+t_shell	*get_shell(void)
 {
-	while (env)
-	{
-		if (env->value[0] == '\0')
-			printf("declare -x %s\n", env->name);
-		else
-			printf("declare -x %s=\"%s\"\n", env->name, env->value);
-		env = env->next;
-	}
-	return (CMD_SUCCESS);
+	static t_shell	shell;
+
+	return (&shell);
 }
 
-int	export_error(void)
+int	*get_run(void)
 {
-	ft_putstr_fd("minishell: export: not a valid identifier\n", 2);
-	return (CMD_FAILURE);
+	static int	run = 1;
+
+	return (&run);
 }

@@ -17,8 +17,6 @@ void	env_destroy(t_env_var *env);
 char	**get_env(void);
 void	print_start_logo(void);
 
-int	g_run = 1;
-
 int	setup_environment(t_shell *shell, char **envp)
 {
 	shell->env_vars = env_make_vars(envp);
@@ -45,8 +43,7 @@ int	setup_signals(t_shell *shell)
 
 int	initialize_shell(t_shell *shell, int argc, char **argv, char **envp)
 {
-	shell->run = true;
-	g_run = 1;
+	*get_run() = 1;
 	shell->path = getcwd(NULL, 0);
 	shell->exit_status = malloc(sizeof(int));
 	*shell->exit_status = CMD_SUCCESS;
@@ -60,24 +57,29 @@ int	initialize_shell(t_shell *shell, int argc, char **argv, char **envp)
 
 void	run_shell(t_shell *shell)
 {
-	print_start_logo();
+	// print_start_logo();
 	command_loop(shell);
-	free(shell->path);
+	if (shell->path)
+		free(shell->path);
 	env_destroy(shell->env_vars);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
+	t_shell	*shell;
 	int		init_status;
 
-	init_status = initialize_shell(&shell, argc, argv, envp);
+	rl_catch_signals = 0; // TODO: Check if this  prevents some readline functions to not work correclty -> this is only to not print ^C when pressing control + c
+	shell = get_shell();
+	init_status = initialize_shell(shell, argc, argv, envp);
 	if (init_status == CMD_FAILURE)
 		return (CMD_FAILURE);
-	run_shell(&shell);
+	run_shell(shell);
 	if (isatty(STDIN_FILENO))
 		printf("exit\n");
-	return (*shell.exit_status);
+	return (*shell->exit_status);
 }
 
+// TODO: the command /bin/echo -n test1		test2 prits the two tabs instead fo seperating them into two arguments
 // TODO: when running anything with pipes make the parent process ignore SIGINT and SIGQUIT and after the child process is done, reset the signal handlers
+// FIXME: why is this working? >> '$USER'

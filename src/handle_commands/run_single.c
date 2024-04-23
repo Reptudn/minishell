@@ -61,7 +61,7 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 
 	if (!cmd || !shell)
 		return (CMD_FAILURE);
-	replace_variable(cmd->args, shell); // TODO: not just the args have to be replaced but also the value
+	replace_variable(&(cmd->value), cmd->args, shell);
 	status = run_builtin_command(shell, cmd);
 	if (status == -1)
 		status = run_external_command(shell, cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/19 11:19:13 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/22 15:22:05 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ int	run_delimiter_helper(int pipefd[2], t_shunting_node **chain)
 	exit_status = CMD_SUCCESS;
 	while (1)
 	{
-		temp = readline("heredoc> ");
+		temp = get_input("heredoc> ");
 		if (!temp)
 			return (CMD_FAILURE);
+		temp = get_var_str(temp, get_shell());
 		if (chain[counter] && str_is_equal(temp, (chain[counter])->value))
 			counter++;
 		if (chain[counter] == NULL)
@@ -70,7 +71,8 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		dup2(pipefd_back[1], STDOUT_FILENO);
-		*chain[0]->exit_status = run_command(shell, chain[0]);
+		// XXX: when we add a printf here, it stops correctly but the output is not correct or gone
+		*chain[0]->exit_status = run_command(shell, chain[0]); // FIXME: there us an issue here when piping an echo with the minishell like: echo "cat << john\nwhy\nnot\njohn" | ./minishell we are stuck
 		close(pipefd_back[0]);
 		exit(*chain[0]->exit_status);
 	}
@@ -80,6 +82,6 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 		close(pipefd[1]);
 		read(pipefd_back[0], buffer, 99999);
 	}
-	return (ft_strdup(buffer));
+	return (ft_strtrim(buffer, "\n"));
 }
 // TODO: i think heredoc is not freed in the end <- YES THATS TRUE <- why we have a free call? need to check that again 

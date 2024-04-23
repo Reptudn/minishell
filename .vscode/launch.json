@@ -23,6 +23,27 @@
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {
+      "name": "Minishell: Pipe Test outside pipe into minishell",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "/bin/sh",
+      "args": ["-c", "echo 'echo hi' | ${workspaceFolder}/minishell"],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "sudo minishell prelaunch",
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
+    {
       "name": "C/C++ Runner: Debug Session",
       "type": "lldb",
       "request": "launch",
