@@ -3,13 +3,13 @@
 # **************************************************************************** #
 
 ### comparing your input parsing to bash ###
-/bin/echo ""$?""
+/bin/echo ""$?"" # FAIL
 
-/bin/echo $?"42"
+/bin/echo $?"42" # FAIL
 
-/bin/echo ''$?''"42"
+/bin/echo ''$?''"42" # FAIL
 
-/bin/echo '"$USER"'
+/bin/echo '"$USER"' # FAIL
 
 /bin/echo "'$USER'"
 

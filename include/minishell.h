@@ -53,8 +53,6 @@
 # define CMD_IMPROP 2
 # define CMD_NOT_FOUND 127
 
-extern int	g_run;
-
 char	*prompt_success(void);
 char	*prompt_failure(void);
 char	*prompt_hello(void);
@@ -72,7 +70,6 @@ typedef struct s_env_var
 
 typedef struct s_shell
 {
-	bool		run;
 	char		*path;
 	t_env_var	*env_vars;
 	int			*exit_status;
@@ -110,8 +107,9 @@ typedef struct s_temps
 }	t_temps;
 
 
-t_shell	*get_shell(void);
-int		*get_run(void);
+t_shell			*get_shell(void);
+int				*get_run(void);
+char			*get_input(char *prompt);
 
 // command hanling
 int				run_command(t_shell *shell, t_shunting_node *cmd);
@@ -185,5 +183,6 @@ void			signal_handler(int signum);
 
 // var utils
 void			replace_variable(char **value, char **args, t_shell *shell);
+char			*get_var_str(char *str, t_shell *shell);
 
 #endif

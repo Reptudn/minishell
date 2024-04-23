@@ -32,6 +32,11 @@ int	ft_cd(t_shunting_node *cmd, t_shell *shell)
 	char		*new_path;
 	t_env_var	*tmp;
 
+	if (cmd->args[0] && cmd->args[1])
+	{
+		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
+		return (1);
+	}
 	if (!cmd->args[0])
 	{
 		tmp = env_get_by_name(shell->env_vars, "HOME");

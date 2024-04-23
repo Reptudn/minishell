@@ -11,6 +11,7 @@ minishell_tester/
 *.sh
 .idea/
 
+
 # Not ignore files in test folder
 !/tests/**/*.sh
 
@@ -21,6 +22,7 @@ minishell_tester/
 
 # Tester
 minishell_tester/
+bla_test/
 tmp_err_bash
 tmp_err_minishell
 tmp_out_bash
