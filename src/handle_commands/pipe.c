@@ -33,12 +33,12 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 	pid_t	pids[pipe_amount];
 	int		exit_code;
 	char	*temp;
+	int		i;
 
-	counter = -1;
+	counter = pipe_amount;
 	temp = NULL;
-
-	counter = -1;
-	while (chain[++counter] && counter <= pipe_amount)
+	i = 0;
+	while (chain[--counter] && counter >= 0)
 	{
 		if (pipe(fd[counter]) == -1)
 			return (NULL);
@@ -54,8 +54,8 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 			}
 			if (counter != pipe_amount)
 			{
-				close(fd[counter][0]);
-				dup2(fd[counter][1], STDOUT_FILENO);
+				close(fd[counter - 1][0]);
+				dup2(fd[counter - 1][1], STDOUT_FILENO);
 			}
 			exit_code = run_command(shell, chain[counter]);
 			exit(exit_code);
@@ -67,9 +67,10 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 				close(fd[counter - 1][0]);
 		}
 	}
-	for (int i = 0; i < pipe_amount; i++)
+	while (i++ < pipe_amount)
 		close(fd[i][1]);
-	for (int i = 0; i <= counter; i++)
+	i = 0;
+	while (i <= counter)
 	{
 		int status;
 		waitpid(pids[i], &status, 0);
@@ -94,3 +95,4 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 		temp[ft_strlen(temp) - 1] = '\0';
 	return (temp);
 }
+//TODO: cat | cat | ls cat is ongoing cause the fd for ls is not closed!

@@ -29,6 +29,7 @@
 # include <errno.h>
 # include <termios.h>
 # include <sys/ioctl.h>
+# include <sys/select.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
