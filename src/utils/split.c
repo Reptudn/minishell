@@ -56,6 +56,7 @@ void	process_string(const char *str, char **result, int *res_i)
 	int		start;
 	int		op_len;
 	int		len;
+	char	quote;
 
 	i = 0;
 	start = 0;
@@ -64,7 +65,7 @@ void	process_string(const char *str, char **result, int *res_i)
 	{
 		if ((str[i] == '"')
 			&& (str[i - 1] && (str[i - 1] == '=')))
-			{
+		{
 			quote = str[i];
 			while (str[i - 1] && str[i] != ' ')
 				i--;
