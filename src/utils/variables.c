@@ -91,7 +91,8 @@ char	*remove_surrounding_quotes(char *str)
 			break ;
 		str = remove_surrounding_singleq(str, &changed);
 	}
-	remove_closing_quotes(&str);
+	if (!changed)
+		remove_closing_quotes(&str);
 	return (str);
 }
 

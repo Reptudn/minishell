@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/22 14:25:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/23 13:10:02 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,20 @@ char	*get_var_str(char *str, t_shell *shell)
 	char		*insert;
 	int			i;
 	int			k;
+	bool		is_quoted;
+	char		*last_quote;
 
 	i = -1;
+	is_quoted = false;
+	last_quote = NULL;
 	while (str[++i])
 	{
-		if (str[i] != '$' || !str[i + 1])
+		if (str[i] == '\'' && (last_quote < &str[i] || !last_quote))
+		{
+			last_quote = &str[i];
+			is_quoted = !is_quoted;
+		}
+		if (str[i] != '$' || !str[i + 1] || is_quoted)
 			continue ;
 		if (str[i + 1] == '?')
 		{
