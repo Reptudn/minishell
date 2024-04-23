@@ -14,8 +14,12 @@
 
 char	*remove_surrounding_singleq(char *str, int *changed)
 {
-	if (!str || !*str || ft_strlen(str) < 2)
+	printf("s> input str: %s\n", str);
+	if (!str || !*str
+		|| (ft_strlen(str) == 2 && str[0] == '\'' && str[1] == '\''))
 		return (ft_strdup(""));
+	else if (ft_strlen(str) < 2)
+		return (str);
 	if (!str || !*str || (str[0] != '\'' && str[ft_strlen(str) - 1] != '\''))
 		return (str);
 	ft_memmove(str, str + 1, ft_strlen(str) - 2);
@@ -27,8 +31,12 @@ char	*remove_surrounding_singleq(char *str, int *changed)
 
 char	*remove_surrounding_doubleq(char *str, int *changed)
 {
-	if (!str || !*str || ft_strlen(str) < 2)
+	printf("d> input str: %s\n", str);
+	if (!str || !*str
+		|| (ft_strlen(str) == 2 && str[0] == '"' && str[1] == '"'))
 		return (ft_strdup(""));
+	else if (ft_strlen(str) < 2)
+		return (str);
 	if (!str || !*str || (str[0] != '"' && str[ft_strlen(str) - 1] != '"'))
 		return (str);
 	ft_memmove(str, str + 1, ft_strlen(str) - 2);
