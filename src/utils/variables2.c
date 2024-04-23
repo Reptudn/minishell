@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/23 13:49:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/23 13:51:12 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	insert_str_on_pos_w_len(char **str, char *insert, int pos, int len)
 	*str = new_str;
 }
 
-char	*get_var_str(char *str, t_shell *shell)
+char	*get_var_str(char *str, t_shell *shell) // TODO: fix this to work like bash
 {
 	t_env_var	*env_var;
 	char		*var_str;
