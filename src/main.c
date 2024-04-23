@@ -57,7 +57,8 @@ int	initialize_shell(t_shell *shell, int argc, char **argv, char **envp)
 
 void	run_shell(t_shell *shell)
 {
-	// print_start_logo();
+	if (isatty(fileno(stdin)))
+		print_start_logo();
 	command_loop(shell);
 	if (shell->path)
 		free(shell->path);
