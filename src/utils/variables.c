@@ -49,6 +49,35 @@ void	handle_env_var(char **arg, t_shell *shell)
 	*arg = var;
 }
 
+void	remove_closing_quotes(char **str)
+{
+	int		i;
+	int		j;
+	char	quote;
+	char	*new_str;
+
+	i = -1;
+	j = 0;
+	new_str = malloc(sizeof(char) * (ft_strlen(*str) + 1));
+	while (str && new_str && *str && (*str)[++i])
+	{
+		if ((*str)[i] != '\'' && (*str)[i] != '\"')
+		{
+			new_str[j++] = (*str)[i];
+			continue ;
+		}
+		quote = (*str)[i];
+		while ((*str)[i] && (*str)[i] != quote)
+			new_str[j++] = (*str)[i++];
+	}
+	if (*str)
+		free(*str);
+	if (new_str)
+		new_str[j] = '\0';
+	printf("new_str: %s\n", new_str);
+	*str = new_str;
+}
+
 char	*remove_surrounding_quotes(char *str)
 {
 	int		changed;
@@ -61,6 +90,7 @@ char	*remove_surrounding_quotes(char *str)
 		str = remove_surrounding_doubleq(str, NULL);
 		str = remove_surrounding_singleq(str, &changed);
 	}
+	remove_closing_quotes(&str);
 	return (str);
 }
 
@@ -74,6 +104,7 @@ void	replace_variable(char **value, char **args, t_shell *shell)
 		return ;
 	*value = get_var_str(*value, shell);
 	*value = remove_surrounding_quotes(*value);
+	remove_closing_quotes(value);
 	while (args && args[++i])
 	{
 		args[i] = get_var_str(args[i], shell);
