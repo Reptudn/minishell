@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:55:29 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/15 14:56:13 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/23 09:38:57 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int	print_export(t_env_var *env)
 
 int	export_error(void)
 {
-	ft_putstr_fd("minishell: export: `=': not a valid identifier\n", 2);
+	ft_putstr_fd("minishell: export: not a valid identifier\n", 2);
 	return (CMD_FAILURE);
 }

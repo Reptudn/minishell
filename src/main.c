@@ -82,3 +82,4 @@ int	main(int argc, char **argv, char **envp)
 
 // TODO: the command /bin/echo -n test1		test2 prits the two tabs instead fo seperating them into two arguments
 // TODO: when running anything with pipes make the parent process ignore SIGINT and SIGQUIT and after the child process is done, reset the signal handlers
+// FIXME: why is this working? >> '$USER'
