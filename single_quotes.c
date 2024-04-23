@@ -23,3 +23,4 @@ void	single_quotes(const char *str, int i, int *start, char **result, int *res_i
 		*start = i;
 	}
 }
+

@@ -56,7 +56,6 @@ void	process_string(const char *str, char **result, int *res_i)
 	int		start;
 	int		op_len;
 	int		len;
-	char	quote;
 
 	i = 0;
 	start = 0;
