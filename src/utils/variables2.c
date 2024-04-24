@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/24 16:59:38 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:22:59 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ char	*get_var_str(char *str)
 						&& (str[temp.int_i + temp.int_k] == '"' || str[temp.int_i + temp.int_k] == '\'' || str[temp.int_i + temp.int_k] == ' '))
 					{
 						var_str = append_single_char(var_str, str[temp.int_i++]);
-						// temp.int_i++;
 						continue ;
 					}
 					temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);

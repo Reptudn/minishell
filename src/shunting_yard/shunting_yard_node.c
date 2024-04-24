@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:36:01 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/16 16:41:23 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:34:08 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	place_operator_node(t_shunting_node *node, t_shunting_yard *yard)
 	else
 	{
 		tmp = get_last_node(yard->stack);
-		while (tmp && *node->priority >= *tmp->priority)
+		while (tmp && *node->priority <= *tmp->priority)
 		{
 			stack_to_output_end(yard);
 			tmp = get_last_node(yard->stack);

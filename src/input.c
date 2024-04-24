@@ -97,8 +97,6 @@ int	command_loop(t_shell *shell)
 			status = CMD_FAILURE;
 			continue ;
 		}
-		for (int i = 0; split[i]; i++)
-			printf("split[%d]: %s\n", i, split[i]);
 		yard = shunting_yard(split);
 		if (!yard)
 		{

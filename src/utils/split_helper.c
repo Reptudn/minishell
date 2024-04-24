@@ -94,14 +94,13 @@ char	**fill_shell_op(void)
 {
 	char	**shell_op;
 
-	shell_op = malloc(11 * sizeof(char *));
+	shell_op = malloc(10 * sizeof(char *));
 	shell_op[0] = ft_strdup("||");
 	shell_op[1] = ft_strdup("&&");
 	shell_op[2] = ft_strdup("<<");
 	shell_op[3] = ft_strdup("<");
 	shell_op[4] = ft_strdup(">>");
 	shell_op[5] = ft_strdup(">");
-	// shell_op[6] = ft_strdup(" ");
 	shell_op[6] = ft_strdup("(");
 	shell_op[7] = ft_strdup(")");
 	shell_op[8] = ft_strdup("|");

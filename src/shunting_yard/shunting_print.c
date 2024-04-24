@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:36:47 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/16 15:38:42 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:30:50 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	print_shunting_node(t_shunting_node *node, int a)
 			printf("  %s\n", node->args[i]);
 	else
 		printf("  NULL\n");
+	printf("Priority: %d\n", *node->priority);
 	printf("----------\n");
 	print_shunting_node(node->next, ++a);
 }
