@@ -103,9 +103,21 @@ void	replace_variable(char **value, char **args)
 	i = -1;
 	if (!value || (!args && *args == NULL))
 		return ;
-	*value = get_var_str(*value); // TODO: Handle when this fails
+	if (str_is_equal(*value, "''") || str_is_equal(*value, "\"\""))
+	{
+		free(*value);
+		*value = ft_strdup("");
+	}
+	else
+		*value = get_var_str(*value); // TODO: Handle when this fails
 	while (args && args[++i])
 	{
+		if (str_is_equal(args[i], "''") || str_is_equal(args[i], "\"\""))
+		{
+			free(args[i]);
+			args[i] = ft_strdup("");
+			continue ;
+		}
 		args[i] = get_var_str(args[i]); // TODO: Handle when this fails
 		matching = get_matching_files(args[i]);
 		if (matching)

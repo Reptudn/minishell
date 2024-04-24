@@ -101,10 +101,10 @@ char	**fill_shell_op(void)
 	shell_op[3] = ft_strdup("<");
 	shell_op[4] = ft_strdup(">>");
 	shell_op[5] = ft_strdup(">");
-	shell_op[6] = ft_strdup(" ");
-	shell_op[7] = ft_strdup("(");
-	shell_op[8] = ft_strdup(")");
-	shell_op[9] = ft_strdup("|");
-	shell_op[10] = NULL;
+	// shell_op[6] = ft_strdup(" ");
+	shell_op[6] = ft_strdup("(");
+	shell_op[7] = ft_strdup(")");
+	shell_op[8] = ft_strdup("|");
+	shell_op[9] = NULL;
 	return (shell_op);
 }
