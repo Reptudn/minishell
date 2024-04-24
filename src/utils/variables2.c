@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/24 12:28:16 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/24 13:30:46 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char	*append_single_char(char *str, char c)
 }
 
 // TODO: the two expanding the var are almost the same so make them into a sep func
+// echo "$ "
 char	*get_var_str(char *str)
 {
 	t_temps	temp;
@@ -87,18 +88,33 @@ char	*get_var_str(char *str)
 			temp.int_l = 0;
 			while (str[temp.int_i])
 			{
-				if (temp.int_l == 0)
+				if (temp.int_l == 0 && str[temp.int_i] == '"')
 					temp.int_i++;
 				if (temp.int_l++ != 0 && str[temp.int_i] == '"')
 					break ;
-				if (str[temp.int_i] != '$')
+				if (str[temp.int_i] != '$' && str[temp.int_i] != '"')
 					var_str = append_single_char(var_str, str[temp.int_i++]);
-				else
+				else if (str[temp.int_i] != '"')
 				{
+					if (str[temp.int_i + 1] && str[temp.int_i + 1] == '?')
+					{
+						var_str = ft_strjoin(var_str, ft_itoa(*get_shell()->exit_status));
+						if (!var_str)
+							return (NULL);
+						temp.int_i++;
+						continue ;
+					}
 					temp.int_k = 1;
 					while (str[temp.int_i + temp.int_k]
 						&& ft_isalnum(str[temp.int_i + temp.int_k]))
 						temp.int_k++;
+					if (temp.int_k == 1 && str[temp.int_i + 1]
+						&& (str[temp.int_i + temp.int_k] == '"' || str[temp.int_i + temp.int_k] == '\'' || str[temp.int_i + temp.int_k] == ' '))
+					{
+						var_str = append_single_char(var_str, str[temp.int_i++]);
+						// temp.int_i++;
+						continue ;
+					}
 					temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);
 					if (!temp.charp_i)
 						return (NULL);
@@ -123,10 +139,21 @@ char	*get_var_str(char *str)
 					return (NULL);
 				continue ;
 			}
+			if (str[temp.int_i + 1] && str[temp.int_i + 1] == '?')
+			{
+				var_str = ft_strjoin(var_str, ft_itoa(*get_shell()->exit_status));
+				if (!var_str)
+					return (NULL);
+				temp.int_i++;
+				continue ;
+			}
 			temp.int_k = 1;
 			while (str[temp.int_i + temp.int_k]
 				&& ft_isalnum(str[temp.int_i + temp.int_k]))
 				temp.int_k++;
+			if (temp.int_k == 1 && str[temp.int_i + 1]
+				&& (str[temp.int_i + temp.int_k] == '"' || str[temp.int_i + temp.int_k] == '\'' || str[temp.int_i + temp.int_k] == ' '))
+				continue ;
 			temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);
 			if (!temp.charp_i)
 				return (NULL);

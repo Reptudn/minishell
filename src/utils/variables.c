@@ -103,10 +103,10 @@ void	replace_variable(char **value, char **args)
 	i = -1;
 	if (!value || (!args && *args == NULL))
 		return ;
-	*value = get_var_str(*value);
+	*value = get_var_str(*value); // TODO: Handle when this fails
 	while (args && args[++i])
 	{
-		args[i] = get_var_str(args[i]);
+		args[i] = get_var_str(args[i]); // TODO: Handle when this fails
 		matching = get_matching_files(args[i]);
 		if (matching)
 		{
