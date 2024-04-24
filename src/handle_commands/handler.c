@@ -130,7 +130,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 		return (run_command(shell, yard->output));
 	if (operator_count != get_command_count(yard->output) - 1)
 	{
-		ft_putstr_fd("minishell: unbalanced tokens!", 2);
+		ft_putstr_fd("minishell: unbalanced tokens\n", 2);
 		return (CMD_FAILURE);
 	}
 	execute_commands_helper(yard, shell, cmd1, cmd2);

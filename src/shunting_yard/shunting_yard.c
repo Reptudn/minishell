@@ -78,12 +78,6 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	yard = shunting_yard_create(tokens);
 	if (!yard)
 		return (NULL);
-	if (get_operator_count(yard->input)
-		!= get_command_count(yard->input) - 1)
-	{
-		ft_putstr_fd("minishell: unbalanced Commands and Operators\n", STDERR_FILENO);
-		return (NULL);
-	}
 	while (yard->input)
 	{
 		node = get_first_input(yard);
