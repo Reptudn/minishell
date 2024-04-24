@@ -13,6 +13,8 @@
 #include "../../lib/libft/libft.h"
 #include "../../include/minishell.h"
 
+char		*append_single_char(char *str, char c);
+
 char	*create_split_string(const char *str, int start, int len)
 {
 	char	*result;
@@ -51,40 +53,63 @@ void	update_indices(int *i, int *start, int len, int op_len)
 
 void	process_string(const char *str, char **result, int *res_i)
 {
+	t_temps	temp;
 	char	**shell_op;
 	int		i;
-	int		start;
-	int		op_len;
-	int		len;
+	char	quote;
 
-	i = 0;
-	start = 0;
-	shell_op = fill_shell_op();
-	while (str[i] != '\0')
-	{
-		op_len = is_shell_op((char *) &str[i], shell_op, 10);
-		if (op_len > 0)
-			len = i - start;
-		else if (str[i + 1] == '\0')
-			len = i - start + 1;
-		else
-			len = 0;
-		if (len > 0)
-		{
-			result[*res_i] = create_split_string(str, start, len);
-			(*res_i)++;
-		}
-		if (op_len > 0)
-		{
-			result[*res_i] = create_operator_string(&str[i], op_len);
-			(*res_i)++;
-		}
-		update_indices(&i, &start, len, op_len);
-	}
 	i = -1;
-	while (shell_op[++i])
-		free(shell_op[i]);
-	free(shell_op);
+	shell_op = fill_shell_op();
+	temp.charp_i = ft_strdup("");
+	while (str[++i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			temp.int_j = 0;
+			quote = str[i];
+			while (str[i++])
+			{
+				if (str[i] == quote && temp.int_j++ > 0)
+				{
+					temp.charp_i = append_single_char(temp.charp_i, str[i]);
+					break ;
+				}
+				temp.charp_i = append_single_char(temp.charp_i, str[i]);
+				if (!temp.charp_i)
+					return ;
+			}
+		}
+		else
+		{
+			temp.int_j = is_shell_op((char *) &str[i], shell_op, 10);
+			if (temp.int_j != 0)
+			{
+				result[(*res_i)++] = temp.charp_i;
+				result[(*res_i)++] = ft_substr(&str[i], 0, temp.int_j);
+				temp.charp_i = ft_strdup("");
+				if (!temp.charp_i)
+					return ;
+			}
+			else
+			{
+				if (str[i] == ' ')
+				{
+					result[(*res_i)++] = temp.charp_i;
+					temp.charp_i = ft_strdup("");
+					if (!temp.charp_i)
+						return ;
+					continue ;
+				}
+				temp.charp_i = append_single_char(temp.charp_i, str[i]);
+				if (!temp.charp_i)
+					return ;
+			}
+		}
+	}
+	if (!str_is_equal(temp.charp_i, ""))
+		result[(*res_i)++] = temp.charp_i;
+	result[(*res_i)] = NULL;
+	free_split(shell_op);
 }
 
 char	**clean_quotes(char **tmp)

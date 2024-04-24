@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/24 13:30:46 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/24 16:37:06 by nsabia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*append_single_char(char *str, char c)
 			return (NULL);
 		out[len] = c;
 		out[len + 1] = '\0';
+		// free(str);
 	}
 	return (out);
 }
