@@ -92,7 +92,10 @@ int	ft_echo(t_shunting_node *cmd)
 	i--;
 	while (cmd->args && cmd->args[++i])
 	{
-		printf("%s", cmd->args[i]);
+		if (cmd->args[i][0] == '\0')
+			printf(" ");
+		else
+			printf("%s", cmd->args[i]);
 		if (cmd->args[i + 1])
 			printf(" ");
 	}
