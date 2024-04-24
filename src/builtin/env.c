@@ -12,7 +12,6 @@
 
 #include "../../include/minishell.h"
 
-// TODO: i heard that env only prints the vars with values and if they dont have values they should not be printed so we might have to remove the else but first confirm that
 int	ft_env(t_shell *shell)
 {
 	t_env_var	*env;
@@ -22,8 +21,6 @@ int	ft_env(t_shell *shell)
 	{
 		if (env->value)
 			printf("%s=%s\n", env->name, env->value);
-		else
-			printf("%s=\n", env->name);
 		env = env->next;
 	}
 	return (CMD_SUCCESS);

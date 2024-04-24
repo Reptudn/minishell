@@ -112,10 +112,13 @@ t_shell			*get_shell(void);
 int				*get_run(void);
 char			*get_input(char *prompt);
 
-// command hanling
+// command handling
 int				run_command(t_shell *shell, t_shunting_node *cmd);
 int				run_path_command(t_shell *shell, t_shunting_node *cmd);
+void			print_cmd_chain(t_shunting_node **chain);
 int				execute_commands(t_shunting_yard *yard, t_shell *shell);
+void			pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain,
+					int len, int type);
 
 // old
 int				command_loop(t_shell *shell);
@@ -129,7 +132,7 @@ t_shunting_yard	*shunting_yard(char **tokens);
 void			print_all_stacks(t_shunting_yard *yard);
 
 // builtins
-int				ft_cd(t_shunting_node *cmd, t_shell *shell);
+int				ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path);
 int				pwd(void);
 int				ft_export(t_shell *shell, t_shunting_node *cmd);
 int				ft_unset(t_shunting_node *cmd, t_shell *shell);
