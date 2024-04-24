@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/24 10:37:28 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/24 12:28:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,28 +79,40 @@ char	*get_var_str(char *str)
 		{
 			if (str[temp.int_i] == '\'')
 			{
-				++temp.int_i;
+				temp.int_i++;
 				while (str[temp.int_i] && str[temp.int_i] != '\'')
 					var_str = append_single_char(var_str, str[temp.int_i++]);
 				continue ;
 			}
-			temp.int_k = 1;
-			while (str[temp.int_i + temp.int_k]
-				&& ft_isalnum(str[temp.int_i + temp.int_k]))
-				temp.int_k++;
-			temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);
-			if (!temp.charp_i)
-				return (NULL);
-			temp.env_var1 = env_get_by_name(get_shell()->env_vars,
-					temp.charp_i + 1);
-			if (temp.env_var1)
+			temp.int_l = 0;
+			while (str[temp.int_i])
 			{
-				printf("env var\n");
-				var_str = ft_strjoin(var_str, temp.env_var1->value);
-				if (!var_str)
-					return (NULL);
+				if (temp.int_l == 0)
+					temp.int_i++;
+				if (temp.int_l++ != 0 && str[temp.int_i] == '"')
+					break ;
+				if (str[temp.int_i] != '$')
+					var_str = append_single_char(var_str, str[temp.int_i++]);
+				else
+				{
+					temp.int_k = 1;
+					while (str[temp.int_i + temp.int_k]
+						&& ft_isalnum(str[temp.int_i + temp.int_k]))
+						temp.int_k++;
+					temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);
+					if (!temp.charp_i)
+						return (NULL);
+					temp.env_var1 = env_get_by_name(get_shell()->env_vars,
+							temp.charp_i + 1);
+					if (temp.env_var1)
+					{
+						var_str = ft_strjoin(var_str, temp.env_var1->value);
+						if (!var_str)
+							return (NULL);
+					}
+					temp.int_i += temp.int_k;
+				}
 			}
-			temp.int_i += temp.int_k - 1;
 		}
 		else
 		{
