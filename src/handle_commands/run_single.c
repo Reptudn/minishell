@@ -14,6 +14,9 @@
 
 int	run_builtin_command(t_shell *shell, t_shunting_node *cmd)
 {
+	char	*new_path;
+
+	new_path = NULL;
 	if (str_is_equal(cmd->value, "history"))
 		return (display_history());
 	else if (str_is_equal(cmd->value, "exit"))
@@ -31,7 +34,7 @@ int	run_builtin_command(t_shell *shell, t_shunting_node *cmd)
 	else if (str_is_equal(cmd->value, "unset"))
 		return (ft_unset(cmd, shell));
 	else if (str_is_equal(cmd->value, "cd"))
-		return (ft_cd(cmd, shell));
+		return (ft_cd(cmd, shell, new_path));
 	else
 		return (-1);
 }

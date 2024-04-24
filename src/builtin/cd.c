@@ -27,16 +27,14 @@ void	echo_err(char *new_path)
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
-int	ft_cd(t_shunting_node *cmd, t_shell *shell)
+int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 {
-	char		*new_path;
 	t_env_var	*tmp;
 
 	if (cmd->args[0] && cmd->args[1])
-	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
+	if (cmd->args[0] && cmd->args[1])
 		return (1);
-	}
 	if (!cmd->args[0])
 	{
 		tmp = env_get_by_name(shell->env_vars, "HOME");
@@ -50,10 +48,9 @@ int	ft_cd(t_shunting_node *cmd, t_shell *shell)
 	if ((cmd->args)[1] != 0)
 		return (1);
 	if (!new_path || chdir(new_path) == -1)
-	{
 		echo_err(new_path);
-		return (1);
-	}
+	if (!new_path || chdir(new_path) == -1)
+		return (0);
 	free(shell->path);
 	shell->path = getcwd(NULL, 0);
 	return (0);
