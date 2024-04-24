@@ -17,6 +17,20 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	size_t	i;
 
 	i = 0;
+	if (!dst)
+	{
+		if (!src)
+			return (0);
+		dst = ft_strdup(src);
+		return (ft_strlen(dst));
+	}
+	if (!src)
+	{
+		if (!dst)
+			return (0);
+		src = ft_strdup(dst);
+		return (ft_strlen(src));
+	}
 	while (*dst != 0 && i < size)
 	{
 		i++;

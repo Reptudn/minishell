@@ -87,12 +87,11 @@ int	ft_echo(t_shunting_node *cmd)
 	if (!cmd)
 		return (CMD_FAILURE);
 	while (cmd->args
-		&& is_new_line(remove_surrounding_singleq(cmd->args[++i], NULL)))
+		&& is_new_line(cmd->args[++i]))
 		nl = 0;
 	i--;
 	while (cmd->args && cmd->args[++i])
 	{
-		remove_surrounding_singleq(cmd->args[i], NULL);
 		printf("%s", cmd->args[i]);
 		if (cmd->args[i + 1])
 			printf(" ");
