@@ -50,6 +50,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)handle_commands/redirect_out.c \
 			$(SRCDIR)handle_commands/run_single.c \
 			$(SRCDIR)handle_commands/execute_pipe_chain.c \
+			$(SRCDIR)handle_commands/execute_pipe_chain_helper.c \
 			$(SRCDIR)shunting_yard/shunting_yard.c \
 			$(SRCDIR)shunting_yard/shunting_yard2.c \
 			$(SRCDIR)shunting_yard/shunting_yard_node.c \

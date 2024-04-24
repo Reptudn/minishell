@@ -17,8 +17,10 @@ void	yard_pop(t_shunting_node *node, t_shunting_yard *yard);
 int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 char	*run_pipe(t_shell *shell, t_shunting_node **chain);
-int		redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell);
-int		redirect_out(t_shell *shell, t_shunting_node **chain, int redirection_amout);	
+int		redirect_in(t_shunting_node *cmd,
+			t_shunting_node *cmd2, t_shell *shell);
+int		redirect_out(t_shell *shell, t_shunting_node **chain,
+			int redirection_amout);
 int		run_append(t_shell *shell, t_shunting_node **chain, int append_amount);
 char	*run_delimiter(t_shunting_node **chain, t_shell *shell);
 
@@ -88,9 +90,8 @@ t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 	return (chain);
 }
 
-// after calling this the first one of the chain can still be used
-// as echo and save the output there
-void	pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain, int len, int type)
+void	pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain,
+		int len, int type)
 {
 	if (!chain)
 		return ;
@@ -104,32 +105,12 @@ void	pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain, int len, int 
 	}
 }
 
-void	print_cmd_chain(t_shunting_node **chain)
+void	execute_cmd_chain_helper(int len, t_shunting_node **chain,
+		t_shell *shell, int type)
 {
 	int	i;
 
 	i = -1;
-	printf("Command Chain:\n");
-	if (!chain)
-	{
-		printf("  No chain\n");
-		return ;
-	}
-	while (chain[++i])
-		printf("  chain[%d]: %s\n", i, (chain[i])->value);
-}
-
-int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *yard)
-{
-	t_shunting_node	**chain;
-	int				len;
-	int				type;
-	int				i;
-
-	chain = get_cmd_chain(start, &len, &type);
-	i = -1;
-	if (!chain)
-		return (-1);
 	while (++i < len && chain[i])
 		replace_variable(&(chain[i]->value), chain[i]->args, shell);
 	if (type == PIPE)
@@ -142,6 +123,19 @@ int execute_cmd_chain(t_shell *shell, t_shunting_node *start, t_shunting_yard *y
 		run_append(shell, chain, len);
 	else if (type == REDIRECT_IN_DELIMITER)
 		chain[0]->args = ft_split(run_delimiter(chain, shell), ' ');
+}
+
+int	execute_cmd_chain(t_shell *shell, t_shunting_node *start,
+		t_shunting_yard *yard)
+{
+	t_shunting_node	**chain;
+	int				len;
+	int				type;
+
+	chain = get_cmd_chain(start, &len, &type);
+	if (!chain)
+		return (-1);
+	execute_cmd_chain_helper(len, chain, shell, type);
 	if (type == REDIRECT_IN || type == REDIRECT_OUT
 		|| type == REDIRECT_OUT_APPEND)
 		chain[0]->args = ft_split("-n  ", ' ');
