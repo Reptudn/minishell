@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/24 10:15:24 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/24 10:37:28 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,61 +61,73 @@ char	*append_single_char(char *str, char c)
 		out[len] = c;
 		out[len + 1] = '\0';
 	}
-	printf("out: %s\n", out);
 	return (out);
 }
 
+// TODO: the two expanding the var are almost the same so make them into a sep func
 char	*get_var_str(char *str)
 {
 	t_temps	temp;
-	bool	in_quotes;
 	char	*var_str;
-	char	*last_quote;
 
 	temp.int_i = -1;
 	temp.int_j = 0;
-	in_quotes = false;
 	var_str = NULL;
-	last_quote = NULL;
 	while (str && str[++temp.int_i])
 	{
-		if ((str[temp.int_i] == '\'' || str[temp.int_i] == '"'))
+		if (str[temp.int_i] == '\'' || str[temp.int_i] == '"')
 		{
-			if (last_quote && *last_quote == str[temp.int_i])
-				in_quotes = false;
-			else if (!in_quotes)
+			if (str[temp.int_i] == '\'')
 			{
-				in_quotes = true;
-				last_quote = &str[temp.int_i];
+				++temp.int_i;
+				while (str[temp.int_i] && str[temp.int_i] != '\'')
+					var_str = append_single_char(var_str, str[temp.int_i++]);
 				continue ;
 			}
-		}
-		if ((in_quotes && ((last_quote && *last_quote == '\'')))
-			|| str[temp.int_i] != '$')
-		{
-			printf("appending normal\n");
-			var_str = append_single_char(var_str, str[temp.int_i]);
-			if (!var_str)
+			temp.int_k = 1;
+			while (str[temp.int_i + temp.int_k]
+				&& ft_isalnum(str[temp.int_i + temp.int_k]))
+				temp.int_k++;
+			temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);
+			if (!temp.charp_i)
 				return (NULL);
-			continue ;
+			temp.env_var1 = env_get_by_name(get_shell()->env_vars,
+					temp.charp_i + 1);
+			if (temp.env_var1)
+			{
+				printf("env var\n");
+				var_str = ft_strjoin(var_str, temp.env_var1->value);
+				if (!var_str)
+					return (NULL);
+			}
+			temp.int_i += temp.int_k - 1;
 		}
-		printf("variable\n");
-		temp.int_k = 1;
-		while (str[temp.int_i + temp.int_k]
-			&& ft_isalnum(str[temp.int_i + temp.int_k]))
-			temp.int_k++;
-		temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);
-		if (!temp.charp_i)
-			return (NULL);
-		temp.env_var1 = env_get_by_name(get_shell()->env_vars,
-				temp.charp_i + 1);
-		if (temp.env_var1)
+		else
 		{
-			var_str = ft_strjoin(var_str, temp.env_var1->value);
-			if (!var_str)
+			if (str[temp.int_i] != '$')
+			{
+				var_str = append_single_char(var_str, str[temp.int_i]);
+				if (!var_str)
+					return (NULL);
+				continue ;
+			}
+			temp.int_k = 1;
+			while (str[temp.int_i + temp.int_k]
+				&& ft_isalnum(str[temp.int_i + temp.int_k]))
+				temp.int_k++;
+			temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);
+			if (!temp.charp_i)
 				return (NULL);
+			temp.env_var1 = env_get_by_name(get_shell()->env_vars,
+					temp.charp_i + 1);
+			if (temp.env_var1)
+			{
+				var_str = ft_strjoin(var_str, temp.env_var1->value);
+				if (!var_str)
+					return (NULL);
+			}
+			temp.int_i += temp.int_k - 1;
 		}
-		temp.int_i += temp.int_k;
 	}
 	if (str)
 		free(str);
