@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/23 13:51:12 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/24 06:39:46 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ char	*get_var_str(char *str, t_shell *shell) // TODO: fix this to work like bash
 			last_quote = &str[i];
 			is_quoted = !is_quoted;
 		}
-		else if (str[i] == '"')
-			continue ;
 		if (str[i] != '$' || !str[i + 1] || is_quoted)
 		{
 			new_str[j++] = str[i];
@@ -99,4 +97,66 @@ char	*get_var_str(char *str, t_shell *shell) // TODO: fix this to work like bash
 	}
 	new_str[j] = '\0';
 	return (str);
+}
+
+// TODO: try this when in 42
+char	*get_var_str(char *str)
+{
+	t_temps	temp;
+	bool	in_quotes;
+	char	*var_str;
+	char	*last_quote;
+	int		j;
+
+	temp.int_i = -1;
+	temp.int_j = 0;
+	in_quotes = false;
+	var_str = NULL;
+	last_quote = NULL;
+	while (str && str[++temp.int_i])
+	{
+		if ((str[temp.int_i] == '\'' || str[temp.int_i] == '"')
+			&& (last_quote < &str[temp.int_i] || !last_quote))
+		{
+			last_quote = &str[temp.int_i];
+			in_quotes = !in_quotes;
+		}
+		if (&str[temp.int_i] > last_quote)
+		{
+			if (*last_quote == '\'')
+			{
+				ft_strlcat(var_str, &str[temp.int_i], 1);
+				if (!var_str)
+					return (NULL);
+				continue ;	
+			}
+			else if (*last_quote == '"')
+			{
+				temp.int_k = 1;
+				if (str[temp.int_i] != '$')
+				{
+					ft_strlcat(var_str, &str[temp.int_i], 1);
+					if (!var_str)
+						return (NULL);
+					continue ;
+				}
+				while (str[temp.int_i + temp.int_k]
+					&& ft_isalnum(str[temp.int_i + temp.int_k]))
+					temp.int_k++;
+				temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);
+				if (!temp.charp_i)
+					return (NULL);
+				temp.env_var1 = env_get_by_name(get_shell()->env_vars, temp.charp_i + 1);
+				if (temp.env_var1)
+				{
+					ft_strlcat(var_str, temp.env_var1->value, ft_strlen(temp.env_var1->value));
+					if (!var_str)
+						return (NULL);
+				}
+			}
+		}
+	}
+	if (str)
+		free(str);
+	return (var_str);
 }

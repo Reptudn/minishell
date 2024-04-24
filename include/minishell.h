@@ -97,14 +97,16 @@ typedef struct s_shunting_yard
 
 typedef struct s_temps
 {
-	int		int_i;
-	int		int_j;
-	int		int_k;
-	int		int_l;
-	char	*charp_i;
-	char	*charp_j;
-	char	*charp_k;
-	char	*charp_l;
+	int			int_i;
+	int			int_j;
+	int			int_k;
+	int			int_l;
+	char		*charp_i;
+	char		*charp_j;
+	char		*charp_k;
+	char		*charp_l;
+	t_env_var	*env_var1;
+	t_env_var	*env_var2;
 }	t_temps;
 
 
