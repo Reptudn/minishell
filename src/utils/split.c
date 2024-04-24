@@ -85,7 +85,9 @@ void	process_string(const char *str, char **result, int *res_i)
 			temp.int_j = is_shell_op((char *) &str[i], shell_op, 10);
 			if (temp.int_j != 0)
 			{
-				result[(*res_i)++] = temp.charp_i;
+				if (!str_is_equal(temp.charp_i, "")
+					|| !str_is_equal(temp.charp_i, " "))
+					result[(*res_i)++] = temp.charp_i;
 				result[(*res_i)++] = ft_substr(&str[i], 0, temp.int_j);
 				i += temp.int_j - 1;
 				temp.charp_i = ft_strdup("");
@@ -96,7 +98,9 @@ void	process_string(const char *str, char **result, int *res_i)
 			{
 				if (str[i] == ' ')
 				{
-					result[(*res_i)++] = temp.charp_i;
+					if (!str_is_equal(temp.charp_i, "")
+						|| !str_is_equal(temp.charp_i, " "))
+						result[(*res_i)++] = temp.charp_i;
 					temp.charp_i = ft_strdup("");
 					if (!temp.charp_i)
 						return ;
@@ -108,7 +112,7 @@ void	process_string(const char *str, char **result, int *res_i)
 			}
 		}
 	}
-	if (!str_is_equal(temp.charp_i, ""))
+	if (!str_is_equal(temp.charp_i, "")|| !str_is_equal(temp.charp_i, " "))
 		result[(*res_i)++] = temp.charp_i;
 	result[(*res_i)] = NULL;
 	// for (int i = 0; result[i]; i++)
