@@ -12,10 +12,23 @@
 
 #include "../../include/minishell.h"
 
+// TODO: check if this is correct even if we have somthing like echo "hello world""
+
 char	*remove_surrounding_singleq(char *str, int *changed)
 {
-	if (!str || !*str || ft_strlen(str) < 2)
+	if (!str || !*str
+		|| (ft_strlen(str) == 2 && str[0] == '\'' && str[1] == '\''))
+	{
+		if (changed)
+			*changed = 1;
 		return (ft_strdup(""));
+	}
+	else if (ft_strlen(str) < 2)
+	{
+		if (changed)
+			*changed = 1;
+		return (str);
+	}
 	if (!str || !*str || (str[0] != '\'' && str[ft_strlen(str) - 1] != '\''))
 		return (str);
 	ft_memmove(str, str + 1, ft_strlen(str) - 2);
@@ -27,8 +40,19 @@ char	*remove_surrounding_singleq(char *str, int *changed)
 
 char	*remove_surrounding_doubleq(char *str, int *changed)
 {
-	if (!str || !*str || ft_strlen(str) < 2)
+	if (!str || !*str
+		|| (ft_strlen(str) == 2 && str[0] == '"' && str[1] == '"'))
+	{
+		if (changed)
+			*changed = 1;
 		return (ft_strdup(""));
+	}
+	else if (ft_strlen(str) < 2)
+	{
+		if (changed)
+			*changed = 1;
+		return (str);
+	}
 	if (!str || !*str || (str[0] != '"' && str[ft_strlen(str) - 1] != '"'))
 		return (str);
 	ft_memmove(str, str + 1, ft_strlen(str) - 2);
@@ -63,12 +87,11 @@ int	ft_echo(t_shunting_node *cmd)
 	if (!cmd)
 		return (CMD_FAILURE);
 	while (cmd->args
-		&& is_new_line(remove_surrounding_singleq(cmd->args[++i], NULL)))
+		&& is_new_line(cmd->args[++i]))
 		nl = 0;
 	i--;
 	while (cmd->args && cmd->args[++i])
 	{
-		remove_surrounding_singleq(cmd->args[i], NULL);
 		printf("%s", cmd->args[i]);
 		if (cmd->args[i + 1])
 			printf(" ");

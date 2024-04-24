@@ -69,6 +69,8 @@ int	ft_exit(t_shell *shell, t_shunting_node *cmd)
 		*shell->exit_status = CMD_FAILURE;
 		return (CMD_FAILURE);
 	}
+	while(*cmd->args[0] == '0')
+		cmd->args[0]++;
 	exit_code = ft_atoi(cmd->args[0]);
 	if (exit_code < 0)
 		exit_code = 256 + exit_code;

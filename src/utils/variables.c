@@ -13,7 +13,6 @@
 #include "../../include/minishell.h"
 
 char	*get_matching_files(char *pattern);
-char	*get_var_str(char *str, t_shell *shell);
 char	*remove_surrounding_singleq(char *str, int *changed);
 char	*remove_surrounding_doubleq(char *str, int *changed);
 
@@ -91,12 +90,12 @@ char	*remove_surrounding_quotes(char *str)
 			break ;
 		str = remove_surrounding_singleq(str, &changed);
 	}
-	remove_closing_quotes(&str);
+	if (!changed)
+		remove_closing_quotes(&str);
 	return (str);
 }
 
-// TODO: figure out how when to remove quotes and when not
-void	replace_variable(char **value, char **args, t_shell *shell)
+void	replace_variable(char **value, char **args)
 {
 	int		i;
 	char	*matching;
@@ -104,18 +103,15 @@ void	replace_variable(char **value, char **args, t_shell *shell)
 	i = -1;
 	if (!value || (!args && *args == NULL))
 		return ;
-	*value = get_var_str(*value, shell);
-	*value = remove_surrounding_quotes(*value);
-	remove_closing_quotes(value);
+	*value = get_var_str(*value); // TODO: Handle when this fails
 	while (args && args[++i])
 	{
-		args[i] = get_var_str(args[i], shell);
+		args[i] = get_var_str(args[i]); // TODO: Handle when this fails
 		matching = get_matching_files(args[i]);
 		if (matching)
 		{
 			free(args[i]);
 			args[i] = matching;
 		}
-		args[i] = remove_surrounding_quotes(args[i]);
 	}
 }
