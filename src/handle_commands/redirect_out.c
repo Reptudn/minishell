@@ -21,7 +21,10 @@ int	redirect_out_helper(t_shunting_node **chain, t_shell *shell,
 	{
 		fd = open(chain[i]->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
+		{
+			perror("minishell: ");
 			return (CMD_FAILURE);
+		}
 		if (dup2(fd, STDOUT_FILENO) == -1)
 			return (CMD_FAILURE);
 		run_command(shell, chain[0]);
@@ -43,7 +46,10 @@ int	redirect_out(t_shell *shell, t_shunting_node **chain, int redirection_amout)
 	{
 		fd = open(chain[++i]->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
+		{
+			perror("minishell: ");
 			return (CMD_FAILURE);
+		}
 		close(fd);
 	}
 	exit_status = redirect_out_helper(chain, shell, i, redirection_amout);
