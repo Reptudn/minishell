@@ -48,12 +48,31 @@ t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type)
 	return (last);
 }
 
-t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
+t_shunting_node	**fill_chain(t_shunting_node *start, t_shunting_node *last,
+		int *len, int type)
 {
 	t_shunting_node	**chain;
+	int				i;
+
+	chain = (t_shunting_node **)malloc(sizeof(t_shunting_node *) * (*len + 1));
+	if (!chain)
+		return (NULL);
+	chain[*len] = NULL;
+	i = -1;
+	while (start && start != last && start->next
+		&& (*start->type == type || *start->type == NONE))
+	{
+		if (*start->type != type && *start->type == NONE)
+			chain[++i] = start;
+		start = start->next;
+	}
+	return (chain);
+}
+
+t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
+{
 	t_shunting_node	*node;
 	t_shunting_node	*last;
-	int				i;
 
 	if (!start)
 		return (NULL);
@@ -75,34 +94,7 @@ t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 			*len += 1;
 		node = node->next;
 	}
-	chain = (t_shunting_node **)malloc(sizeof(t_shunting_node *) * (*len + 1));
-	if (!chain)
-		return (NULL);
-	chain[*len] = NULL;
-	i = -1;
-	while (start && start != last && start->next
-		&& (*start->type == *type || *start->type == NONE))
-	{
-		if (*start->type != *type && *start->type == NONE)
-			chain[++i] = start;
-		start = start->next;
-	}
-	return (chain);
-}
-
-void	pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain,
-		int len, int type)
-{
-	if (!chain)
-		return ;
-	while (--len > 0)
-	{
-		if (chain[len]->next && *chain[len]->next->type == type)
-			yard_pop(chain[len]->next, yard);
-		if (chain[len]->prev && *chain[len]->prev->type == type)
-			yard_pop(chain[len]->prev, yard);
-		yard_pop(chain[len], yard);
-	}
+	return (fill_chain(start, last, len, *type));
 }
 
 void	execute_cmd_chain_helper(int len, t_shunting_node **chain,

@@ -19,7 +19,6 @@ int	redirect_out_helper(t_shunting_node **chain, t_shell *shell,
 
 	if (chain[i] && i == redirection_amout - 1)
 	{
-		// printf("l");
 		fd = open(chain[i]->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
 			return (CMD_FAILURE);
@@ -47,9 +46,9 @@ int	redirect_out(t_shell *shell, t_shunting_node **chain, int redirection_amout)
 			return (CMD_FAILURE);
 		close(fd);
 	}
+	exit_status = redirect_out_helper(chain, shell, i, redirection_amout);
 	if (dup2(saved_stdout, STDOUT_FILENO) == -1)
 		return (CMD_FAILURE);
-	exit_status = redirect_out_helper(chain, shell, i, redirection_amout);
 	close(saved_stdout);
 	return (exit_status);
 }

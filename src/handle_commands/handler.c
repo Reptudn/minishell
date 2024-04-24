@@ -29,6 +29,8 @@ int		run_delimiter(t_shunting_node **chain, t_shell *shell);
 int		execute_cmd_chain(t_shell *shell, t_shunting_node *start,
 			t_shunting_yard *yard);
 
+int		get_command_count(t_shunting_node *nodes);
+
 int	get_operator_count(t_shunting_node *nodes)
 {
 	int	count;
@@ -40,20 +42,6 @@ int	get_operator_count(t_shunting_node *nodes)
 		if (*nodes->type == NONE || *nodes->type == OPEN_PAREN
 			|| *nodes->type == CLOSE_PAREN)
 			count--;
-		nodes = nodes->next;
-	}
-	return (count);
-}
-
-int	get_command_count(t_shunting_node *nodes)
-{
-	int	count;
-
-	count = 0;
-	while (nodes)
-	{
-		if (*nodes->type == NONE)
-			count++;
 		nodes = nodes->next;
 	}
 	return (count);
@@ -88,26 +76,16 @@ int	execution_manager(t_shunting_node *cmd1, t_shunting_node *cmd2,
 	return (CMD_FAILURE);
 }
 
-int	execute_commands(t_shunting_yard *yard, t_shell *shell)
+int	execute_commands_helper(t_shunting_yard *yard, t_shell *shell,
+		t_shunting_node *cmd1, t_shunting_node *cmd2)
 {
-	t_shunting_node	*operator;
-	t_shunting_node	*cmd1;
-	t_shunting_node	*cmd2;
-	int				operator_count;
 	int				index;
+	int				operator_count;
 	int				exit_status;
+	t_shunting_node	*operator;
 
 	index = -1;
-	if (!yard || !yard->output || !shell)
-		return (CMD_FAILURE);
 	operator_count = get_operator_count(yard->output);
-	if (operator_count == 0)
-		return (run_command(shell, yard->output));
-	if (operator_count != get_command_count(yard->output) - 1)
-	{
-		ft_putstr_fd("minishell: unbalanced tokens!", 2);
-		return (CMD_FAILURE);
-	}
 	while (++index < operator_count && yard->output)
 	{
 		operator = get_operator_with_index(yard->output, 1);
@@ -132,6 +110,30 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 			*cmd2->exit_status = exit_status;
 		}
 	}
+	return (exit_status);
+}
+
+int	execute_commands(t_shunting_yard *yard, t_shell *shell)
+{
+	t_shunting_node	*cmd1;
+	t_shunting_node	*cmd2;
+	int				operator_count;
+	int				exit_status;
+
+	exit_status = CMD_FAILURE;
+	cmd1 = NULL;
+	cmd2 = NULL;
+	if (!yard || !yard->output || !shell)
+		return (CMD_FAILURE);
+	operator_count = get_operator_count(yard->output);
+	if (operator_count == 0)
+		return (run_command(shell, yard->output));
+	if (operator_count != get_command_count(yard->output) - 1)
+	{
+		ft_putstr_fd("minishell: unbalanced tokens!", 2);
+		return (CMD_FAILURE);
+	}
+	execute_commands_helper(yard, shell, cmd1, cmd2);
 	if (yard->output && !yard->output->next && !yard->output->prev)
 		exit_status = run_command(shell, yard->output);
 	else
