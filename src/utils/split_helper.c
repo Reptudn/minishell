@@ -55,10 +55,10 @@ char	**clean_data(char **temp, char **result)
 	j = 0;
 	while (temp[i])
 	{
-		if (!(ft_strlen(temp[i]) == 1 && temp[i][0] == ' '))
+		if (!str_is_equal(temp[i], " ") || !str_is_equal(temp[i], "")) // FIXME: appending spaces or empty strings wich is wrong
 		{
-			result[j] = ft_strdup(temp[i]);
-			j++;
+			result[j++] = ft_strdup(temp[i]);
+			printf("append:\t\t'%s'\n", temp[i]);
 		}
 		free(temp[i]);
 		temp[i] = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/24 16:37:06 by nsabia           ###   ########.fr       */
+/*   Updated: 2024/04/24 15:14:17 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	*append_single_char(char *str, char c)
 
 // TODO: the two expanding the var are almost the same so make them into a sep func
 // echo "$ "
+// echo "$?"
 char	*get_var_str(char *str)
 {
 	t_temps	temp;
@@ -102,7 +103,7 @@ char	*get_var_str(char *str)
 						var_str = ft_strjoin(var_str, ft_itoa(*get_shell()->exit_status));
 						if (!var_str)
 							return (NULL);
-						temp.int_i++;
+						temp.int_i += 2;
 						continue ;
 					}
 					temp.int_k = 1;

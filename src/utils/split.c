@@ -67,7 +67,7 @@ void	process_string(const char *str, char **result, int *res_i)
 		{
 			temp.int_j = 0;
 			quote = str[i];
-			while (str[i++])
+			while (str[i])
 			{
 				if (str[i] == quote && temp.int_j++ > 0)
 				{
@@ -77,6 +77,7 @@ void	process_string(const char *str, char **result, int *res_i)
 				temp.charp_i = append_single_char(temp.charp_i, str[i]);
 				if (!temp.charp_i)
 					return ;
+				i++;
 			}
 		}
 		else
@@ -86,6 +87,7 @@ void	process_string(const char *str, char **result, int *res_i)
 			{
 				result[(*res_i)++] = temp.charp_i;
 				result[(*res_i)++] = ft_substr(&str[i], 0, temp.int_j);
+				i += temp.int_j - 1;
 				temp.charp_i = ft_strdup("");
 				if (!temp.charp_i)
 					return ;
@@ -109,6 +111,9 @@ void	process_string(const char *str, char **result, int *res_i)
 	if (!str_is_equal(temp.charp_i, ""))
 		result[(*res_i)++] = temp.charp_i;
 	result[(*res_i)] = NULL;
+	// for (int i = 0; result[i]; i++)
+	// 	printf("result[%d]: %s\n", i, result[i]);
+	// printf("--------\n");
 	free_split(shell_op);
 }
 
