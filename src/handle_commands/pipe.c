@@ -29,7 +29,7 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 	int				pipe_amount = get_chain_len(chain);
 	int				fd[pipe_amount][2];
 	int				counter;
-	pid_t			pid;
+	pid_t			pid[pipe_amount];
 	int				exit_code;
 	char			*line;
 
@@ -39,10 +39,10 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 	{
 		if (pipe(fd[counter]) == -1)
 			return (NULL);
-		pid = fork();
-		if (pid == -1)
+		pid[counter] = fork();
+		if (pid[counter] == -1)
 			return (NULL);
-		else if (pid == 0)
+		else if (pid[counter] == 0)
 		{
 			if (counter != 0)
 			{
@@ -60,8 +60,14 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 		else
 		{
 			close(fd[counter][1]);
+			if (counter != 0)
+			{
+				close(fd[counter - 1][0]);
+			}
 			if (counter == pipe_amount - 1)
 			{
+				for (int m = 0; m <= pipe_amount; m++)
+					waitpid(pid[m], 0, 0);
 				char buffer[4096];
 				ssize_t bytesRead;
 				line = malloc(1);
@@ -77,78 +83,12 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 			}
 		}
 	}
-	if (line[ft_strlen(line) - 1] == '\n')
-		line[ft_strlen(line) - 1] = '\0';
+	while (--pipe_amount >= 0)
+	{
+		close(fd[pipe_amount][0]);
+		close(fd[pipe_amount][1]);
+	}
 	return (line);
 }
 
 //TODO: cat | cat | ls cat is ongoing cause the fd for ls is not closed!
-// char	*run_pipe(t_shell *shell, t_shunting_node **chain)
-// {
-// 	int		pipe_amount = get_chain_len(chain);
-// 	int		fd[pipe_amount][2];
-// 	int		counter;
-// 	pid_t	pid;
-// 	pid_t	pids[pipe_amount];
-// 	int		exit_code;
-// 	char	*temp;
-// 	int		i;
-
-// 	counter = pipe_amount;
-// 	temp = NULL;
-// 	i = 0;
-// 	while (chain[--counter] && counter >= 0)
-// 	{
-// 		if (pipe(fd[counter]) == -1)
-// 			return (NULL);
-// 		pid = fork();
-// 		if (pid == -1)
-// 			return (NULL);
-// 		else if (pid == 0)
-// 		{
-// 			if (counter != 0)
-// 			{
-// 				close(fd[counter - 1][1]);
-// 				dup2(fd[counter - 1][0], STDIN_FILENO);
-// 			}
-// 			if (counter != pipe_amount)
-// 			{
-// 				close(fd[counter][0]);
-// 				dup2(fd[counter][1], STDOUT_FILENO);
-// 			}
-// 			exit_code = run_command(shell, chain[counter]);
-// 			exit(exit_code);
-// 		}
-// 		else
-// 		{
-// 			pids[counter] = pid;
-// 			(void)pids;
-// 			// int status;
-// 			// waitpid(pids[i], &status, 0);
-// 			if (counter != 0)
-// 				close(fd[counter - 1][0]);
-// 		}
-// 	}
-// 	while (i++ < pipe_amount)
-// 		close(fd[i][1]);
-	
-// 	char buffer[4096];
-// 	ssize_t bytes_read;
-// 	temp = NULL;
-// 	while ((bytes_read = read(fd[pipe_amount - 1][0], buffer, sizeof(buffer) - 1)) > 0)
-// 	{
-// 		buffer[bytes_read] = '\0';
-// 		if (temp != NULL)
-// 		{
-// 			char *old_temp = temp;
-// 			temp = ft_strjoin(temp, buffer);
-// 			free(old_temp);
-// 		}
-// 		else
-// 			temp = strdup(buffer);
-// 	}
-// 	close(fd[pipe_amount - 1][0]);
-// 	if (temp && temp[ft_strlen(temp) - 1] == '\n')
-// 		temp[ft_strlen(temp) - 1] = '\0';
-// 	return (temp);
-// }
