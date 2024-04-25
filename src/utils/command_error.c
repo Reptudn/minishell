@@ -14,25 +14,16 @@
 
 void	print_invalid_cmd(char *command, char *error, int exit)
 {
-	char	**args;
-
-	args = ft_split(command, ' ');
 	ft_putstr_fd((char *)color_red(), 2);
-	if (!args)
-		ft_putstr_fd("minishell: command not found", 2);
-	else
-	{
-		ft_putstr_fd((char *)color_red(), 2);
-		ft_putstr_fd("minishell: command not found: ", 2);
-		ft_putstr_fd((char *)color_magenta(), 2);
-		ft_putstr_fd(args[0], 2);
-		ft_putstr_fd((char *)color_red(), 2);
-	}
-	ft_putstr_fd(" | error: ", 2);
+	ft_putstr_fd((char *)color_red(), 2);
+	ft_putstr_fd("minishell: command not found: `", 2);
+	ft_putstr_fd((char *)color_magenta(), 2);
+	ft_putstr_fd(command, 2);
+	ft_putstr_fd((char *)color_red(), 2);
+	ft_putstr_fd("` | error: ", 2);
 	ft_putstr_fd(error, 2);
 	ft_putstr_fd(" | exit: ", 2);
 	ft_putnbr_fd(exit, 2);
 	ft_putstr_fd((char *)color_reset(), 2);
 	ft_putstr_fd("\n", 2);
-	free_split(args);
 }

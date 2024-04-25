@@ -12,6 +12,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)input.c \
 			$(SRCDIR)setup.c \
 			$(SRCDIR)cheese.c \
+			$(SRCDIR)fancy/prompt.c \
 			$(SRCDIR)utils/split.c \
 			$(SRCDIR)utils/split_helper.c \
 			$(SRCDIR)utils/command_error.c \
@@ -83,7 +84,7 @@ $(OBJDIR)%.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
 $(NAME): $(OBJS) libft ft_printf get_next_line
-	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/get_next_line/get_next_line.a ./lib/ft_printf/libftprintf.a $(HEADERS) -lreadline -o $(NAME) && printf "\n\nCompilation finished!\n"
+	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/get_next_line/get_next_line.a ./lib/ft_printf/libftprintf.a $(HEADERS) -lreadline -lncurses -ltinfo -ltermcap -o $(NAME) && printf "\n\nCompilation finished!\n"
 
 clean:
 	@make -C ./lib/libft clean

@@ -12,6 +12,8 @@
 
 #include "../include/minishell.h"
 
+void	print_path(void);
+
 void	shunting_yard_destroy(t_shunting_yard *yard)
 {
 	t_shunting_node	*node;
@@ -44,6 +46,7 @@ char	*get_input(char *prompt)
 	char	*line;
 	char	*tmp;
 
+	print_path();
 	if (isatty(fileno(stdin)))
 		line = readline(prompt);
 	else
