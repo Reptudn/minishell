@@ -97,6 +97,23 @@ t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 	return (fill_chain(start, last, len, *type));
 }
 
+char	**chain_out_to_arg_nl(char *output)
+{
+	char	**out;
+
+	if (!output)
+		return (NULL);
+	out = malloc(2 * sizeof(char));
+	if (!out)
+	{
+		free(output);
+		return (NULL);
+	}
+	out[1] = NULL;
+	out[0] = output;
+	return (out);
+}
+
 char	**chain_out_to_arg(char *output)
 {
 	char	**out;
@@ -138,7 +155,7 @@ void	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 	else if (type == REDIRECT_OUT_APPEND)
 		run_append(shell, chain, len);
 	else if (type == REDIRECT_IN_DELIMITER)
-		chain[0]->args = chain_out_to_arg(run_delimiter(chain, shell));
+		chain[0]->args = chain_out_to_arg_nl(run_delimiter(chain, shell));
 }
 
 int	execute_cmd_chain(t_shell *shell, t_shunting_node *start,

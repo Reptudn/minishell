@@ -74,6 +74,8 @@ char	**ft_split_shell(const char *str)
 
 	res_i = 0;
 	k = -1;
+	if (!str)
+		return (NULL);
 	temp = (char **)malloc((strlen(str) + 1) * sizeof(char *));
 	process_string(str, temp, &res_i);
 	temp[res_i] = NULL;

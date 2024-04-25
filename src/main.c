@@ -81,6 +81,6 @@ int	main(int argc, char **argv, char **envp)
 	return (*shell->exit_status);
 }
 
-// TODO: the command /bin/echo -n test1		test2 prits the two tabs instead fo seperating them into two arguments
+
 // TODO: when running anything with pipes make the parent process ignore SIGINT and SIGQUIT and after the child process is done, reset the signal handlers
 // XXX: When saving commands inside a export variable they have to be executed when just calling the variable

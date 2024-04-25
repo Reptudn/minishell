@@ -75,6 +75,8 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	t_shunting_yard	*yard;
 	t_shunting_node	*node;
 
+	if (!tokens)
+		return (NULL);
 	yard = shunting_yard_create(tokens);
 	if (!yard)
 		return (NULL);
@@ -88,5 +90,6 @@ t_shunting_yard	*shunting_yard(char **tokens)
 	while (yard->stack)
 		stack_to_output_end(yard);
 	// print_all_stacks(yard);
+	free_split(tokens);
 	return (yard);
 }

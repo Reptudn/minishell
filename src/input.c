@@ -71,7 +71,6 @@ int	command_loop(t_shell *shell)
 	int				status;
 	char			*line;
 	t_shunting_yard	*yard;
-	char			**split;
 
 	line = get_input(prompt_hello());
 	status = 0;
@@ -80,27 +79,12 @@ int	command_loop(t_shell *shell)
 		if (ft_strlen(line) == 0)
 		{
 			free(line);
-			line = get_input(prompt_failure());
+			line = get_input(prompt_success());
 			if (!line)
 				break ;
 			continue ;
 		}
-		line = is_valid_input(line);
-		if (!line)
-		{
-			line = get_input(prompt_failure());
-			status = CMD_FAILURE;
-			continue ;
-		}
-		split = ft_split_shell(line);
-		if (!split)
-		{
-			free(line);
-			line = get_input(prompt_failure());
-			status = CMD_FAILURE;
-			continue ;
-		}
-		yard = shunting_yard(split);
+		yard = shunting_yard(ft_split_shell(is_valid_input(line)));
 		if (!yard)
 		{
 			free(line);
@@ -108,7 +92,6 @@ int	command_loop(t_shell *shell)
 			status = CMD_FAILURE;
 			continue ;
 		}
-		free_split(split);
 		status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
 		free(line);
