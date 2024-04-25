@@ -84,7 +84,7 @@ $(OBJDIR)%.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
 $(NAME): $(OBJS) libft ft_printf get_next_line
-	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/get_next_line/get_next_line.a ./lib/ft_printf/libftprintf.a $(HEADERS) -lreadline -lncurses -ltinfo -ltermcap -o $(NAME) && printf "\n\nCompilation finished!\n"
+	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/get_next_line/get_next_line.a ./lib/ft_printf/libftprintf.a $(HEADERS) -lreadline -lncurses	 -ltermcap -o $(NAME) && printf "\n\nCompilation finished!\n"
 
 clean:
 	@make -C ./lib/libft clean

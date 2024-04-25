@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 06:28:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/25 06:52:11 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/25 09:40:10 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,26 @@
 
 void	print_path(void)
 {
-	int		original_pos;
-	int		col;
-	char	*move_cursor;
-	int		position;
-	char	term_buffer[2048];
-	char	*term_type = getenv("TERM");
-	t_shell	*shell;
+	t_prompt	prompt;
+	t_shell		*shell;
+	t_env_var	*path;
 
 	if (!isatty(fileno(stdin)))
 		return ;
-
-	if (tgetent(term_buffer, term_type) != 1)
-	{
-		printf("not in db\n");
+	prompt.term_type = env_get_by_name(get_shell()->env_vars, "TERM");
+	if (tgetent(prompt.term_buffer, prompt.term_type) != 1)
 		return ;
-	}
-
+	path = env_get_by_name(get_shell()->env_vars, "PWD");
 	shell = get_shell();
-	col = tgetnum("co");
-	original_pos = tgetnum("cc");
-	position = col - strlen(shell->path) - 1;
-	move_cursor = tgoto(tgetstr("ch", NULL), 0, position);
-	tputs(move_cursor, 1, putchar);
+	prompt.col = tgetnum("co");
+	prompt.original_pos = tgetnum("cc");
+	prompt.position = prompt.col - ft_strlen(path);
+	prompt.move_cursor = tgoto(tgetstr("ch", NULL), 0, prompt.position);
+	tputs(prompt.move_cursor, 1, putchar);
 	tputs((char *)color_green(), 1, putchar);
-	tputs(shell->path, 1, putchar);
+	if (path)
+		tputs(path->value, 1, putchar);
 	tputs((char *)color_reset(), 1, putchar);
-	tputs(" ", 1, putchar);
-	move_cursor = tgoto(tgetstr("ch", NULL), 0, original_pos);
-	tputs(move_cursor, 1, putchar);
-	original_pos--;
+	prompt.move_cursor = tgoto(tgetstr("ch", NULL), 0, prompt.original_pos);
+	tputs(prompt.move_cursor, 1, putchar);
 }

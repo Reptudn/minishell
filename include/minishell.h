@@ -109,6 +109,15 @@ typedef struct s_temps
 	t_env_var	*env_var2;
 }	t_temps;
 
+typedef struct s_prompt
+{
+	int		original_pos;
+	int		col;
+	char	*move_cursor;
+	int		position;
+	char	term_buffer[2048];
+	char	*term_type;
+}	t_prompt;
 
 t_shell			*get_shell(void);
 int				*get_run(void);
