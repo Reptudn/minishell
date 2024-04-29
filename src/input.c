@@ -46,9 +46,6 @@ char	*get_input(char *prompt, bool is_prompt)
 	char	*line;
 	char	*tmp;
 
-	(void)is_prompt;
-	// if (is_prompt)
-	// 	print_path();
 	if (isatty(fileno(stdin)))
 		line = readline(prompt);
 	else
@@ -61,7 +58,7 @@ char	*get_input(char *prompt, bool is_prompt)
 			free(line);
 		line = tmp;
 	}
-	if (line && ft_strlen(line) > 0)
+	if (is_prompt && line && ft_strlen(line) > 0)
 		add_history(line);
 	if (!line)
 		return (NULL);
