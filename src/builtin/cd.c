@@ -70,7 +70,8 @@ int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 		return (1);
 	if (str_is_equal(cmd->args[0], getcwd(NULL, 0)))
 		return (CMD_SUCCESS);
-	if (!cmd->args[0])
+	if (!cmd->args[0] || ((cmd->args)[0] != 0
+		&& str_is_equal(cmd->args[0], "~")))
 	{
 		tmp = env_get_by_name(shell->env_vars, "HOME");
 		if (!tmp)
@@ -93,9 +94,10 @@ int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 		return (set_pwd(shell, old_path));
 	old_path = getcwd(NULL, 0);
 	if (!new_path || chdir(new_path) == -1)
+	{
 		echo_err(new_path);
-	if (!new_path || chdir(new_path) == -1)
-		return (0);
+		return (CMD_FAILURE);
+	}
 	if (str_is_equal(cmd->args[0], "-"))
 		printf("~%s\n", new_path);
 	return (set_pwd(shell, old_path));

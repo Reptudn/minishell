@@ -17,6 +17,8 @@ void	env_destroy(t_env_var *env);
 char	**get_env(void);
 void	print_start_logo(void);
 
+// TODO: add following env vars if not given
+// PWD
 int	setup_environment(t_shell *shell, char **envp)
 {
 	if (!envp || !*envp)
