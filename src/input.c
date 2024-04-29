@@ -46,9 +46,9 @@ char	*get_input(char *prompt, bool is_prompt)
 	char	*line;
 	char	*tmp;
 
-	// (void)is_prompt
-	if (is_prompt)
-		print_path();
+	(void)is_prompt;
+	// if (is_prompt)
+	// 	print_path();
 	if (isatty(fileno(stdin)))
 		line = readline(prompt);
 	else

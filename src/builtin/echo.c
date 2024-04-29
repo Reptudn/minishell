@@ -12,8 +12,6 @@
 
 #include "../../include/minishell.h"
 
-// TODO: check if this is correct even if we have somthing like echo "hello world""
-
 char	*remove_surrounding_singleq(char *str, int *changed)
 {
 	if (!str || !*str
@@ -62,23 +60,31 @@ char	*remove_surrounding_doubleq(char *str, int *changed)
 	return (str);
 }
 
-bool	is_new_line(char *str)
+bool	is_valid_flag(char *str)
 {
-	int	i;
-
-	if (!str)
-		return (false);
 	if (str[0] != '-')
 		return (false);
-	i = 0;
-	while (str[++i])
+	str++;
+	while (*str == 'n')
+		str++;
+	return (ft_isspace(*str) || *str == '\0');
+}
+
+char	*get_first(char *str)
+{
+	while (*str)
 	{
-		if (i > 1 && ft_isspace(str[i]))
-			return (true);
-		if (str[i] != 'n')
-			return (false);
+		if (is_valid_flag(str))
+		{
+			while (*str != ' ' && *str != '\0')
+				str++;
+			while (ft_isspace(*str))
+				str++;
+		}
+		else
+			return (str);
 	}
-	return (true);
+	return (str);
 }
 
 char	*get_first(char *str)
@@ -109,23 +115,35 @@ int	ft_echo(t_shunting_node *cmd)
 {
 	int		i;
 	int		nl;
-	int		start;
+	int		c;
 
 	i = -1;
 	nl = 1;
 	if (!cmd)
 		return (CMD_FAILURE);
-	while (cmd->args && is_new_line(cmd->args[++i]))
+	while (cmd->args && cmd->args[++i]
+		&& is_valid_flag(cmd->args[i]))
 		nl = 0;
-	i--;
-	start = i;
-	while (cmd->args && cmd->args[i])
+	i -= 2;
+	if (i < -1)
+		i = -1;
+	c = i;
+	while (cmd->args && cmd->args[++i])
 	{
-		if (i == start)
-			printf("%s", get_first(cmd->args[i]));
+		if (c == i - 1)
+		{
+			if (*(cmd->args[i]) == 0)
+				printf(" ");
+			else if (*get_first(cmd->args[i]) == 0)
+				continue ;
+			else
+				printf("%s", get_first(cmd->args[i]));
+		}
+		else if (*(cmd->args[i]) == '\0')
+			printf(" ");
 		else
 			printf("%s", cmd->args[i]);
-		if (cmd->args[i + 1])
+		if (*(cmd->args[i]) != '\0' && cmd->args[i + 1])
 			printf(" ");
 		i++;
 	}
