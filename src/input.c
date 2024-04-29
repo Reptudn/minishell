@@ -41,12 +41,13 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 	free(yard);
 }
 
-char	*get_input(char *prompt)
+char	*get_input(char *prompt, bool is_prompt)
 {
 	char	*line;
 	char	*tmp;
 
-	print_path();
+	if (is_prompt)
+		print_path();
 	if (isatty(fileno(stdin)))
 		line = readline(prompt);
 	else
@@ -72,14 +73,14 @@ int	command_loop(t_shell *shell)
 	char			*line;
 	t_shunting_yard	*yard;
 
-	line = get_input(prompt_hello());
+	line = get_input(prompt_hello(), true);
 	status = 0;
 	while (*get_run() && line)
 	{
 		if (ft_strlen(line) == 0)
 		{
 			free(line);
-			line = get_input(prompt_success());
+			line = get_input(prompt_success(), true);
 			if (!line)
 				break ;
 			continue ;
@@ -88,7 +89,7 @@ int	command_loop(t_shell *shell)
 		if (!yard)
 		{
 			free(line);
-			line = get_input(prompt_failure());
+			line = get_input(prompt_failure(), true);
 			status = CMD_FAILURE;
 			continue ;
 		}
@@ -99,9 +100,9 @@ int	command_loop(t_shell *shell)
 		if (!*get_run())
 			break ;
 		if (status == CMD_FAILURE || status == CMD_NOT_FOUND || status == 2)
-			line = get_input(prompt_failure());
+			line = get_input(prompt_failure(), true);
 		else
-			line = get_input(prompt_success());
+			line = get_input(prompt_success(), true);
 	}
 	clear_history();
 	if (line)

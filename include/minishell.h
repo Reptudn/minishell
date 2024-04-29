@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "colors.h"
+# include "fancy.h"
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
 # include "../lib/get_next_line/get_next_line.h"
@@ -121,7 +122,7 @@ typedef struct s_prompt
 
 t_shell			*get_shell(void);
 int				*get_run(void);
-char			*get_input(char *prompt);
+char			*get_input(char *prompt, bool is_prompt);
 
 // command handling
 int				run_command(t_shell *shell, t_shunting_node *cmd);

@@ -13,6 +13,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)setup.c \
 			$(SRCDIR)cheese.c \
 			$(SRCDIR)fancy/prompt.c \
+			$(SRCDIR)fancy/cursor_utils.c \
 			$(SRCDIR)utils/split.c \
 			$(SRCDIR)utils/split_helper.c \
 			$(SRCDIR)utils/command_error.c \

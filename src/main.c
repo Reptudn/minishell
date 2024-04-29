@@ -17,12 +17,19 @@ void	env_destroy(t_env_var *env);
 char	**get_env(void);
 void	print_start_logo(void);
 
+// TODO: add following env vars if not given
+// PWD
 int	setup_environment(t_shell *shell, char **envp)
 {
+	if (!envp || !*envp)
+	{
+		handle_shell_depth(shell);
+		return (CMD_SUCCESS);
+	}
 	shell->env_vars = env_make_vars(envp);
 	if (!shell->env_vars)
 	{
-		ft_putstr_fd("Error: environment\n", STDERR_FILENO);
+		ft_putstr_fd("Error: environment variables\n", STDERR_FILENO);
 		return (CMD_FAILURE);
 	}
 	handle_shell_depth(shell);

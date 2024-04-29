@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/25 10:25:43 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/25 12:31:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 
 	while (1)
 	{
-		temp = get_input("heredoc> ");
+		temp = get_input("heredoc> ", false);
 		if (!temp)
 			return (CMD_FAILURE);
 		temp = get_var_str(temp);
