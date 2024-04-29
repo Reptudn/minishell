@@ -98,7 +98,7 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 		return (CMD_FAILURE);
 	replace_variable(&(cmd->value), cmd->args);
 	status = run_builtin_command(shell, cmd);
-	if (is_invlid_builtin(cmd->value))
+	if (is_invlid_builtin(cmd->value) || str_is_equal(cmd->value, ""))
 	{
 		print_invalid_cmd(cmd->value, "FAILURE", CMD_NOT_FOUND);
 		status = CMD_NOT_FOUND;
