@@ -35,8 +35,6 @@ int	set_pwd(t_shell *shell, char *old_path)
 	tmp = env_get_by_name(shell->env_vars, "PWD");
 	if (tmp)
 	{
-		// if (tmp->value)
-		// 	free(tmp->value);
 		tmp->value = ft_strdup(getcwd(NULL, 0));
 		return (CMD_SUCCESS);
 	}

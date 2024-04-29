@@ -46,6 +46,7 @@ char	*get_input(char *prompt, bool is_prompt)
 	char	*line;
 	char	*tmp;
 
+	// (void)is_prompt
 	if (is_prompt)
 		print_path();
 	if (isatty(fileno(stdin)))
@@ -97,7 +98,7 @@ int	command_loop(t_shell *shell)
 		shunting_yard_destroy(yard);
 		free(line);
 		line = NULL;
-		if (!*get_run())
+		if (!(*get_run()))
 			break ;
 		if (status != CMD_SUCCESS)
 			line = get_input(prompt_failure(), true);

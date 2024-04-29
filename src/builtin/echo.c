@@ -72,32 +72,62 @@ bool	is_new_line(char *str)
 		return (false);
 	i = 0;
 	while (str[++i])
+	{
+		if (i > 1 && ft_isspace(str[i]))
+			return (true);
 		if (str[i] != 'n')
 			return (false);
+	}
 	return (true);
+}
+
+char	*get_first(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (NULL);
+	if (str[0] != '-')
+		return (str);
+	i = 0;
+	while (str[++i])
+	{
+		while (ft_isspace(str[i]))
+			i++;
+		while (ft_strncmp(&str[i], "n", 1) == 0 || ft_strncmp(&str[i], "-", 1) == 0)
+			i++;
+		if (ft_isspace(str[i]))
+			continue ;
+		return (&str[i]);
+	}
+	if (str[i] != 'n')
+		return (str);
+	return (str);
 }
 
 int	ft_echo(t_shunting_node *cmd)
 {
 	int		i;
 	int		nl;
+	int		start;
 
 	i = -1;
 	nl = 1;
 	if (!cmd)
 		return (CMD_FAILURE);
-	while (cmd->args
-		&& is_new_line(cmd->args[++i]))
+	while (cmd->args && is_new_line(cmd->args[++i]))
 		nl = 0;
 	i--;
-	while (cmd->args && cmd->args[++i])
+	start = i;
+	while (cmd->args && cmd->args[i])
 	{
-		if (cmd->args[i][0] == '\0')
-			printf(" ");
+		if (i == start)
+			printf("%s", get_first(cmd->args[i]));
 		else
 			printf("%s", cmd->args[i]);
 		if (cmd->args[i + 1])
 			printf(" ");
+		i++;
 	}
 	if (nl)
 		printf("\n");

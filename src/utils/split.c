@@ -96,7 +96,7 @@ void	process_string(const char *str, char **result, int *res_i)
 			}
 			else
 			{
-				if (str[i] == ' ')
+				if (ft_isspace(str[i]))
 				{
 					if (!str_is_equal(temp.charp_i, "")
 						|| !str_is_equal(temp.charp_i, " "))
