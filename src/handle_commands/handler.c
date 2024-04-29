@@ -103,6 +103,7 @@ int	execute_commands_helper(t_shunting_yard *yard, t_shell *shell,
 		{
 			exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
 			yard_pop(operator, yard);
+			operator = NULL;
 			yard_pop(cmd1, yard);
 			cmd2->value = ft_strdup("echo");
 			cmd2->args = ft_split("-n", ' ');

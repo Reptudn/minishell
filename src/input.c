@@ -99,7 +99,7 @@ int	command_loop(t_shell *shell)
 		line = NULL;
 		if (!*get_run())
 			break ;
-		if (status == CMD_FAILURE || status == CMD_NOT_FOUND || status == 2)
+		if (status != CMD_SUCCESS)
 			line = get_input(prompt_failure(), true);
 		else
 			line = get_input(prompt_success(), true);

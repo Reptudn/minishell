@@ -95,6 +95,7 @@ char	*remove_surrounding_quotes(char *str)
 	return (str);
 }
 
+// TODO: when something fails return false
 void	replace_variable(char **value, char **args)
 {
 	int		i;
@@ -109,7 +110,9 @@ void	replace_variable(char **value, char **args)
 		*value = ft_strdup("");
 	}
 	else
-		*value = get_var_str(*value); // TODO: Handle when this fails
+		*value = get_var_str(*value);
+	if (!*value)
+		return ;
 	while (args && args[++i])
 	{
 		if (str_is_equal(args[i], "''") || str_is_equal(args[i], "\"\""))
@@ -118,7 +121,9 @@ void	replace_variable(char **value, char **args)
 			args[i] = ft_strdup("");
 			continue ;
 		}
-		args[i] = get_var_str(args[i]); // TODO: Handle when this fails
+		args[i] = get_var_str(args[i]);
+		if (!args[i])
+			return ;
 		matching = get_matching_files(args[i]);
 		if (matching)
 		{

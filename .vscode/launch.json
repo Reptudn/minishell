@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Minishell: Debug Session",
+      "name": "Minishell: Debug Session (LINUX)",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/minishell",
@@ -23,25 +23,25 @@
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {
-      "name": "Minishell: Pipe Test outside pipe into minishell",
+      "name": "Minishell: Debug Session (MAC)",
       "type": "cppdbg",
       "request": "launch",
-      "program": "/bin/sh",
-      "args": ["-c", "echo 'echo hi' | ${workspaceFolder}/minishell"],
+      "program": "${workspaceFolder}/minishell",
+      "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
       "externalConsole": false,
-      "MIMode": "gdb",
+      "MIMode": "lldb",
       "setupCommands": [
         {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
+          "description": "Enable pretty-printing for lldb",
+          "text": "command script import /path/to/lldb/pretty_printers.py",
           "ignoreFailures": true
         }
       ],
-      "preLaunchTask": "sudo minishell prelaunch",
-      "miDebuggerPath": "/usr/bin/gdb"
+      "preLaunchTask": "minishell prelaunch",
+      "miDebuggerPath": "/usr/bin/lldb"
     },
     {
       "name": "C/C++ Runner: Debug Session",
