@@ -128,7 +128,7 @@ void	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 
 	i = -1;
 	while (++i < len && chain[i])
-		replace_variable(&(chain[i]->value), chain[i]->args);
+		replace_variable(&(chain[i]->value), &chain[i]->args);
 	if (type == PIPE)
 		chain[0]->args = chain_out_to_arg(run_pipe(shell, chain));
 	else if (type == REDIRECT_IN)

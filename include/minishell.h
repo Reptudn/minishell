@@ -131,6 +131,7 @@ void			print_cmd_chain(t_shunting_node **chain);
 int				execute_commands(t_shunting_yard *yard, t_shell *shell);
 void			pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain,
 					int len, int type);
+void			print_shunting_node(t_shunting_node *node, int a);
 
 // old
 int				command_loop(t_shell *shell);
@@ -198,7 +199,7 @@ char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
 void			signal_handler(int signum);
 
 // var utils
-void			replace_variable(char **value, char **args);
+void			replace_variable(char **value, char ***args);
 char			*get_var_str(char *str);
 
 #endif

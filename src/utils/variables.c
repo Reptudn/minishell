@@ -96,13 +96,13 @@ char	*remove_surrounding_quotes(char *str)
 }
 
 // TODO: when something fails return false
-void	replace_variable(char **value, char **args)
+void	replace_variable(char **value, char ***args)
 {
 	int		i;
 	char	*matching;
 
 	i = -1;
-	if (!value || (!args && *args == NULL))
+	if (!args || !value || (!*args && **args == NULL))
 		return ;
 	if (str_is_equal(*value, "''") || str_is_equal(*value, "\"\""))
 	{
@@ -111,24 +111,27 @@ void	replace_variable(char **value, char **args)
 	}
 	else
 		*value = get_var_str(*value);
-	if (!*value)
-		return ;
-	while (args && args[++i])
+	while (*args && (*args)[++i])
 	{
-		if (str_is_equal(args[i], "''") || str_is_equal(args[i], "\"\""))
+		if (str_is_equal((*args)[i], "''") || str_is_equal((*args)[i], "\"\""))
 		{
-			free(args[i]);
-			args[i] = ft_strdup("");
+			free(*args[i]);
+			*args[i] = ft_strdup("");
 			continue ;
 		}
-		args[i] = get_var_str(args[i]);
-		if (!args[i])
+		(*args)[i] = get_var_str((*args)[i]);
+		if (!(*args)[i])
 			return ;
-		matching = get_matching_files(args[i]);
+		matching = get_matching_files((*args)[i]);
 		if (matching)
 		{
-			free(args[i]);
-			args[i] = matching;
+			free((*args)[i]);
+			*args[i] = matching;
 		}
+	}
+	if (!*value)
+	{
+		*value = ft_strdup((*args)[0]);
+		*args = doublestrdup((*args) + 1);
 	}
 }

@@ -65,6 +65,8 @@ bool	is_invlid_builtin(char *cmd)
 	bool	changed;
 	char	curr;
 
+	if (!cmd)
+		return (false);
 	lower = ft_strdup(cmd);
 	if (!lower)
 		return (false);
@@ -96,7 +98,7 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 
 	if (!cmd || !shell)
 		return (CMD_FAILURE);
-	replace_variable(&(cmd->value), cmd->args);
+	replace_variable(&(cmd->value), &cmd->args);
 	status = run_builtin_command(shell, cmd);
 	if (is_invlid_builtin(cmd->value) || str_is_equal(cmd->value, ""))
 	{
