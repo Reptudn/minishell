@@ -60,7 +60,6 @@ char	*append_single_char(char *str, char c)
 			return (NULL);
 		out[len] = c;
 		out[len + 1] = '\0';
-		// free(str);
 	}
 	return (out);
 }
