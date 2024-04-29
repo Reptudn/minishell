@@ -12,8 +12,6 @@
 
 #include "../../include/minishell.h"
 
-// TODO: check if this is correct even if we have somthing like echo "hello world""
-
 char	*remove_surrounding_singleq(char *str, int *changed)
 {
 	if (!str || !*str
@@ -60,23 +58,6 @@ char	*remove_surrounding_doubleq(char *str, int *changed)
 	if (changed)
 		*changed = 1;
 	return (str);
-}
-
-bool	is_new_line(char *str)
-{
-	int	i;
-
-	if (!str)
-		return (false);
-	if (str[0] != '-')
-		return (false);
-	i = 0;
-	while (str[++i])
-	{
-		if (str[i] != 'n')
-			return (false);
-	}
-	return (true);
 }
 
 bool	is_valid_flag(char *str)
@@ -127,15 +108,18 @@ int	ft_echo(t_shunting_node *cmd)
 	{
 		if (c == i - 1)
 		{
-			if (cmd->args[i][0] != 0)
+			if (*(cmd->args[i]) == 0)
+				printf(" ");
+			else if (*get_first(cmd->args[i]) == 0)
+				continue ;
+			else
 				printf("%s", get_first(cmd->args[i]));
-			continue ;
 		}
-		else if (cmd->args[i][0] == '\0')
+		else if (*(cmd->args[i]) == '\0')
 			printf(" ");
 		else
 			printf("%s", cmd->args[i]);
-		if (cmd->args[i][0] != '\0' && cmd->args[i + 1])
+		if (*(cmd->args[i]) != '\0' && cmd->args[i + 1])
 			printf(" ");
 	}
 	if (nl)

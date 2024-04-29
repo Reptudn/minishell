@@ -115,8 +115,8 @@ void	replace_variable(char **value, char ***args)
 	{
 		if (str_is_equal((*args)[i], "''") || str_is_equal((*args)[i], "\"\""))
 		{
-			free(*args[i]);
-			*args[i] = ft_strdup("");
+			free((*args)[i]);
+			(*args)[i] = ft_strdup("");
 			continue ;
 		}
 		(*args)[i] = get_var_str((*args)[i]);
