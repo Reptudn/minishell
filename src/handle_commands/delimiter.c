@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/25 09:43:11 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/04/25 10:25:43 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 		free(heredoc);
 		heredoc = ft_strjoin(new_heredoc, "\n");
 		free(new_heredoc);
-		write(pipefd[1], temp, strlen(temp));
+		if (temp)
+			write(pipefd[1], temp, strlen(temp));
 		write(pipefd[1], "\n", 1);
 		free(temp);
 	}
@@ -44,8 +45,6 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 	return (CMD_SUCCESS);
 }
 
-// FIXME: segv when pressing enter on first line when line is empty
-// FIXME: stuck in ur mom when typing the delimiter right in the first heredoc line
 // FIXME: control + c jsut prits a new heredoc line instead of exiting the heredoc
 // FIXME: control + d is supposed to show an error
 
@@ -87,6 +86,8 @@ char	*run_delimiter(t_shunting_node **chain, t_shell *shell)
 	}
 	waitpid(pid, &status, 0);
 	close(pipefd[1]);
+	close(pipefd[0]);
+	close(pipefd_back[1]);
 	read(pipefd_back[0], buffer, 999999);
-	return (ft_strtrim(buffer, "\n"));
+	return (buffer);
 }
