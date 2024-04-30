@@ -50,7 +50,7 @@
 		// "forwardPorts": [],
 
 		// Use 'postCreateCommand' to run commands after the container is created.
-		"postCreateCommand": "chmod +x /workspace/.devcontainer/init.sh && /workspace/.devcontainer/init.sh"
+		"postCreateCommand": "chmod +x /workspaces/minishell/.devcontainer/init.sh && /workspaces/minishell/.devcontainer/init.sh"
 
 		// Configure tool-specific properties.
 		// "customizations": {},
