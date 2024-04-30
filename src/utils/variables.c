@@ -99,7 +99,7 @@ char	*remove_surrounding_quotes(char *str)
 void	replace_variable(char **value, char ***args)
 {
 	int		i;
-	char	*matching;
+	// char	*matching;
 
 	i = -1;
 	if (!args || !value || (!*args && **args == NULL))
@@ -122,12 +122,12 @@ void	replace_variable(char **value, char ***args)
 		(*args)[i] = get_var_str((*args)[i]);
 		if (!(*args)[i])
 			return ;
-		matching = get_matching_files((*args)[i]);
-		if (matching)
-		{
-			free((*args)[i]);
-			*args[i] = matching;
-		}
+		// matching = get_matching_files((*args)[i]);
+		// if (matching)
+		// {
+		// 	free((*args)[i]);
+		// 	*args[i] = matching;
+		// }
 	}
 	if (!*value)
 	{

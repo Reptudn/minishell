@@ -15,42 +15,6 @@
 
 char		*append_single_char(char *str, char c);
 
-char	*create_split_string(const char *str, int start, int len)
-{
-	char	*result;
-
-	result = (char *)malloc((len + 1) * sizeof(char));
-	ft_strncpy(result, &str[start], len);
-	result[len] = '\0';
-	return (result);
-}
-
-char	*create_operator_string(const char *str, int len)
-{
-	char	*result;
-
-	result = malloc((len + 1) * sizeof(char));
-	ft_strncpy(result, &str[0], len);
-	result[len] = '\0';
-	return (result);
-}
-
-void	update_indices(int *i, int *start, int len, int op_len)
-{
-	if (op_len > 0)
-	{
-		*i += op_len;
-		*start = *i;
-	}
-	else if (len > 0)
-	{
-		(*i)++;
-		*start = *i;
-	}
-	else
-		(*i)++;
-}
-
 void	process_string(const char *str, char **result, int *res_i)
 {
 	t_temps	temp;
@@ -96,7 +60,7 @@ void	process_string(const char *str, char **result, int *res_i)
 			}
 			else
 			{
-				if (str[i] == ' ')
+				if (ft_isspace(str[i]))
 				{
 					if (!str_is_equal(temp.charp_i, "")
 						|| !str_is_equal(temp.charp_i, " "))

@@ -120,86 +120,84 @@ typedef struct s_prompt
 	char	*term_type;
 }	t_prompt;
 
-t_shell			*get_shell(void);
-int				*get_run(void);
-char			*get_input(char *prompt, bool is_prompt);
+t_shell	*get_shell(void);
+int		*get_run(void);
+char	*get_input(char *prompt, bool is_prompt);
 
 // command handling
-int				run_command(t_shell *shell, t_shunting_node *cmd);
-int				run_path_command(t_shell *shell, t_shunting_node *cmd);
-void			print_cmd_chain(t_shunting_node **chain);
-int				execute_commands(t_shunting_yard *yard, t_shell *shell);
-void			pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain,
-					int len, int type);
-void			print_shunting_node(t_shunting_node *node, int a);
+int		run_command(t_shell *shell, t_shunting_node *cmd);
+int		run_path_command(t_shell *shell, t_shunting_node *cmd);
+void	print_cmd_chain(t_shunting_node **chain);
+int		execute_commands(t_shunting_yard *yard, t_shell *shell);
+void	pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain,
+			int len, int type);
+void	print_shunting_node(t_shunting_node *node, int a);
 
 // old
-int				command_loop(t_shell *shell);
-int				command_handler(t_shell *shell, char *line);
+int		command_loop(t_shell *shell);
+int		command_handler(t_shell *shell, char *line);
 
 // Parsing
-char			*ft_strncpy(char *dest, const char *src, size_t n);
-int				is_shell_op(char *str, char *shell_op[], int size);
 t_shunting_yard	*shunting_yard_create(char	**tokens);
 t_shunting_yard	*shunting_yard(char **tokens);
+char			*ft_strncpy(char *dest, const char *src, size_t n);
+int				is_shell_op(char *str, char *shell_op[], int size);
 void			print_all_stacks(t_shunting_yard *yard);
 
 // builtins
-int				ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path);
-int				pwd(void);
-int				ft_export(t_shell *shell, t_shunting_node *cmd);
-int				ft_unset(t_shunting_node *cmd, t_shell *shell);
-int				ft_env(t_shell *shell);
-int				ft_exit(t_shell *shell, t_shunting_node *cmd);
-int				ft_echo(t_shunting_node *cmd);
+int		ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path);
+int		pwd(void);
+int		ft_export(t_shell *shell, t_shunting_node *cmd);
+int		ft_unset(t_shunting_node *cmd, t_shell *shell);
+int		ft_env(t_shell *shell);
+int		ft_exit(t_shell *shell, t_shunting_node *cmd);
+int		ft_echo(t_shunting_node *cmd);
 
 // exec env commands
-int				run_env_command(t_shell *shell, t_shunting_node *cmd);
-void			env_pop(t_env_var *vars, t_env_var *pop);
-void			env_push(t_env_var *vars, t_env_var *new_var);
-char			**env_to_envp(t_env_var *var);
-char			**env_get_path(t_env_var *vars);
-t_env_var		*env_get_by_name(t_env_var *vars, char *name);
-t_env_var		*env_create_var(char *name, char *value, bool is_envp);
-t_env_var		*env_make_vars(char **envp);
-bool			arg_is_numerical(char *arg);
+int		run_env_command(t_shell *shell, t_shunting_node *cmd);
+void	env_pop(t_env_var *vars, t_env_var *pop);
+void	env_push(t_env_var *vars, t_env_var *new_var);
+char	**env_to_envp(t_env_var *var);
+char	**env_get_path(t_env_var *vars);
+t_env_var	*env_get_by_name(t_env_var *vars, char *name);
+t_env_var	*env_create_var(char *name, char *value, bool is_envp);
+t_env_var	*env_make_vars(char **envp);
+bool	arg_is_numerical(char *arg);
 
 //our commands
-int				display_history(void);
-int				ft_clear(void);
+int		display_history(void);
+int		ft_clear(void);
 
 //utils
-void			print_invalid_cmd(char *command, char *error, int status);
-char			**ft_split_shell(const char *str);
-void			process_string(const char *str, char **result, int *res_i);
-void			double_quotes(const char *str, int i, int *start, char **result, int *res_i);
-char			*create_split_string(const char *str, int start, int len);
-char			**fill_shell_op(void);
-void			*free_split(char **split);
-char			**clean_quotes(char **tmp);
-void			free_node(t_shunting_node *node);
-int				is_operator(char *str);
-void			*make_cmds(char *line, t_shell *shell, int i);
-void			free_cmds_helper(t_env_var *cmds);
-char			**clean_data(char **temp, char **result);
-int				str_is_equal(char *str1, char *str2);
-char			*is_valid_input(char *line);
-char			**doublestrdup(char **str);
-char			*get_matching_files(char *pattern);
-char			**split_first_occ(char *str, char c);
-int				get_quote_cout(char *str, char quote);
+void	print_invalid_cmd(char *command, char *error, int status);
+char	**ft_split_shell(const char *str);
+void	process_string(const char *str, char **result, int *res_i);
+char	**fill_shell_op(void);
+void	*free_split(char **split);
+char	**clean_quotes(char **tmp);
+void	free_node(t_shunting_node *node);
+int		is_operator(char *str);
+void	*make_cmds(char *line, t_shell *shell, int i);
+void	free_cmds_helper(t_env_var *cmds);
+char	**clean_data(char **temp, char **result);
+int		str_is_equal(char *str1, char *str2);
+char	*is_valid_input(char *line);
+char	**doublestrdup(char **str);
+char	*get_matching_files(char *pattern);
+char	**split_first_occ(char *str, char c);
+int		get_quote_cout(char *str, char quote);
 
 // pipes
-int				run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
-								t_shell *shell, int in_fd);
-char			**make_env_args(char *cmd, char **args);
-char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
+int		run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
+			t_shell *shell, int in_fd);
+char	**make_env_args(char *cmd, char **args);
+char	*get_env_path_to_cmd(t_shell *shell, char *cmd);
 
 //signals
-void			signal_handler(int signum);
+void	signal_handler(int signum);
 
 // var utils
-void			replace_variable(char **value, char ***args);
-char			*get_var_str(char *str);
+void	replace_variable(char **value, char ***args);
+char	*get_var_str(char *str);
 
 #endif
