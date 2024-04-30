@@ -131,8 +131,9 @@ void	replace_variable(char **value, char ***args)
 	}
 	if (!*value)
 	{
-		if ((*args)[0])
-			*value = ft_strdup((*args)[0]);
-		*args = doublestrdup((*args) + 1);
+		// if ((*args)[0])
+		// 	*value = ft_strdup((*args)[0]);
+		// *args = doublestrdup((*args) + 1);
+		*value = ft_strdup("");
 	}
 }
