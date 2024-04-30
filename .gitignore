@@ -7,8 +7,8 @@
 minishell
 minishell.dSYM
 *.py
-minishell_tester/
-*.sh
+# minishell_tester/
+# *.sh
 .idea/
 
 
@@ -21,7 +21,7 @@ minishell_tester/
 !.vscode/tasks.json
 
 # Tester
-minishell_tester/
+# minishell_tester/
 bla_test/
 tmp_err_bash
 tmp_err_minishell
@@ -31,5 +31,5 @@ tmp_redir_out
 tmp_redir_out_file1
 
 # No ignore 42_minishell_tester folder
-!42_minishell_tester
+!42_minishell_tester/**.*
 !.devcontainer/**.*
