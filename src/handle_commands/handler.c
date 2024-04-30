@@ -18,8 +18,6 @@ int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 char	*run_pipe(t_shell *shell, t_shunting_node **chain, int counter,
 			int pipe_amount, char *str);
-int		redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2,
-			t_shell *shell);
 int		redirect_out(t_shell *shell, t_shunting_node *cmd,
 			t_shunting_node *cmd2, int in_fd);
 int		run_append(t_shell *shell, t_shunting_node *cmd1,
@@ -99,7 +97,8 @@ int	execute_commands_helper(t_shunting_yard *yard, t_shell *shell,
 		cmd1 = cmd2->prev;
 		if (!cmd1)
 			return (CMD_FAILURE);
-		if (execute_cmd_chain(shell, cmd1, yard) == -1)
+		exit_status = execute_cmd_chain(shell, cmd1, yard);
+		if (exit_status == -1)
 		{
 			exit_status = execution_manager(cmd1, cmd2, *operator->type, shell);
 			yard_pop(operator, yard);
@@ -119,9 +118,10 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 	t_shunting_node	*cmd1;
 	t_shunting_node	*cmd2;
 	int				operator_count;
-	int				exit_status;
+	// int				exit_status;
+	int				exit_code;
 
-	exit_status = CMD_FAILURE;
+	// exit_status = CMD_FAILURE;
 	cmd1 = NULL;
 	cmd2 = NULL;
 	if (!yard || !yard->output || !shell)
@@ -134,10 +134,12 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 		ft_putstr_fd("minishell: unbalanced tokens\n", 2);
 		return (CMD_FAILURE);
 	}
-	execute_commands_helper(yard, shell, cmd1, cmd2);
-	if (yard->output && !yard->output->next && !yard->output->prev)
-		exit_status = run_command(shell, yard->output);
+	exit_code = execute_commands_helper(yard, shell, cmd1, cmd2);
+	if (exit_code != 0)
+		*shell->exit_status = exit_code;
+	else if (yard->output && !yard->output->next && !yard->output->prev)
+		run_command(shell, yard->output);
 	else
 		printf("Last command error\n");
-	return (exit_status);
+	return (exit_code);
 }

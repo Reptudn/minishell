@@ -121,24 +121,27 @@ char	**chain_out_to_arg(char *output)
 	return (out);
 }
 
-void	execute_cmd_chain_helper(int len, t_shunting_node **chain,
+int	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 		t_shell *shell, int type)
 {
 	int	i;
+	int	exit_code;
 
 	i = -1;
+	exit_code = 0;
 	while (++i < len && chain[i])
 		replace_variable(&(chain[i]->value), &chain[i]->args);
 	if (type == PIPE)
 		chain[0]->args = chain_out_to_arg(run_pipe(shell, chain));
 	else if (type == REDIRECT_IN)
-		redirect_in(chain[0], chain[1], shell);
+		exit_code = redirect_in(chain[0], chain[1], shell);
 	else if (type == REDIRECT_OUT)
-		redirect_out(shell, chain, len);
+		exit_code = redirect_out(shell, chain, len);
 	else if (type == REDIRECT_OUT_APPEND)
-		run_append(shell, chain, len);
+		exit_code = run_append(shell, chain, len);
 	else if (type == REDIRECT_IN_DELIMITER)
 		chain[0]->args = chain_out_to_arg(run_delimiter(chain, shell));
+	return (exit_code);
 }
 
 int	execute_cmd_chain(t_shell *shell, t_shunting_node *start,
@@ -147,11 +150,12 @@ int	execute_cmd_chain(t_shell *shell, t_shunting_node *start,
 	t_shunting_node	**chain;
 	int				len;
 	int				type;
+	int				exit_code;
 
 	chain = get_cmd_chain(start, &len, &type);
 	if (!chain)
 		return (-1);
-	execute_cmd_chain_helper(len, chain, shell, type);
+	exit_code = execute_cmd_chain_helper(len, chain, shell, type);
 	if (type == REDIRECT_IN || type == REDIRECT_OUT
 		|| type == REDIRECT_OUT_APPEND)
 		chain[0]->args = ft_split("-n  ", ' ');
@@ -161,5 +165,7 @@ int	execute_cmd_chain(t_shell *shell, t_shunting_node *start,
 	chain[0]->update = 0;
 	pop_cmd_chain(yard, chain, len, type);
 	free(chain);
+	if (exit_code != 0)
+		return (exit_code);
 	return (CMD_SUCCESS);
 }

@@ -21,7 +21,7 @@ int	redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell)
 	fd = open(cmd2->value, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("minishell: ");
+		perror("minishell");
 		return (CMD_FAILURE);
 	}
 	if (dup2(fd, 0) == -1)
@@ -32,5 +32,5 @@ int	redirect_in(t_shunting_node *cmd, t_shunting_node *cmd2, t_shell *shell)
 	run_command(shell, cmd);
 	dup2(saved_stdin, 0);
 	close(fd);
-	return (CMD_SUCCESS);
+	return (CMD_FAILURE);
 }
