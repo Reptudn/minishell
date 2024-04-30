@@ -50,7 +50,7 @@
 		// "forwardPorts": [],
 
 		// Use 'postCreateCommand' to run commands after the container is created.
-		"postCreateCommand": "bash -c '$(curl -fsSL https://raw.githubusercontent.com/zstenger93/42_minishell_tester/master/install.sh)' && echo 'Container created. Happy coding!'"
+		"postCreateCommand": "chmod +x /workspace/.devcontainer/init.sh && /workspace/.devcontainer/init.sh"
 
 		// Configure tool-specific properties.
 		// "customizations": {},

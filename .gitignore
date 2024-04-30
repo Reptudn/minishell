@@ -29,3 +29,6 @@ tmp_out_bash
 tmp_out_minishell
 tmp_redir_out
 tmp_redir_out_file1
+
+# No ignore 42_minishell_tester folder
+!42_minishell_tester/**.*

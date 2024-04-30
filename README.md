@@ -9,3 +9,7 @@ The objective of this project is for you to create a simple shell.
 # Tester
 - https://github.com/zstenger93/42_minishell_tester
 - run this command when wanting to use the tester: `bash -c "$(curl -fsSL https://raw.githubusercontent.com/zstenger93/42_minishell_tester/master/install.sh)"` 
+
+# Bashversion
+42 = bash3.2
+Docker Container = bash5.1
