@@ -59,15 +59,15 @@ int	ft_exit(t_shell *shell, t_shunting_node *cmd)
 	if (get_str_arr_len(cmd->args) > 1)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 1);
-		*shell->exit_status = CMD_FAILURE;
-		return (CMD_FAILURE);
+		*shell->exit_status = 2;
+		return (2);
 	}
 	if (!arg_is_numerical(cmd->args[0]))
 	{
 		if (cmd->args[0])
 			error_exit(shell, cmd);
-		*shell->exit_status = CMD_FAILURE;
-		return (CMD_FAILURE);
+		*shell->exit_status = 2;
+		return (2);
 	}
 	while(*cmd->args[0] == '0')
 		cmd->args[0]++;
