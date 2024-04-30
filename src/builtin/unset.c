@@ -19,11 +19,12 @@ int	ft_unset(t_shunting_node *cmd, t_shell *shell)
 	if (!cmd->args[0])
 	{
 		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
-		return (CMD_FAILURE);
+		*shell->exit_status = 0;
+		return (CMD_SUCCESS);
 	}
 	found = env_get_by_name(shell->env_vars, cmd->args[0]);
 	if (!found)
-		return (CMD_FAILURE);
+		return (CMD_SUCCESS);
 	if (str_is_equal(cmd->args[0], "SHLVL"))
 	{
 		free(found->value);
@@ -33,3 +34,6 @@ int	ft_unset(t_shunting_node *cmd, t_shell *shell)
 		env_pop(shell->env_vars, found);
 	return (CMD_SUCCESS);
 }
+
+//610
+//2293
