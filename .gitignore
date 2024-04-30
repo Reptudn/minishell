@@ -8,7 +8,7 @@ minishell
 minishell.dSYM
 *.py
 # minishell_tester/
-# *.sh
+*.sh
 .idea/
 
 
@@ -31,5 +31,5 @@ tmp_redir_out
 tmp_redir_out_file1
 
 # No ignore 42_minishell_tester folder
-!42_minishell_tester/**.*
-!.devcontainer/**.*
+!42_minishell_tester/**/*.*
+!.devcontainer/**/**.*
