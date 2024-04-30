@@ -68,7 +68,6 @@ char	*read_and_append(char *line, char missing)
 		return (0);
 	line = new_line;
 	free(tmp);
-
 	return (line);
 }
 

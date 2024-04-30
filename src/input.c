@@ -71,7 +71,7 @@ int	command_loop(t_shell *shell)
 	char			*line;
 	t_shunting_yard	*yard;
 
-	line = get_input(prompt_hello(), true);
+	line = ft_strdup(get_input(prompt_hello(), true));
 	status = 0;
 	while (*get_run() && line)
 	{
