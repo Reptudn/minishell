@@ -79,7 +79,7 @@ void	process_string(const char *str, char **result, int *res_i)
 	if (!str_is_equal(temp.charp_i, "")|| !str_is_equal(temp.charp_i, " "))
 		result[(*res_i)++] = temp.charp_i;
 	result[(*res_i)] = NULL;
-	free_split(shell_op);
+	// free_split(shell_op); //TODO: causes leaks if outcommented and causes aborts if not outcommented
 }
 
 char	**clean_quotes(char **tmp)
