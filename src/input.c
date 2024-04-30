@@ -92,6 +92,7 @@ int	command_loop(t_shell *shell)
 			continue ;
 		}
 		status = execute_commands(yard, shell);
+		*shell->exit_status = status;
 		shunting_yard_destroy(yard);
 		free(line);
 		line = NULL;
@@ -107,3 +108,4 @@ int	command_loop(t_shell *shell)
 		free(line);
 	return (*shell->exit_status);
 }
+
