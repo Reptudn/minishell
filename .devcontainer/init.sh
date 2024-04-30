@@ -1,1 +1,1 @@
-echo "alias mstest='bash /workspaces/minishell/42_minishell_tester/tester.sh'" >> ~/.bashrc && bash && echo 'Container created. Happy coding!'
+echo "alias mstest='bash /workspaces/minishell/test/tester.sh'" >> ~/.bashrc && bash && echo 'Container created. Happy coding!'
