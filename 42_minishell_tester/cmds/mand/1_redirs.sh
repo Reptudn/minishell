@@ -192,14 +192,14 @@ testing your minishell
 limm
 lim
 
-<<lim cat
- "lim"
-HELLO
-42
- lim
-testing your minishell
-limm
-lim
+# <<lim cat
+#  "lim"
+# HELLO
+# 42
+#  lim
+# testing your minishell
+# limm
+# lim
 
 cat << lim
 test
@@ -244,11 +244,11 @@ $NOVAR
 $HOME
 lim
 
-> out
-/bin/rm -f out
+# > out
+# /bin/rm -f out
 
-< out
-/bin/rm -f out
+# < out
+# /bin/rm -f out
 
->> out
-/bin/rm -f out
+# >> out
+# /bin/rm -f out

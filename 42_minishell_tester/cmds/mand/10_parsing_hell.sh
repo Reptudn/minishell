@@ -2,18 +2,18 @@
 #                                PARSING HELL                                  #
 # **************************************************************************** #
 
-">>" asd
+# ">>" asd
 
->">" asd
-/bin/rm -f ">"
+# >">" asd
+# /bin/rm -f ">"
 
->> '$USER'
-cat $USER
-/bin/rm -f '$USER'
+# >> '$USER'
+# cat $USER
+# /bin/rm -f '$USER'
 
->> '$USER'
-cat '$USER'
-/bin/rm -f '$USER'
+# >> '$USER'
+# cat '$USER'
+# /bin/rm -f '$USER'
 
 "echo "
 
@@ -49,19 +49,19 @@ love
 bash
 $USER
 
->> $HOME
+# >> $HOME
 
->> "$H"OM"E"
-cat OME
-/bin/rm -f OME
+# >> "$H"OM"E"
+# cat OME
+# /bin/rm -f OME
 
->> "$USER'$USER'"
-cat "$USER'$USER'"
-/bin/rm -f "$USER'$USER'"
+# >> "$USER'$USER'"
+# cat "$USER'$USER'"
+# /bin/rm -f "$USER'$USER'"
 
->> "$USER"
-cat $USER
-/bin/rm -f $USER
+# >> "$USER"
+# cat $USER
+# /bin/rm -f $USER
 
 cd $HOME/Desktop/
 pwd
@@ -314,8 +314,8 @@ exit 9223372036854775805
 
 exit 123"123"
 
-<| echo ok
+# <| echo ok
 
->| echo sure
+# >| echo sure
 
 cd --

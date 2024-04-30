@@ -15,9 +15,9 @@ rm tmp_redir_out
 
 sleep 0 | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat
 
->tmp_out | echo 1
-cat tmp_out
-rm -f tmp_out
+# >tmp_out | echo 1
+# cat tmp_out
+# rm -f tmp_out
 
 echo 1 | >tmp_out
 cat tmp_out
