@@ -55,7 +55,6 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 				dup2(fd[counter][1], STDOUT_FILENO);
 			}
 			exit_code = run_command(shell, chain[counter]);
-			printf("exit code: %d\n", exit_code);
 			exit(exit_code);
 		}
 		else

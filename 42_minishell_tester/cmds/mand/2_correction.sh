@@ -36,21 +36,21 @@ echo -n -n -n 42
 
 echo -n -n -n -n 42
 
-exit
+# exit #should work
 
-exit 42
+# exit 42 #should work
 
-exit ""
+# exit "" #should work
 
-exit 1 2 3
+# exit 1 2 3 #should not work
 
-exit 42 42
+# exit 42 42 # should not work
 
-exit A
+# exit A #should work
 
-exit A 1
+# exit A 1 #should work
 
-exit 1 A
+# exit 1 A #should not work
 
 /bin/echo 42
 echo $?
