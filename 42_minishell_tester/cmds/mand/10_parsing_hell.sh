@@ -300,15 +300,15 @@ echo '$'$'$'$'$'$'$'
 
 echo "$"$'$'$"$"$"$"$'$'
 
-echo $/ $/ 
+# echo $/ $/ 
 
-echo $U/SER
+# echo $U/SER
 
-echo "$/ $/"
+# echo "$/ $/"
 
-echo $/"$/"
+# echo $/"$/"
 
-echo '$/'
+# echo '$/'
 
 exit 9223372036854775805
 

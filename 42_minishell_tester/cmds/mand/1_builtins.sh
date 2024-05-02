@@ -349,6 +349,7 @@ cd ../libft ojid iowjiojwoid joijd owjoid jwojd
 pwd
 
 ### ENV ###
+# XXX: ENV
 env | grep DOESNT_EXIST
 
 env | grep HOME
