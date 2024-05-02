@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/24 18:51:52 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/02 12:19:19 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,15 @@ char	*get_var_str(char *str)
 					temp.charp_i + 1);
 			if (temp.env_var1)
 			{
-				var_str = ft_strjoin(var_str, temp.env_var1->value);
+				char *lol;
+				if (ft_isspace(temp.env_var1->value[0]) && ft_isspace(temp.env_var1->value[ft_strlen(temp.env_var1->value) - 1]))
+				{
+					lol = ft_strtrim(temp.env_var1->value, " \t\n\r\v\f");
+					lol = ft_strjoin(" ", ft_strjoin(lol, " "));
+					var_str = ft_strjoin(var_str, lol);
+				}
+				else
+					var_str = ft_strjoin(var_str, temp.env_var1->value);
 				if (!var_str)
 					return (NULL);
 			}
