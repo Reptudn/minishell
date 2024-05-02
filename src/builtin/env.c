@@ -12,11 +12,11 @@
 
 #include "../../include/minishell.h"
 
-int	ft_env(t_shell *shell)
+int	print_env_vars(void)
 {
 	t_env_var	*env;
 
-	env = shell->env_vars;
+	env = get_shell()->env_vars;
 	while (env)
 	{
 		if (env->value)
@@ -24,4 +24,14 @@ int	ft_env(t_shell *shell)
 		env = env->next;
 	}
 	return (CMD_SUCCESS);
+}
+
+int	ft_env(t_shunting_node *cmd)
+{
+	t_env_var	*env_env;
+	int			i;
+
+	if (!cmd)
+		return (CMD_FAILURE);
+	return (print_env_vars());
 }

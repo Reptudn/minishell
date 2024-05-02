@@ -48,8 +48,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/jkauker/Documents/minishell/src/handle_commands",
-      "program": "/Users/jkauker/Documents/minishell/src/handle_commands/build/Debug/outDebug"
+      "cwd": "/Users/jkauker/Documents/minishell/src/builtin",
+      "program": "/Users/jkauker/Documents/minishell/src/builtin/build/Debug/outDebug"
     }
   ]
 }

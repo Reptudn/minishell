@@ -349,6 +349,7 @@ cd ../libft ojid iowjiojwoid joijd owjoid jwojd
 pwd
 
 ### ENV ###
+# XXX: ENV
 env | grep DOESNT_EXIST
 
 env | grep HOME
@@ -357,7 +358,8 @@ env | grep USER
 
 env | wc -l
 
-env what
+# XXX: This is not really needed according to the subject
+# env what
 
 ### PWD ###
 pwd
