@@ -104,7 +104,7 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 	if (str_is_equal(cmd->value, "."))
 	{
 		ft_putstr_fd("minishell: .: filename argument required\n", 2);
-		return (CMD_FAILURE);
+		return (2);
 	}
 	status = run_builtin_command(shell, cmd);
 	if (is_invlid_builtin(cmd->value) || str_is_equal(cmd->value, ""))

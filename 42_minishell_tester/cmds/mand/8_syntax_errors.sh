@@ -30,15 +30,15 @@ cat 42 42
 
 # echo > <
 
-.
+# .
 
-..
+# ..
 
 # echo | |
 
 EechoE
 
-.echo.
+# .echo.
 
 # XXX: Studpid stuff we dont handle
 # >echo>
