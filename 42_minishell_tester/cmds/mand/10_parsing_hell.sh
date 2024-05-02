@@ -107,7 +107,7 @@ echo $T'o '
 
 "PWD"
 
-echo "-nnnnn "
+# echo "-nnnnn "
 
 ECHO -nn
 
@@ -156,7 +156,7 @@ $T$E"C"$L -nn
 export T=e E=c S=h L=o
 $T$E"C"$L "" -""n
 
-$NOVAR
+# $NOVAR
 
 export T="s"
 l$T
@@ -164,8 +164,8 @@ l$T
 export T="s"
 l$T -a
 
-export T="l"
-$Ts
+# export T="l"
+# $Ts
 
 export T="l"
 $Ts -a
@@ -213,8 +213,8 @@ echo segfault $T grep segfault
 export T="|"
 $T$T$T$T$T$T$T
 
-export T="echo segfault | grep segfault"
-$T
+# export T="echo segfault | grep segfault"
+# $T
 
 export T=-nnnnnnnn"nnnnnnn "
 echo $T

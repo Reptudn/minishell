@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/02 10:27:53 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/02 11:13:08 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 	char	*temp;
 	char	*new_heredoc;
 
-	printf("chain[counter]->value: %s\n", chain[counter]->value);
+	// printf("chain[counter]->value: %s\n", chain[counter]->value);
 	while (1)
 	{
 		temp = get_input("heredoc> ", false);
