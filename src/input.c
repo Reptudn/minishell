@@ -59,7 +59,7 @@ char	*get_input(char *prompt, bool is_prompt)
 		line = tmp;
 	}
 	if (is_prompt && line && ft_strlen(line) > 0)
-		add_history(line);
+		add_history(line); // TODO: move this to after the quote completion checking to add everything eve after the quotes have been completed
 	if (!line)
 		return (NULL);
 	return (line);
