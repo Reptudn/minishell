@@ -137,3 +137,5 @@ int	ft_export(t_shell *shell, t_shunting_node *cmd)
 	}
 	return (CMD_SUCCESS);
 }
+
+// XXX: For some reason when doing export X="  AB  " and then doing echo 1$X2 it prints 1  AB  2 instead of 1 AB 2

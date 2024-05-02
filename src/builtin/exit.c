@@ -12,6 +12,29 @@
 
 #include "../../include/minishell.h"
 
+long	ft_atol(const char *str)
+{
+	long long	result;
+	int			sign;
+
+	result = 0;
+	sign = 1;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (ft_isdigit(*str))
+	{
+		result = result * 10 + (*str - '0');
+		str++;
+	}
+	return ((long)(result * sign));
+}
+
 int	get_str_arr_len(char **arr)
 {
 	int	i;
@@ -58,22 +81,28 @@ int	ft_exit(t_shell *shell, t_shunting_node *cmd)
 		return (exit_code);
 	if (get_str_arr_len(cmd->args) > 1)
 	{
+		if (!arg_is_numerical(cmd->args[0]) || ft_strlen(cmd->args[0]) > 20)
+		{
+			if (cmd->args[0])
+				error_exit(shell, cmd);
+			*shell->exit_status = 2;
+			return (2);
+		}
 		ft_putstr_fd("minishell: exit: too many arguments\n", 1);
-		*get_run() = 0;
 		*shell->exit_status = 1;
 		return (1);
 	}
-	if (!arg_is_numerical(cmd->args[0]))
+	else if (!arg_is_numerical(cmd->args[0]) || ft_strlen(cmd->args[0]) > 20)
 	{
 		if (cmd->args[0])
 			error_exit(shell, cmd);
 		*shell->exit_status = 2;
 		return (2);
 	}
-	while (*cmd->args[0] == '0') // TODO: stuff like +2 or -3 is allowed and has to be handled but ++2 or --3 is invalid
+	while (*cmd->args[0] == '0')
 		cmd->args[0]++;
-	exit_code = atol(cmd->args[0]);
-	if (exit_code < 0) // this if should handle it if its negative
+	exit_code = ft_atol(cmd->args[0]);
+	if (exit_code < 0)
 		exit_code = 256 + exit_code;
 	*shell->exit_status = exit_code % 256;
 	return (exit_code % 256);
