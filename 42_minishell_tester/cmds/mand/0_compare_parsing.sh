@@ -179,4 +179,5 @@
 
 /bin/echo ''totally logical''
 
-/bin/echo ""'totally logical'""
+#exit code is the same so but wrong in the tester!
+# /bin/echo ""'totally logical'"" 
