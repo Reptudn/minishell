@@ -50,7 +50,7 @@ void	error_exit(t_shell *shell, t_shunting_node *cmd)
 
 int	ft_exit(t_shell *shell, t_shunting_node *cmd)
 {
-	int	exit_code;
+	long	exit_code;
 
 	exit_code = CMD_SUCCESS;
 	*get_run() = 0;
@@ -59,9 +59,9 @@ int	ft_exit(t_shell *shell, t_shunting_node *cmd)
 	if (get_str_arr_len(cmd->args) > 1)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 1);
-		*get_run() = 1;
-		*shell->exit_status = 2;
-		return (2);
+		*get_run() = 0;
+		*shell->exit_status = 1;
+		return (1);
 	}
 	if (!arg_is_numerical(cmd->args[0]))
 	{
@@ -70,10 +70,10 @@ int	ft_exit(t_shell *shell, t_shunting_node *cmd)
 		*shell->exit_status = 2;
 		return (2);
 	}
-	while (*cmd->args[0] == '0')
+	while (*cmd->args[0] == '0') // TODO: stuff like +2 or -3 is allowed and has to be handled but ++2 or --3 is invalid
 		cmd->args[0]++;
-	exit_code = ft_atoi(cmd->args[0]);
-	if (exit_code < 0)
+	exit_code = atol(cmd->args[0]);
+	if (exit_code < 0) // this if should handle it if its negative
 		exit_code = 256 + exit_code;
 	*shell->exit_status = exit_code % 256;
 	return (exit_code % 256);
