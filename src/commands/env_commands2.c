@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 19:52:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/17 11:53:03 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/02 12:52:21 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,18 @@ int	execute_child_process(char *cmd_path, char **args,
 int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid < 0)
-		return (0);
+		return (-1);
 	else if (pid == 0)
 	{
 		if (execute_child_process(cmd_path, args, command, shell) <= 0)
 			exit(EXIT_FAILURE);
 	}
 	else
-		waitpid(pid, shell->exit_status, 0);
-	return (1);
+		waitpid(pid, &status, 0);
+	*shell->exit_status = WEXITSTATUS(status);
+	return (WEXITSTATUS(status));
 }

@@ -44,7 +44,7 @@ int	run_external_command(t_shell *shell, t_shunting_node *cmd)
 	int	status;
 
 	status = run_env_command(shell, cmd);
-	if (status == CMD_FAILURE)
+	if (status == -1)
 	{
 		status = run_path_command(shell, cmd);
 		if (status == CMD_FAILURE)
@@ -54,6 +54,8 @@ int	run_external_command(t_shell *shell, t_shunting_node *cmd)
 		}
 		else if (status == CMD_IMPROP)
 			print_invalid_cmd(cmd->value, "IMPROP", CMD_IMPROP);
+		else if (status != CMD_SUCCESS)
+			print_invalid_cmd(cmd->value, "FAILURE", CMD_FAILURE);
 	}
 	return (status);
 }
@@ -99,6 +101,11 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 	if (!cmd || !shell)
 		return (CMD_FAILURE);
 	replace_variable(&(cmd->value), &cmd->args);
+	if (str_is_equal(cmd->value, "."))
+	{
+		ft_putstr_fd("minishell: .: filename argument required\n", 2);
+		return (CMD_FAILURE);
+	}
 	status = run_builtin_command(shell, cmd);
 	if (is_invlid_builtin(cmd->value) || str_is_equal(cmd->value, ""))
 	{

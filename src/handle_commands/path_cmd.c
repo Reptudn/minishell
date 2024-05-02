@@ -25,7 +25,5 @@ int	run_path_command(t_shell *shell, t_shunting_node *cmd)
 		printf("minishell: %s: Permission denied\n", cmd->value);
 		return (CMD_IMPROP);
 	}
-	if (execute(cmd->value, cmd->args, cmd->value, shell))
-		return (CMD_SUCCESS);
-	return (CMD_FAILURE);
+	return (execute(cmd->value, cmd->args, cmd->value, shell));
 }

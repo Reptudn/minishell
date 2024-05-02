@@ -61,29 +61,28 @@ char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 	return (NULL);
 }
 
-int	execute_command(t_shell *shell, t_shunting_node *cmd, char *cmd_path)
+int	execute_command(t_shell *shell, t_shunting_node *cmd, char *cmd_path, int *status)
 {
 	int	ran;
 
 	ran = 0;
 	if (access(cmd_path, F_OK) == 0 && access(cmd_path, X_OK) == 0)
 	{
-		if (execute(cmd_path, cmd->args, cmd->value, shell) == 0)
-			return (CMD_FAILURE);
+		*status = execute(cmd_path, cmd->args, cmd->value, shell);
+		if (*status == -1)
+			return (-1);
 		ran = 1;
 	}
 	return (ran);
 }
 
-int	norm_conform_function_to_return_correct_val(int ran, t_shell *shell)
+int	norm_conform_function_to_return_correct_val(int ran, int status)
 {
 	if (ran)
 	{
-		if (*shell->exit_status == 512)
-			return (2);
-		return (CMD_SUCCESS);
+		return (status);
 	}
-	return (CMD_FAILURE);
+	return (-1);
 }
 
 int	run_env_command(t_shell *shell, t_shunting_node *cmd)
@@ -92,22 +91,23 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 	int		i;
 	int		ran;
 	char	**path;
+	int		status;
 
 	i = -1;
 	path = env_get_path(shell->env_vars);
 	if (!path)
-		return (CMD_FAILURE);
+		return (-1);
 	while (path[++i])
 	{
 		cmd_path = create_cmd_path(path[i], cmd->value);
 		if (!cmd_path)
-			return (CMD_FAILURE);
-		ran = execute_command(shell, cmd, cmd_path);
+			return (-1);
+		ran = execute_command(shell, cmd, cmd_path, &status);
 		free(cmd_path);
 		cmd_path = NULL;
 		if (ran)
 			break ;
 	}
 	free_split(path);
-	return (norm_conform_function_to_return_correct_val(ran, shell));
+	return (norm_conform_function_to_return_correct_val(ran, status));
 }

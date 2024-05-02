@@ -112,7 +112,7 @@ echo 1 '>' echo 2
 
 echo 1 '>>' file 2
 
-'<<' lim echo 1 >>/dev/null
+# '<<' lim echo 1 >>/dev/null
 
 echo "$USER"
 

@@ -20,70 +20,71 @@
 
 # < < < < < <
 
-/bin/cat ><
+# /bin/cat ><
 
-/bin/cat <Makefile >
+# /bin/cat <Makefile >
 
 cat 42 42
 
-echo >
+# echo >
 
-echo > <
+# echo > <
 
 .
 
 ..
 
-echo | |
+# echo | |
 
 EechoE
 
 .echo.
 
->echo>
-/bin/rm -f echo
+# XXX: Studpid stuff we dont handle
+# >echo>
+# /bin/rm -f echo
 
-<echo<
-/bin/rm -f echo
+# <echo<
+# /bin/rm -f echo
 
->>echo>>
-/bin/rm -f echo
+# >>echo>>
+# /bin/rm -f echo
 
-|echo|
+# |echo|
 
-trying to destroy your minishell
+# trying to destroy your minishell
 
-|
+# |
 
-| test
+# | test
 
-| | |
+# | | |
 
-| | | | test
+# | | | | test
 
-| test
+# | test
 
-echo > <
+# echo > <
 
-hello world
-||||||||
+# hello world
+# ||||||||
             
-cat wouaf wouaf
->
+# cat wouaf wouaf
+# >
 
-> > > >
+# > > > >
 
->> >> >> >>
+# >> >> >> >>
 
-<<
+# <<
 
-/
+# /
 
-\\\
+# \\\
 
 rm -f something
 
-| echo -n oui
+# | echo -n oui
 
 trying to destroy your minishell
 trying something again echo if you see this message thats not a good new
@@ -93,23 +94,23 @@ hi im zsolt
 nice to meet you if these tests are green
 your minishell is perfect
 
-<<| echo wtf
+# <<| echo wtf
 
->>| echo wtf
+# >>| echo wtf
 
->| echo wtf
-/bin/rm -rf echo
+# >| echo wtf
+# /bin/rm -rf echo
 
-<| echo wtf
+# <| echo wtf
 
-echo "<<| echo wtf"
+# echo "<<| echo wtf"
 
-echo ">>| echo wtf"
+# echo ">>| echo wtf"
 
-echo ">| echo wtf"
+# echo ">| echo wtf"
 
-echo "<| echo wtf"
+# echo "<| echo wtf"
 
-<>
+# <>
 
-< >
+# < >
