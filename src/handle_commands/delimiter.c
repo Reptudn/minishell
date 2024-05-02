@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/29 09:18:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/02 11:13:08 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 	char	*temp;
 	char	*new_heredoc;
 
+	// printf("chain[counter]->value: %s\n", chain[counter]->value);
 	while (1)
 	{
 		temp = get_input("heredoc> ", false);
 		if (!temp)
 			return (CMD_FAILURE);
-		temp = get_var_str(temp);
+		// temp = get_var_str(temp);
 		if (chain[counter] && str_is_equal(temp, (chain[counter])->value))
 			counter++;
 		if (chain[counter] == NULL)
@@ -45,6 +46,36 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 	return (CMD_SUCCESS);
 }
 
+void	clean_quotes_in_chain(t_shunting_node **chain)
+{
+	int		i;
+	int		j;
+	char	*temp;
+	char	*temp2;
+
+	i = 0;
+	j = 0;
+	temp = strdup(chain[1]->value);
+	free(chain[1]->value);
+	temp2 = (char *)malloc(sizeof(char) * (ft_strlen(temp) + 1));
+	if (!temp2)
+		printf("malloc failed\n");
+	while (temp[i])
+	{
+		if (temp[i] == '\'' || temp[i] == '\"')
+		{
+			i++;
+			continue ;
+		}
+		temp2[j] = temp[i];
+		j++;
+		i++;
+	}
+	temp2[j] = '\0';
+	free(temp);
+	chain[1]->value = strdup(temp2);
+}
+
 // FIXME: control + c jsut prits a new heredoc line instead of exiting the heredoc
 // FIXME: control + d is supposed to show an error
 
@@ -57,6 +88,7 @@ int	run_delimiter_helper(int pipefd[2], t_shunting_node **chain)
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
 	counter = 1;
+	clean_quotes_in_chain(chain);
 	exit_status = run_delimiter_helper2(pipefd, chain, heredoc, counter);
 	return (exit_status);
 }

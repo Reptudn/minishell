@@ -101,7 +101,7 @@ fclean: clean
 
 debug: CFLAGS += -g -O0
 debug: fclean $(NAME)
-	./minishell
+# 	./minishell
 
 re: fclean all
 
