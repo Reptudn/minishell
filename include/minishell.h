@@ -149,7 +149,7 @@ int		ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path);
 int		pwd(void);
 int		ft_export(t_shell *shell, t_shunting_node *cmd);
 int		ft_unset(t_shunting_node *cmd, t_shell *shell);
-int		ft_env(t_shunting_node *cmd);
+int		ft_env(void);
 int		ft_exit(t_shell *shell, t_shunting_node *cmd);
 int		ft_echo(t_shunting_node *cmd);
 

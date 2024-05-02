@@ -30,7 +30,7 @@ int	run_builtin_command(t_shell *shell, t_shunting_node *cmd)
 	else if (str_is_equal(cmd->value, "export"))
 		return (ft_export(shell, cmd));
 	else if (str_is_equal(cmd->value, "env"))
-		return (ft_env(shell));
+		return (ft_env());
 	else if (str_is_equal(cmd->value, "unset"))
 		return (ft_unset(cmd, shell));
 	else if (str_is_equal(cmd->value, "cd"))
