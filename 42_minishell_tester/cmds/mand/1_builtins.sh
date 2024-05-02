@@ -358,7 +358,8 @@ env | grep USER
 
 env | wc -l
 
-env what
+# XXX: This is not really needed according to the subject
+# env what
 
 ### PWD ###
 pwd
