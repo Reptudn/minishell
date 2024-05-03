@@ -122,7 +122,7 @@ typedef struct s_prompt
 
 t_shell	*get_shell(void);
 int		*get_run(void);
-char	*get_input(char *prompt, bool is_prompt);
+char	*get_input(char *prompt);
 
 // command handling
 int		run_command(t_shell *shell, t_shunting_node *cmd);
@@ -194,7 +194,10 @@ char	**make_env_args(char *cmd, char **args);
 char	*get_env_path_to_cmd(t_shell *shell, char *cmd);
 
 //signals
-void	signal_handler(int signum);
+void			signal_handler(int signum);
+void			signal_restore_parent(void);
+void			signal_ignore_parent(void);
+sig_atomic_t	*sigint_recv(void);
 
 // var utils
 void	replace_variable(char **value, char ***args);
