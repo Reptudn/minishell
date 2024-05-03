@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 06:28:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/25 12:28:32 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/03 10:00:42 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	print_path(void)
 	prompt.col = tgetnum("co");
 	prompt.original_pos = tgetnum("cc");
 	prompt.position = prompt.col - ft_strlen(path->value);
-	prompt.move_cursor = tgoto(tgetstr("ch", NULL), 0, prompt.position);
+	prompt.move_cursor = tgoto(tgetstr("ch", NULL), 1, prompt.position);
 	tputs(prompt.move_cursor, 1, putchar);
 	tputs((char *)color_green(), 1, putchar);
 	if (path && path->value)
 		tputs(path->value, 1, putchar);
 	tputs((char *)color_reset(), 1, putchar);
-	prompt.move_cursor = tgoto(tgetstr("ch", NULL), 0, prompt.original_pos);
+	prompt.move_cursor = tgoto(tgetstr("ch", NULL), -1, prompt.original_pos);
 	tputs(prompt.move_cursor, 1, putchar);
 }

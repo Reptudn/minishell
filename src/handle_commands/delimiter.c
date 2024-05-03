@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/02 11:13:08 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/03 10:06:09 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,16 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 	char	*temp;
 	char	*new_heredoc;
 
-	// printf("chain[counter]->value: %s\n", chain[counter]->value);
-	while (1)
+	while (42 == 42)
 	{
-		temp = get_input("heredoc> ", false);
-		if (!temp)
+		temp = get_input("heredoc> ");
+		if (!temp && *sigint_recv())
+		{
+			ft_putstr_fd("minishell: syntax error: unexpected end of file\n",
+				2);
+			return (CMD_FAILURE);
+		}
+		else if (!temp && !*sigint_recv())
 			return (CMD_FAILURE);
 		// temp = get_var_str(temp);
 		if (chain[counter] && str_is_equal(temp, (chain[counter])->value))
@@ -89,7 +94,9 @@ int	run_delimiter_helper(int pipefd[2], t_shunting_node **chain)
 	heredoc[0] = '\0';
 	counter = 1;
 	clean_quotes_in_chain(chain);
+	signal_ignore_parent();
 	exit_status = run_delimiter_helper2(pipefd, chain, heredoc, counter);
+	signal_restore_parent();
 	return (exit_status);
 }
 

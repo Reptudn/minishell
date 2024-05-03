@@ -98,5 +98,7 @@ char	*is_valid_input(char *line)
 		if (!line)
 			return (0);
 	}
+	if (line && ft_strlen(line) > 0)
+		add_history(line);
 	return (line);
 }

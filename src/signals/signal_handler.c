@@ -12,6 +12,13 @@
 
 #include "../../include/minishell.h"
 
+sig_atomic_t	*sigint_recv(void)
+{
+	static sig_atomic_t	sigint_recv = 0;
+
+	return (&sigint_recv);
+}
+
 // TODO: i think we peint one nl too much when pressing control + c
 void	signal_handler(int signum)
 {
@@ -20,8 +27,14 @@ void	signal_handler(int signum)
 		*get_run() = 0;
 		return ;
 	}
-	if (signum == SIGINT)
+	else if (signum == SIGINT)
+	{
+		*sigint_recv() = 1;
+		rl_redisplay();
 		printf("\n");
+	}
+	else if (signum == SIGQUIT)
+		return ;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -32,8 +45,9 @@ void	signal_handler(int signum)
 // XXX: This function is being called when goign to a child process
 void	signal_ignore_parent(void)
 {
-	signal(SIGINT, SIG_IGN);
+	// signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
 }
 
 // XXX: This function is being called when going back to the parent process
@@ -41,4 +55,5 @@ void	signal_restore_parent(void)
 {
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
+	signal(SIGTERM, signal_handler);
 }

@@ -13,6 +13,7 @@
 #include "../include/minishell.h"
 
 void	print_path(void);
+int		*is_heredoc(void);
 
 void	shunting_yard_destroy(t_shunting_yard *yard)
 {
@@ -41,7 +42,7 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 	free(yard);
 }
 
-char	*get_input(char *prompt, bool is_prompt)
+char	*get_input(char *prompt)
 {
 	char	*line;
 	char	*tmp;
@@ -58,8 +59,6 @@ char	*get_input(char *prompt, bool is_prompt)
 			free(line);
 		line = tmp;
 	}
-	if (is_prompt && line && ft_strlen(line) > 0)
-		add_history(line); // TODO: move this to after the quote completion checking to add everything eve after the quotes have been completed
 	if (!line)
 		return (NULL);
 	return (line);
@@ -71,14 +70,14 @@ int	command_loop(t_shell *shell)
 	char			*line;
 	t_shunting_yard	*yard;
 
-	line = ft_strdup(get_input(prompt_hello(), true));
+	line = ft_strdup(get_input(prompt_hello()));
 	status = 0;
 	while (*get_run() && line)
 	{
 		if (ft_strlen(line) == 0)
 		{
 			free(line);
-			line = get_input(prompt_success(), true);
+			line = get_input(prompt_success());
 			if (!line)
 				break ;
 			continue ;
@@ -87,7 +86,7 @@ int	command_loop(t_shell *shell)
 		if (!yard)
 		{
 			free(line);
-			line = get_input(prompt_failure(), true);
+			line = get_input(prompt_failure());
 			status = CMD_FAILURE;
 			continue ;
 		}
@@ -99,9 +98,9 @@ int	command_loop(t_shell *shell)
 		if (!*get_run())
 			break ;
 		if (status != CMD_SUCCESS)
-			line = get_input(prompt_failure(), true);
+			line = get_input(prompt_failure());
 		else
-			line = get_input(prompt_success(), true);
+			line = get_input(prompt_success());
 	}
 	clear_history();
 	if (line)
