@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/02 12:19:19 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:48:04 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ char	*get_var_str(char *str)
 	temp.int_i = -1;
 	temp.int_j = 0;
 	var_str = NULL;
+	if (!str)
+		return (NULL);
 	while (str && str[++temp.int_i])
 	{
 		if (str[temp.int_i] == '\'' || str[temp.int_i] == '"')
