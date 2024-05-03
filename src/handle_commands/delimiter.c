@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/03 10:06:09 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/03 13:47:31 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ void	clean_quotes_in_chain(t_shunting_node **chain)
 			i++;
 			continue ;
 		}
-		temp2[j] = temp[i];
-		j++;
-		i++;
+		temp2[j++] = temp[i++];
 	}
 	temp2[j] = '\0';
 	free(temp);
@@ -93,7 +91,7 @@ int	run_delimiter_helper(int pipefd[2], t_shunting_node **chain)
 	heredoc = malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
 	counter = 1;
-	clean_quotes_in_chain(chain);
+	// clean_quotes_in_chain(chain);
 	signal_ignore_parent();
 	exit_status = run_delimiter_helper2(pipefd, chain, heredoc, counter);
 	signal_restore_parent();
