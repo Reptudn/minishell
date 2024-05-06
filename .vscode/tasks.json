@@ -19,7 +19,7 @@
         {
             "type": "shell",
             "label": "sudo minishell prelaunch",
-            "command": "sudo make debug",
+            "command": "sudo make debug && /workspaces/minishell/minishell",
             "options": {
                 "cwd": "${workspaceFolder}"
             },

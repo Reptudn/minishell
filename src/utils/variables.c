@@ -110,18 +110,31 @@ void	replace_variable(char **value, char ***args)
 		*value = ft_strdup("");
 	}
 	else
-		*value = get_var_str(*value);
-	while (*args && (*args)[++i])
 	{
-		if (str_is_equal((*args)[i], "''") || str_is_equal((*args)[i], "\"\""))
+		*value = get_var_str(*value);
+		ft_printf("");
+	}
+	ft_putstr_fd("start var\n", 2);
+	while (*args && (*args)[++i]) // FIXME: segv somewhere in this loop but it doesnt make sense
+	{
+		printf("i: %d\n", i);
+		if (*args) printf("*args is not null\n");
+		else printf("*args is null\n");
+		if ((*args)[i]) printf("(*args)[i] is not null\n");
+		else printf("(*args)[i] is null\n");
+		if (args && *args && (*args)[i] && (str_is_equal((*args)[i], "''") || str_is_equal((*args)[i], "\"\"")))
 		{
 			free((*args)[i]);
 			(*args)[i] = ft_strdup("");
 			continue ;
 		}
-		(*args)[i] = get_var_str((*args)[i]);
-		if (!(*args)[i])
-			return ;
+		if ((*args)[i]) {
+			printf("getting var str\n");
+			(*args)[i] = get_var_str((*args)[i]);
+			printf("after getting var str\n");
+		}
+		if (!((*args)[i]))
+			break ;
 		// matching = get_matching_files((*args)[i]);
 		// if (matching)
 		// {
@@ -129,7 +142,8 @@ void	replace_variable(char **value, char ***args)
 		// 	*args[i] = matching;
 		// }
 	}
-	if (!*value)
+	ft_putstr_fd("end var\n", 2);
+	if (!(*value))
 	{
 		// if ((*args)[0])
 		// 	*value = ft_strdup((*args)[0]);
