@@ -121,7 +121,6 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 	// int				exit_status;
 	int				exit_code;
 
-	print_all_stacks(yard);
 	cmd1 = NULL;
 	cmd2 = NULL;
 	if (!yard || !yard->output || !shell)

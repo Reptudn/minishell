@@ -17,6 +17,9 @@
 // only for output
 void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard)
 {
+	int	i;
+
+	i = -1;
 	if (!pop)
 		return ;
 	if (pop->prev)
@@ -31,6 +34,9 @@ void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard)
 	}
 	if (pop->value)
 		free(pop->value);
+	if (pop->args)
+		while (pop->args[++i])
+			free(pop->args[i]);
 	free(pop->args);
 	free(pop->type);
 	free(pop->priority);

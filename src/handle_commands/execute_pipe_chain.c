@@ -126,13 +126,18 @@ int	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 {
 	int	i;
 	int	exit_code;
+	char	**args;
 
 	i = -1;
 	exit_code = 0;
 	while (++i < len && chain[i] && type != REDIRECT_IN_DELIMITER)
 		replace_variable(&(chain[i]->value), &chain[i]->args);
 	if (type == PIPE)
-		chain[0]->args = chain_out_to_arg(run_pipe(shell, chain));
+	{
+		args = chain_out_to_arg(run_pipe(shell, chain));
+		free_split(chain[0]->args);
+		chain[0]->args = args;
+	}
 	else if (type == REDIRECT_IN)
 		exit_code = redirect_in(chain[0], chain[1], shell);
 	else if (type == REDIRECT_OUT)
@@ -140,7 +145,11 @@ int	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 	else if (type == REDIRECT_OUT_APPEND)
 		exit_code = run_append(shell, chain, len);
 	else if (type == REDIRECT_IN_DELIMITER)
-		chain[0]->args = chain_out_to_arg(run_delimiter(chain, shell));
+	{
+		args = chain_out_to_arg(run_delimiter(chain,shell));
+		free_split(chain[0]->args);
+		chain[0]->args = args;
+	}
 	return (exit_code);
 }
 
@@ -151,6 +160,7 @@ int	execute_cmd_chain(t_shell *shell, t_shunting_node *start,
 	int				len;
 	int				type;
 	int				exit_code;
+	char			**args;
 
 	chain = get_cmd_chain(start, &len, &type);
 	if (!chain)
@@ -158,9 +168,14 @@ int	execute_cmd_chain(t_shell *shell, t_shunting_node *start,
 	exit_code = execute_cmd_chain_helper(len, chain, shell, type);
 	if (type == REDIRECT_IN || type == REDIRECT_OUT
 		|| type == REDIRECT_OUT_APPEND)
-		chain[0]->args = ft_split("-n  ", ' ');
+	{
+		args = ft_split("-n ", ' ');
+		free_split(chain[0]->args);
+		chain[0]->args = args;
+	}
 	if (!(*chain)->args)
 		return (CMD_FAILURE);
+	free(chain[0]->value);
 	chain[0]->value = ft_strdup("echo");
 	chain[0]->update = 0;
 	pop_cmd_chain(yard, chain, len, type);

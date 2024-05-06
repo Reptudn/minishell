@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe_chain_helper.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:49:59 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/24 15:04:23 by nsabia           ###   ########.fr       */
+/*   Updated: 2024/05/06 14:04:12 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
