@@ -100,9 +100,7 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 
 	if (!cmd || !shell)
 		return (CMD_FAILURE);
-	ft_putstr_fd("poggers\n", 2);
 	replace_variable(&(cmd->value), &cmd->args);
-	ft_putstr_fd("poggers2\n", 2);
 	if (str_is_equal(cmd->value, "."))
 	{
 		ft_putstr_fd("minishell: .: filename argument required\n", 2);

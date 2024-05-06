@@ -6,13 +6,13 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 08:11:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/25 13:11:34 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/06 13:21:46 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	handle_shell_depth(t_shell *shell)
+int	handle_shell_depth(t_shell *shell)
 {
 	t_env_var	*depth;
 	char		*new_val;
@@ -20,10 +20,11 @@ void	handle_shell_depth(t_shell *shell)
 	depth = env_get_by_name(shell->env_vars, "SHLVL");
 	if (!depth)
 	{
-		printf("Shell depth value not found\n Creating new one\n");
 		depth = env_create_var("SHLVL", "1", true);
 		if (!depth)
-			printf("Failed to create shell depth value");
+			return (CMD_FAILURE);
+		else if (!shell->env_vars)
+			shell->env_vars = depth;
 		else
 			env_push(shell->env_vars, depth);
 	}
@@ -36,6 +37,7 @@ void	handle_shell_depth(t_shell *shell)
 		free(depth->value);
 		depth->value = new_val;
 	}
+	return (CMD_SUCCESS);
 }
 
 void	welcome_user(void)

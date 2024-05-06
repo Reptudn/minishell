@@ -198,6 +198,7 @@ void			signal_handler(int signum);
 void			signal_restore_parent(void);
 void			signal_ignore_parent(void);
 sig_atomic_t	*sigint_recv(void);
+void			segfault(int signal);
 
 // var utils
 void	replace_variable(char **value, char ***args);
