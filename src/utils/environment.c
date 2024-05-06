@@ -164,6 +164,8 @@ t_env_var	*env_make_vars(char **envp)
 
 	i = -1;
 	first = NULL;
+	if (!(*envp))
+		return (NULL);
 	while (envp[++i])
 	{
 		if (ft_strchr(envp[i], '=') == NULL)
