@@ -103,14 +103,14 @@ char	**chain_out_to_arg(char *output)
 
 	if (!output)
 		return (NULL);
-	out = malloc(3 * sizeof(char));
+	out = malloc(3 * sizeof(char *));
 	if (!out)
 	{
 		free(output);
 		return (NULL);
 	}
 	out[2] = NULL;
-	out[1] = output;
+	out[1] = ft_strdup(output);
 	out[0] = ft_strdup("-n");
 	if (!out[0])
 	{

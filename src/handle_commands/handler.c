@@ -135,16 +135,14 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 		return (2);
 	}
 	exit_code = execute_commands_helper(yard, shell, cmd1, cmd2);
-	ft_putstr_fd("aa\n", 1);
 	if (exit_code != 0)
 		*shell->exit_status = exit_code;
 	else if (yard->output && !yard->output->next && !yard->output->prev)
 	{
+		// print_all_stacks(yard);
 		run_command(shell, yard->output);
-		ft_putstr_fd("bb\n", 1);
 	}
 	else
 		printf("Last command error\n");
-	ft_putstr_fd("cc", 1); // XXX:  maybe one pipe is still open
 	return (exit_code);
 }

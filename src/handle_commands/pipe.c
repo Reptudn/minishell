@@ -35,6 +35,7 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain)
 
 	counter = -1;
 	line = NULL;
+	ft_memset(pid, 0, sizeof(pid));
 	while (chain[++counter] && counter <= pipe_amount)
 	{
 		if (pipe(fd[counter]) == -1)

@@ -87,11 +87,22 @@ char	*get_first(char *str)
 	return (str);
 }
 
+int	args_len(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args && args[i])
+		i++;
+	return (i);
+}
+
 int	ft_echo(t_shunting_node *cmd)
 {
 	int		i;
 	int		nl;
 	int		c;
+	int		len;
 
 	i = -1;
 	nl = 1;
@@ -104,7 +115,8 @@ int	ft_echo(t_shunting_node *cmd)
 	if (i < -1)
 		i = -1;
 	c = i;
-	while (cmd->args && cmd->args[++i])
+	len = args_len(cmd->args);
+	while (cmd->args && cmd->args[++i] && i < len - 1)
 	{
 		if (c == i - 1)
 		{
@@ -119,7 +131,7 @@ int	ft_echo(t_shunting_node *cmd)
 			printf(" ");
 		else
 			printf("%s", cmd->args[i]);
-		if (*(cmd->args[i]) != '\0' && cmd->args[i + 1])
+		if (*(cmd->args[i]) != 0 && i < len - 2)
 			printf(" ");
 	}
 	if (nl)
