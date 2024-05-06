@@ -207,8 +207,7 @@ unset PATH
 echo $PATH
 unset HOME
 echo $HOME
-
-export NEW=42
+\export NEW=42
 env | grep NEW
 unset NEW
 env | grep NEW

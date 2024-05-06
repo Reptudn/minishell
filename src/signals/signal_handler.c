@@ -19,6 +19,14 @@ sig_atomic_t	*sigint_recv(void)
 	return (&sigint_recv);
 }
 
+void	segfault(int signal)
+{
+	(void)signal;
+	ft_putstr_fd("Internal Error occured\nExiting!\n", 2);
+	*get_run() = 0;
+	exit(1);
+}
+
 // TODO: i think we peint one nl too much when pressing control + c
 void	signal_handler(int signum)
 {
@@ -56,4 +64,5 @@ void	signal_restore_parent(void)
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	signal(SIGTERM, signal_handler);
+	signal(SIGSEGV, segfault);
 }

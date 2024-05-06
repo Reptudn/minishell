@@ -116,7 +116,7 @@ int	ft_echo(t_shunting_node *cmd)
 		i = -1;
 	c = i;
 	len = args_len(cmd->args);
-	while (cmd->args && cmd->args[++i] && i < len - 1)
+	while (cmd->args && cmd->args[++i] && i < len)
 	{
 		if (c == i - 1)
 		{
@@ -131,7 +131,7 @@ int	ft_echo(t_shunting_node *cmd)
 			printf(" ");
 		else
 			printf("%s", cmd->args[i]);
-		if (*(cmd->args[i]) != 0 && i < len - 2)
+		if (*(cmd->args[i]) != 0 && i < len - 1)
 			printf(" ");
 	}
 	if (nl)
