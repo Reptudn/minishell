@@ -89,8 +89,10 @@ int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 {
 	t_env_var	*tmp;
 	char		*old_path;
+	char		*curr;
 
 	old_path = getcwd(NULL, 0);
+	curr = getcwd(NULL, 0);
 	if (cmd->args[0] && cmd->args[1])
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
 	if (cmd->args[0] && cmd->args[1])
@@ -119,7 +121,8 @@ int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 	}
 	else
 		old_path = getcwd(NULL, 0);
-	if (str_is_equal(cmd->args[0], "..") && str_is_equal(getcwd(NULL, 0), "/"))
+	free(curr);
+	if (str_is_equal(cmd->args[0], "..") && str_is_equal(curr, "/"))
 		return (set_pwd(shell, old_path));
 	if (!new_path || chdir(new_path) == -1)
 	{
