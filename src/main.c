@@ -131,7 +131,10 @@ int	main(int argc, char **argv, char **envp)
 	run_shell(shell);
 	if (isatty(STDIN_FILENO))
 		printf("exit\n");
-	return (*shell->exit_status);
+	init_status = *shell->exit_status;
+	if (shell->exit_status)
+		free(shell->exit_status);
+	return (init_status);
 }
 
 

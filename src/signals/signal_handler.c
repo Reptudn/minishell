@@ -21,10 +21,14 @@ sig_atomic_t	*sigint_recv(void)
 
 void	segfault(int signal)
 {
+	int	exits;
+
 	(void)signal;
 	ft_putstr_fd("Internal Error occured\nExiting!\n", 2);
 	*get_run() = 0;
-	exit(1);
+	exits = *get_shell()->exit_status;
+	free(get_shell()->exit_status);
+	exit(exits);
 }
 
 // TODO: i think we peint one nl too much when pressing control + c

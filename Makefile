@@ -114,3 +114,6 @@ norm:
 	@cd src && norminette | grep "Error:" | wc -l
 
 norminette: norm
+
+valgrind: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)

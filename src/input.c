@@ -28,9 +28,11 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 	{
 		free(node->value);
 		i = -1;
-		if (node->args && node->args[0])
+		if (node->args)
+		{
 			while (node->args[++i])
 				free(node->args[i]);
+		}
 		free(node->args);
 		free(node->type);
 		free(node->priority);
@@ -70,7 +72,7 @@ int	command_loop(t_shell *shell)
 	char			*line;
 	t_shunting_yard	*yard;
 
-	line = ft_strdup(get_input(prompt_hello()));
+	line = get_input(prompt_hello());
 	status = 0;
 	while (*get_run() && line)
 	{
@@ -95,7 +97,7 @@ int	command_loop(t_shell *shell)
 		shunting_yard_destroy(yard);
 		free(line);
 		line = NULL;
-		if (!*get_run())
+		if (!(*get_run()))
 			break ;
 		if (status != CMD_SUCCESS)
 			line = get_input(prompt_failure());

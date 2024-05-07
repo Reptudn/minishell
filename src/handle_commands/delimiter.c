@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/03 14:32:22 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/07 08:19:20 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 		}
 		else if (!temp && !*sigint_recv())
 			return (CMD_FAILURE);
-		// temp = get_var_str(temp);
 		if (chain[counter] && str_is_equal(temp, (chain[counter])->value))
 			counter++;
 		if (chain[counter] == NULL)
+		{
 			free(temp);
-		if (chain[counter] == NULL)
 			return (CMD_SUCCESS);
+		}
 		new_heredoc = ft_strjoin(heredoc, temp);
 		free(heredoc);
 		heredoc = ft_strjoin(new_heredoc, "\n");

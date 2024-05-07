@@ -32,20 +32,36 @@ int	set_pwd(t_shell *shell, char *old_path)
 {
 	t_env_var	*tmp;
 	t_env_var	*oldpwd;
+	char		*new_path;
 
+	new_path = getcwd(NULL, 0);
+	if (!new_path)
+	{
+		echo_err(NULL);
+		return (CMD_FAILURE);
+	}
 	tmp = env_get_by_name(shell->env_vars, "PWD");
 	if (tmp)
 	{
-		// if (tmp->value)
-		// 	free(tmp->value);
-		tmp->value = ft_strdup(getcwd(NULL, 0));
-		// return (CMD_SUCCESS);
+		if (tmp->value)
+			free(tmp->value);
+		tmp->value = new_path;
+		if (!tmp->value)
+		{
+			free(new_path);
+			free(old_path);
+			return (CMD_FAILURE);
+		}
 	}
 	else
 	{
-		tmp = env_create_var("PWD", ft_strdup(getcwd(NULL, 0)), true);
+		tmp = env_create_var("PWD", new_path, true);
 		if (!tmp)
+		{
+			free(new_path);
+			free(old_path);
 			return (CMD_FAILURE);
+		}
 		env_push(shell->env_vars, tmp);
 	}
 	oldpwd = env_get_by_name(shell->env_vars, "OLDPWD");
@@ -54,9 +70,15 @@ int	set_pwd(t_shell *shell, char *old_path)
 		free(oldpwd->value);
 		oldpwd->value = ft_strdup(old_path);
 		if (!oldpwd->value)
+		{
+			free(new_path);
+			free(old_path);
 			return (CMD_FAILURE);
+		}
 	}
 	oldpwd = env_create_var("OLDPWD", ft_strdup(old_path), true);
+	free(old_path);
+	free(new_path);
 	if (!oldpwd)
 		return (CMD_FAILURE);
 	env_push(shell->env_vars, oldpwd);
