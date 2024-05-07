@@ -113,6 +113,7 @@ int	handle_arg(t_shell *shell, char *arg)
 		append = true;
 	}
 	env = env_get_by_name(shell->env_vars, split[0]);
+	free_split(split);
 	if (env)
 	{
 		replace_existing_val(split, env, append);
