@@ -118,14 +118,15 @@ char	**chain_out_to_arg(char *output)
 		free(out);
 		return (NULL);
 	}
+	free(output);
 	return (out);
 }
 
 int	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 		t_shell *shell, int type)
 {
-	int	i;
-	int	exit_code;
+	int		i;
+	int		exit_code;
 	char	**args;
 
 	i = -1;
