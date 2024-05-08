@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/08 10:14:22 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/08 10:48:52 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	*get_var_str(char *str)
 {
 	t_temps	temp;
 	char	*var_str;
+	char	*exit;
 
 	temp.int_i = -1;
 	temp.int_j = 0;
@@ -101,7 +102,11 @@ char	*get_var_str(char *str)
 				{
 					if (str[temp.int_i + 1] && str[temp.int_i + 1] == '?')
 					{
-						var_str = ft_strjoin(var_str, ft_itoa(*get_shell()->exit_status));
+						exit = ft_itoa(*get_shell()->exit_status);
+						if (!exit)
+							return (NULL);
+						var_str = ft_strjoin(var_str, exit);
+						free(exit);
 						if (!var_str)
 							return (NULL);
 						temp.int_i += 2;
@@ -144,7 +149,11 @@ char	*get_var_str(char *str)
 			}
 			if (str[temp.int_i + 1] && str[temp.int_i + 1] == '?')
 			{
-				var_str = ft_strjoin(var_str, ft_itoa(*get_shell()->exit_status));
+				exit = ft_itoa(*get_shell()->exit_status);
+				if (!exit)
+					return (NULL);
+				var_str = ft_strjoin(var_str, exit);
+				free(exit);
 				if (!var_str)
 					return (NULL);
 				temp.int_i++;

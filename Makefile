@@ -1,6 +1,6 @@
 NAME	:= minishell
 
-CFLAGS	:= -Wextra -Wall -Werror 
+CFLAGS	:= -Wextra -Wall -Werror -Wunused-function
 
 HEADERS	:= -I ./include
 
@@ -25,6 +25,8 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/wildcard.c \
 			$(SRCDIR)utils/variables.c \
 			$(SRCDIR)utils/variables2.c \
+			$(SRCDIR)libft_extended/ft_free.c \
+			$(SRCDIR)libft_extended/ft_strjoin_many.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \
@@ -102,7 +104,6 @@ fclean: clean
 
 debug: CFLAGS += -g -O0
 debug: fclean $(NAME)
-# 	./minishell
 
 re: fclean all
 
@@ -117,4 +118,7 @@ norm:
 norminette: norm
 
 valgrind: all
-	valgrind --leak-check=full ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+
+unused:
+	cppcheck --enable=unusedFunction ./src

@@ -80,6 +80,8 @@ int	execute_commands_helper(t_shunting_yard *yard, t_shell *shell,
 
 	index = -1;
 	operator_count = get_operator_count(yard->output);
+	if (!yard || !yard->output || !shell)
+		return (CMD_FAILURE);
 	while (++index < operator_count && yard->output)
 	{
 		operator = get_operator_with_index(yard->output, 1);

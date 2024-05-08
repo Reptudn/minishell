@@ -24,18 +24,3 @@ void	*free_split(char **split)
 	free (split);
 	return (0);
 }
-
-void	free_cmds_helper(t_env_var *cmds)
-{
-	t_env_var	*tmp;
-
-	while (cmds)
-	{
-		tmp = cmds->next;
-		free(cmds->name);
-		free(cmds->value);
-		free(cmds);
-		cmds = tmp;
-	}
-	cmds = NULL;
-}
