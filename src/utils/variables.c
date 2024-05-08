@@ -16,22 +16,6 @@ char	*get_matching_files(char *pattern);
 char	*remove_surrounding_singleq(char *str, int *changed);
 char	*remove_surrounding_doubleq(char *str, int *changed);
 
-void	handle_exit_status(char **arg, t_shell *shell)
-{
-	char	*a_status;
-	char	*var;
-
-	a_status = ft_itoa(*shell->exit_status);
-	if (!a_status)
-		return ;
-	var = ft_strjoin(a_status, (*arg) + 2);
-	free(a_status);
-	if (!var)
-		return ;
-	free(*arg);
-	*arg = var;
-}
-
 void	handle_env_var(char **arg, t_shell *shell)
 {
 	char		*var;
