@@ -55,6 +55,13 @@
 # define CMD_IMPROP 2
 # define CMD_NOT_FOUND 127
 
+# define GARBAGE_COLLECTOR_SIZE 100
+# define GARBAGE_CREATE 0
+# define GARBAGE_ADD 1
+# define GARBAGE_FREE 2
+
+void	ft_garbage_collector(void *ptr, int action);
+
 char	*prompt_success(void);
 char	*prompt_failure(void);
 char	*prompt_hello(void);
