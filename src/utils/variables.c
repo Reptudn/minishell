@@ -99,7 +99,6 @@ char	*remove_surrounding_quotes(char *str)
 void	replace_variable(char **value, char ***args)
 {
 	int		i;
-	char	*tmp;
 	// char	*matching;
 
 	i = -1;
@@ -112,12 +111,7 @@ void	replace_variable(char **value, char ***args)
 		*value = ft_strdup("");
 	}
 	else
-	{
-		tmp = *value;
 		*value = get_var_str(*value);
-		if (tmp)
-			free(tmp);
-	}
 	while (*args && (*args)[++i])
 	{
 		if (args && *args && (*args)[i] && (str_is_equal((*args)[i], "''")
