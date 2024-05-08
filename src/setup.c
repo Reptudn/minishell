@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 08:11:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/08 10:04:28 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/08 11:17:56 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	handle_shell_depth(t_shell *shell)
 {
 	t_env_var	*depth;
 	char		*new_val;
+	int			lvl;
 
 	depth = env_get_by_name(shell->env_vars, "SHLVL");
 	if (!depth)
@@ -31,7 +32,14 @@ int	handle_shell_depth(t_shell *shell)
 	else
 	{
 		if (arg_is_numerical(depth->value) && ft_atoi(depth->value) > 0)
-			new_val = ft_itoa(ft_atoi(depth->value) + 1);
+		{
+			lvl = ft_atoi(depth->value);
+			if (lvl > 999)
+				lvl = 0;
+			else if (lvl < 0)
+				lvl = -1;
+			new_val = ft_itoa(lvl + 1);
+		}
 		else
 			new_val = ft_strdup("1");
 		free(depth->value);
