@@ -67,7 +67,7 @@ int	replace_existing_val(char **split, t_env_var *env, bool append)
 		env->value = ft_strjoin(env->value, split[1]);
 	else
 		env->value = ft_strdup("");
-	if (append)
+	if (old)
 		free(old);
 	free_split(split);
 	return (CMD_SUCCESS);
@@ -80,7 +80,7 @@ int	create_env_var(char **split, t_shell *shell)
 	if (split[1])
 		env = env_create_var(split[0], split[1], false);
 	else
-		env = env_create_var(split[0], ft_strdup(""), false);
+		env = env_create_var(split[0], "", false);
 	free_split(split);
 	if (!env)
 		return (CMD_FAILURE);
@@ -113,7 +113,6 @@ int	handle_arg(t_shell *shell, char *arg)
 		append = true;
 	}
 	env = env_get_by_name(shell->env_vars, split[0]);
-	free_split(split);
 	if (env)
 	{
 		replace_existing_val(split, env, append);

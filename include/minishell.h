@@ -194,14 +194,18 @@ char	**make_env_args(char *cmd, char **args);
 char	*get_env_path_to_cmd(t_shell *shell, char *cmd);
 
 //signals
-void			signal_handler(int signum);
-void			signal_restore_parent(void);
-void			signal_ignore_parent(void);
-sig_atomic_t	*sigint_recv(void);
-void			segfault(int signal);
+sig_atomic_t		*sigint_recv(void);
+void				signal_handler(int signum);
+void				signal_restore_parent(void);
+void				signal_ignore_parent(void);
+void				segfault(int signal);
 
 // var utils
 void	replace_variable(char **value, char ***args);
 char	*get_var_str(char *str);
+
+// libft extended
+void	*ft_free_many(void *return_val, int count, ...);
+char	*ft_strjoin_many(int count, ...);
 
 #endif

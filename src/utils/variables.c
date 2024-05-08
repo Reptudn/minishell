@@ -99,6 +99,7 @@ char	*remove_surrounding_quotes(char *str)
 void	replace_variable(char **value, char ***args)
 {
 	int		i;
+	char	*tmp;
 	// char	*matching;
 
 	i = -1;
@@ -106,15 +107,18 @@ void	replace_variable(char **value, char ***args)
 		return ;
 	if (str_is_equal(*value, "''") || str_is_equal(*value, "\"\""))
 	{
-		free(*value);
+		if (*value)
+			free(*value);
 		*value = ft_strdup("");
 	}
 	else
 	{
+		tmp = *value;
 		*value = get_var_str(*value);
-		ft_printf("");
+		if (tmp)
+			free(tmp);
 	}
-	while (*args && (*args)[++i]) // FIXME: segv somewhere in this loop but it doesnt make sense
+	while (*args && (*args)[++i])
 	{
 		if (args && *args && (*args)[i] && (str_is_equal((*args)[i], "''")
 			|| str_is_equal((*args)[i], "\"\"")))
