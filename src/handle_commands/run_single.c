@@ -86,10 +86,10 @@ bool	is_invlid_builtin(char *cmd)
 			|| str_is_equal(lower, "clear") || str_is_equal(lower, "export")
 			|| str_is_equal(lower, "env") || str_is_equal(lower, "unset")
 			|| str_is_equal(lower, "cd")))
-		{
-			free(lower);
-			return (true);
-		}
+	{
+		free(lower);
+		return (true);
+	}
 	free(lower);
 	return (false);
 }

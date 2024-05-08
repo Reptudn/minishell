@@ -19,6 +19,8 @@ RUN apt-get update && apt-get install -y \
     python-dev-is-python3 \
     python3.10-venv
 
+RUN apt install -y cppcheck clang-tidy
+
 # Upgrade pip and setuptools, and install norminette
 RUN python3 -m pip install --upgrade pip setuptools && \
     python3 -m pip install norminette

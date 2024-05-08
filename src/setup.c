@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 08:11:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/06 13:21:46 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/08 10:04:28 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,23 +80,6 @@ void	print_start_logo(void)
 		color_red(), color_magenta(), color_red(), color_reset());
 	printf("%s", color_reset());
 	welcome_user();
-}
-
-char	**get_env(void)
-{
-	char	*env;
-	char	**envp;
-
-	env = getenv("PATH");
-	if (!env)
-		return (NULL);
-	envp = ft_split(env, ':');
-	if (!envp)
-	{
-		free(envp);
-		return (NULL);
-	}
-	return (envp);
 }
 
 void	env_destroy(t_env_var *env)
