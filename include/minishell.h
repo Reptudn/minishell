@@ -204,4 +204,6 @@ void			segfault(int signal);
 void	replace_variable(char **value, char ***args);
 char	*get_var_str(char *str);
 
+void	*ft_realloc(void *ptr, size_t size);
+
 #endif

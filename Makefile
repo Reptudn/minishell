@@ -59,7 +59,8 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)shunting_yard/shunting_yard_utils.c \
 			$(SRCDIR)shunting_yard/shunting_stack_utils.c \
 			$(SRCDIR)shunting_yard/shunting_print.c \
-			$(SRCDIR)shunting_yard/ast_utils.c
+			$(SRCDIR)shunting_yard/ast_utils.c \
+			$(SRCDIR)libft_extended/ft_realloc.c
 
 OBJDIR := ./obj/
 OBJS	:= $(SRCS:.c=.o)
@@ -116,4 +117,4 @@ norm:
 norminette: norm
 
 valgrind: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	valgrind --leak-check=full ./$(NAME)

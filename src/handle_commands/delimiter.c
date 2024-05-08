@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/07 08:19:20 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/08 10:40:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 		if (chain[counter] == NULL)
 		{
 			free(temp);
+			free(heredoc);
 			return (CMD_SUCCESS);
 		}
 		new_heredoc = ft_strjoin(heredoc, temp);
@@ -47,7 +48,6 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 		write(pipefd[1], "\n", 1);
 		free(temp);
 	}
-	free(heredoc);
 	return (CMD_SUCCESS);
 }
 
@@ -95,6 +95,7 @@ int	run_delimiter_helper(int pipefd[2], t_shunting_node **chain)
 	signal_ignore_parent();
 	exit_status = run_delimiter_helper2(pipefd, chain, heredoc, counter);
 	signal_restore_parent();
+	free(heredoc);
 	return (exit_status);
 }
 

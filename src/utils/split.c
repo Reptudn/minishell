@@ -24,7 +24,7 @@ void	process_string(const char *str, char **result, int *res_i)
 
 	i = -1;
 	shell_op = fill_shell_op();
-	temp.charp_i = ft_strdup("");
+	temp.charp_i = NULL;
 	while (str[++i])
 	{
 		if (str[i] == '"' || str[i] == '\'')
