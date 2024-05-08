@@ -82,13 +82,10 @@ char	**ft_split_shell(const char *str)
 	result = (char **)malloc((res_i + 1) * sizeof(char *));
 	result[res_i] = NULL;
 	result = clean_data(temp, result);
-	free(temp);
+	free_split(temp);
 	temp = result;
 	result = clean_quotes(temp);
-	while (temp[++k])
-		free(temp[k]);
-	free(temp);
-	temp = NULL;
+	free_split(temp);
 	return (result);
 }
 

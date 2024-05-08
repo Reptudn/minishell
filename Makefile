@@ -118,7 +118,7 @@ norm:
 norminette: norm
 
 valgrind: all
-	valgrind ./$(NAME)
+	valgrind --leak-check=full ./$(NAME)
 
 unused:
 	cppcheck --enable=unusedFunction ./src

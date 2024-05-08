@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/08 10:48:52 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/08 16:28:08 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ char	*get_var_str(char *str)
 						return (NULL);
 					temp.env_var1 = env_get_by_name(get_shell()->env_vars,
 							temp.charp_i + 1);
+					free(temp.charp_i);
 					if (temp.env_var1)
 					{
 						var_str = ft_strjoin(var_str, temp.env_var1->value);
@@ -178,6 +179,7 @@ char	*get_var_str(char *str)
 				return (NULL);
 			temp.env_var1 = env_get_by_name(get_shell()->env_vars,
 					temp.charp_i + 1);
+			free(temp.charp_i);
 			if (temp.env_var1)
 			{
 				char *lol;

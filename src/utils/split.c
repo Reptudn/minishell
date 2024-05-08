@@ -91,20 +91,22 @@ char	**clean_quotes(char **tmp)
 	i = 0;
 	while (tmp[i])
 		i++;
-	result = (char **)malloc((i + 1) * sizeof(char *));
+	printf("i: %d\n", i);
+	result = (char **)ft_calloc((i + 1), sizeof(char *));
 	if (!tmp || !result)
+	{
+		if (result)
+			free(result);
 		return (NULL);
+	}
 	i = -1;
 	m = -1;
 	while (tmp[++i])
 	{
-		result[i] = malloc(sizeof(char) * (ft_strlen(tmp[i]) + 1));
-		if (!result[i])
-			return (NULL);
-		if (tmp[i] && !str_is_equal(tmp[i], "(") && !str_is_equal(tmp[i], ")"))
+		if (!str_is_equal(tmp[i], "(") && !str_is_equal(tmp[i], ")"))
 		{
-			free(result[++m]);
-			result[m] = ft_strdup(tmp[i]);
+			result[++m] = ft_strdup(tmp[i]);
+			printf("result[%d]: (%d) %s\n", m, i, result[m]);
 		}
 	}
 	result[++m] = NULL;

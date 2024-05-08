@@ -105,7 +105,9 @@ void	replace_variable(char **value, char ***args)
 			(*args)[i] = ft_strdup("");
 			continue ;
 		}
-		if ((*args)[i])
+		if ((*args)[i] && (ft_strchr((*args)[i], '$')
+			|| ft_strchr((*args)[i], '"')
+			|| ft_strchr((*args)[i], '\'')))
 			(*args)[i] = get_var_str((*args)[i]);
 		if (!((*args)[i]))
 			break ;
