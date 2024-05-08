@@ -37,6 +37,7 @@ int	set_pwd(t_shell *shell, char *old_path)
 	new_path = getcwd(NULL, 0);
 	if (!new_path)
 	{
+		free(old_path);
 		echo_err(NULL);
 		return (CMD_FAILURE);
 	}
@@ -45,7 +46,7 @@ int	set_pwd(t_shell *shell, char *old_path)
 	{
 		if (tmp->value)
 			free(tmp->value);
-		tmp->value = new_path;
+		tmp->value = ft_strdup(new_path);
 		if (!tmp->value)
 		{
 			free(new_path);
@@ -76,12 +77,15 @@ int	set_pwd(t_shell *shell, char *old_path)
 			return (CMD_FAILURE);
 		}
 	}
-	oldpwd = env_create_var("OLDPWD", ft_strdup(old_path), true);
+	else
+	{
+		oldpwd = env_create_var("OLDPWD", old_path, true);
+		env_push(shell->env_vars, oldpwd);
+	}
 	free(old_path);
 	free(new_path);
 	if (!oldpwd)
 		return (CMD_FAILURE);
-	env_push(shell->env_vars, oldpwd);
 	return (CMD_SUCCESS);
 }
 
@@ -89,17 +93,20 @@ int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 {
 	t_env_var	*tmp;
 	char		*old_path;
-	char		*curr;
 
 	old_path = getcwd(NULL, 0);
-	curr = getcwd(NULL, 0);
-	if (cmd->args[0] && cmd->args[1])
+	if (cmd->args && cmd->args[0] && cmd->args[1])
+	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
-	if (cmd->args[0] && cmd->args[1])
-		return (1);
-	if (str_is_equal(cmd->args[0], getcwd(NULL, 0)))
+		free(old_path);
+		return (CMD_FAILURE);
+	}
+	if (cmd->args && str_is_equal(cmd->args[0], old_path))
+	{
+		free(old_path);
 		return (CMD_SUCCESS);
-	if (!cmd->args[0] || ((cmd->args)[0] != 0
+	}
+	if (!cmd->args || !cmd->args[0] || ((cmd->args)[0] != 0
 		&& str_is_equal(cmd->args[0], "~")))
 	{
 		tmp = env_get_by_name(shell->env_vars, "HOME");
@@ -110,23 +117,23 @@ int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 	}
 	else
 		new_path = (cmd->args)[0];
-	if ((cmd->args)[1] != 0)
-		return (1);
 	if (str_is_equal(cmd->args[0], "-") || str_is_equal(cmd->args[0], "--"))
 	{
 		tmp = env_get_by_name(shell->env_vars, "OLDPWD");
 		if (!tmp)
-			return (1);
+		{
+			free(old_path);
+			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
+			return (CMD_FAILURE);
+		}
 		new_path = tmp->value;
 	}
-	else
-		old_path = getcwd(NULL, 0);
-	free(curr);
-	if (str_is_equal(cmd->args[0], "..") && str_is_equal(curr, "/"))
+	if (str_is_equal(cmd->args[0], "..") && str_is_equal(old_path, "/"))
 		return (set_pwd(shell, old_path));
 	if (!new_path || chdir(new_path) == -1)
 	{
 		echo_err(new_path);
+		free(old_path);
 		return (CMD_FAILURE);
 	}
 	if (str_is_equal(cmd->args[0], "-"))

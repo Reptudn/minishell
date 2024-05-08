@@ -39,4 +39,3 @@ int	ft_unset(t_shunting_node *cmd, t_shell *shell)
 	}
 	return (CMD_SUCCESS);
 }
-
