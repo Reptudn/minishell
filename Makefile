@@ -1,6 +1,6 @@
 NAME	:= minishell
 
-CFLAGS	:= -Wextra -Wall -Werror 
+CFLAGS	:= -Wextra -Wall -Werror -Wunused-function
 
 HEADERS	:= -I ./include
 
@@ -103,7 +103,6 @@ fclean: clean
 
 debug: CFLAGS += -g -O0
 debug: fclean $(NAME)
-# 	./minishell
 
 re: fclean all
 
@@ -119,3 +118,6 @@ norminette: norm
 
 valgrind: all
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+
+unused:
+	cppcheck --enable=unusedFunction ./src

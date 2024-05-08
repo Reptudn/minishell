@@ -43,18 +43,3 @@ void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard)
 	free(pop->exit_status);
 	free(pop);
 }
-
-int	yard_len(t_shunting_node *stack)
-{
-	t_shunting_node	*node;
-	int				len;
-
-	len = 0;
-	node = stack;
-	while (node)
-	{
-		len++;
-		node = node->next;
-	}
-	return (len);
-}

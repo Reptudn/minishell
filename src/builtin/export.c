@@ -56,19 +56,14 @@ int	handle_no_equal(t_shell *shell, char *arg)
 
 int	replace_existing_val(char **split, t_env_var *env, bool append)
 {
-	char		*old;
-
-	if (!append)
+	if (!append && env->value)
 		free(env->value);
-	old = env->value;
 	if (split[1] && !append)
 		env->value = ft_strdup(split[1]);
 	else if (split[1] && append)
 		env->value = ft_strjoin(env->value, split[1]);
 	else
 		env->value = ft_strdup("");
-	if (old)
-		free(old);
 	free_split(split);
 	return (CMD_SUCCESS);
 }
