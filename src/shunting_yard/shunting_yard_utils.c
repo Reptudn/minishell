@@ -63,7 +63,7 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 			free(node->args[i - 1]);
 			node->args[i - 1] = NULL;
 		}
-		node->args[i - 1] = tokens[i];
+		node->args[i - 1] = ft_strdup(tokens[i]);
 	}
 	return (node);
 }

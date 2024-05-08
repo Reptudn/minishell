@@ -91,7 +91,6 @@ char	**clean_quotes(char **tmp)
 	i = 0;
 	while (tmp[i])
 		i++;
-	printf("i: %d\n", i);
 	result = (char **)ft_calloc((i + 1), sizeof(char *));
 	if (!tmp || !result)
 	{
@@ -104,10 +103,7 @@ char	**clean_quotes(char **tmp)
 	while (tmp[++i])
 	{
 		if (!str_is_equal(tmp[i], "(") && !str_is_equal(tmp[i], ")"))
-		{
 			result[++m] = ft_strdup(tmp[i]);
-			printf("result[%d]: (%d) %s\n", m, i, result[m]);
-		}
 	}
 	result[++m] = NULL;
 	return (result);
