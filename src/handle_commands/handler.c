@@ -77,8 +77,10 @@ int	execute_commands_helper(t_shunting_yard *yard, t_shell *shell,
 	int				operator_count;
 	int				exit_status;
 	t_shunting_node	*operator;
+	int				i;
 
 	index = -1;
+	i = -1;
 	operator_count = get_operator_count(yard->output);
 	if (!yard || !yard->output || !shell)
 		return (CMD_FAILURE);
@@ -102,7 +104,11 @@ int	execute_commands_helper(t_shunting_yard *yard, t_shell *shell,
 			yard_pop(operator, yard);
 			operator = NULL;
 			yard_pop(cmd1, yard);
+			free(cmd2->value);
 			cmd2->value = ft_strdup("echo");
+			while (cmd2->args[++i])
+				free(cmd2->args[i]);
+			free(cmd2->args);
 			cmd2->args = ft_split("-n", ' ');
 			cmd2->update = 0;
 			*cmd2->exit_status = exit_status;

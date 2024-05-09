@@ -70,10 +70,8 @@ char	**ft_split_shell(const char *str)
 	char	**temp;
 	int		res_i;
 	char	**result;
-	int		k;
 
 	res_i = 0;
-	k = -1;
 	if (!str)
 		return (NULL);
 	temp = (char **)malloc((strlen(str) + 1) * sizeof(char *));

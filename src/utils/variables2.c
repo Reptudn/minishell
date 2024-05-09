@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/08 16:28:08 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/09 09:06:03 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,7 @@ char	*get_var_str(char *str)
 		{
 			if (str[temp.int_i] != '$')
 			{
-				char *var_str_test = append_single_char(var_str, str[temp.int_i]);
-				var_str = var_str_test;
+				var_str = append_single_char(var_str, str[temp.int_i]);
 				if (!var_str)
 					return (NULL);
 				continue ;

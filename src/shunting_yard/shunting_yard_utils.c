@@ -54,7 +54,7 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	while (tokens[i] && is_operator(tokens[i]) == NONE)
 		i++;
 	node->args = ft_calloc(i, sizeof(char *));
-	node->args[i - 1] = NULL;
+	// node->args[i - 1] = NULL;
 	*step += i;
 	while (--i > 0)
 	{

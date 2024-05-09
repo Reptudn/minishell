@@ -109,4 +109,3 @@ int	command_loop(t_shell *shell)
 		free(line);
 	return (*shell->exit_status);
 }
-
