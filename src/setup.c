@@ -6,11 +6,28 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 08:11:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/08 11:17:56 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/12 09:25:30 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	handle_shell_depth_helper(t_env_var *depth, char *new_val, int *lvl)
+{
+	if (arg_is_numerical(depth->value) && ft_atoi(depth->value) > 0)
+	{
+		*lvl = ft_atoi(depth->value);
+		if (*lvl > 999)
+			*lvl = 0;
+		else if (*lvl < 0)
+			*lvl = -1;
+		new_val = ft_itoa(*lvl + 1);
+	}
+	else
+		new_val = ft_strdup("1");
+	free(depth->value);
+	depth->value = new_val;
+}
 
 int	handle_shell_depth(t_shell *shell)
 {
@@ -30,21 +47,7 @@ int	handle_shell_depth(t_shell *shell)
 			env_push(shell->env_vars, depth);
 	}
 	else
-	{
-		if (arg_is_numerical(depth->value) && ft_atoi(depth->value) > 0)
-		{
-			lvl = ft_atoi(depth->value);
-			if (lvl > 999)
-				lvl = 0;
-			else if (lvl < 0)
-				lvl = -1;
-			new_val = ft_itoa(lvl + 1);
-		}
-		else
-			new_val = ft_strdup("1");
-		free(depth->value);
-		depth->value = new_val;
-	}
+		handle_shell_depth_helper(depth, new_val, &lvl);
 	return (CMD_SUCCESS);
 }
 

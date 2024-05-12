@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   delimiter_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/08 08:58:59 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/12 17:07:52 by jkauker          ###   ########.fr       */
+/*   Created: 2024/05/12 15:28:07 by jkauker           #+#    #+#             */
+/*   Updated: 2024/05/12 15:29:46 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+int	run_delimiter_helper2dot1(char *temp, char *heredoc)
 {
-	void	*new_ptr;
-	size_t	original_size;
+	free(temp);
+	free(heredoc);
+	return (1);
+}
 
-	new_ptr = malloc(size);
-	if (!new_ptr)
-		return (NULL);
-	if (ptr)
-	{
-		original_size = ft_strlen((char *) ptr);
-		ft_memcpy(new_ptr, ptr, original_size);
-		free(ptr);
-	}
-	return (new_ptr);
+int	run_delmiter_im_crying(void)
+{
+	ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
+	return (1);
 }

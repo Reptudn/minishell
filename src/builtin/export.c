@@ -12,47 +12,11 @@
 
 #include "../../include/minishell.h"
 
-int	print_export(t_env_var *env);
-int	export_error(char *arg);
-
-bool	is_valid_var_indentifier(char *arg)
-{
-	int	i;
-
-	if (!ft_isalpha(arg[0]) && arg[0] != '_')
-		return (false);
-	i = 0;
-	while (arg[++i])
-	{
-		if (arg[i] == '+' && arg[i + 1] == 0)
-			return (true);
-		if (!ft_isalnum(arg[i]) && arg[i] != '_')
-			return (false);
-	}
-	return (true);
-}
-
-int	handle_no_equal(t_shell *shell, char *arg)
-{
-	t_env_var	*env;
-
-	if (!is_valid_var_indentifier(arg))
-		return (export_error(arg));
-	env = env_get_by_name(shell->env_vars, arg);
-	if (!env)
-	{
-		env = env_create_var(arg, NULL, false);
-		if (!env)
-			return (CMD_FAILURE);
-		env_push(shell->env_vars, env);
-	}
-	else
-	{
-		free(env->value);
-		env->value = NULL;
-	}
-	return (CMD_SUCCESS);
-}
+int		print_export(t_env_var *env);
+int		export_error(char *arg);
+bool	is_valid_var_indentifier(char *arg);
+int		handle_no_equal(t_shell *shell, char *arg);
+int		handle_arg_helper(char **split, t_env_var *env, bool append);
 
 int	replace_existing_val(char **split, t_env_var *env, bool append)
 {
@@ -83,11 +47,10 @@ int	create_env_var(char **split, t_shell *shell)
 	return (CMD_SUCCESS);
 }
 
-int	handle_arg(t_shell *shell, char *arg)
+int	handle_arg(t_shell *shell, char *arg, bool append)
 {
 	char		**split;
 	t_env_var	*env;
-	bool		append;
 
 	if (arg[0] == '=')
 		return (export_error(arg));
@@ -103,34 +66,30 @@ int	handle_arg(t_shell *shell, char *arg)
 	}
 	append = false;
 	if (split[0][ft_strlen(split[0]) - 1] == '+')
-	{
 		split[0][ft_strlen(split[0]) - 1] = 0;
+	if (split[0][ft_strlen(split[0]) - 1] == '+')
 		append = true;
-	}
 	env = env_get_by_name(shell->env_vars, split[0]);
 	if (env)
-	{
-		replace_existing_val(split, env, append);
-		return (CMD_SUCCESS);
-	}
+		if (handle_arg_helper(split, env, append))
+			return (CMD_SUCCESS);
 	return (create_env_var(split, shell));
 }
 
 int	ft_export(t_shell *shell, t_shunting_node *cmd)
 {
-	int	i;
-	int	status;
+	int		i;
+	int		status;
+	bool	append;
 
 	if (!cmd->args || !cmd->args[0])
 		return (print_export(shell->env_vars));
 	i = -1;
 	while (cmd->args && cmd->args[++i])
 	{
-		status = handle_arg(shell, cmd->args[i]);
+		status = handle_arg(shell, cmd->args[i], append);
 		if (status != CMD_SUCCESS)
 			return (status);
 	}
 	return (CMD_SUCCESS);
 }
-
-// XXX: For some reason when doing export X="  AB  " and then doing echo 1$X2 it prints 1  AB  2 instead of 1 AB 2

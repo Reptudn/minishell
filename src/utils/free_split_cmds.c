@@ -22,5 +22,6 @@ void	*free_split(char **split)
 	while (split[++i])
 		free(split[i]);
 	free (split);
+	split = NULL;
 	return (0);
 }

@@ -31,7 +31,6 @@ void	segfault(int signal)
 	exit(exits);
 }
 
-// TODO: i think we peint one nl too much when pressing control + c
 void	signal_handler(int signum)
 {
 	if (signum == SIGTERM)
@@ -52,17 +51,12 @@ void	signal_handler(int signum)
 	rl_redisplay();
 }
 
-// TODO: implement all those functions down here
-
-// XXX: This function is being called when goign to a child process
 void	signal_ignore_parent(void)
 {
-	// signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTERM, SIG_IGN);
 }
 
-// XXX: This function is being called when going back to the parent process
 void	signal_restore_parent(void)
 {
 	signal(SIGINT, signal_handler);

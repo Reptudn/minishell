@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:49:59 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/06 14:04:12 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/12 15:31:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,47 @@ int	get_command_count(t_shunting_node *nodes)
 		nodes = nodes->next;
 	}
 	return (count);
+}
+
+t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type)
+{
+	t_shunting_node	*last;
+	t_shunting_node	*start;
+
+	last = NULL;
+	start = node;
+	while (node && node != last && node->next
+		&& (*node->type == type || *node->type == NONE))
+	{
+		if (node != start && node->prev && *node->prev->type == type
+			&& *node->type == NONE && node->next && *node->next->type == NONE)
+			break ;
+		if (*node->type == type)
+			last = node;
+		node = node->next;
+	}
+	if (node && *node->type == type)
+		last = node;
+	return (last);
+}
+
+t_shunting_node	**fill_chain(t_shunting_node *start, t_shunting_node *last,
+		int *len, int type)
+{
+	t_shunting_node	**chain;
+	int				i;
+
+	chain = (t_shunting_node **)malloc(sizeof(t_shunting_node *) * (*len + 1));
+	if (!chain)
+		return (NULL);
+	chain[*len] = NULL;
+	i = -1;
+	while (start && start != last && start->next
+		&& (*start->type == type || *start->type == NONE))
+	{
+		if (*start->type != type && *start->type == NONE)
+			chain[++i] = start;
+		start = start->next;
+	}
+	return (chain);
 }

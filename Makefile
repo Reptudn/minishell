@@ -11,6 +11,7 @@ SRCDIR := ./src/
 SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)input.c \
 			$(SRCDIR)setup.c \
+			$(SRCDIR)setup_helper.c \
 			$(SRCDIR)cheese.c \
 			$(SRCDIR)fancy/prompt.c \
 			$(SRCDIR)fancy/cursor_utils.c \
@@ -36,17 +37,22 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)prompts/readline_prompts.c \
 			$(SRCDIR)builtin/unset.c \
 			$(SRCDIR)builtin/exit.c \
+			$(SRCDIR)builtin/exit_helper.c \
 			$(SRCDIR)builtin/echo.c \
+			$(SRCDIR)builtin/echo_helper.c \
 			$(SRCDIR)builtin/pwd.c \
 			$(SRCDIR)builtin/env.c \
 			$(SRCDIR)builtin/export.c \
 			$(SRCDIR)builtin/export_helper.c \
 			$(SRCDIR)builtin/cd.c \
+			$(SRCDIR)builtin/cd_helper.c \
 			$(SRCDIR)signals/signal_handler.c \
 			$(SRCDIR)handle_commands/and.c \
 			$(SRCDIR)handle_commands/append.c \
 			$(SRCDIR)handle_commands/delimiter.c \
+			$(SRCDIR)handle_commands/delimiter_helper.c \
 			$(SRCDIR)handle_commands/handler.c \
+			$(SRCDIR)handle_commands/handler_helper.c \
 			$(SRCDIR)handle_commands/pipe.c \
 			$(SRCDIR)handle_commands/or.c \
 			$(SRCDIR)handle_commands/path_cmd.c \
@@ -55,6 +61,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)handle_commands/run_single.c \
 			$(SRCDIR)handle_commands/execute_pipe_chain.c \
 			$(SRCDIR)handle_commands/execute_pipe_chain_helper.c \
+			$(SRCDIR)handle_commands/execute_pipe_chain_helper2.c \
 			$(SRCDIR)shunting_yard/shunting_yard.c \
 			$(SRCDIR)shunting_yard/shunting_yard2.c \
 			$(SRCDIR)shunting_yard/shunting_yard_node.c \

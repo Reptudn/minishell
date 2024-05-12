@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   execute_pipe_chain_helper2.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/08 08:58:59 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/12 17:07:52 by jkauker          ###   ########.fr       */
+/*   Created: 2024/05/12 15:51:53 by jkauker           #+#    #+#             */
+/*   Updated: 2024/05/12 15:52:13 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+void	execute_cmd_chain_helper2(char **args, t_shunting_node **chain)
 {
-	void	*new_ptr;
-	size_t	original_size;
-
-	new_ptr = malloc(size);
-	if (!new_ptr)
-		return (NULL);
-	if (ptr)
-	{
-		original_size = ft_strlen((char *) ptr);
-		ft_memcpy(new_ptr, ptr, original_size);
-		free(ptr);
-	}
-	return (new_ptr);
+	args = ft_split("-n ", ' ');
+	free_split(chain[0]->args);
+	chain[0]->args = args;
 }

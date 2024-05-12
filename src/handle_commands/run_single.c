@@ -60,6 +60,17 @@ int	run_external_command(t_shell *shell, t_shunting_node *cmd)
 	return (status);
 }
 
+void	is_invlid_builtin_helper(char *lower, int *i, char curr, bool changed)
+{
+	while (lower[++(*i)])
+	{
+		curr = lower[*i];
+		lower[*i] = ft_tolower(lower[*i]);
+		if (curr != lower[*i])
+			changed = true;
+	}
+}
+
 bool	is_invlid_builtin(char *cmd)
 {
 	char	*lower;
@@ -74,14 +85,9 @@ bool	is_invlid_builtin(char *cmd)
 		return (false);
 	i = -1;
 	changed = false;
-	while (lower[++i])
-	{
-		curr = lower[i];
-		lower[i] = ft_tolower(lower[i]);
-		if (curr != lower[i])
-			changed = true;
-	}
-	if (changed && (str_is_equal(lower, "history") || str_is_equal(lower, "exit")
+	is_invlid_builtin_helper(lower, &i, curr, changed);
+	if (changed && (str_is_equal(lower, "history")
+			|| str_is_equal(lower, "exit")
 			|| str_is_equal(lower, "echo") || str_is_equal(lower, "pwd")
 			|| str_is_equal(lower, "clear") || str_is_equal(lower, "export")
 			|| str_is_equal(lower, "env") || str_is_equal(lower, "unset")

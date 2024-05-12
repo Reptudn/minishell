@@ -6,14 +6,13 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 06:28:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/25 12:15:03 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/12 13:26:36 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include <term.h>
 
-// moves the cursor to the left with an offset from the left side of the screen
 void	move_cursor_left_offset(int offset)
 {
 	char	*cap;
@@ -23,7 +22,6 @@ void	move_cursor_left_offset(int offset)
 		tputs(cap, 1, putchar);
 }
 
-// moves the cursor to the right with an offset from the right side of the scre
 void	move_cursor_right_offset(int offset)
 {
 	char	*cap;
@@ -33,7 +31,23 @@ void	move_cursor_right_offset(int offset)
 		tputs(cap, 1, putchar);
 }
 
-// moves the cursor relative to the current cursor position
+void	move_cursor_relative_helper(int *x, int *y, char *cap)
+{
+	if (*y > 0)
+	{
+		cap = tgetstr("do", NULL);
+		while (*y--)
+			tputs(cap, 1, putchar);
+	}
+	else if (*y < 0)
+	{
+		cap = tgetstr("up", NULL);
+		*y = -(*y);
+		while (*y--)
+			tputs(cap, 1, putchar);
+	}
+}
+
 void	move_cursor_relative(int x, int y)
 {
 	char	*cap;
@@ -51,22 +65,9 @@ void	move_cursor_relative(int x, int y)
 		while (x--)
 			tputs(cap, 1, putchar);
 	}
-	if (y > 0)
-	{
-		cap = tgetstr("do", NULL);
-		while (y--)
-			tputs(cap, 1, putchar);
-	}
-	else if (y < 0)
-	{
-		cap = tgetstr("up", NULL);
-		y = -y;
-		while (y--)
-			tputs(cap, 1, putchar);
-	}
+	move_cursor_relative_helper(&x, &y, cap);
 }
 
-// moves the cursor in total position
 void	move_cursor(int x, int y)
 {
 	char	*cap;

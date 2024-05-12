@@ -43,10 +43,9 @@ int	run_append(t_shell *shell, t_shunting_node **chain, int append_amount)
 	{
 		fd = open(chain[i]->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
-		{
 			perror("minishell ");
+		if (fd == -1)
 			return (CMD_FAILURE);
-		}
 		if (dup2(fd, STDOUT_FILENO) == -1)
 			return (CMD_FAILURE);
 		run_command(shell, chain[0]);

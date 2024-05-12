@@ -12,6 +12,12 @@
 
 #include "../../include/minishell.h"
 
+int		set_pwd_helper(t_env_var *tmp, t_env_var *oldpwd,
+			char *new_path, char *old_path);
+void	set_pwd_helper_helper_fuck_norminette(char *new_path, char *old_path);
+int		set_pwd_helper2(t_env_var *oldpwd, char *old_path,
+			char *new_path, t_shell *shell);
+
 void	echo_err(char *new_path)
 {
 	ft_putstr_fd("cd: ", STDERR_FILENO);
@@ -27,7 +33,6 @@ void	echo_err(char *new_path)
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
-//TODO: check if you need to free old_path
 int	set_pwd(t_shell *shell, char *old_path)
 {
 	t_env_var	*tmp;
@@ -42,46 +47,11 @@ int	set_pwd(t_shell *shell, char *old_path)
 		return (CMD_FAILURE);
 	}
 	tmp = env_get_by_name(shell->env_vars, "PWD");
-	if (tmp)
-	{
-		if (tmp->value)
-			free(tmp->value);
-		tmp->value = ft_strdup(new_path);
-		if (!tmp->value)
-		{
-			free(new_path);
-			free(old_path);
-			return (CMD_FAILURE);
-		}
-	}
-	else
-	{
-		tmp = env_create_var("PWD", new_path, true);
-		if (!tmp)
-		{
-			free(new_path);
-			free(old_path);
-			return (CMD_FAILURE);
-		}
-		env_push(shell->env_vars, tmp);
-	}
+	if (set_pwd_helper(tmp, oldpwd, new_path, old_path))
+		return (CMD_FAILURE);
 	oldpwd = env_get_by_name(shell->env_vars, "OLDPWD");
-	if (oldpwd)
-	{
-		free(oldpwd->value);
-		oldpwd->value = ft_strdup(old_path);
-		if (!oldpwd->value)
-		{
-			free(new_path);
-			free(old_path);
-			return (CMD_FAILURE);
-		}
-	}
-	else
-	{
-		oldpwd = env_create_var("OLDPWD", old_path, true);
-		env_push(shell->env_vars, oldpwd);
-	}
+	if (set_pwd_helper2(oldpwd, old_path, new_path, shell))
+		return (CMD_FAILURE);
 	free(old_path);
 	free(new_path);
 	if (!oldpwd)

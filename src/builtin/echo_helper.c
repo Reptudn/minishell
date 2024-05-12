@@ -1,30 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   echo_helper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/08 08:58:59 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/12 17:07:52 by jkauker          ###   ########.fr       */
+/*   Created: 2024/05/12 09:48:59 by jkauker           #+#    #+#             */
+/*   Updated: 2024/05/12 10:17:58 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+bool	is_valid_flag(char *str)
 {
-	void	*new_ptr;
-	size_t	original_size;
+	if (str[0] != '-')
+		return (false);
+	str++;
+	while (*str == 'n')
+		str++;
+	return (ft_isspace(*str) || *str == '\0');
+}
 
-	new_ptr = malloc(size);
-	if (!new_ptr)
-		return (NULL);
-	if (ptr)
+char	*get_first(char *str)
+{
+	while (*str)
 	{
-		original_size = ft_strlen((char *) ptr);
-		ft_memcpy(new_ptr, ptr, original_size);
-		free(ptr);
+		if (is_valid_flag(str))
+		{
+			while (*str != ' ' && *str != '\0')
+				str++;
+			while (ft_isspace(*str))
+				str++;
+		}
+		else
+			return (str);
 	}
-	return (new_ptr);
+	return (str);
+}
+
+int	args_len(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args && args[i])
+		i++;
+	return (i);
 }

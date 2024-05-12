@@ -61,7 +61,8 @@ char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 	return (NULL);
 }
 
-int	execute_command(t_shell *shell, t_shunting_node *cmd, char *cmd_path, int *status)
+int	execute_command(t_shell *shell, t_shunting_node *cmd,
+		char *cmd_path, int *status)
 {
 	int	ran;
 

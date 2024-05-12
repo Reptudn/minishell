@@ -68,9 +68,9 @@ char	*get_input(char *prompt)
 
 int	command_loop(t_shell *shell)
 {
-	int				status;
 	char			*line;
 	t_shunting_yard	*yard;
+	int				status;
 
 	line = get_input(prompt_hello());
 	status = 0;
@@ -92,8 +92,7 @@ int	command_loop(t_shell *shell)
 			status = CMD_FAILURE;
 			continue ;
 		}
-		status = execute_commands(yard, shell);
-		*shell->exit_status = status;
+		*shell->exit_status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
 		free(line);
 		line = NULL;

@@ -12,62 +12,24 @@
 
 #include "../../include/minishell.h"
 
-void	yard_pop(t_shunting_node *node, t_shunting_yard *yard);
-
-int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
-int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
-char	*run_pipe(t_shell *shell, t_shunting_node **chain);
-int		redirect_in(t_shunting_node *cmd,
-			t_shunting_node *cmd2, t_shell *shell);
-int		redirect_out(t_shell *shell, t_shunting_node **chain,
-			int redirection_amout);
-int		run_append(t_shell *shell, t_shunting_node **chain, int append_amount);
-char	*run_delimiter(t_shunting_node **chain, t_shell *shell);
-
-void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard);
-
-t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type)
-{
-	t_shunting_node	*last;
-	t_shunting_node	*start;
-
-	last = NULL;
-	start = node;
-	while (node && node != last && node->next
-		&& (*node->type == type || *node->type == NONE))
-	{
-		if (node != start && node->prev && *node->prev->type == type
-			&& *node->type == NONE && node->next && *node->next->type == NONE)
-			break ;
-		if (*node->type == type)
-			last = node;
-		node = node->next;
-	}
-	if (node && *node->type == type)
-		last = node;
-	return (last);
-}
-
+void			yard_pop(t_shunting_node *node, t_shunting_yard *yard);
+int				run_and(t_shell *shell, t_shunting_node *cmd1,
+					t_shunting_node *cmd2);
+int				run_or(t_shell *shell, t_shunting_node *cmd1,
+					t_shunting_node *cmd2);
+char			*run_pipe(t_shell *shell, t_shunting_node **chain);
+int				redirect_in(t_shunting_node *cmd,
+					t_shunting_node *cmd2, t_shell *shell);
+int				redirect_out(t_shell *shell, t_shunting_node **chain,
+					int redirection_amout);
+int				run_append(t_shell *shell, t_shunting_node **chain,
+					int append_amount);
+char			*run_delimiter(t_shunting_node **chain, t_shell *shell);
+void			yard_pop(t_shunting_node *pop, t_shunting_yard *yard);
+t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type);
 t_shunting_node	**fill_chain(t_shunting_node *start, t_shunting_node *last,
-		int *len, int type)
-{
-	t_shunting_node	**chain;
-	int				i;
-
-	chain = (t_shunting_node **)malloc(sizeof(t_shunting_node *) * (*len + 1));
-	if (!chain)
-		return (NULL);
-	chain[*len] = NULL;
-	i = -1;
-	while (start && start != last && start->next
-		&& (*start->type == type || *start->type == NONE))
-	{
-		if (*start->type != type && *start->type == NONE)
-			chain[++i] = start;
-		start = start->next;
-	}
-	return (chain);
-}
+					int *len, int type);
+void			execute_cmd_chain_helper2(char **args, t_shunting_node **chain);
 
 t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 {
@@ -122,6 +84,13 @@ char	**chain_out_to_arg(char *output)
 	return (out);
 }
 
+void	why_only_25_lines(char **args, t_shunting_node **chain, t_shell *shell)
+{
+	args = chain_out_to_arg(run_delimiter(chain, shell));
+	free_split(chain[0]->args);
+	chain[0]->args = args;
+}
+
 int	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 		t_shell *shell, int type)
 {
@@ -146,11 +115,7 @@ int	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 	else if (type == REDIRECT_OUT_APPEND)
 		exit_code = run_append(shell, chain, len);
 	else if (type == REDIRECT_IN_DELIMITER)
-	{
-		args = chain_out_to_arg(run_delimiter(chain,shell));
-		free_split(chain[0]->args);
-		chain[0]->args = args;
-	}
+		why_only_25_lines(args, chain, shell);
 	return (exit_code);
 }
 
@@ -169,11 +134,7 @@ int	execute_cmd_chain(t_shell *shell, t_shunting_node *start,
 	exit_code = execute_cmd_chain_helper(len, chain, shell, type);
 	if (type == REDIRECT_IN || type == REDIRECT_OUT
 		|| type == REDIRECT_OUT_APPEND)
-	{
-		args = ft_split("-n ", ' ');
-		free_split(chain[0]->args);
-		chain[0]->args = args;
-	}
+		execute_cmd_chain_helper2(args, chain);
 	if (!(*chain)->args)
 		return (CMD_FAILURE);
 	free(chain[0]->value);
