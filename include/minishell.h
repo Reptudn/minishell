@@ -149,6 +149,14 @@ typedef struct s_handler
 	t_shunting_node	*operator;
 }	t_handler;
 
+typedef struct s_strjoin_many
+{
+	char	*str;
+	char	*temp_str;
+	char	*temp;
+	int		i;
+}	t_strjoin_many;
+
 t_shell			*get_shell(void);
 int				*get_run(void);
 char			*get_input(char *prompt);

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 13:24:28 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 14:34:07 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,8 @@ char	*get_var_str(char *str)
 				&& ft_isalnum(str[temp.int_i + temp.int_k]))
 				temp.int_k++;
 			if (temp.int_k == 1 && str[temp.int_i + 1]
-				&& (str[temp.int_i + temp.int_k] == '"' || str[temp.int_i + temp.int_k] == '\'' || str[temp.int_i + temp.int_k] == ' '))
+				&& (str[temp.int_i + temp.int_k] == '"'
+					|| str[temp.int_i + temp.int_k] == '\'' || str[temp.int_i + temp.int_k] == ' '))
 				continue ;
 			temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);
 			if (!temp.charp_i)
@@ -179,7 +180,8 @@ char	*get_var_str(char *str)
 			free(temp.charp_i);
 			if (temp.env_var1)
 			{
-				if (ft_isspace(temp.env_var1->value[0]) && ft_isspace(temp.env_var1->value[ft_strlen(temp.env_var1->value) - 1]))
+				if (ft_isspace(temp.env_var1->value[0]) &&
+					ft_isspace(temp.env_var1->value[ft_strlen(temp.env_var1->value) - 1]))
 				{
 					lol = ft_strtrim(temp.env_var1->value, " \t\n\r\v\f");
 					lol = ft_strjoin(" ", ft_strjoin(lol, " "));

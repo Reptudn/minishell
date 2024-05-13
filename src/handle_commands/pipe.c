@@ -12,6 +12,8 @@
 
 #include "../../include/minishell.h"
 
+#include "../../include/minishell.h"
+
 void	print_cmd_chain(t_shunting_node **chain);
 
 int	get_chain_len(t_shunting_node **chain)
@@ -24,9 +26,8 @@ int	get_chain_len(t_shunting_node **chain)
 	return (pipe_amount);
 }
 
-char	*run_pipe(t_shell *shell, t_shunting_node **chain)
+char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 {
-	int				pipe_amount = get_chain_len(chain);
 	int				fd[pipe_amount][2];
 	int				counter;
 	pid_t			pid[pipe_amount];
