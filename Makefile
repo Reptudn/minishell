@@ -23,6 +23,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/command_utils.c \
 			$(SRCDIR)utils/input_validation.c \
 			$(SRCDIR)utils/environment.c \
+			$(SRCDIR)utils/environment2.c \
 			$(SRCDIR)utils/wildcard.c \
 			$(SRCDIR)utils/variables.c \
 			$(SRCDIR)utils/variables2.c \

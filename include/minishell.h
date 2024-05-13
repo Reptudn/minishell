@@ -127,6 +127,13 @@ typedef struct s_prompt
 	char	*term_type;
 }	t_prompt;
 
+typedef struct s_process
+{
+	const char	*str;
+	int			*i;
+	t_temps		*temp;
+}	t_process;
+
 t_shell	*get_shell(void);
 int		*get_run(void);
 char	*get_input(char *prompt);
@@ -150,6 +157,7 @@ t_shunting_yard	*shunting_yard(char **tokens);
 char			*ft_strncpy(char *dest, const char *src, size_t n);
 int				is_shell_op(char *str, char *shell_op[], int size);
 void			print_all_stacks(t_shunting_yard *yard);
+char			**split_first_occ(char *str, char c);
 
 // builtins
 int		ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path);
@@ -161,11 +169,11 @@ int		ft_exit(t_shell *shell, t_shunting_node *cmd);
 int		ft_echo(t_shunting_node *cmd);
 
 // exec env commands
-int		run_env_command(t_shell *shell, t_shunting_node *cmd);
-void	env_pop(t_env_var *vars, t_env_var *pop);
-void	env_push(t_env_var *vars, t_env_var *new_var);
-char	**env_to_envp(t_env_var *var);
-char	**env_get_path(t_env_var *vars);
+int			run_env_command(t_shell *shell, t_shunting_node *cmd);
+void		env_pop(t_env_var *vars, t_env_var *pop);
+void		env_push(t_env_var *vars, t_env_var *new_var);
+char		**env_to_envp(t_env_var *var);
+char		**env_get_path(t_env_var *vars);
 t_env_var	*env_get_by_name(t_env_var *vars, char *name);
 t_env_var	*env_create_var(char *name, char *value, bool is_envp);
 t_env_var	*env_make_vars(char **envp);
@@ -201,11 +209,11 @@ char	**make_env_args(char *cmd, char **args);
 char	*get_env_path_to_cmd(t_shell *shell, char *cmd);
 
 //signals
-sig_atomic_t		*sigint_recv(void);
-void				signal_handler(int signum);
-void				signal_restore_parent(void);
-void				signal_ignore_parent(void);
-void				segfault(int signal);
+sig_atomic_t	*sigint_recv(void);
+void			signal_handler(int signum);
+void			signal_restore_parent(void);
+void			signal_ignore_parent(void);
+void			segfault(int signal);
 
 // var utils
 void	replace_variable(char **value, char ***args);

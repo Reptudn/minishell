@@ -15,7 +15,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 char	*strjoin(char *s1, char *s2)
 {
 	char	*str;

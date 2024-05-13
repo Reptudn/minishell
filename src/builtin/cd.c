@@ -72,9 +72,8 @@ int	handle_too_many_args(t_shunting_node *cmd, char *old_path)
 	return (CMD_SUCCESS);
 }
 
-
-
-char	*handle_old_path(t_shunting_node *cmd, t_shell *shell, char *old_path, char *new_path)
+char	*handle_old_path(t_shunting_node *cmd, t_shell *shell,
+	char *old_path, char *new_path)
 {
 	t_env_var	*tmp;
 

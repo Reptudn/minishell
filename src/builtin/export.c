@@ -17,6 +17,7 @@ int		export_error(char *arg);
 bool	is_valid_var_indentifier(char *arg);
 int		handle_no_equal(t_shell *shell, char *arg);
 int		handle_arg_helper(char **split, t_env_var *env, bool append);
+char	**split_first_occ(char *str, char c);
 
 int	replace_existing_val(char **split, t_env_var *env, bool append)
 {
