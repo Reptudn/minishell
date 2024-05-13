@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 08:38:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 08:40:54 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 09:35:44 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	**env_to_envp(t_env_var *var)
 		return (NULL);
 	temp = var;
 	i = 0;
-	while (temp && i++)
+	while (temp && ++i)
 		temp = temp->next;
 	split = malloc((i + 1) * sizeof(char *));
 	if (!split)

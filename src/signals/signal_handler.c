@@ -24,7 +24,7 @@ void	segfault(int signal)
 	int	exits;
 
 	(void)signal;
-	ft_putstr_fd("Internal Error occured\nExiting!\n", 2);
+	ft_putstr_fd("Internal Error occured\n", 2);
 	*get_run() = 0;
 	exits = *get_shell()->exit_status;
 	free(get_shell()->exit_status);

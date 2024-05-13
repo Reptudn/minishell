@@ -15,80 +15,65 @@
 
 char		*append_single_char(char *str, char c);
 
-void	process_quote(t_process *proc)
-{
-	char	quote;
-
-	proc->temp->int_j = 0;
-	quote = proc->str[*proc->i];
-	while (proc->str[*proc->i])
-	{
-		if (proc->str[*proc->i] == quote && proc->temp->int_j++ > 0)
-		{
-			proc->temp->charp_i = append_single_char(proc->temp->charp_i,
-					proc->str[*proc->i]);
-			break ;
-		}
-		proc->temp->charp_i = append_single_char(proc->temp->charp_i,
-				proc->str[*proc->i]);
-		if (!proc->temp->charp_i)
-			return ;
-		(*proc->i)++;
-	}
-}
-
-void	process_shell_op(t_process *proc, char **result, int *res_i,
-	char **shell_op)
-{
-	proc->temp->int_j = is_shell_op((char *) &proc->str[*proc->i],
-			shell_op, 10);
-	if (proc->temp->int_j != 0)
-	{
-		if (!str_is_equal(proc->temp->charp_i, "")
-			|| !str_is_equal(proc->temp->charp_i, " "))
-			result[(*res_i)++] = proc->temp->charp_i;
-		result[(*res_i)++] = ft_substr(&proc->str[*proc->i], 0,
-				proc->temp->int_j);
-		*proc->i += proc->temp->int_j - 1;
-		proc->temp->charp_i = ft_strdup("");
-	}
-}
-
-void	process_space(t_process *proc, char **result, int *res_i)
-{
-	if (ft_isspace(proc->str[*proc->i]))
-	{
-		if (!str_is_equal(proc->temp->charp_i, "")
-			|| !str_is_equal(proc->temp->charp_i, " "))
-			result[(*res_i)++] = proc->temp->charp_i;
-		proc->temp->charp_i = ft_strdup("");
-	}
-	else
-		proc->temp->charp_i = append_single_char(proc->temp->charp_i,
-				proc->str[*proc->i]);
-}
-
 void	process_string(const char *str, char **result, int *res_i)
 {
-	t_temps		temp;
-	char		**shell_op;
-	int			i;
-	t_process	proc;
+	t_temps	temp;
+	char	**shell_op;
+	int		i;
+	char	quote;
 
 	i = -1;
 	shell_op = fill_shell_op();
 	temp.charp_i = NULL;
-	proc.str = str;
-	proc.i = &i;
-	proc.temp = &temp;
 	while (str[++i])
 	{
 		if (str[i] == '"' || str[i] == '\'')
-			process_quote(&proc);
+		{
+			temp.int_j = 0;
+			quote = str[i];
+			while (str[i])
+			{
+				if (str[i] == quote && temp.int_j++ > 0)
+				{
+					temp.charp_i = append_single_char(temp.charp_i, str[i]);
+					break ;
+				}
+				temp.charp_i = append_single_char(temp.charp_i, str[i]);
+				if (!temp.charp_i)
+					return ;
+				i++;
+			}
+		}
 		else
 		{
-			process_shell_op(&proc, result, res_i, shell_op);
-			process_space(&proc, result, res_i);
+			temp.int_j = is_shell_op((char *) &str[i], shell_op, 10);
+			if (temp.int_j != 0)
+			{
+				if (!str_is_equal(temp.charp_i, "")
+					|| !str_is_equal(temp.charp_i, " "))
+					result[(*res_i)++] = temp.charp_i;
+				result[(*res_i)++] = ft_substr(&str[i], 0, temp.int_j);
+				i += temp.int_j - 1;
+				temp.charp_i = ft_strdup("");
+				if (!temp.charp_i)
+					return ;
+			}
+			else
+			{
+				if (ft_isspace(str[i]))
+				{
+					if (!str_is_equal(temp.charp_i, "")
+						|| !str_is_equal(temp.charp_i, " "))
+						result[(*res_i)++] = temp.charp_i;
+					temp.charp_i = ft_strdup("");
+					if (!temp.charp_i)
+						return ;
+					continue ;
+				}
+				temp.charp_i = append_single_char(temp.charp_i, str[i]);
+				if (!temp.charp_i)
+					return ;
+			}
 		}
 	}
 	if (!str_is_equal(temp.charp_i, "") || !str_is_equal(temp.charp_i, " "))
@@ -121,5 +106,7 @@ char	**clean_quotes(char **tmp)
 			result[++m] = ft_strdup(tmp[i]);
 	}
 	result[++m] = NULL;
+	for (i = 0; result[i]; i++)
+		printf("result[%d]: %s\n", i, result[i]);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 19:52:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/02 12:52:21 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 09:36:23 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
 
 	pid = fork();
 	if (pid < 0)
+	{
+		perror("minishell: fork failed");
 		return (-1);
+	}
 	else if (pid == 0)
 	{
 		if (execute_child_process(cmd_path, args, command, shell) <= 0)
