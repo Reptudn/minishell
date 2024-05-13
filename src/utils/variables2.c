@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 13:53:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 14:49:34 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ int	expand_var(char **var_str, char *str)
 		free(var);
 		if (!var_str)
 			return (-1);
+		return (2);
+	}
+	else if (*str == ' ')
+	{
+		*var_str = append_single_char(*var_str, '$');
 		return (1);
 	}
 	var = ft_substr(str, 0, len);
@@ -107,7 +112,7 @@ int	expand_var(char **var_str, char *str)
 
 bool	is_quote(char c)
 {
-	return (c == '\'' || c == '\"');
+	return (c == '\'' || c == '\"' || c == ' ');
 }
 
 char	*get_var_str(char *str)

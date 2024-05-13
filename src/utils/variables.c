@@ -125,6 +125,7 @@ char	*remove_surrounding_quotes(char *str)
 void	replace_variable(char **value, char ***args)
 {
 	int		i;
+	int		j;
 
 	i = -1;
 	if (!args || !value || (!*args && **args == NULL))
@@ -149,9 +150,20 @@ void	replace_variable(char **value, char ***args)
 		if ((*args)[i] && (ft_strchr((*args)[i], '$')
 			|| ft_strchr((*args)[i], '"')
 			|| ft_strchr((*args)[i], '\'')))
+		{
 			(*args)[i] = get_var_str((*args)[i]);
-		if (!((*args)[i]))
-			break ;
+			if (!((*args)[i]))
+			{
+				j = i;
+				while (1)
+				{
+					if (!(*args)[j] && i != j)
+						break ;
+					(*args)[j] = (*args)[j + 1];
+					j++;
+				}
+			}
+		}
 	}
 	if (!(*value))
 		*value = ft_strdup("");
