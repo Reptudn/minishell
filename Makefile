@@ -10,6 +10,7 @@ SRCDIR := ./src/
 
 SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)input.c \
+			$(SRCDIR)input_helper.c \
 			$(SRCDIR)setup.c \
 			$(SRCDIR)setup_helper.c \
 			$(SRCDIR)cheese.c \

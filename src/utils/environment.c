@@ -67,6 +67,24 @@ t_env_var	*env_create_var(char *name, char *value, bool is_envp)
 	return (env_var);
 }
 
+int	env_make_vars_helper(t_env_var **temp,
+		t_env_var **first, t_env_var **current)
+{
+	if (!(*temp))
+		return (1);
+	if (!(*first))
+		(*first) = (*temp);
+	else
+	{
+		(*current) = (*first);
+		while ((*current)->next)
+			(*current) = (*current)->next;
+		(*current)->next = (*temp);
+		(*temp)->prev = (*current);
+	}
+	return (0);
+}
+
 t_env_var	*env_make_vars(char **envp)
 {
 	t_env_var	*first;
@@ -88,20 +106,10 @@ t_env_var	*env_make_vars(char **envp)
 			return (NULL);
 		temp = env_create_var(split[0], split[1], true);
 		free_split(split);
-		if (!temp)
+		if (env_make_vars_helper(&temp, &first, &current))
 			return (NULL);
-		if (!first)
-			first = temp;
-		else
-		{
-			current = first;
-			while (current->next)
-				current = current->next;
-			current->next = temp;
-			temp->prev = current;
-		}
 	}
-	while (first && first->prev)
+	while (first->prev)
 		first = first->prev;
 	return (first);
 }

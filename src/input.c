@@ -14,6 +14,9 @@
 
 void	print_path(void);
 int		*is_heredoc(void);
+int		command_loop_helper2(t_shunting_yard *yard, char *line, int status);
+int		command_loop_helper(char *line);
+int		command_loop_helper3(char *line, t_shunting_yard **yard, int status);
 
 void	shunting_yard_destroy(t_shunting_yard *yard)
 {
@@ -76,22 +79,8 @@ int	command_loop(t_shell *shell)
 	status = 0;
 	while (*get_run() && line)
 	{
-		if (ft_strlen(line) == 0)
-		{
-			free(line);
-			line = get_input(prompt_success());
-			if (!line)
-				break ;
+		if (command_loop_helper3(line, &yard, status))
 			continue ;
-		}
-		yard = shunting_yard(ft_split_shell(is_valid_input(line)));
-		if (!yard)
-		{
-			free(line);
-			line = get_input(prompt_failure());
-			status = CMD_FAILURE;
-			continue ;
-		}
 		*shell->exit_status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
 		free(line);
