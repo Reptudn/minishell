@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 13:05:40 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/12 13:06:04 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 08:31:04 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,32 @@ int	set_pwd_helper2(t_env_var *oldpwd, char *old_path,
 		env_push(shell->env_vars, oldpwd);
 	}
 	return (0);
+}
+
+int	handle_same_path(t_shunting_node *cmd, char *old_path)
+{
+	if (cmd->args && str_is_equal(cmd->args[0], old_path))
+	{
+		free(old_path);
+		return (CMD_SUCCESS);
+	}
+	return (CMD_FAILURE);
+}
+
+char	*handle_home_path(t_shunting_node *cmd, t_shell *shell, char *new_path)
+{
+	t_env_var	*tmp;
+
+	if (!cmd->args || !cmd->args[0] || ((cmd->args)[0] != 0
+		&& str_is_equal(cmd->args[0], "~")))
+	{
+		tmp = env_get_by_name(shell->env_vars, "HOME");
+		if (!tmp)
+			new_path = NULL;
+		else
+			new_path = tmp->value;
+	}
+	else
+		new_path = (cmd->args)[0];
+	return (new_path);
 }

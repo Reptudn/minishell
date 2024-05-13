@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/09 09:06:03 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 08:01:51 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	*get_var_str(char *str)
 	t_temps	temp;
 	char	*var_str;
 	char	*exit;
+	char	*lol;
 
 	temp.int_i = -1;
 	temp.int_j = 0;
@@ -181,7 +182,6 @@ char	*get_var_str(char *str)
 			free(temp.charp_i);
 			if (temp.env_var1)
 			{
-				char *lol;
 				if (ft_isspace(temp.env_var1->value[0]) && ft_isspace(temp.env_var1->value[ft_strlen(temp.env_var1->value) - 1]))
 				{
 					lol = ft_strtrim(temp.env_var1->value, " \t\n\r\v\f");

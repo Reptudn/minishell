@@ -15,12 +15,6 @@
 void	yard_pop(t_shunting_node *node, t_shunting_yard *yard);
 int		run_and(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
 int		run_or(t_shell *shell, t_shunting_node *cmd1, t_shunting_node *cmd2);
-char	*run_pipe(t_shell *shell, t_shunting_node **chain, int counter,
-			int pipe_amount, char *str);
-int		redirect_out(t_shell *shell, t_shunting_node *cmd,
-			t_shunting_node *cmd2, int in_fd);
-int		run_append(t_shell *shell, t_shunting_node *cmd1,
-			t_shunting_node *cmd2);
 int		execute_cmd_chain(t_shell *shell, t_shunting_node *start,
 			t_shunting_yard *yard);
 int		get_command_count(t_shunting_node *nodes);

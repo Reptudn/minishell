@@ -75,8 +75,8 @@ void	process_string(const char *str, char **result, int *res_i)
 					return ;
 			}
 		}
-	} 
-	if (!str_is_equal(temp.charp_i, "")|| !str_is_equal(temp.charp_i, " "))
+	}
+	if (!str_is_equal(temp.charp_i, "") || !str_is_equal(temp.charp_i, " "))
 		result[(*res_i)++] = temp.charp_i;
 	result[(*res_i)] = NULL;
 	free_split(shell_op);

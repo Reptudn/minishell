@@ -83,7 +83,7 @@ char	*remove_surrounding_quotes(char *str)
 void	replace_variable(char **value, char ***args)
 {
 	int		i;
-	// char	*matching;
+	char	*matching;
 
 	i = -1;
 	if (!args || !value || (!*args && **args == NULL))
@@ -111,18 +111,13 @@ void	replace_variable(char **value, char ***args)
 			(*args)[i] = get_var_str((*args)[i]);
 		if (!((*args)[i]))
 			break ;
-		// matching = get_matching_files((*args)[i]);
-		// if (matching)
-		// {
-		// 	free((*args)[i]);
-		// 	*args[i] = matching;
-		// }
+		matching = get_matching_files((*args)[i]);
+		if (matching)
+		{
+			free((*args)[i]);
+			(*args)[i] = matching;
+		}
 	}
 	if (!(*value))
-	{
-		// if ((*args)[0])
-		// 	*value = ft_strdup((*args)[0]);
-		// *args = doublestrdup((*args) + 1);
 		*value = ft_strdup("");
-	}
 }
