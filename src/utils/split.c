@@ -106,7 +106,5 @@ char	**clean_quotes(char **tmp)
 			result[++m] = ft_strdup(tmp[i]);
 	}
 	result[++m] = NULL;
-	for (i = 0; result[i]; i++)
-		printf("result[%d]: %s\n", i, result[i]);
 	return (result);
 }
