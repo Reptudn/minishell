@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/12 15:28:56 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 09:52:32 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	run_delimiter_helper3(pid_t pid, int pipefd[2],
 	return (0);
 }
 
+// FIXME: Double free
 char	*run_delimiter(t_shunting_node **chain,
 		t_shell *shell)
 {
