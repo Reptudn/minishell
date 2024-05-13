@@ -134,6 +134,12 @@ typedef struct s_process
 	t_temps		*temp;
 }	t_process;
 
+typedef struct s_delimiter
+{
+	int	pipefd[2];
+	int	pipefd_back[2];
+}	t_delimiter;
+
 t_shell	*get_shell(void);
 int		*get_run(void);
 char	*get_input(char *prompt);
