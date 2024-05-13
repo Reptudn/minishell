@@ -33,6 +33,9 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 	pid_t			pid[pipe_amount];
 	int				exit_code;
 	char			*line;
+	int				m;
+	char			buffer[PIPE_BUFFER_SIZE];
+	ssize_t			bytesRead;
 
 	counter = -1;
 	line = NULL;
@@ -63,22 +66,21 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 		{
 			close(fd[counter][1]);
 			if (counter != 0)
-			{
 				close(fd[counter - 1][0]);
-			}
 			if (counter == pipe_amount - 1)
 			{
-				for (int m = 0; m <= pipe_amount; m++)
+				m = -1;
+				while (++m <= pipe_amount)
 					waitpid(pid[m], 0, 0);
-				char buffer[4096];
-				ssize_t bytesRead;
-				line = malloc(1);
-				line[0] = '\0';
-				while ((bytesRead = read(fd[counter][0], buffer, sizeof(buffer) - 1)) > 0)
+				line = ft_strdup("");
+				bytesRead = read(fd[counter][0], buffer, sizeof(buffer) - 1);
+				while (bytesRead > 0)
 				{
 					buffer[bytesRead] = '\0';
 					line = realloc(line, strlen(line) + bytesRead + 1);
 					strcat(line, buffer);
+					bytesRead = read(fd[counter][0], buffer,
+							sizeof(buffer) - 1);
 				}
 				close(fd[counter][0]);
 				break ;
