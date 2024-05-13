@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 09:52:32 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 11:41:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,51 +86,47 @@ int	run_delimiter_helper(int pipefd[2],
 	signal_ignore_parent();
 	exit_status = run_delimiter_helper2(pipefd, chain, heredoc, counter);
 	signal_restore_parent();
-	free(heredoc);
 	return (exit_status);
 }
 
-int	run_delimiter_helper3(pid_t pid, int pipefd[2],
-		int pipefd_back[2], t_shunting_node **chain)
+int	run_delimiter_helper3(pid_t pid, t_delimiter *delimiter,
+		t_shunting_node **chain, t_shell *shell)
 {
-	t_shell	*shell;
 
 	if (pid == -1)
 		return (1);
 	else if (pid == 0)
 	{
-		close(pipefd[1]);
-		dup2(pipefd[0], STDIN_FILENO);
-		dup2(pipefd_back[1], STDOUT_FILENO);
+		close(delimiter->pipefd[1]);
+		dup2(delimiter->pipefd[0], STDIN_FILENO);
+		dup2(delimiter->pipefd_back[1], STDOUT_FILENO);
 		*chain[0]->exit_status = run_command(shell, chain[0]);
-		close(pipefd_back[0]);
+		close(delimiter->pipefd_back[0]);
 		exit(*chain[0]->exit_status);
 	}
 	return (0);
 }
 
-// FIXME: Double free
 char	*run_delimiter(t_shunting_node **chain,
 		t_shell *shell)
 {
-	char	*buffer;
-	pid_t	pid;
-	int		status;
-	int		pipefd[2];
-	int		pipefd_back[2];
+	char		*buffer;
+	pid_t		pid;
+	int			status;
+	t_delimiter	delimiter;
 
 	buffer = ft_calloc(1000000, sizeof(char));
-	pipe(pipefd);
-	pipe(pipefd_back);
-	*chain[0]->exit_status = run_delimiter_helper(pipefd, chain);
-	close(pipefd[1]);
+	pipe(delimiter.pipefd);
+	pipe(delimiter.pipefd_back);
+	*chain[0]->exit_status = run_delimiter_helper(delimiter.pipefd, chain);
+	close(delimiter.pipefd[1]);
 	pid = fork();
-	if (run_delimiter_helper3(pid, pipefd, pipefd_back, chain))
+	if (run_delimiter_helper3(pid, &delimiter, chain, shell))
 		return (NULL);
 	waitpid(pid, &status, 0);
-	close(pipefd[1]);
-	close(pipefd[0]);
-	close(pipefd_back[1]);
-	read(pipefd_back[0], buffer, 999999);
+	close(delimiter.pipefd[1]);
+	close(delimiter.pipefd[0]);
+	close(delimiter.pipefd_back[1]);
+	read(delimiter.pipefd_back[0], buffer, 999999);
 	return (buffer);
 }
