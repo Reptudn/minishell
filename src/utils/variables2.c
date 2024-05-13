@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 08:01:51 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 13:24:28 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,6 @@ char	*append_single_char(char *str, char c)
 	return (out);
 }
 
-// TODO: the two expanding the var are almost the same so make them into a sep func
-// echo "$ "
-// echo "$?"
 char	*get_var_str(char *str)
 {
 	t_temps	temp;

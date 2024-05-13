@@ -60,13 +60,13 @@
 # define GARBAGE_ADD 1
 # define GARBAGE_FREE 2
 
-void	ft_garbage_collector(void *ptr, int action);
+void			ft_garbage_collector(void *ptr, int action);
 
-char	*prompt_success(void);
-char	*prompt_failure(void);
-char	*prompt_hello(void);
-char	*prompt_squote(void);
-char	*prompt_dquote(void);
+char			*prompt_success(void);
+char			*prompt_failure(void);
+char			*prompt_hello(void);
+char			*prompt_squote(void);
+char			*prompt_dquote(void);
 
 typedef struct s_env_var
 {
@@ -140,22 +140,31 @@ typedef struct s_delimiter
 	int	pipefd_back[2];
 }	t_delimiter;
 
-t_shell	*get_shell(void);
-int		*get_run(void);
-char	*get_input(char *prompt);
+typedef struct s_handler
+{
+	int				index;
+	int				operator_count;
+	int				exit_status;
+	int				i;
+	t_shunting_node	*operator;
+}	t_handler;
+
+t_shell			*get_shell(void);
+int				*get_run(void);
+char			*get_input(char *prompt);
 
 // command handling
-int		run_command(t_shell *shell, t_shunting_node *cmd);
-int		run_path_command(t_shell *shell, t_shunting_node *cmd);
-void	print_cmd_chain(t_shunting_node **chain);
-int		execute_commands(t_shunting_yard *yard, t_shell *shell);
-void	pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain,
-			int len, int type);
-void	print_shunting_node(t_shunting_node *node, int a);
+int				run_command(t_shell *shell, t_shunting_node *cmd);
+int				run_path_command(t_shell *shell, t_shunting_node *cmd);
+void			print_cmd_chain(t_shunting_node **chain);
+int				execute_commands(t_shunting_yard *yard, t_shell *shell);
+void			pop_cmd_chain(t_shunting_yard *yard, t_shunting_node **chain,
+					int len, int type);
+void			print_shunting_node(t_shunting_node *node, int a);
 
 // old
-int		command_loop(t_shell *shell);
-int		command_handler(t_shell *shell, char *line);
+int				command_loop(t_shell *shell);
+int				command_handler(t_shell *shell, char *line);
 
 // Parsing
 t_shunting_yard	*shunting_yard_create(char	**tokens);
@@ -166,53 +175,53 @@ void			print_all_stacks(t_shunting_yard *yard);
 char			**split_first_occ(char *str, char c);
 
 // builtins
-int		ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path);
-int		pwd(void);
-int		ft_export(t_shell *shell, t_shunting_node *cmd);
-int		ft_unset(t_shunting_node *cmd, t_shell *shell);
-int		ft_env(void);
-int		ft_exit(t_shell *shell, t_shunting_node *cmd);
-int		ft_echo(t_shunting_node *cmd);
+int				ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path);
+int				pwd(void);
+int				ft_export(t_shell *shell, t_shunting_node *cmd);
+int				ft_unset(t_shunting_node *cmd, t_shell *shell);
+int				ft_env(void);
+int				ft_exit(t_shell *shell, t_shunting_node *cmd);
+int				ft_echo(t_shunting_node *cmd);
 
 // exec env commands
-int			run_env_command(t_shell *shell, t_shunting_node *cmd);
-void		env_pop(t_env_var *vars, t_env_var *pop);
-void		env_push(t_env_var *vars, t_env_var *new_var);
-char		**env_to_envp(t_env_var *var);
-char		**env_get_path(t_env_var *vars);
-t_env_var	*env_get_by_name(t_env_var *vars, char *name);
-t_env_var	*env_create_var(char *name, char *value, bool is_envp);
-t_env_var	*env_make_vars(char **envp);
-bool	arg_is_numerical(char *arg);
+int				run_env_command(t_shell *shell, t_shunting_node *cmd);
+void			env_pop(t_env_var *vars, t_env_var *pop);
+void			env_push(t_env_var *vars, t_env_var *new_var);
+char			**env_to_envp(t_env_var *var);
+char			**env_get_path(t_env_var *vars);
+t_env_var		*env_get_by_name(t_env_var *vars, char *name);
+t_env_var		*env_create_var(char *name, char *value, bool is_envp);
+t_env_var		*env_make_vars(char **envp);
+bool			arg_is_numerical(char *arg);
 
 //our commands
-int		display_history(void);
-int		ft_clear(void);
+int				display_history(void);
+int				ft_clear(void);
 
 //utils
-void	print_invalid_cmd(char *command, char *error, int status);
-char	**ft_split_shell(const char *str);
-void	process_string(const char *str, char **result, int *res_i);
-char	**fill_shell_op(void);
-void	*free_split(char **split);
-char	**clean_quotes(char **tmp);
-void	free_node(t_shunting_node *node);
-int		is_operator(char *str);
-void	*make_cmds(char *line, t_shell *shell, int i);
-void	free_cmds_helper(t_env_var *cmds);
-char	**clean_data(char **temp, char **result);
-int		str_is_equal(char *str1, char *str2);
-char	*is_valid_input(char *line);
-char	**doublestrdup(char **str);
-char	*get_matching_files(char *pattern);
-char	**split_first_occ(char *str, char c);
-int		get_quote_cout(char *str, char quote);
+void			print_invalid_cmd(char *command, char *error, int status);
+char			**ft_split_shell(const char *str);
+void			process_string(const char *str, char **result, int *res_i);
+char			**fill_shell_op(void);
+void			*free_split(char **split);
+char			**clean_quotes(char **tmp);
+void			free_node(t_shunting_node *node);
+int				is_operator(char *str);
+void			*make_cmds(char *line, t_shell *shell, int i);
+void			free_cmds_helper(t_env_var *cmds);
+char			**clean_data(char **temp, char **result);
+int				str_is_equal(char *str1, char *str2);
+char			*is_valid_input(char *line);
+char			**doublestrdup(char **str);
+char			*get_matching_files(char *pattern);
+char			**split_first_occ(char *str, char c);
+int				get_quote_cout(char *str, char quote);
 
 // pipes
-int		run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
-			t_shell *shell, int in_fd);
-char	**make_env_args(char *cmd, char **args);
-char	*get_env_path_to_cmd(t_shell *shell, char *cmd);
+int				run_pipe_cmd(t_shunting_node *cmd1, t_shunting_node *cmd2,
+					t_shell *shell, int in_fd);
+char			**make_env_args(char *cmd, char **args);
+char			*get_env_path_to_cmd(t_shell *shell, char *cmd);
 
 //signals
 sig_atomic_t	*sigint_recv(void);
@@ -222,12 +231,12 @@ void			signal_ignore_parent(void);
 void			segfault(int signal);
 
 // var utils
-void	replace_variable(char **value, char ***args);
-char	*get_var_str(char *str);
+void			replace_variable(char **value, char ***args);
+char			*get_var_str(char *str);
 
 // libft extended
-void	*ft_free_many(void *return_val, int count, ...);
-char	*ft_strjoin_many(int count, ...);
-void	*ft_realloc(void *ptr, size_t size);
+void			*ft_free_many(void *return_val, int count, ...);
+char			*ft_strjoin_many(int count, ...);
+void			*ft_realloc(void *ptr, size_t size);
 
 #endif
