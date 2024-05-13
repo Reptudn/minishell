@@ -12,6 +12,8 @@
 
 #include "../../include/minishell.h"
 
+t_env_var	*env_get_by_name(t_env_var *vars, char *name);
+
 void	env_pop(t_env_var *vars, t_env_var *pop)
 {
 	if (!pop)
@@ -43,17 +45,6 @@ void	env_push(t_env_var *vars, t_env_var *new_var)
 		temp = temp->next;
 	temp->next = new_var;
 	new_var->prev = temp;
-}
-
-t_env_var	*env_get_by_name(t_env_var *vars, char *name)
-{
-	while (vars)
-	{
-		if (str_is_equal(vars->name, name))
-			return (vars);
-		vars = vars->next;
-	}
-	return (NULL);
 }
 
 t_env_var	*env_create_var(char *name, char *value, bool is_envp)
@@ -110,7 +101,7 @@ t_env_var	*env_make_vars(char **envp)
 			temp->prev = current;
 		}
 	}
-	while (first->prev)
+	while (first && first->prev)
 		first = first->prev;
 	return (first);
 }

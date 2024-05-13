@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 08:38:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 09:35:44 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 16:16:04 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,25 @@ char	**env_to_envp(t_env_var *var)
 	return (split);
 }
 
+int	split_first_occ_helper(char **split, char *str, int i)
+{
+	if (!split[0])
+	{
+		free(split);
+		return (1);
+	}
+	split[0] = ft_strncpy(split[0], str, i);
+	split[0][i] = 0;
+	split[1] = ft_strdup(str + i + 1);
+	if (!split[1])
+	{
+		free(split[0]);
+		free(split);
+		return (1);
+	}
+	return (0);
+}
+
 char	**split_first_occ(char *str, char c)
 {
 	int		i;
@@ -97,19 +116,7 @@ char	**split_first_occ(char *str, char c)
 		return (NULL);
 	split[2] = NULL;
 	split[0] = malloc(i + 1);
-	if (!split[0])
-	{
-		free(split);
+	if (split_first_occ_helper(split, str, i))
 		return (NULL);
-	}
-	split[0] = ft_strncpy(split[0], str, i);
-	split[0][i] = 0;
-	split[1] = ft_strdup(str + i + 1);
-	if (!split[1])
-	{
-		free(split[0]);
-		free(split);
-		return (NULL);
-	}
 	return (split);
 }

@@ -79,49 +79,6 @@ char	*remove_surrounding_quotes(char *str)
 	return (str);
 }
 
-// TODO: when something fails return false
-// void	replace_variable(char **value, char ***args)
-// {
-// 	int		i;
-// 	char	*matching;
-
-// 	i = -1;
-// 	if (!args || !value || (!*args && **args == NULL))
-// 		return ;
-// 	if (str_is_equal(*value, "''") || str_is_equal(*value, "\"\""))
-// 	{
-// 		if (*value)
-// 			free(*value);
-// 		*value = ft_strdup("");
-// 	}
-// 	else
-// 		*value = get_var_str(*value);
-// 	while (*args && (*args)[++i])
-// 	{
-// 		if (args && *args && (*args)[i] && (str_is_equal((*args)[i], "''")
-// 			|| str_is_equal((*args)[i], "\"\"")))
-// 		{
-// 			free((*args)[i]);
-// 			(*args)[i] = ft_strdup("");
-// 			continue ;
-// 		}
-// 		if ((*args)[i] && (ft_strchr((*args)[i], '$')
-// 			|| ft_strchr((*args)[i], '"')
-// 			|| ft_strchr((*args)[i], '\'')))
-// 			(*args)[i] = get_var_str((*args)[i]);
-// 		if (!((*args)[i]))
-// 			break ;
-// 		matching = get_matching_files((*args)[i]);
-// 		if (matching)
-// 		{
-// 			free((*args)[i]);
-// 			(*args)[i] = matching;
-// 		}
-// 	}
-// 	if (!(*value))
-// 		*value = ft_strdup("");
-// }
-
 void	replace_variable(char **value, char ***args)
 {
 	int		i;
