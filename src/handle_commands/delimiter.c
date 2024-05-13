@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 11:41:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 13:24:08 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	run_delimiter_helper(int pipefd[2],
 int	run_delimiter_helper3(pid_t pid, t_delimiter *delimiter,
 		t_shunting_node **chain, t_shell *shell)
 {
-
 	if (pid == -1)
 		return (1);
 	else if (pid == 0)

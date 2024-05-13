@@ -17,7 +17,8 @@ int				run_and(t_shell *shell, t_shunting_node *cmd1,
 					t_shunting_node *cmd2);
 int				run_or(t_shell *shell, t_shunting_node *cmd1,
 					t_shunting_node *cmd2);
-char			*run_pipe(t_shell *shell, t_shunting_node **chain);
+char			*run_pipe(t_shell *shell, t_shunting_node **chain,
+					int pipe_amount);
 int				redirect_in(t_shunting_node *cmd,
 					t_shunting_node *cmd2, t_shell *shell);
 int				redirect_out(t_shell *shell, t_shunting_node **chain,
@@ -30,6 +31,7 @@ t_shunting_node	*get_last_opeartor(t_shunting_node *node, int type);
 t_shunting_node	**fill_chain(t_shunting_node *start, t_shunting_node *last,
 					int *len, int type);
 void			execute_cmd_chain_helper2(char **args, t_shunting_node **chain);
+int				get_chain_len(t_shunting_node **chain);
 
 t_shunting_node	**get_cmd_chain(t_shunting_node *start, int *len, int *type)
 {
@@ -104,7 +106,7 @@ int	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 		replace_variable(&(chain[i]->value), &chain[i]->args);
 	if (type == PIPE)
 	{
-		args = chain_out_to_arg(run_pipe(shell, chain));
+		args = chain_out_to_arg(run_pipe(shell, chain, get_chain_len(chain)));
 		free_split(chain[0]->args);
 		chain[0]->args = args;
 	}
