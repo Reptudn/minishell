@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 08:01:51 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/13 14:49:34 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,137 +64,91 @@ char	*append_single_char(char *str, char c)
 	return (out);
 }
 
-// TODO: the two expanding the var are almost the same so make them into a sep func
-// echo "$ "
-// echo "$?"
+int	expand_var(char **var_str, char *str)
+{
+	char		*var;
+	int			len;
+	t_env_var	*env_var;
+
+	if (*str != '$')
+		return (0);
+	str++;
+	len = 0;
+	while (str[len] && ft_isalnum(str[len]))
+		len++;
+	if (*str == '?' && len == 0)
+	{
+		var = ft_itoa(*get_shell()->exit_status);
+		if (!var)
+			return (-1);
+		*var_str = ft_strjoin(*var_str, var);
+		free(var);
+		if (!var_str)
+			return (-1);
+		return (2);
+	}
+	else if (*str == ' ')
+	{
+		*var_str = append_single_char(*var_str, '$');
+		return (1);
+	}
+	var = ft_substr(str, 0, len);
+	if (!var)
+		return (-1);
+	env_var = env_get_by_name(get_shell()->env_vars, var);
+	if (!env_var)
+	{
+		free(var);
+		return (len + 1);
+	}
+	*var_str = ft_strjoin(*var_str, env_var->value);
+	free(var);
+	if (!var_str)
+		return (-1);
+	if (len == 0)
+		return (1);
+	return (len + 1);
+}
+
+bool	is_quote(char c)
+{
+	return (c == '\'' || c == '\"' || c == ' ');
+}
+
 char	*get_var_str(char *str)
 {
 	t_temps	temp;
 	char	*var_str;
-	char	*exit;
-	char	*lol;
 
 	temp.int_i = -1;
-	temp.int_j = 0;
-	var_str = NULL;
 	if (!str)
 		return (NULL);
+	var_str = NULL;
 	while (str && str[++temp.int_i])
 	{
-		if (str[temp.int_i] == '\'' || str[temp.int_i] == '"')
+		if (str[temp.int_i] == '\'')
 		{
-			if (str[temp.int_i] == '\'')
-			{
-				temp.int_i++;
-				while (str[temp.int_i] && str[temp.int_i] != '\'')
-					var_str = append_single_char(var_str, str[temp.int_i++]);
-				continue ;
-			}
-			temp.int_l = 0;
-			while (str[temp.int_i])
-			{
-				if (temp.int_l == 0 && str[temp.int_i] == '"')
-					temp.int_i++;
-				if (temp.int_l++ != 0 && str[temp.int_i] == '"')
-					break ;
-				if (str[temp.int_i] != '$' && str[temp.int_i] != '"')
-					var_str = append_single_char(var_str, str[temp.int_i++]);
-				else if (str[temp.int_i] != '"')
-				{
-					if (str[temp.int_i + 1] && str[temp.int_i + 1] == '?')
-					{
-						exit = ft_itoa(*get_shell()->exit_status);
-						if (!exit)
-							return (NULL);
-						var_str = ft_strjoin(var_str, exit);
-						free(exit);
-						if (!var_str)
-							return (NULL);
-						temp.int_i += 2;
-						continue ;
-					}
-					temp.int_k = 1;
-					while (str[temp.int_i + temp.int_k]
-						&& ft_isalnum(str[temp.int_i + temp.int_k]))
-						temp.int_k++;
-					if (temp.int_k == 1 && str[temp.int_i + 1]
-						&& (str[temp.int_i + temp.int_k] == '"' || str[temp.int_i + temp.int_k] == '\'' || str[temp.int_i + temp.int_k] == ' '))
-					{
-						var_str = append_single_char(var_str, str[temp.int_i++]);
-						continue ;
-					}
-					temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);
-					if (!temp.charp_i)
-						return (NULL);
-					temp.env_var1 = env_get_by_name(get_shell()->env_vars,
-							temp.charp_i + 1);
-					free(temp.charp_i);
-					if (temp.env_var1)
-					{
-						var_str = ft_strjoin(var_str, temp.env_var1->value);
-						if (!var_str)
-							return (NULL);
-					}
-					temp.int_i += temp.int_k;
-				}
-			}
+			temp.int_i++;
+			while (str[temp.int_i] && str[temp.int_i] != '\'')
+				var_str = append_single_char(var_str, str[temp.int_i++]);
+			continue ;
 		}
-		else
+		if (str[temp.int_i] == '\"')
 		{
-			if (str[temp.int_i] != '$')
+			temp.int_i++;
+			while (str[temp.int_i] && str[temp.int_i] != '\"')
 			{
-				var_str = append_single_char(var_str, str[temp.int_i]);
-				if (!var_str)
-					return (NULL);
-				continue ;
-			}
-			if (str[temp.int_i + 1] && str[temp.int_i + 1] == '?')
-			{
-				exit = ft_itoa(*get_shell()->exit_status);
-				if (!exit)
-					return (NULL);
-				var_str = ft_strjoin(var_str, exit);
-				free(exit);
-				if (!var_str)
-					return (NULL);
-				temp.int_i++;
-				continue ;
-			}
-			if (!str[temp.int_i + 1])
-			{
-				var_str = append_single_char(var_str, str[temp.int_i]);
-				if (!var_str)
-					return (NULL);
-				continue ;
-			}
-			temp.int_k = 1;
-			while (str[temp.int_i + temp.int_k]
-				&& ft_isalnum(str[temp.int_i + temp.int_k]))
-				temp.int_k++;
-			if (temp.int_k == 1 && str[temp.int_i + 1]
-				&& (str[temp.int_i + temp.int_k] == '"' || str[temp.int_i + temp.int_k] == '\'' || str[temp.int_i + temp.int_k] == ' '))
-				continue ;
-			temp.charp_i = ft_substr(str, temp.int_i, temp.int_k);
-			if (!temp.charp_i)
-				return (NULL);
-			temp.env_var1 = env_get_by_name(get_shell()->env_vars,
-					temp.charp_i + 1);
-			free(temp.charp_i);
-			if (temp.env_var1)
-			{
-				if (ft_isspace(temp.env_var1->value[0]) && ft_isspace(temp.env_var1->value[ft_strlen(temp.env_var1->value) - 1]))
-				{
-					lol = ft_strtrim(temp.env_var1->value, " \t\n\r\v\f");
-					lol = ft_strjoin(" ", ft_strjoin(lol, " "));
-					var_str = ft_strjoin(var_str, lol);
-				}
+				if (str[temp.int_i] == '$' && str[temp.int_i + 1] != '\"')
+					temp.int_i += expand_var(&var_str, str + temp.int_i);
 				else
-					var_str = ft_strjoin(var_str, temp.env_var1->value);
-				if (!var_str)
-					return (NULL);
+					var_str = append_single_char(var_str, str[temp.int_i++]);
 			}
-			temp.int_i += temp.int_k - 1;
+			continue ;
 		}
+		if (str[temp.int_i] == '$' && str[temp.int_i + 1])
+			temp.int_i += expand_var(&var_str, str + temp.int_i) - 1;
+		else
+			var_str = append_single_char(var_str, str[temp.int_i]);
 	}
 	if (str)
 		free(str);
