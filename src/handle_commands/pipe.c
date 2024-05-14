@@ -20,6 +20,13 @@ void	print_cmd_chain(t_shunting_node **chain);
 char	*read_buff(int fd[2]);
 int		setup_pipe(int pipe_amount, int ***fd, pid_t **pid);
 
+int	*get_pipe_amount(void)
+{
+	static int	pipe_amount = 0;
+
+	return (&pipe_amount);
+}
+
 int	child(int counter, int pipe_amount, int *fd[2],
 	t_shunting_node **chain)
 {
@@ -36,7 +43,7 @@ int	child(int counter, int pipe_amount, int *fd[2],
 	return (run_command(get_shell(), chain[counter]));
 }
 
-int	parent(int counter, int pipe_amount, int *fd[2],
+int	parent(int counter, int *fd[2],
 	pid_t pid[], char **line)
 {
 	int		m;
@@ -47,15 +54,28 @@ int	parent(int counter, int pipe_amount, int *fd[2],
 	close(fd[counter][1]);
 	if (counter != 0)
 		close(fd[counter - 1][0]);
-	if (counter == pipe_amount - 1)
+	if (counter == *get_pipe_amount() - 1)
 	{
 		m = -1;
-		while (++m <= pipe_amount)
+		while (++m <= *get_pipe_amount())
 			waitpid(pid[m], 0, 0);
 		*line = read_buff(fd[counter]);
 		close(fd[counter][0]);
 		return (1);
 	}
+	return (0);
+}
+
+char	*pipe_fail(int counter, int ***fd, pid_t **pid)
+{
+	perror("minishell: pipe");
+	while (--counter >= 0)
+	{
+		close((*fd)[counter][0]);
+		close((*fd)[counter][1]);
+	}
+	free(*fd);
+	free(*pid);
 	return (0);
 }
 
@@ -68,19 +88,20 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 
 	counter = -1;
 	line = NULL;
-	if (!setup_pipe(pipe_amount, &fd, &pid)) // TODO: fail here
+	*get_pipe_amount() = pipe_amount;
+	if (!setup_pipe(pipe_amount, &fd, &pid))
 		return (NULL);
 	counter = -1;
 	while (chain[++counter] && counter <= pipe_amount)
 	{
 		if (pipe(fd[counter]) == -1)
-			return (NULL);
+			return (pipe_fail(counter, &fd, &pid));
 		pid[counter] = fork();
 		if (pid[counter] == -1)
 			return (NULL);
 		else if (pid[counter] == 0)
 			exit(child(counter, pipe_amount, fd, chain));
-		else if (parent(counter, pipe_amount, fd, pid, &line))
+		else if (parent(counter, fd, pid, &line))
 			break ;
 	}
 	return (complete_pipe(&fd, pipe_amount, line));

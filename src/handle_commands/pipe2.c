@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 09:03:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/14 10:11:09 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/14 11:11:07 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ int	setup_pipe(int pipe_amount, int ***fd, pid_t **pid)
 	}
 	while (++counter < pipe_amount)
 	{
-		*fd[counter] = (int *)ft_calloc(2, sizeof(int));
-		if (!(*fd[counter]))
+		(*fd)[counter] = (int *)ft_calloc(2, sizeof(int));
+		if (!((*fd)[counter]))
 		{
 			while (--counter >= 0)
-				free(*fd[counter]);
+				free((*fd)[counter]);
 			free(*fd);
 			free(*pid);
 			return (0);
