@@ -60,6 +60,8 @@
 # define GARBAGE_ADD 1
 # define GARBAGE_FREE 2
 
+# define PIPE_BUFFER_SIZE 4096
+
 void			ft_garbage_collector(void *ptr, int action);
 
 char			*prompt_success(void);
