@@ -15,10 +15,10 @@
 #include "../../include/minishell.h"
 
 char	*complete_pipe(int ***fd, int pipe_amount, char *line);
-int		setup_pipe(pid_t **pid, int ***fd, int pipe_amount, int counter);
 int		get_chain_len(t_shunting_node **chain);
 void	print_cmd_chain(t_shunting_node **chain);
 char	*read_buff(int fd[2]);
+int		setup_pipe(int pipe_amount, int ***fd, pid_t **pid);
 
 int	child(int counter, int pipe_amount, int *fd[2],
 	t_shunting_node **chain)
@@ -68,11 +68,11 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 
 	counter = -1;
 	line = NULL;
-	if (!setup_pipe(&pid, &fd, pipe_amount, counter))
+	if (!setup_pipe(pipe_amount, &fd, &pid)) // TODO: fail here
 		return (NULL);
+	counter = -1;
 	while (chain[++counter] && counter <= pipe_amount)
 	{
-		printf("counter: %d\n", counter);
 		if (pipe(fd[counter]) == -1)
 			return (NULL);
 		pid[counter] = fork();

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 09:03:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/14 09:04:15 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/14 10:11:09 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,31 @@ int	get_chain_len(t_shunting_node **chain)
 	return (pipe_amount);
 }
 
-int	setup_pipe(pid_t **pid, int ***fd, int pipe_amount, int counter)
+int	setup_pipe(int pipe_amount, int ***fd, pid_t **pid)
 {
-	*pid = ft_calloc(pipe_amount, sizeof(pid_t));
-	if (!(*pid))
+	int		counter;
+
+	counter = -1;
+	*pid = (pid_t *)ft_calloc(pipe_amount, sizeof(pid_t));
+	if (!*pid)
 		return (0);
-	*fd = ft_calloc(pipe_amount, sizeof(int [2]));
-	if (!*fd)
+	*fd = (int **)ft_calloc(pipe_amount, sizeof(int *));
+	if (!fd)
 	{
-		free(*pid);
+		free(pid);
 		return (0);
+	}
+	while (++counter < pipe_amount)
+	{
+		*fd[counter] = (int *)ft_calloc(2, sizeof(int));
+		if (!(*fd[counter]))
+		{
+			while (--counter >= 0)
+				free(*fd[counter]);
+			free(*fd);
+			free(*pid);
+			return (0);
+		}
 	}
 	return (1);
 }
