@@ -14,83 +14,74 @@
 
 #include "../../include/minishell.h"
 
+char	*complete_pipe(int ***fd, int pipe_amount, char *line);
+int		setup_pipe(pid_t **pid, int ***fd, int pipe_amount, int counter);
+int		get_chain_len(t_shunting_node **chain);
 void	print_cmd_chain(t_shunting_node **chain);
+char	*read_buff(int fd[2]);
 
-int	get_chain_len(t_shunting_node **chain)
+int	child(int counter, int pipe_amount, int *fd[2],
+	t_shunting_node **chain)
 {
-	int				pipe_amount;
+	if (counter != 0)
+	{
+		close(fd[counter - 1][1]);
+		dup2(fd[counter - 1][0], STDIN_FILENO);
+	}
+	if (counter != pipe_amount)
+	{
+		close(fd[counter][0]);
+		dup2(fd[counter][1], STDOUT_FILENO);
+	}
+	return (run_command(get_shell(), chain[counter]));
+}
 
-	pipe_amount = 0;
-	while (chain[pipe_amount])
-		pipe_amount++;
-	return (pipe_amount);
+int	parent(int counter, int pipe_amount, int *fd[2],
+	pid_t pid[], char **line)
+{
+	int		m;
+	char	buffer[PIPE_BUFFER_SIZE];
+	int		bytes_read;
+	char	*tmp;
+
+	close(fd[counter][1]);
+	if (counter != 0)
+		close(fd[counter - 1][0]);
+	if (counter == pipe_amount - 1)
+	{
+		m = -1;
+		while (++m <= pipe_amount)
+			waitpid(pid[m], 0, 0);
+		*line = read_buff(fd[counter]);
+		close(fd[counter][0]);
+		return (1);
+	}
+	return (0);
 }
 
 char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 {
-	int				fd[pipe_amount][2];
+	int				**fd;
 	int				counter;
-	pid_t			pid[pipe_amount];
-	int				exit_code;
+	pid_t			*pid;
 	char			*line;
-	int				m;
-	char			buffer[PIPE_BUFFER_SIZE];
-	ssize_t			bytesRead;
 
 	counter = -1;
 	line = NULL;
-	ft_memset(pid, 0, sizeof(pid));
+	if (!setup_pipe(&pid, &fd, pipe_amount, counter))
+		return (NULL);
 	while (chain[++counter] && counter <= pipe_amount)
 	{
+		printf("counter: %d\n", counter);
 		if (pipe(fd[counter]) == -1)
 			return (NULL);
 		pid[counter] = fork();
 		if (pid[counter] == -1)
 			return (NULL);
 		else if (pid[counter] == 0)
-		{
-			if (counter != 0)
-			{
-				close(fd[counter - 1][1]);
-				dup2(fd[counter - 1][0], STDIN_FILENO);
-			}
-			if (counter != pipe_amount)
-			{
-				close(fd[counter][0]);
-				dup2(fd[counter][1], STDOUT_FILENO);
-			}
-			exit_code = run_command(shell, chain[counter]);
-			exit(exit_code);
-		}
-		else
-		{
-			close(fd[counter][1]);
-			if (counter != 0)
-				close(fd[counter - 1][0]);
-			if (counter == pipe_amount - 1)
-			{
-				m = -1;
-				while (++m <= pipe_amount)
-					waitpid(pid[m], 0, 0);
-				line = ft_strdup("");
-				bytesRead = read(fd[counter][0], buffer, sizeof(buffer) - 1);
-				while (bytesRead > 0)
-				{
-					buffer[bytesRead] = '\0';
-					line = realloc(line, strlen(line) + bytesRead + 1);
-					strcat(line, buffer);
-					bytesRead = read(fd[counter][0], buffer,
-							sizeof(buffer) - 1);
-				}
-				close(fd[counter][0]);
-				break ;
-			}
-		}
+			exit(child(counter, pipe_amount, fd, chain));
+		else if (parent(counter, pipe_amount, fd, pid, &line))
+			break ;
 	}
-	while (--pipe_amount >= 0)
-	{
-		close(fd[pipe_amount][0]);
-		close(fd[pipe_amount][1]);
-	}
-	return (line);
+	return (complete_pipe(&fd, pipe_amount, line));
 }

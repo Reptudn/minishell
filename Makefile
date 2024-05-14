@@ -55,6 +55,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)handle_commands/handler.c \
 			$(SRCDIR)handle_commands/handler_helper.c \
 			$(SRCDIR)handle_commands/pipe.c \
+			$(SRCDIR)handle_commands/pipe2.c \
 			$(SRCDIR)handle_commands/or.c \
 			$(SRCDIR)handle_commands/path_cmd.c \
 			$(SRCDIR)handle_commands/redirect_in.c \
