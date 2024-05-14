@@ -15,6 +15,67 @@
 
 char	*append_single_char(char *str, char c);
 
+void	ft_fuck1(const char *dick1, t_process_string *dick)
+{
+	dick->temp.int_j = 0;
+	dick->quote = dick1[dick->i];
+	while (dick1[dick->i])
+	{
+		if (dick1[dick->i] == dick->quote && dick->temp.int_j++ > 0)
+		{
+			dick->temp.charp_i = append_single_char(
+					dick->temp.charp_i, dick1[dick->i]);
+			break ;
+		}
+		dick->temp.charp_i = append_single_char(dick->temp.charp_i,
+				dick1[dick->i]);
+		if (!dick->temp.charp_i)
+			return ;
+		dick->i++;
+	}
+}
+
+int	ft_fuck3(const char *dick_3, t_process_string *dick1,
+		char **nis_pe, int *hu_so)
+{
+	if (ft_isspace(dick_3[dick1->i]))
+	{
+		if (!str_is_equal(dick1->temp.charp_i, "")
+			|| !str_is_equal(dick1->temp.charp_i, " "))
+			nis_pe[(*hu_so)++] = dick1->temp.charp_i;
+		dick1->temp.charp_i = ft_strdup("");
+		if (!dick1->temp.charp_i)
+			return (0);
+		return (1);
+	}
+	dick1->temp.charp_i = append_single_char(dick1->temp.charp_i,
+			dick_3[dick1->i]);
+	if (!dick1->temp.charp_i)
+		return (0);
+}
+
+int	ft_fuck2(const char *dick, t_process_string *dick2,
+		char **nis_pe, int *hu_so)
+{
+	dick2->temp.int_j = is_shell_op((char *) &dick[dick2->i],
+			dick2->shell_op, 10);
+	if (dick2->temp.int_j != 0)
+	{
+		if (!str_is_equal(dick2->temp.charp_i, "")
+			|| !str_is_equal(dick2->temp.charp_i, " "))
+			nis_pe[(*hu_so)++] = dick2->temp.charp_i;
+		nis_pe[(*hu_so)++] = ft_substr(&dick[dick2->i], 0,
+				dick2->temp.int_j);
+		dick2->i += dick2->temp.int_j - 1;
+		dick2->temp.charp_i = ft_strdup("");
+		if (!dick2->temp.charp_i)
+			return (0);
+	}
+	else
+		return (ft_fuck3(dick, dick2, nis_pe, hu_so));
+	return (1);
+}
+
 void	process_string(const char *str, char **result, int *res_i)
 {
 	t_process_string	string;
@@ -25,60 +86,17 @@ void	process_string(const char *str, char **result, int *res_i)
 	while (str[++(string.i)])
 	{
 		if (str[string.i] == '"' || str[string.i] == '\'')
-		{
-			string.temp.int_j = 0;
-			string.quote = str[string.i];
-			while (str[string.i])
-			{
-				if (str[string.i] == string.quote && string.temp.int_j++ > 0)
-				{
-					string.temp.charp_i = append_single_char(
-							string.temp.charp_i, str[string.i]);
-					break ;
-				}
-				string.temp.charp_i = append_single_char(string.temp.charp_i,
-						str[string.i]);
-				if (!string.temp.charp_i)
-					return ;
-				string.i++;
-			}
-		}
+			ft_fuck1(str, &string);
 		else
 		{
-			string.temp.int_j = is_shell_op((char *) &str[string.i],
-					string.shell_op, 10);
-			if (string.temp.int_j != 0)
-			{
-				if (!str_is_equal(string.temp.charp_i, "")
-					|| !str_is_equal(string.temp.charp_i, " "))
-					result[(*res_i)++] = string.temp.charp_i;
-				result[(*res_i)++] = ft_substr(&str[string.i], 0,
-						string.temp.int_j);
-				string.i += string.temp.int_j - 1;
-				string.temp.charp_i = ft_strdup("");
-				if (!string.temp.charp_i)
-					return ;
-			}
+			if (ft_fuck2(str, &string, result, res_i))
+				continue ;
 			else
-			{
-				if (ft_isspace(str[string.i]))
-				{
-					if (!str_is_equal(string.temp.charp_i, "")
-						|| !str_is_equal(string.temp.charp_i, " "))
-						result[(*res_i)++] = string.temp.charp_i;
-					string.temp.charp_i = ft_strdup("");
-					if (!string.temp.charp_i)
-						return ;
-					continue ;
-				}
-				string.temp.charp_i = append_single_char(string.temp.charp_i,
-						str[string.i]);
-				if (!string.temp.charp_i)
-					return ;
-			}
+				return ;
 		}
 	}
-	if (!str_is_equal(string.temp.charp_i, "") || !str_is_equal(string.temp.charp_i, " "))
+	if (!str_is_equal(string.temp.charp_i, "")
+		|| !str_is_equal(string.temp.charp_i, " "))
 		result[(*res_i)++] = string.temp.charp_i;
 	result[(*res_i)] = NULL;
 	free_split(string.shell_op);
