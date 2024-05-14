@@ -271,6 +271,7 @@ p""''''w''''''""""""''''''''''''''''''''''''''''''''d
 
 '''''''''''''''' echo ok
 
+# XXX: why would this not work for us hmm
            ''echo ok
 
            ""echo ok

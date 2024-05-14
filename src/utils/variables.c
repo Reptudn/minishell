@@ -32,51 +32,42 @@ void	handle_env_var(char **arg, t_shell *shell)
 	*arg = var;
 }
 
-void	remove_closing_quotes(char **str)
+static void	move_forwards(int i, int *j, char ***args)
+{
+	while (1)
+	{
+		if (!(*args)[i] && i != *j)
+			break ;
+		(*args)[i] = (*args)[i + 1];
+		i++;
+	}
+}
+
+static void	replace_args(char ***args)
 {
 	int		i;
 	int		j;
-	char	quote;
-	char	*new_str;
+	char	*var;
 
 	i = -1;
-	j = 0;
-	new_str = malloc(sizeof(char) * (ft_strlen(*str) + 1));
-	while (str && new_str && *str && (*str)[++i])
+	while (*args && (*args)[++i])
 	{
-		if ((*str)[i] != '\"')
+		if (args && *args && (*args)[i] && (str_is_equal((*args)[i], "''")
+			|| str_is_equal((*args)[i], "\"\"")))
 		{
-			new_str[j++] = (*str)[i];
+			free((*args)[i]);
+			(*args)[i] = ft_strdup("");
 			continue ;
 		}
-		quote = (*str)[i];
-		while ((*str)[i] && (*str)[i] != quote)
-			new_str[j++] = (*str)[i++];
+		if ((*args)[i] && (ft_strchr((*args)[i], '$')
+			|| ft_strchr((*args)[i], '"')
+			|| ft_strchr((*args)[i], '\'')))
+		{
+			(*args)[i] = get_var_str((*args)[i]);
+			if (!((*args)[i]))
+				move_forwards(i, &j, args);
+		}
 	}
-	if (*str)
-		free(*str);
-	if (new_str)
-		new_str[j] = '\0';
-	*str = new_str;
-}
-
-char	*remove_surrounding_quotes(char *str)
-{
-	int		changed;
-
-	changed = 0;
-	while (str && ((str[0] == '\'' && str[ft_strlen(str) - 1] == '\'')
-			|| (str[0] == '\"' && str[ft_strlen(str) - 1] == '\"'))
-		&& !changed)
-	{
-		str = remove_surrounding_doubleq(str, NULL);
-		if (str_is_equal(str, ""))
-			break ;
-		str = remove_surrounding_singleq(str, &changed);
-	}
-	if (!changed)
-		remove_closing_quotes(&str);
-	return (str);
 }
 
 void	replace_variable(char **value, char ***args)
@@ -95,33 +86,7 @@ void	replace_variable(char **value, char ***args)
 	}
 	else
 		*value = get_var_str(*value);
-	while (*args && (*args)[++i])
-	{
-		if (args && *args && (*args)[i] && (str_is_equal((*args)[i], "''")
-			|| str_is_equal((*args)[i], "\"\"")))
-		{
-			free((*args)[i]);
-			(*args)[i] = ft_strdup("");
-			continue ;
-		}
-		if ((*args)[i] && (ft_strchr((*args)[i], '$')
-			|| ft_strchr((*args)[i], '"')
-			|| ft_strchr((*args)[i], '\'')))
-		{
-			(*args)[i] = get_var_str((*args)[i]);
-			if (!((*args)[i]))
-			{
-				j = i;
-				while (1)
-				{
-					if (!(*args)[j] && i != j)
-						break ;
-					(*args)[j] = (*args)[j + 1];
-					j++;
-				}
-			}
-		}
-	}
+	replace_args(args);
 	if (!(*value))
 		*value = ft_strdup("");
 }
