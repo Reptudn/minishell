@@ -6,13 +6,17 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 14:49:34 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/14 13:51:04 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 char	*remove_surrounding_doubleq(char *str, int *changed);
+char	*handle_single_quotes(char *str, t_temps *temp, char *var_str);
+char	*handle_double_quotes(char *str, t_temps *temp, char *var_str);
+char	*handle_dollar_sign(char *str, t_temps *temp, char *var_str);
+int		expand_var(char **var_str, char *str);
 
 void	insert_str_on_pos_w_len(char **str, char *insert, int pos, int len)
 {
@@ -64,57 +68,6 @@ char	*append_single_char(char *str, char c)
 	return (out);
 }
 
-int	expand_var(char **var_str, char *str)
-{
-	char		*var;
-	int			len;
-	t_env_var	*env_var;
-
-	if (*str != '$')
-		return (0);
-	str++;
-	len = 0;
-	while (str[len] && ft_isalnum(str[len]))
-		len++;
-	if (*str == '?' && len == 0)
-	{
-		var = ft_itoa(*get_shell()->exit_status);
-		if (!var)
-			return (-1);
-		*var_str = ft_strjoin(*var_str, var);
-		free(var);
-		if (!var_str)
-			return (-1);
-		return (2);
-	}
-	else if (*str == ' ')
-	{
-		*var_str = append_single_char(*var_str, '$');
-		return (1);
-	}
-	var = ft_substr(str, 0, len);
-	if (!var)
-		return (-1);
-	env_var = env_get_by_name(get_shell()->env_vars, var);
-	if (!env_var)
-	{
-		free(var);
-		return (len + 1);
-	}
-	*var_str = ft_strjoin(*var_str, env_var->value);
-	free(var);
-	if (!var_str)
-		return (-1);
-	if (len == 0)
-		return (1);
-	return (len + 1);
-}
-
-bool	is_quote(char c)
-{
-	return (c == '\'' || c == '\"' || c == ' ');
-}
-
 char	*get_var_str(char *str)
 {
 	t_temps	temp;
@@ -127,26 +80,11 @@ char	*get_var_str(char *str)
 	while (str && str[++temp.int_i])
 	{
 		if (str[temp.int_i] == '\'')
-		{
-			temp.int_i++;
-			while (str[temp.int_i] && str[temp.int_i] != '\'')
-				var_str = append_single_char(var_str, str[temp.int_i++]);
-			continue ;
-		}
-		if (str[temp.int_i] == '\"')
-		{
-			temp.int_i++;
-			while (str[temp.int_i] && str[temp.int_i] != '\"')
-			{
-				if (str[temp.int_i] == '$' && str[temp.int_i + 1] != '\"')
-					temp.int_i += expand_var(&var_str, str + temp.int_i);
-				else
-					var_str = append_single_char(var_str, str[temp.int_i++]);
-			}
-			continue ;
-		}
-		if (str[temp.int_i] == '$' && str[temp.int_i + 1])
-			temp.int_i += expand_var(&var_str, str + temp.int_i) - 1;
+			var_str = handle_single_quotes(str, &temp, var_str);
+		else if (str[temp.int_i] == '\"')
+			var_str = handle_double_quotes(str, &temp, var_str);
+		else if (str[temp.int_i] == '$')
+			var_str = handle_dollar_sign(str, &temp, var_str);
 		else
 			var_str = append_single_char(var_str, str[temp.int_i]);
 	}
