@@ -111,8 +111,8 @@ EechoE
 
 rm -f something
 
-| echo -n oui
+# | echo -n oui
 
-| | |
+# | | |
 
 
