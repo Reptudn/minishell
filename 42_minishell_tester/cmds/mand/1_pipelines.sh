@@ -147,7 +147,7 @@ ls|cat Makefile|> out
 ls|cat Makefile|>> out
 /bin/rm -f out
 
-
+# XXX: check this
 ls|cat Makefile|cat<<asd>out
 $USER
 asd

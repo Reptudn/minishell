@@ -29,6 +29,8 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/wildcard.c \
 			$(SRCDIR)utils/variables.c \
 			$(SRCDIR)utils/variables2.c \
+			$(SRCDIR)utils/variables3.c \
+			$(SRCDIR)utils/variables4.c \
 			$(SRCDIR)libft_extended/ft_free.c \
 			$(SRCDIR)libft_extended/ft_strjoin_many.c \
 			$(SRCDIR)commands/show_history.c \
