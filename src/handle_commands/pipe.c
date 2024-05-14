@@ -43,8 +43,7 @@ int	child(int counter, int pipe_amount, int *fd[2],
 	return (run_command(get_shell(), chain[counter]));
 }
 
-int	parent(int counter, int *fd[2],
-	pid_t pid[], char **line)
+int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 {
 	int		m;
 	char	buffer[PIPE_BUFFER_SIZE];
