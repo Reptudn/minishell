@@ -13,73 +13,75 @@
 #include "../../lib/libft/libft.h"
 #include "../../include/minishell.h"
 
-char		*append_single_char(char *str, char c);
+char	*append_single_char(char *str, char c);
 
 void	process_string(const char *str, char **result, int *res_i)
 {
-	t_temps	temp;
-	char	**shell_op;
-	int		i;
-	char	quote;
+	t_process_string	string;
 
-	i = -1;
-	shell_op = fill_shell_op();
-	temp.charp_i = NULL;
-	while (str[++i])
+	string.i = -1;
+	string.shell_op = fill_shell_op();
+	string.temp.charp_i = NULL;
+	while (str[++(string.i)])
 	{
-		if (str[i] == '"' || str[i] == '\'')
+		if (str[string.i] == '"' || str[string.i] == '\'')
 		{
-			temp.int_j = 0;
-			quote = str[i];
-			while (str[i])
+			string.temp.int_j = 0;
+			string.quote = str[string.i];
+			while (str[string.i])
 			{
-				if (str[i] == quote && temp.int_j++ > 0)
+				if (str[string.i] == string.quote && string.temp.int_j++ > 0)
 				{
-					temp.charp_i = append_single_char(temp.charp_i, str[i]);
+					string.temp.charp_i = append_single_char(
+							string.temp.charp_i, str[string.i]);
 					break ;
 				}
-				temp.charp_i = append_single_char(temp.charp_i, str[i]);
-				if (!temp.charp_i)
+				string.temp.charp_i = append_single_char(string.temp.charp_i,
+						str[string.i]);
+				if (!string.temp.charp_i)
 					return ;
-				i++;
+				string.i++;
 			}
 		}
 		else
 		{
-			temp.int_j = is_shell_op((char *) &str[i], shell_op, 10);
-			if (temp.int_j != 0)
+			string.temp.int_j = is_shell_op((char *) &str[string.i],
+					string.shell_op, 10);
+			if (string.temp.int_j != 0)
 			{
-				if (!str_is_equal(temp.charp_i, "")
-					|| !str_is_equal(temp.charp_i, " "))
-					result[(*res_i)++] = temp.charp_i;
-				result[(*res_i)++] = ft_substr(&str[i], 0, temp.int_j);
-				i += temp.int_j - 1;
-				temp.charp_i = ft_strdup("");
-				if (!temp.charp_i)
+				if (!str_is_equal(string.temp.charp_i, "")
+					|| !str_is_equal(string.temp.charp_i, " "))
+					result[(*res_i)++] = string.temp.charp_i;
+				result[(*res_i)++] = ft_substr(&str[string.i], 0,
+						string.temp.int_j);
+				string.i += string.temp.int_j - 1;
+				string.temp.charp_i = ft_strdup("");
+				if (!string.temp.charp_i)
 					return ;
 			}
 			else
 			{
-				if (ft_isspace(str[i]))
+				if (ft_isspace(str[string.i]))
 				{
-					if (!str_is_equal(temp.charp_i, "")
-						|| !str_is_equal(temp.charp_i, " "))
-						result[(*res_i)++] = temp.charp_i;
-					temp.charp_i = ft_strdup("");
-					if (!temp.charp_i)
+					if (!str_is_equal(string.temp.charp_i, "")
+						|| !str_is_equal(string.temp.charp_i, " "))
+						result[(*res_i)++] = string.temp.charp_i;
+					string.temp.charp_i = ft_strdup("");
+					if (!string.temp.charp_i)
 						return ;
 					continue ;
 				}
-				temp.charp_i = append_single_char(temp.charp_i, str[i]);
-				if (!temp.charp_i)
+				string.temp.charp_i = append_single_char(string.temp.charp_i,
+						str[string.i]);
+				if (!string.temp.charp_i)
 					return ;
 			}
 		}
 	}
-	if (!str_is_equal(temp.charp_i, "") || !str_is_equal(temp.charp_i, " "))
-		result[(*res_i)++] = temp.charp_i;
+	if (!str_is_equal(string.temp.charp_i, "") || !str_is_equal(string.temp.charp_i, " "))
+		result[(*res_i)++] = string.temp.charp_i;
 	result[(*res_i)] = NULL;
-	free_split(shell_op);
+	free_split(string.shell_op);
 }
 
 char	**clean_quotes(char **tmp)

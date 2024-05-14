@@ -157,6 +157,15 @@ typedef struct s_strjoin_many
 	int		i;
 }	t_strjoin_many;
 
+typedef struct s_process_string
+{
+	t_temps	temp;
+	char	**shell_op;
+	int		i;
+	char	quote;
+	int		returnvalue;
+}	t_process_string;
+
 t_shell			*get_shell(void);
 int				*get_run(void);
 char			*get_input(char *prompt);
