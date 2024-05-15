@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/14 15:11:55 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 13:25:46 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 		write(pipefd[1], "\n", 1);
 		free(temp);
 	}
+	free(heredoc);
 	return (CMD_SUCCESS);
 }
 
@@ -107,7 +108,6 @@ int	run_delimiter_helper3(pid_t pid, t_delimiter *delimiter,
 	return (0);
 }
 
-// FIXME: this doesnt work: cat << lim''
 char	*run_delimiter(t_shunting_node **chain,
 		t_shell *shell)
 {

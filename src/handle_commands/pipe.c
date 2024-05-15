@@ -57,7 +57,7 @@ int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 	if (counter == *get_pipe_amount() - 1)
 	{
 		m = -1;
-		while (++m <= *get_pipe_amount())
+		while (++m < *get_pipe_amount())
 		{
 			waitpid(pid[m], &exits, 0);
 			if (WIFEXITED(exits) != CMD_SUCCESS)
@@ -108,5 +108,6 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 		else if (parent(counter, fd, pid, &line))
 			break ;
 	}
+	free(pid);
 	return (complete_pipe(&fd, pipe_amount, line));
 }
