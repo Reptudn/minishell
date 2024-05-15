@@ -81,6 +81,7 @@ int	command_loop(t_shell *shell)
 	{
 		if (command_loop_helper3(line, &yard, status))
 			continue ;
+		// print_all_stacks(yard);
 		*shell->exit_status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
 		free(line);

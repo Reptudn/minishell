@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:49:41 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/14 13:51:54 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 07:51:18 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	expand_var(char **var_str, char *str)
 		return (0);
 	str++;
 	len = 0;
-	while (str[len] && ft_isalnum(str[len]))
+	while (str[len] && (ft_isalnum(str[len]) || str[len] == '_'))
 		len++;
 	if (*str == '?' && len == 0)
 		return (handle_question_mark(var_str, str));
