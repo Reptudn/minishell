@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 09:03:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/14 11:11:07 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 11:46:01 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*read_buff(int fd[2])
 	while (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
-		tmp = ft_strjoin(line, buffer);
+		tmp = ft_strjoin(line, buffer); // TODO: leak stuff
 		free(line);
 		if (!tmp)
 			return (NULL);

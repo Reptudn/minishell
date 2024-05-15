@@ -130,7 +130,7 @@ norm:
 
 norminette: norm
 
-valgrind: all
+valgrind: debug
 	valgrind --leak-check=full ./$(NAME)
 
 unused:
