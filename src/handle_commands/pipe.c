@@ -108,5 +108,6 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 		else if (parent(counter, fd, pid, &line))
 			break ;
 	}
+	free(pid);
 	return (complete_pipe(&fd, pipe_amount, line));
 }
