@@ -57,7 +57,7 @@ int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 	if (counter == *get_pipe_amount() - 1)
 	{
 		m = -1;
-		while (++m <= *get_pipe_amount())
+		while (++m < *get_pipe_amount())
 		{
 			waitpid(pid[m], &exits, 0);
 			if (WIFEXITED(exits) != CMD_SUCCESS)
