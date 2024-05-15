@@ -24,8 +24,8 @@ void	is_var(char *str, t_env_var *var)
 	m = 0;
 	if (!str || !var)
 		return ;
-	name = malloc(strlen(str) + 1);
-	value = malloc(strlen(str) + 1);
+	name = ft_malloc(ft_strlen(str) + 1);
+	value = ft_malloc(ft_strlen(str) + 1);
 	while (str[++i] && str[i] != '=')
 		name[i] = str[i];
 	name[i] = '\0';

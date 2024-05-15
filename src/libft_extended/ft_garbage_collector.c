@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_garbage_collector.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/15 16:11:49 by jkauker           #+#    #+#             */
+/*   Updated: 2024/05/15 16:23:30 by jkauker          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 # include "../../include/minishell.h"
 
@@ -54,6 +65,7 @@ static int	ft_garbage_col_add(void *ptr)
 	if (!*garbage && !ft_garbage_col_create())
 		return (GARBAGE_ERROR_CREATE);
 	count = garbage_col_count();
+	printf("count: %d\n", *count);
 	if (*count >= *garbage_col_size())
 	{
 		new_garbage = realloc(*garbage, sizeof(void *)

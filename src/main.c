@@ -84,7 +84,7 @@ int	initialize_shell(t_shell *shell, int argc, char **argv, char **envp)
 {
 	*get_run() = 1;
 	shell->path = getcwd(NULL, 0);
-	shell->exit_status = malloc(sizeof(int));
+	shell->exit_status = ft_malloc(sizeof(int));
 	*shell->exit_status = CMD_SUCCESS;
 	argc++;
 	(void)argv;
@@ -110,5 +110,6 @@ int	main(int argc, char **argv, char **envp)
 	init_status = *shell->exit_status;
 	if (shell->exit_status)
 		free(shell->exit_status);
+	// free_all();
 	return (init_status);
 }

@@ -53,7 +53,7 @@ t_env_var	*env_create_var(char *name, char *value, bool is_envp)
 
 	if (!name)
 		return (NULL);
-	env_var = malloc(sizeof(t_env_var));
+	env_var = ft_malloc(sizeof(t_env_var));
 	if (!env_var)
 		return (NULL);
 	env_var->name = ft_strdup(name);

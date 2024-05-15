@@ -121,7 +121,7 @@ int	run_command(t_shell *shell, t_shunting_node *cmd)
 	else if (status == -1)
 		status = run_external_command(shell, cmd);
 	if (cmd->exit_status == NULL)
-		cmd->exit_status = malloc(sizeof(int));
+		cmd->exit_status = ft_malloc(1);
 	if (!cmd->update)
 		return (status);
 	*cmd->exit_status = status;

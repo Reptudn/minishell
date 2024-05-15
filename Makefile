@@ -31,6 +31,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/variables2.c \
 			$(SRCDIR)utils/variables3.c \
 			$(SRCDIR)utils/variables4.c \
+			$(SRCDIR)libft_extended/ft_garbage_collector.c \
 			$(SRCDIR)libft_extended/ft_free.c \
 			$(SRCDIR)libft_extended/ft_strjoin_many.c \
 			$(SRCDIR)commands/show_history.c \

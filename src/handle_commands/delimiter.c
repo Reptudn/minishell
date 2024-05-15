@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 13:25:46 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 16:14:58 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	clean_quotes_in_chain(t_shunting_node **chain)
 	j = 0;
 	temp = strdup(chain[1]->value);
 	free(chain[1]->value);
-	temp2 = (char *)malloc(sizeof(char) * (ft_strlen(temp) + 1));
+	temp2 = ft_malloc(sizeof(char) * (ft_strlen(temp) + 1));
 	if (!temp2)
-		printf("malloc failed\n");
+		printf("ft_malloc failed\n");
 	while (temp[i])
 	{
 		if (temp[i] == '\'' || temp[i] == '\"')
@@ -81,7 +81,7 @@ int	run_delimiter_helper(int pipefd[2],
 	int		counter;
 	int		exit_status;
 
-	heredoc = malloc(sizeof(char) * 100);
+	heredoc = ft_malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
 	counter = 1;
 	signal_ignore_parent();

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 12:18:03 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 16:18:18 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	insert_str_on_pos_w_len(char **str, char *insert, int pos, int len)
 	int		i;
 	int		k;
 
-	new_str = malloc((ft_strlen(*str) + ft_strlen(insert) - len + 1)
+	new_str = ft_malloc((ft_strlen(*str) + ft_strlen(insert) - len + 1)
 			* sizeof(char));
 	if (!new_str)
 		return ;
@@ -50,7 +50,7 @@ char	*append_single_char(char *str, char c)
 
 	if (!str)
 	{
-		out = malloc(2 * sizeof(char));
+		out = ft_malloc(2 * sizeof(char));
 		if (!out)
 			return (NULL);
 		out[0] = c;

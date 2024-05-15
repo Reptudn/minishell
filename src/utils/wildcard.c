@@ -75,7 +75,7 @@ char	*get_matching_files(char *pattern)
 	if (!pattern || ft_strchr(pattern, '*') == NULL)
 		return (NULL);
 	d = opendir(".");
-	match = malloc(sizeof(char));
+	match = ft_malloc(1);
 	match[0] = '\0';
 	if (d && match)
 	{
