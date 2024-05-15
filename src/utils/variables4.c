@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:49:41 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 12:03:24 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 12:27:05 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static int	handle_var(char **var_str, char *str, int len, bool trim)
 {
 	char		*var;
 	t_env_var	*env_var;
+	char		*temp_var_str;
 
 	var = ft_substr(str, 0, len);
 	if (!var)
@@ -99,7 +100,12 @@ static int	handle_var(char **var_str, char *str, int len, bool trim)
 	if (trim && str + len && ft_strchr(env_var->value, ' '))
 		*var_str = handle_trim(env_var, var_str);
 	else
-		*var_str = ft_strjoin(*var_str, env_var->value);
+	{
+		temp_var_str = ft_strjoin(*var_str, env_var->value);
+		free(*var_str);
+		(*var_str) = ft_strdup(temp_var_str);
+		free(temp_var_str);
+	}
 	if (!var_str)
 		return (-1);
 	if (len == 0)
