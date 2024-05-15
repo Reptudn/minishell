@@ -22,7 +22,7 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 	char	*temp;
 	char	*new_heredoc;
 
-	while (42 == 42)
+	while (69420)
 	{
 		temp = get_input("heredoc> ");
 		if (!temp && *sigint_recv() && run_delmiter_im_crying())
@@ -84,6 +84,7 @@ int	run_delimiter_helper(int pipefd[2],
 	heredoc[0] = '\0';
 	counter = 1;
 	signal_ignore_parent();
+	clean_quotes_in_chain(chain);
 	exit_status = run_delimiter_helper2(pipefd, chain, heredoc, counter);
 	signal_restore_parent();
 	return (exit_status);
