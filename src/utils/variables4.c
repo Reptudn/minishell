@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:49:41 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 12:27:05 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 12:31:41 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@ char	*append_single_char(char *str, char c);
 static int	handle_question_mark(char **var_str, char *str)
 {
 	char	*var;
+	char	*tmp;
 
 	var = ft_itoa(*get_shell()->exit_status);
 	if (!var)
 		return (-1);
-	*var_str = ft_strjoin(*var_str, var);
+	tmp = ft_strjoin(*var_str, var);
+	free(*var_str);
+	*var_str = tmp;
 	free(var);
 	if (!var_str)
 		return (-1);
