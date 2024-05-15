@@ -77,12 +77,13 @@ int	execute_command(t_shell *shell, t_shunting_node *cmd,
 	return (ran);
 }
 
-int	norm_conform_function_to_return_correct_val(int ran, int status)
+int	norm_conform_function_to_return_correct_val(int ran, int status,
+	char *val)
 {
-	if (ran)
-	{
+	if (ran && val && (*val != '.' && *val != '/')) // TODO: check this if yes
+		return (127);
+	else if (ran)
 		return (status);
-	}
 	return (-1);
 }
 
@@ -98,7 +99,8 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 	path = env_get_path(shell->env_vars);
 	if (!path)
 		return (-1);
-	while (path[++i])
+	ran = 0;
+	while (path[++i] && (cmd->value[0] != '.' && cmd->value[1] != '/'))
 	{
 		cmd_path = create_cmd_path(path[i], cmd->value);
 		if (!cmd_path)
@@ -110,5 +112,6 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 			break ;
 	}
 	free_split(path);
-	return (norm_conform_function_to_return_correct_val(ran, status));
+	return (norm_conform_function_to_return_correct_val(ran, status,
+			cmd->value));
 }
