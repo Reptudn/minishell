@@ -12,6 +12,11 @@
 
 #include "../../include/minishell.h"
 
+/*
+**	TODO: check if those prio values are all correct
+**	 and fit with shunting_yard_node.c:28 that checks forthe pro to
+**	 be less than or equal to the prio of the last node in the stack
+*/
 int	get_operator_priority(char *operator)
 {
 	if (operator && ft_strlen(operator) == 1)
@@ -23,16 +28,16 @@ int	get_operator_priority(char *operator)
 		if (str_is_equal(operator, "<") == 1)
 			return (2);
 		if (str_is_equal(operator, "(") == 1)
-			return (4);
+			return (3);
 		if (str_is_equal(operator, ")") == 1)
-			return (4);
+			return (3);
 	}
 	else if (operator && ft_strlen(operator) == 2)
 	{
 		if (str_is_equal(operator, "||") == 1)
-			return (3);
+			return (1);
 		if (str_is_equal(operator, "&&") == 1)
-			return (3);
+			return (1);
 		if (str_is_equal(operator, ">>") == 1)
 			return (2);
 		if (str_is_equal(operator, "<<") == 1)

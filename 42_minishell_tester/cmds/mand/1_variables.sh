@@ -126,6 +126,7 @@ $tmp_test 42 42
 export tmp_test="/bin/echo 42"
 "tmp_test"
 
+# XXX: i thought i had this covered, but i don't
 ### VARIABLE SPLITTING ###
 export X="  A  B  "
 /bin/echo "1"$X'2'

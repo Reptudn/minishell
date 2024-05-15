@@ -11,6 +11,7 @@ cat ./test_files/infile_big | grep oi
 
 export GHOST=123 | env | grep GHOST
 
+# XXX: exit status is sometimes not correct
 /bin/echo 1 | grep 1
 
 /bin/echo 1 | grep 2

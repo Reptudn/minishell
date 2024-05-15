@@ -43,13 +43,13 @@ int	child(int counter, int pipe_amount, int *fd[2],
 	return (run_command(get_shell(), chain[counter]));
 }
 
-int	parent(int counter, int *fd[2],
-	pid_t pid[], char **line)
+int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 {
 	int		m;
 	char	buffer[PIPE_BUFFER_SIZE];
 	int		bytes_read;
 	char	*tmp;
+	int		exits;
 
 	close(fd[counter][1]);
 	if (counter != 0)
@@ -58,7 +58,11 @@ int	parent(int counter, int *fd[2],
 	{
 		m = -1;
 		while (++m <= *get_pipe_amount())
-			waitpid(pid[m], 0, 0);
+		{
+			waitpid(pid[m], &exits, 0);
+			if (WIFEXITED(exits) != CMD_SUCCESS)
+				*get_shell()->exit_status = WEXITSTATUS(exits);
+		}
 		*line = read_buff(fd[counter]);
 		close(fd[counter][0]);
 		return (1);

@@ -66,7 +66,6 @@ int	handle_too_many_args(t_shunting_node *cmd, char *old_path)
 	if (cmd->args && cmd->args[0] && cmd->args[1])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
-		free(old_path);
 		return (CMD_FAILURE);
 	}
 	return (CMD_SUCCESS);
