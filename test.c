@@ -1,17 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_garbage_collector.c                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 16:11:49 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 20:35:50 by jkauker          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-# include "../../include/minishell.h"
-
 #define GARBAGE_COL_SIZE 100
 #define GARBAGE_ERROR_EXPAND -2
 #define GARBAGE_ERROR_CREATE -1
@@ -152,4 +138,17 @@ void	ft_free(void **ptr)
 		return ;
 	free(*ptr);
 	set_ptr_to_nil(*ptr);
+}
+
+int main()
+{
+	char *str = ft_malloc(10);
+	char *wow = ft_malloc(1);
+	char *el = ft_malloc(1);
+	str[0] = 'h';
+	str[1] = '\0';
+	// ft_free((void **) &(str));
+	// ft_free((void **) &(wow));
+	// ft_free((void **) &(el));
+	free_all();
 }

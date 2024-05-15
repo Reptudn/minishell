@@ -110,6 +110,6 @@ int	main(int argc, char **argv, char **envp)
 	init_status = *shell->exit_status;
 	if (shell->exit_status)
 		free(shell->exit_status);
-	// free_all();
+	free_all();
 	return (init_status);
 }
