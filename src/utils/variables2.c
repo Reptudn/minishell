@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/14 13:51:04 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 08:21:41 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*remove_surrounding_doubleq(char *str, int *changed);
 char	*handle_single_quotes(char *str, t_temps *temp, char *var_str);
 char	*handle_double_quotes(char *str, t_temps *temp, char *var_str);
-char	*handle_dollar_sign(char *str, t_temps *temp, char *var_str);
-int		expand_var(char **var_str, char *str);
+char	*handle_dollar_sign(char *str, t_temps *temp, char *var_str, int index);
+int		expand_var(char **var_str, char *str, bool trim);
 
 void	insert_str_on_pos_w_len(char **str, char *insert, int pos, int len)
 {
@@ -84,7 +84,7 @@ char	*get_var_str(char *str)
 		else if (str[temp.int_i] == '\"')
 			var_str = handle_double_quotes(str, &temp, var_str);
 		else if (str[temp.int_i] == '$')
-			var_str = handle_dollar_sign(str, &temp, var_str);
+			var_str = handle_dollar_sign(str, &temp, var_str, temp.int_i);
 		else
 			var_str = append_single_char(var_str, str[temp.int_i]);
 	}
