@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:43:35 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 11:23:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 12:06:06 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ char	*handle_double_quotes(char *str, t_temps *temp, char *var_str)
 		if (str[temp->int_i] == '$' && str[temp->int_i + 1] != '\"')
 			temp->int_i += expand_var(&var_str, str + temp->int_i, false);
 		else
-		{
-			printf("im here\n");
 			var_str = append_single_char(var_str, str[temp->int_i++]);
-		}
 	}
 	return (var_str);
 }

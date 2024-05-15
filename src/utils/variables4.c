@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:49:41 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 08:56:36 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 12:03:24 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,9 @@ static int	handle_var(char **var_str, char *str, int len, bool trim)
 	if (!var)
 		return (-1);
 	env_var = env_get_by_name(get_shell()->env_vars, var);
+	free(var);
 	if (!env_var)
-	{
-		free(var);
 		return (len + 1);
-	}
 	if (trim && str + len && ft_strchr(env_var->value, ' '))
 		*var_str = handle_trim(env_var, var_str);
 	else
