@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 08:11:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/12 09:25:30 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:27:44 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ void	env_destroy(t_env_var *env)
 		return ;
 	while (env)
 	{
-		free(env->name);
-		free(env->value);
+		if (env->name)
+			free(env->name);
+		if (env->value)
+			free(env->value);
 		temp = env->next;
 		free(env);
 		env = temp;

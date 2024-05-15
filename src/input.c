@@ -71,9 +71,9 @@ char	*get_input(char *prompt)
 
 int	command_loop(t_shell *shell)
 {
-	char			*line;
-	t_shunting_yard	*yard;
-	int				status;
+	char				*line;
+	t_shunting_yard		*yard;
+	int					status;
 
 	line = get_input(prompt_hello());
 	status = 0;

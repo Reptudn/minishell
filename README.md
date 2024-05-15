@@ -13,3 +13,5 @@ The objective of this project is for you to create a simple shell.
 # Bashversion
 42 = bash3.2
 Docker Container = bash5.1
+
+make && valgrind --gen-suppressions=all --suppressions=readline.supp -s --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell

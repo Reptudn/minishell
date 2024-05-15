@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:07:19 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/16 16:28:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 10:25:21 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_shunting_node	*get_last_node(t_shunting_node *node)
 	return (node);
 }
 
-// frees one node
 void	free_node(t_shunting_node *node)
 {
 	if (!node)
@@ -29,6 +28,7 @@ void	free_node(t_shunting_node *node)
 	free(node->value);
 	free(node->type);
 	free(node->priority);
+	free(node->exit_status);
 	free_split(node->args);
 	free(node);
 }
@@ -65,8 +65,6 @@ void	del_last_node(t_shunting_node **node_ptr)
 	free_node(node);
 }
 
-// returns the first node from the input array and also removes it
-// from the input array
 t_shunting_node	*get_first_input(t_shunting_yard *yard)
 {
 	t_shunting_node	*node;
