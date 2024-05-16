@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 08:11:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 10:27:44 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 08:02:57 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handle_shell_depth_helper(t_env_var *depth, char *new_val, int *lvl)
 	}
 	else
 		new_val = ft_strdup("1");
-	free(depth->value);
+	ft_free((depth->value));
 	depth->value = new_val;
 }
 
@@ -102,11 +102,11 @@ void	env_destroy(t_env_var *env)
 	while (env)
 	{
 		if (env->name)
-			free(env->name);
+			ft_free((env->name));
 		if (env->value)
-			free(env->value);
+			ft_free((env->value));
 		temp = env->next;
-		free(env);
+		ft_free((env));
 		env = temp;
 	}
 }

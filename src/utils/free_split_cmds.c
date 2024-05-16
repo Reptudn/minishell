@@ -20,8 +20,7 @@ void	*free_split(char **split)
 	if (!split)
 		return (0);
 	while (split[++i])
-		free(split[i]);
-	free (split);
-	split = NULL;
+		ft_free((split[i]));
+	ft_free((split));
 	return (0);
 }

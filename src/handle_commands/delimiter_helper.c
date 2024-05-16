@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:28:07 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 10:48:01 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 08:02:57 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	run_delimiter_helper2dot1(char *temp, char *heredoc)
 {
-	free(temp);
-	free(heredoc);
+	ft_free((temp));
+	ft_free((heredoc));
 	return (1);
 }
 

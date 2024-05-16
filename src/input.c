@@ -29,22 +29,22 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 		return ;
 	while (node)
 	{
-		free(node->value);
+		ft_free(node->value);
 		i = -1;
 		if (node->args)
 		{
 			while (node->args[++i])
-				free(node->args[i]);
+				ft_free(node->args[i]);
 		}
-		free(node->args);
-		free(node->type);
-		free(node->priority);
-		free(node->exit_status);
+		ft_free(node->args);
+		ft_free(node->type);
+		ft_free(node->priority);
+		ft_free(node->exit_status);
 		next_node = node->next;
-		free(node);
+		ft_free(node);
 		node = next_node;
 	}
-	free(yard);
+	ft_free(yard);
 }
 
 char	*get_input(char *prompt)
@@ -61,7 +61,7 @@ char	*get_input(char *prompt)
 			return (NULL);
 		tmp = ft_strtrim(line, "\n");
 		if (line)
-			free(line);
+			ft_free((line));
 		line = tmp;
 	}
 	if (!line)
@@ -83,7 +83,7 @@ int	command_loop(t_shell *shell)
 			continue ;
 		*shell->exit_status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
-		free(line);
+		ft_free((line));
 		line = NULL;
 		if (!(*get_run()))
 			break ;
@@ -94,6 +94,6 @@ int	command_loop(t_shell *shell)
 	}
 	clear_history();
 	if (line)
-		free(line);
+		ft_free((line));
 	return (*shell->exit_status);
 }

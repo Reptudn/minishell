@@ -31,7 +31,7 @@ int	ft_unset(t_shunting_node *cmd, t_shell *shell)
 			continue ;
 		if (str_is_equal(cmd->args[i], "SHLVL"))
 		{
-			free(found->value);
+			ft_free((found->value));
 			found->value = ft_strdup("0");
 		}
 		else

@@ -35,15 +35,15 @@ char	*append_match(char *match, char *dir_name)
 	match = ft_strjoin(match, " ");
 	if (!match)
 	{
-		free(temp);
+		ft_free((temp));
 		return (NULL);
 	}
-	free(temp);
+	ft_free((temp));
 	temp = match;
 	match = ft_strjoin(match, dir_name);
 	if (!match)
 	{
-		free(temp);
+		ft_free((temp));
 		return (NULL);
 	}
 	return (match);

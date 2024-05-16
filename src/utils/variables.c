@@ -28,7 +28,7 @@ void	handle_env_var(char **arg, t_shell *shell)
 		var = ft_strdup(env_var->value);
 	if (!var)
 		return ;
-	free(*arg);
+	ft_free((*arg));
 	*arg = var;
 }
 
@@ -55,7 +55,7 @@ static void	replace_args(char ***args)
 		if (args && *args && (*args)[i] && (str_is_equal((*args)[i], "''")
 			|| str_is_equal((*args)[i], "\"\"")))
 		{
-			free((*args)[i]);
+			ft_free(((*args)[i]));
 			(*args)[i] = ft_strdup("");
 			continue ;
 		}
@@ -81,7 +81,7 @@ void	replace_variable(char **value, char ***args)
 	if (str_is_equal(*value, "''") || str_is_equal(*value, "\"\""))
 	{
 		if (*value)
-			free(*value);
+			ft_free((*value));
 		*value = ft_strdup("");
 	}
 	else

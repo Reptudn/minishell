@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 13:05:40 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 08:31:04 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 08:02:57 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	set_pwd_helper_helper_fuck_norminette(char *new_path, char *old_path)
 {
-	free(new_path);
-	free(old_path);
+	ft_free((new_path));
+	ft_free((old_path));
 }
 
 int	set_pwd_helper(t_env_var *tmp, t_env_var *oldpwd,
@@ -26,12 +26,12 @@ int	set_pwd_helper(t_env_var *tmp, t_env_var *oldpwd,
 	if (tmp)
 	{
 		if (tmp->value)
-			free(tmp->value);
+			ft_free((tmp->value));
 		tmp->value = ft_strdup(new_path);
 		if (!tmp->value)
 		{
-			free(new_path);
-			free(old_path);
+			ft_free((new_path));
+			ft_free((old_path));
 			return (CMD_FAILURE);
 		}
 	}
@@ -53,12 +53,12 @@ int	set_pwd_helper2(t_env_var *oldpwd, char *old_path,
 {
 	if (oldpwd)
 	{
-		free(oldpwd->value);
+		ft_free((oldpwd->value));
 		oldpwd->value = ft_strdup(old_path);
 		if (!oldpwd->value)
 		{
-			free(new_path);
-			free(old_path);
+			ft_free((new_path));
+			ft_free((old_path));
 			return (CMD_FAILURE);
 		}
 	}
@@ -74,7 +74,7 @@ int	handle_same_path(t_shunting_node *cmd, char *old_path)
 {
 	if (cmd->args && str_is_equal(cmd->args[0], old_path))
 	{
-		free(old_path);
+		ft_free((old_path));
 		return (CMD_SUCCESS);
 	}
 	return (CMD_FAILURE);

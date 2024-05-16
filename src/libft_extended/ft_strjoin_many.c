@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:24:10 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 14:21:23 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 08:02:57 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_strjoin_many(int count, ...)
 		if (strjoin.temp)
 		{
 			strjoin.temp_str = ft_strjoin(strjoin.str, strjoin.temp);
-			free(strjoin.str);
+			ft_free((strjoin.str));
 			if (!strjoin.temp_str && ft_strjoin_many_helper(args))
 				return (NULL);
 			strjoin.str = strjoin.temp_str;

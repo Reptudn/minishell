@@ -57,7 +57,7 @@ char	**clean_data(char **temp, char **result)
 	{
 		if (temp[i][0] != 0 && !(temp[i][0] == ' ' && temp[i][1] == 0))
 			result[j++] = ft_strdup(temp[i]);
-		free(temp[i]);
+		ft_free((temp[i]));
 		temp[i] = NULL;
 		i++;
 	}
@@ -80,10 +80,10 @@ char	**ft_split_shell(const char *str)
 	result = ft_malloc((res_i + 1) * sizeof(char *));
 	result[res_i] = NULL;
 	result = clean_data(temp, result);
-	free_split(temp);
+	ft_free((temp));
 	temp = result;
 	result = clean_quotes(temp);
-	free_split(temp);
+	ft_free((temp));
 	return (result);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:49 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 20:35:50 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 09:36:32 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	ft_garbage_col_create(void)
 // returns 0 on success and otherwise the number of elements that were able to be added
 // returns -1 when the garbage collector has not been created
 // retuen -2 when the garbage collector is full and could not be realloced
-static void	***ft_garbage_col_add(void *ptr)
+static int	ft_garbage_col_add(void *ptr)
 {
 	void	***garbage;
 	void	**new_garbage;
@@ -63,19 +63,19 @@ static void	***ft_garbage_col_add(void *ptr)
 
 	garbage = garbage_col_get();
 	if (!*garbage && !ft_garbage_col_create())
-		return (garbage);
+		return (GARBAGE_ERROR_CREATE);
 	count = garbage_col_count();
 	if (*count >= *garbage_col_size())
 	{
-		new_garbage = realloc(*garbage, sizeof(void *)
+		new_garbage = ft_realloc(*garbage, sizeof(void *)
 				* (*garbage_col_size() * 2));
 		if (!new_garbage)
-			return (garbage);
+			return (GARBAGE_ERROR_EXPAND);
 		*garbage = new_garbage;
 		*garbage_col_size() *= 2;
 	}
 	(*garbage)[(*count)++] = ptr;
-	return (garbage);
+	return (GARBAGE_SUCCESS);
 }
 
 static void	ft_garbage_col_clear(void)
@@ -91,6 +91,7 @@ static void	ft_garbage_col_clear(void)
 	i = 0;
 	while (i < *count)
 	{
+		printf("freeing: %p\n", (*garbage)[i]);
 		free((*garbage)[i]);
 		i++;
 	}
@@ -102,24 +103,23 @@ static void	ft_garbage_col_clear(void)
 void	*ft_malloc(size_t size)
 {
 	void	*ptr;
-	// int		err;
+	int		err;
 
 	ptr = malloc(size);
 	if (!ptr)
 		return (NULL);
-	ft_garbage_col_add(ptr);
-	// err = ft_garbage_col_add(ptr);
-	// if (err == GARBAGE_ERROR_EXPAND)
-	// {
-	// 	ft_garbage_col_clear();
-	// 	free(ptr);
-	// 	return (NULL);
-	// }
-	// else if (err == GARBAGE_ERROR_CREATE)
-	// {
-	// 	free(ptr);
-	// 	return (NULL);
-	// }
+	err = ft_garbage_col_add(ptr);
+	if (err == GARBAGE_ERROR_EXPAND)
+	{
+		ft_garbage_col_clear();
+		free(ptr);
+		return (NULL);
+	}
+	else if (err == GARBAGE_ERROR_CREATE)
+	{
+		free(ptr);
+		return (NULL);
+	}
 	return (ptr);
 }
 
@@ -128,28 +128,22 @@ void	free_all(void)
 	ft_garbage_col_clear();
 }
 
-void	set_ptr_to_nil(void *ptr)
+void	ft_free(void *ptr)
 {
 	void	***garbage;
 	int		i;
 
-	i = 0;
-	garbage = ft_garbage_col_add(NULL);
-	while (1)
+	i = -1;
+	if (ptr == NULL)
+		return ;
+	garbage = garbage_col_get();
+	while (++i < *garbage_col_count())
 	{
 		if ((*garbage)[i] == ptr)
 		{
+			printf("pointer: %p\n", (*garbage)[i]);
 			(*garbage)[i] = NULL;
-			return ;
 		}
-		i++;
 	}
-}
-
-void	ft_free(void **ptr)
-{
-	if (ptr == NULL)
-		return ;
-	free(*ptr);
-	set_ptr_to_nil(*ptr);
+	free(ptr);
 }

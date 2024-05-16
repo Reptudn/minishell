@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:58:59 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/12 17:07:52 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 08:02:57 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ void	*ft_realloc(void *ptr, size_t size)
 	void	*new_ptr;
 	size_t	original_size;
 
-	new_ptr = malloc(size);
+	new_ptr = ft_malloc(size);
 	if (!new_ptr)
 		return (NULL);
 	if (ptr)
 	{
 		original_size = ft_strlen((char *) ptr);
 		ft_memcpy(new_ptr, ptr, original_size);
-		free(ptr);
+		ft_free((ptr));
 	}
 	return (new_ptr);
 }
