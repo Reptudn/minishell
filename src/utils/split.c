@@ -113,11 +113,7 @@ char	**clean_quotes(char **tmp)
 		i++;
 	result = (char **)ft_calloc((i + 1), sizeof(char *));
 	if (!tmp || !result)
-	{
-		if (result)
-			// ft_free((result));
 		return (NULL);
-	}
 	i = -1;
 	m = -1;
 	while (tmp[++i])

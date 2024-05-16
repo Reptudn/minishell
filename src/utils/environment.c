@@ -24,9 +24,6 @@ void	env_pop(t_env_var *vars, t_env_var *pop)
 		pop->next->prev = pop->prev;
 	if (pop == vars)
 		vars = pop->next;
-	// ft_free(pop->name);
-	// ft_free(pop->value);
-	// ft_free(pop);
 }
 
 void	env_push(t_env_var *vars, t_env_var *new_var)

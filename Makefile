@@ -87,9 +87,6 @@ all: $(NAME)
 libft:
 	@make -C ./lib/libft
 
-ft_printf:
-	@make -C ./lib/ft_printf
-
 get_next_line:
 	@make -C ./lib/get_next_line
 
@@ -97,18 +94,16 @@ $(OBJDIR)%.o: %.c
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
-$(NAME): $(OBJS) libft ft_printf get_next_line
-	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/get_next_line/get_next_line.a ./lib/ft_printf/libftprintf.a $(HEADERS) -lreadline -lncurses	 -ltermcap -o $(NAME) && printf "\n\nCompilation finished!\n"
+$(NAME): $(OBJS) libft get_next_line
+	($(CC) $(OBJS) ./lib/libft/libft.a ./lib/get_next_line/get_next_line.a $(HEADERS) -lreadline -lncurses -ltermcap -o $(NAME) && printf "\n\nCompilation finished!\n") || (printf "\n\nCompilation failed!\n")
 
 clean:
 	@make -C ./lib/libft clean
-	@make -C ./lib/ft_printf clean
 	@make -C ./lib/get_next_line clean
 	@rm -rf $(OBJDIR)
 
 fclean: clean
 	@make -C ./lib/libft fclean
-	@make -C ./lib/ft_printf fclean
 	@make -C ./lib/get_next_line fclean
 	@rm -rf $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 12:27:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:31:49 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	insert_str_on_pos_w_len(char **str, char *insert, int pos, int len)
 			new_str[k++] = (*str)[i];
 	}
 	new_str[k] = '\0';
-	// ft_free((*str));
 	*str = new_str;
 }
 
@@ -63,7 +62,6 @@ char	*append_single_char(char *str, char c)
 		if (!out)
 			return (NULL);
 		ft_memcpy(out, str, len);
-		// ft_free(str);
 		out[len] = c;
 		out[len + 1] = '\0';
 	}
@@ -90,7 +88,5 @@ char	*get_var_str(char *str)
 		else
 			var_str = append_single_char(var_str, str[temp.int_i]);
 	}
-	if (str)
-		// ft_free((str));
 	return (var_str);
 }

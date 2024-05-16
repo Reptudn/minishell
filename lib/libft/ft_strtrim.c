@@ -52,10 +52,3 @@ char	*ft_strtrim(const char *s1, const char *set)
 	trimmed[i] = 0;
 	return (trimmed);
 }
-
-// int main()
-// {
-//     printf("%s\n", ft_strtrim(" lorem ipsum dolor sit amet", " "));
-
-//     return 0;
-// }

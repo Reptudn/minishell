@@ -16,7 +16,6 @@
 # include "colors.h"
 # include "fancy.h"
 # include "../lib/libft/libft.h"
-# include "../lib/ft_printf/ft_printf.h"
 # include "../lib/get_next_line/get_next_line.h"
 
 # include <stdio.h>
@@ -252,9 +251,5 @@ void			segfault(int signal);
 // var utils
 void			replace_variable(char **value, char ***args);
 char			*get_var_str(char *str);
-
-// libft extended
-// void			*ft_free_many(void *return_val, int count, ...);
-// char			*ft_strjoin_many(int count, ...);
 
 #endif

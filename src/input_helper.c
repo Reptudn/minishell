@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:55:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 12:27:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:07:22 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	command_loop_helper2(t_shunting_yard *yard, char *line, int status)
 {
 	if (!yard)
 	{
-		// ft_free((line));
 		line = get_input(prompt_failure());
 		status = CMD_FAILURE;
 		return (1);
@@ -28,7 +27,6 @@ int	command_loop_helper(char *line)
 {
 	if (ft_strlen(line) == 0)
 	{
-		// ft_free((line));
 		line = get_input(prompt_success());
 		if (!line)
 		{

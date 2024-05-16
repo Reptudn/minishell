@@ -20,31 +20,8 @@ int		command_loop_helper3(char *line, t_shunting_yard **yard, int status);
 
 void	shunting_yard_destroy(t_shunting_yard *yard)
 {
-	t_shunting_node	*node;
-	t_shunting_node	*next_node;
-	int				i;
-
-	node = yard->output;
-	if (!node)
-		return ;
-	while (node)
-	{
-		// ft_free(node->value);
-		i = -1;
-		if (node->args)
-		{
-			// while (node->args[++i])
-				// ft_free(node->args[i]);
-		}
-		// ft_free(node->args);
-		// ft_free(node->type);
-		// ft_free(node->priority);
-		// ft_free(node->exit_status);
-		next_node = node->next;
-		// ft_free(node);
-		node = next_node;
-	}
-	// ft_free(yard);
+	(void)yard;
+	return ;
 }
 
 char	*get_input(char *prompt)
@@ -54,21 +31,23 @@ char	*get_input(char *prompt)
 
 	if (isatty(fileno(stdin)))
 		line = readline(prompt);
-	// else
-	// 	line = readline("");
 	else
 	{
 		line = get_next_line(fileno(stdin));
 		if (!line)
 			return (NULL);
 		tmp = ft_strtrim(line, "\n");
-		if (line)
-			// ft_free(line);
+		ft_free(line);
 		line = tmp;
 	}
 	if (!line)
 		return (NULL);
-	return (line);
+	tmp = ft_strtrim(line, " \t");
+	if (isatty(fileno(stdin)))
+		free(line);
+	else
+		ft_free(line);
+	return (tmp);
 }
 
 int	command_loop(t_shell *shell)
@@ -85,8 +64,7 @@ int	command_loop(t_shell *shell)
 			continue ;
 		*shell->exit_status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
-		free(line);
-		line = NULL;
+		ft_free(line);
 		if (!(*get_run()))
 			break ;
 		if (status != CMD_SUCCESS)
@@ -95,7 +73,5 @@ int	command_loop(t_shell *shell)
 			line = get_input(prompt_success());
 	}
 	clear_history();
-	if (line)
-		// ft_free((line));
 	return (*shell->exit_status);
 }

@@ -34,18 +34,11 @@ char	*append_match(char *match, char *dir_name)
 	temp = match;
 	match = ft_strjoin(match, " ");
 	if (!match)
-	{
-		// ft_free((temp));
 		return (NULL);
-	}
-	// ft_free((temp));
 	temp = match;
 	match = ft_strjoin(match, dir_name);
 	if (!match)
-	{
-		// ft_free((temp));
 		return (NULL);
-	}
 	return (match);
 }
 

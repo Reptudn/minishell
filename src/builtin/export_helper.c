@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:55:29 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 12:27:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:28:12 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ int	handle_no_equal(t_shell *shell, char *arg)
 		env_push(shell->env_vars, env);
 	}
 	else
-	{
-		// ft_free((env->value));
 		env->value = NULL;
-	}
 	return (CMD_SUCCESS);
 }
 

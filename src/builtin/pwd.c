@@ -19,7 +19,6 @@ int	pwd(void)
 	path = getcwd(NULL, 0);
 	if (!path)
 		return (1);
-	ft_printf("%s\n", path);
-	// ft_free((path));
+	printf("%s\n", path);
 	return (0);
 }

@@ -30,10 +30,7 @@ int	ft_unset(t_shunting_node *cmd, t_shell *shell)
 		if (!found)
 			continue ;
 		if (str_is_equal(cmd->args[i], "SHLVL"))
-		{
-			// ft_free((found->value));
 			found->value = ft_strdup("0");
-		}
 		else
 			env_pop(shell->env_vars, found);
 	}
