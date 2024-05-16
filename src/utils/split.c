@@ -15,23 +15,23 @@
 
 char	*append_single_char(char *str, char c);
 
-void	ft_fuck1(const char *dick1, t_process_string *dick)
+void	ft_fuck1(const char *str, t_process_string *string)
 {
-	dick->temp.int_j = 0;
-	dick->quote = dick1[dick->i];
-	while (dick1[dick->i])
+	string->temp.int_j = 0;
+	string->quote = str[string->i];
+	while (str[string->i])
 	{
-		if (dick1[dick->i] == dick->quote && dick->temp.int_j++ > 0)
+		if (str[string->i] == string->quote && string->temp.int_j++ > 0)
 		{
-			dick->temp.charp_i = append_single_char(
-					dick->temp.charp_i, dick1[dick->i]);
+			string->temp.charp_i = append_single_char(
+					string->temp.charp_i, str[string->i]);
 			break ;
 		}
-		dick->temp.charp_i = append_single_char(dick->temp.charp_i,
-				dick1[dick->i]);
-		if (!dick->temp.charp_i)
+		string->temp.charp_i = append_single_char(string->temp.charp_i,
+				str[string->i]);
+		if (!string->temp.charp_i)
 			return ;
-		dick->i++;
+		string->i++;
 	}
 }
 
@@ -54,17 +54,17 @@ int	ft_fuck3(const char *dick_3, t_process_string *dick1,
 		return (0);
 }
 
-int	ft_fuck2(const char *dick, t_process_string *dick2,
+int	ft_fuck2(const char *str, t_process_string *dick2,
 		char **nis_pe, int *hu_so)
 {
-	dick2->temp.int_j = is_shell_op((char *) &dick[dick2->i],
+	dick2->temp.int_j = is_shell_op((char *) &str[dick2->i],
 			dick2->shell_op, 10);
 	if (dick2->temp.int_j != 0)
 	{
 		if (!str_is_equal(dick2->temp.charp_i, "")
 			|| !str_is_equal(dick2->temp.charp_i, " "))
 			nis_pe[(*hu_so)++] = dick2->temp.charp_i;
-		nis_pe[(*hu_so)++] = ft_substr(&dick[dick2->i], 0,
+		nis_pe[(*hu_so)++] = ft_substr(&str[dick2->i], 0,
 				dick2->temp.int_j);
 		dick2->i += dick2->temp.int_j - 1;
 		dick2->temp.charp_i = ft_strdup("");
@@ -72,7 +72,7 @@ int	ft_fuck2(const char *dick, t_process_string *dick2,
 			return (0);
 	}
 	else
-		return (ft_fuck3(dick, dick2, nis_pe, hu_so));
+		return (ft_fuck3(str, dick2, nis_pe, hu_so));
 	return (1);
 }
 
@@ -89,17 +89,14 @@ void	process_string(const char *str, char **result, int *res_i)
 			ft_fuck1(str, &string);
 		else
 		{
-			if (ft_fuck2(str, &string, result, res_i))
-				continue ;
-			else
-				return ;
+			if (!ft_fuck2(str, &string, result, res_i))
+				break ;
 		}
 	}
 	if (!str_is_equal(string.temp.charp_i, "")
 		|| !str_is_equal(string.temp.charp_i, " "))
 		result[(*res_i)++] = string.temp.charp_i;
 	result[(*res_i)] = NULL;
-	free_split(string.shell_op);
 }
 
 char	**clean_quotes(char **tmp)

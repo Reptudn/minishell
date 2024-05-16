@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:36:47 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/24 18:30:50 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 14:44:16 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	print_shunting_node(t_shunting_node *node, int a)
 
 void	print_all_stacks(t_shunting_yard *yard)
 {
+	if (!yard)
+		return ;
 	printf("\n\n>>>>>>>>\nInput:\n");
 	if (!yard->input)
 		printf("  NULL\n");

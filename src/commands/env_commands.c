@@ -75,7 +75,7 @@ int	execute_command(t_shell *shell, t_shunting_node *cmd,
 int	norm_conform_function_to_return_correct_val(int ran, int status,
 	char *val)
 {
-	if (ran && val && (*val != '.' && *val != '/')) // TODO: check this if yes
+	if (ran && val && (*val != '.' && *val != '/'))
 		return (127);
 	else if (ran)
 		return (status);

@@ -80,8 +80,7 @@ char	**ft_split_shell(const char *str)
 	result[res_i] = NULL;
 	result = clean_data(temp, result);
 	temp = result;
-	result = clean_quotes(temp);
-	return (result);
+	return (clean_quotes(temp));
 }
 
 char	**fill_shell_op(void)

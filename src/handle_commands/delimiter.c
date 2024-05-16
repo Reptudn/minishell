@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 13:40:01 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:56:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	clean_quotes_in_chain(t_shunting_node **chain)
 
 	i = 0;
 	j = 0;
-	temp = strdup(chain[1]->value);
+	temp = ft_strdup(chain[1]->value);
 	temp2 = ft_malloc(sizeof(char) * (ft_strlen(temp) + 1));
 	if (!temp2)
 		printf("ft_malloc failed\n");
@@ -65,7 +65,7 @@ void	clean_quotes_in_chain(t_shunting_node **chain)
 		temp2[j++] = temp[i++];
 	}
 	temp2[j] = '\0';
-	chain[1]->value = strdup(temp2);
+	chain[1]->value = ft_strdup(temp2);
 }
 
 int	run_delimiter_helper(int pipefd[2],
@@ -101,7 +101,6 @@ int	run_delimiter_helper3(pid_t pid, t_delimiter *delimiter,
 	}
 	return (0);
 }
-// TODO: check what leaks here
 char	*run_delimiter(t_shunting_node **chain,
 		t_shell *shell)
 {

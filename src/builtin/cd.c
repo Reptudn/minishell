@@ -86,12 +86,22 @@ char	*handle_old_path(t_shunting_node *cmd, t_shell *shell,
 	return (new_path);
 }
 
-// TODO: leaks when cd --
+char	*ft_getcwd(char *str, int num)
+{
+	char	*str_return;
+	char	*str2;
+
+	str_return = getcwd(str, num);
+	str2 = ft_strdup(str_return);
+	free(str_return);
+	return (str2);
+}
+
 int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 {
 	char		*old_path;
 
-	old_path = getcwd(NULL, 0);
+	old_path = ft_getcwd(NULL, 0);
 	if (handle_too_many_args(cmd, old_path) == CMD_FAILURE)
 		return (CMD_FAILURE);
 	if (handle_same_path(cmd, old_path) == CMD_SUCCESS)
