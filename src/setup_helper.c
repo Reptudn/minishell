@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 09:30:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/12 09:32:08 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:26:50 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	setup_signals(t_shell *shell)
 		|| signal(SIGSEGV, segfault) == SIG_ERR)
 	{
 		ft_putstr_fd("Error: signal handler\n", STDERR_FILENO);
-		free(shell->path);
 		return (CMD_FAILURE);
 	}
 	return (CMD_SUCCESS);
@@ -34,7 +33,5 @@ void	run_shell(t_shell *shell)
 	if (isatty(fileno(stdin)))
 		print_start_logo();
 	command_loop(shell);
-	if (shell->path)
-		free(shell->path);
 	env_destroy(shell->env_vars);
 }

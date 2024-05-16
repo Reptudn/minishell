@@ -10,8 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/minishell.h"
 #include "libft.h"
 #include "limits.h"
+#include <bits/posix1_lim.h>
 
 void	*ft_calloc(size_t nmenb, size_t size)
 {
@@ -21,7 +23,7 @@ void	*ft_calloc(size_t nmenb, size_t size)
 	if (size != 0 && nmenb > SSIZE_MAX / size)
 		return (0);
 	total = nmenb * size;
-	pog = malloc(total);
+	pog = ft_malloc(total);
 	if (!pog)
 		return (0);
 	ft_memset(pog, 0, total);

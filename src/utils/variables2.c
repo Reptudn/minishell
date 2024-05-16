@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 12:18:03 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:31:49 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	insert_str_on_pos_w_len(char **str, char *insert, int pos, int len)
 	int		i;
 	int		k;
 
-	new_str = malloc((ft_strlen(*str) + ft_strlen(insert) - len + 1)
+	new_str = ft_malloc((ft_strlen(*str) + ft_strlen(insert) - len + 1)
 			* sizeof(char));
 	if (!new_str)
 		return ;
@@ -39,7 +39,6 @@ void	insert_str_on_pos_w_len(char **str, char *insert, int pos, int len)
 			new_str[k++] = (*str)[i];
 	}
 	new_str[k] = '\0';
-	free(*str);
 	*str = new_str;
 }
 
@@ -50,7 +49,7 @@ char	*append_single_char(char *str, char c)
 
 	if (!str)
 	{
-		out = malloc(2 * sizeof(char));
+		out = ft_malloc(2 * sizeof(char));
 		if (!out)
 			return (NULL);
 		out[0] = c;
@@ -59,9 +58,10 @@ char	*append_single_char(char *str, char c)
 	else
 	{
 		len = ft_strlen(str);
-		out = ft_realloc(str, (len + 2) * sizeof(char));
+		out = ft_malloc((len + 2) * sizeof(char));
 		if (!out)
 			return (NULL);
+		ft_memcpy(out, str, len);
 		out[len] = c;
 		out[len + 1] = '\0';
 	}
@@ -88,7 +88,5 @@ char	*get_var_str(char *str)
 		else
 			var_str = append_single_char(var_str, str[temp.int_i]);
 	}
-	if (str)
-		free(str);
 	return (var_str);
 }

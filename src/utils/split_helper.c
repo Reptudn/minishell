@@ -57,7 +57,6 @@ char	**clean_data(char **temp, char **result)
 	{
 		if (temp[i][0] != 0 && !(temp[i][0] == ' ' && temp[i][1] == 0))
 			result[j++] = ft_strdup(temp[i]);
-		free(temp[i]);
 		temp[i] = NULL;
 		i++;
 	}
@@ -74,16 +73,14 @@ char	**ft_split_shell(const char *str)
 	res_i = 0;
 	if (!str)
 		return (NULL);
-	temp = (char **)malloc((strlen(str) + 1) * sizeof(char *));
+	temp = ft_malloc((ft_strlen(str) + 1) * sizeof(char *));
 	process_string(str, temp, &res_i);
 	temp[res_i] = NULL;
-	result = (char **)malloc((res_i + 1) * sizeof(char *));
+	result = ft_malloc((res_i + 1) * sizeof(char *));
 	result[res_i] = NULL;
 	result = clean_data(temp, result);
-	free_split(temp);
 	temp = result;
 	result = clean_quotes(temp);
-	free_split(temp);
 	return (result);
 }
 
@@ -91,7 +88,7 @@ char	**fill_shell_op(void)
 {
 	char	**shell_op;
 
-	shell_op = malloc(10 * sizeof(char *));
+	shell_op = ft_malloc(10 * sizeof(char *));
 	shell_op[0] = ft_strdup("||");
 	shell_op[1] = ft_strdup("&&");
 	shell_op[2] = ft_strdup("<<");

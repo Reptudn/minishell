@@ -6,7 +6,8 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 09:03:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 14:22:29 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:30:05 by jkauker          ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
@@ -26,11 +27,9 @@ char	*read_buff(int fd[2])
 	{
 		buffer[bytes_read] = '\0';
 		tmp = ft_strjoin(line, buffer);
-		free(line);
 		if (!tmp)
 			return (NULL);
 		line = ft_strdup(tmp);
-		free(tmp);
 		bytes_read = read(fd[0], buffer,
 				sizeof(buffer) - 1);
 	}
@@ -52,26 +51,19 @@ int	setup_pipe(int pipe_amount, int ***fd, pid_t **pid)
 	int		counter;
 
 	counter = -1;
-	*pid = (pid_t *)ft_calloc(pipe_amount, sizeof(pid_t));
+	*pid = ft_calloc(pipe_amount, sizeof(pid_t));
 	if (!*pid)
 		return (0);
-	*fd = (int **)ft_calloc(pipe_amount, sizeof(int *));
+	*fd = ft_calloc(pipe_amount, sizeof(int *));
 	if (!fd)
 	{
-		free(pid);
 		return (0);
 	}
 	while (++counter < pipe_amount)
 	{
-		(*fd)[counter] = (int *)ft_calloc(2, sizeof(int));
+		(*fd)[counter] = ft_calloc(2, sizeof(int));
 		if (!((*fd)[counter]))
-		{
-			while (--counter >= 0)
-				free((*fd)[counter]);
-			free(*fd);
-			free(*pid);
 			return (0);
-		}
 	}
 	return (1);
 }
@@ -82,8 +74,6 @@ char	*complete_pipe(int ***fd, int pipe_amount, char *line)
 	{
 		close((*fd)[pipe_amount][0]);
 		close((*fd)[pipe_amount][1]);
-		free((*fd)[pipe_amount]);
 	}
-	free(*fd);
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 08:38:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/13 16:16:04 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:31:01 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**doublestrdup(char **str)
 	i = 0;
 	while (str[i])
 		i++;
-	new_str = malloc(sizeof(char *) * (i + 1));
+	new_str = ft_malloc(i + 1);
 	if (!new_str)
 		return (NULL);
 	i = -1;
@@ -28,12 +28,7 @@ char	**doublestrdup(char **str)
 	{
 		new_str[i] = ft_strdup(str[i]);
 		if (!new_str[i])
-		{
-			while (i >= 0)
-				free(new_str[i--]);
-			free(new_str);
 			return (NULL);
-		}
 	}
 	new_str[i] = NULL;
 	return (new_str);
@@ -65,7 +60,7 @@ char	**env_to_envp(t_env_var *var)
 	i = 0;
 	while (temp && ++i)
 		temp = temp->next;
-	split = malloc((i + 1) * sizeof(char *));
+	split = ft_malloc((i + 1) * sizeof(char *));
 	if (!split)
 		return (NULL);
 	split[i] = NULL;
@@ -83,19 +78,12 @@ char	**env_to_envp(t_env_var *var)
 int	split_first_occ_helper(char **split, char *str, int i)
 {
 	if (!split[0])
-	{
-		free(split);
 		return (1);
-	}
 	split[0] = ft_strncpy(split[0], str, i);
 	split[0][i] = 0;
 	split[1] = ft_strdup(str + i + 1);
 	if (!split[1])
-	{
-		free(split[0]);
-		free(split);
 		return (1);
-	}
 	return (0);
 }
 
@@ -111,11 +99,11 @@ char	**split_first_occ(char *str, char c)
 		i++;
 	if (str[i] == 0)
 		return (NULL);
-	split = malloc(3 * sizeof(char *));
+	split = ft_malloc(3 * sizeof(char *));
 	if (!split)
 		return (NULL);
 	split[2] = NULL;
-	split[0] = malloc(i + 1);
+	split[0] = ft_malloc(i + 1);
 	if (split_first_occ_helper(split, str, i))
 		return (NULL);
 	return (split);

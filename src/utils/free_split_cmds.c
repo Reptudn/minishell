@@ -19,9 +19,5 @@ void	*free_split(char **split)
 	i = -1;
 	if (!split)
 		return (0);
-	while (split[++i])
-		free(split[i]);
-	free (split);
-	split = NULL;
 	return (0);
 }

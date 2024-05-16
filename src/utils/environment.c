@@ -24,9 +24,6 @@ void	env_pop(t_env_var *vars, t_env_var *pop)
 		pop->next->prev = pop->prev;
 	if (pop == vars)
 		vars = pop->next;
-	free(pop->name);
-	free(pop->value);
-	free(pop);
 }
 
 void	env_push(t_env_var *vars, t_env_var *new_var)
@@ -53,7 +50,7 @@ t_env_var	*env_create_var(char *name, char *value, bool is_envp)
 
 	if (!name)
 		return (NULL);
-	env_var = malloc(sizeof(t_env_var));
+	env_var = ft_malloc(sizeof(t_env_var));
 	if (!env_var)
 		return (NULL);
 	env_var->name = ft_strdup(name);

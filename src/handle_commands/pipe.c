@@ -46,7 +46,6 @@ int	child(int counter, int pipe_amount, int *fd[2],
 int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 {
 	int		m;
-	char	buffer[PIPE_BUFFER_SIZE];
 	int		bytes_read;
 	char	*tmp;
 	int		exits;
@@ -78,11 +77,10 @@ char	*pipe_fail(int counter, int ***fd, pid_t **pid)
 		close((*fd)[counter][0]);
 		close((*fd)[counter][1]);
 	}
-	free(*fd);
-	free(*pid);
 	return (0);
 }
 
+// TODO: fix space being printed when pipe return null
 char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 {
 	int				**fd;
@@ -108,6 +106,5 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 		else if (parent(counter, fd, pid, &line))
 			break ;
 	}
-	free(pid);
 	return (complete_pipe(&fd, pipe_amount, line));
 }

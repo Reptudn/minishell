@@ -34,18 +34,11 @@ char	*append_match(char *match, char *dir_name)
 	temp = match;
 	match = ft_strjoin(match, " ");
 	if (!match)
-	{
-		free(temp);
 		return (NULL);
-	}
-	free(temp);
 	temp = match;
 	match = ft_strjoin(match, dir_name);
 	if (!match)
-	{
-		free(temp);
 		return (NULL);
-	}
 	return (match);
 }
 
@@ -75,7 +68,7 @@ char	*get_matching_files(char *pattern)
 	if (!pattern || ft_strchr(pattern, '*') == NULL)
 		return (NULL);
 	d = opendir(".");
-	match = malloc(sizeof(char));
+	match = ft_malloc(1);
 	match[0] = '\0';
 	if (d && match)
 	{

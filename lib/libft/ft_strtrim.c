@@ -43,7 +43,7 @@ char	*ft_strtrim(const char *s1, const char *set)
 	while (end_index > start_index && isinset(set, s1[end_index - 1]))
 		end_index--;
 	len = end_index - start_index;
-	trimmed = malloc(sizeof(char) * (len + 1));
+	trimmed = ft_malloc(sizeof(char) * (len + 1));
 	if (!trimmed)
 		return (0);
 	i = 0;
@@ -52,10 +52,3 @@ char	*ft_strtrim(const char *s1, const char *set)
 	trimmed[i] = 0;
 	return (trimmed);
 }
-
-// int main()
-// {
-//     printf("%s\n", ft_strtrim(" lorem ipsum dolor sit amet", " "));
-
-//     return 0;
-// }

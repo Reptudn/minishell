@@ -23,7 +23,6 @@ char	*buff_to_line(char *buffer, char *buf)
 	char	*temp;
 
 	temp = ft_strjoin(buffer, buf);
-	free(buffer);
 	return (temp);
 }
 
@@ -41,21 +40,14 @@ char	*next(char *buffer)
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	if (!buffer[i])
-	{
-		free(buffer);
 		return (NULL);
-	}
 	line = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
 	if (!line)
-	{
-		free(buffer);
 		return (NULL);
-	}
 	i++;
 	j = 0;
 	while (buffer[i])
 		line[j++] = buffer[i++];
-	free(buffer);
 	return (line);
 }
 
@@ -109,12 +101,8 @@ char	*fill_buffer(int fd, char *res)
 			break ;
 		byte_read = (size_t)read(fd, buffer, BUFFER_SIZE);
 	}
-	free(buffer);
 	if (byte_read <= 0 && res[0] == '\0')
-	{
-		free(res);
 		return (NULL);
-	}
 	return (res);
 }
 
@@ -125,7 +113,6 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(buffer);
 		buffer = NULL;
 		return (NULL);
 	}

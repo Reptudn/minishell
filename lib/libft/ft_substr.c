@@ -39,7 +39,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 		len = ft_strlen(s) - start;
 	if (ft_strlen(s) - start < len)
 		len = ft_strlen(s) - start;
-	sub = malloc((len + 1) * sizeof(char));
+	sub = ft_malloc((len + 1) * sizeof(char));
 	if (!sub)
 		return (0);
 	makesub(sub, s + start, len + 1);

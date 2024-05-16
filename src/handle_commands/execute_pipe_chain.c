@@ -70,19 +70,13 @@ char	**chain_out_to_arg(char *output)
 	out = ft_calloc(3, sizeof(char *));
 	if (!out)
 	{
-		free(output);
 		return (NULL);
 	}
 	if (*output != 0)
 		out[1] = ft_strdup(output);
 	out[0] = ft_strdup("-n");
 	if (!out[0])
-	{
-		free(output);
-		free(out);
 		return (NULL);
-	}
-	free(output);
 	return (out);
 }
 
@@ -139,11 +133,9 @@ int	execute_cmd_chain(t_shell *shell, t_shunting_node *start,
 		execute_cmd_chain_helper2(args, chain);
 	if (!(*chain)->args)
 		return (CMD_FAILURE);
-	free(chain[0]->value);
 	chain[0]->value = ft_strdup("echo");
 	chain[0]->update = 0;
 	pop_cmd_chain(yard, chain, len, type);
-	free(chain);
 	if (exit_code != 0)
 		return (exit_code);
 	return (CMD_SUCCESS);

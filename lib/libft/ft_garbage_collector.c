@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_garbage_collector.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/15 16:11:49 by jkauker           #+#    #+#             */
+/*   Updated: 2024/05/16 13:08:20 by jkauker          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-# include "../../include/minishell.h"
+# include "./libft.h"
 
-#define GARBAGE_COL_SIZE 100
+#define GARBAGE_COL_SIZE 50
 #define GARBAGE_ERROR_EXPAND -2
 #define GARBAGE_ERROR_CREATE -1
 #define GARBAGE_SUCCESS 0
@@ -56,10 +67,12 @@ static int	ft_garbage_col_add(void *ptr)
 	count = garbage_col_count();
 	if (*count >= *garbage_col_size())
 	{
-		new_garbage = realloc(*garbage, sizeof(void *)
-				* (*garbage_col_size() * 2));
+		new_garbage = malloc(sizeof(void *) * (*garbage_col_size() * 2));
 		if (!new_garbage)
 			return (GARBAGE_ERROR_EXPAND);
+		ft_memcpy(new_garbage, *garbage, sizeof(void *)
+			* (*garbage_col_count()));
+		free(*garbage);
 		*garbage = new_garbage;
 		*garbage_col_size() *= 2;
 	}
@@ -81,6 +94,7 @@ static void	ft_garbage_col_clear(void)
 	while (i < *count)
 	{
 		free((*garbage)[i]);
+		(*garbage)[i] = NULL; 
 		i++;
 	}
 	free(*garbage);
@@ -111,15 +125,31 @@ void	*ft_malloc(size_t size)
 	return (ptr);
 }
 
-void	free_all(void)
+void	ft_free_all(void)
 {
 	ft_garbage_col_clear();
 }
 
-void	ft_free(void **ptr)
+void	ft_free(void *ptr)
 {
+	void	***garbage;
+	int		i;
+	int		j;
+
+	i = -1;
 	if (ptr == NULL)
 		return ;
-	free(*ptr);
-	*ptr = NULL;
+	garbage = garbage_col_get();
+	while (++i < *garbage_col_count())
+	{
+		if ((*garbage)[i] == ptr)
+		{
+			j = i - 1;
+			while (++j < *garbage_col_count() - 1)
+				(*garbage)[j] = (*garbage)[j + 1];
+			(*garbage_col_count())--;
+			free(ptr);
+			break ;
+		}
+	}
 }

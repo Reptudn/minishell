@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 09:49:59 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/14 12:18:12 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/15 16:15:09 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_shunting_node	**fill_chain(t_shunting_node *start, t_shunting_node *last,
 	t_shunting_node	**chain;
 	int				i;
 
-	chain = (t_shunting_node **)malloc(sizeof(t_shunting_node *) * (*len + 1));
+	chain = ft_malloc(sizeof(t_shunting_node *) * (*len + 1));
 	if (!chain)
 		return (NULL);
 	chain[*len] = NULL;

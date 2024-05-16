@@ -20,12 +20,12 @@ t_shunting_node	*shunting_node_init(char	**tokens)
 
 	if (!tokens || !*tokens)
 		return (NULL);
-	node = (t_shunting_node *)malloc(sizeof(t_shunting_node));
+	node = ft_malloc(sizeof(t_shunting_node));
 	if (!node)
 		return (NULL);
-	node->type = malloc(sizeof(int));
-	node->priority = malloc(sizeof(int));
-	node->exit_status = malloc(sizeof(int));
+	node->type = ft_malloc(sizeof(int));
+	node->priority = ft_malloc(sizeof(int));
+	node->exit_status = ft_malloc(sizeof(int));
 	node->update = 1;
 	*node->exit_status = -1;
 	*node->type = is_operator(tokens[0]);
@@ -57,10 +57,7 @@ t_shunting_node	*shunting_node_new(char	**tokens, int *step)
 	while (--i > 0)
 	{
 		if (node->args[i - 1])
-		{
-			free(node->args[i - 1]);
 			node->args[i - 1] = NULL;
-		}
 		node->args[i - 1] = ft_strdup(tokens[i]);
 	}
 	return (node);
@@ -70,7 +67,7 @@ t_shunting_yard	*shunting_yard_init(char	**tokens)
 {
 	t_shunting_yard	*yard;
 
-	yard = (t_shunting_yard *)malloc(sizeof(t_shunting_yard));
+	yard = (t_shunting_yard *)ft_malloc(sizeof(t_shunting_yard));
 	if (!yard || !tokens || !*tokens)
 		return (NULL);
 	yard->output = NULL;

@@ -45,11 +45,7 @@ void	execute_commands_helper2(t_handler handler, t_shunting_node *cmd1,
 		yard_pop(handler.operator, yard);
 		handler.operator = NULL;
 		yard_pop(cmd1, yard);
-		free(cmd2->value);
 		cmd2->value = ft_strdup("echo");
-		while (cmd2->args[++handler.i])
-			free(cmd2->args[handler.i]);
-		free(cmd2->args);
 		cmd2->args = ft_split("-n", ' ');
 		cmd2->update = 0;
 		*cmd2->exit_status = handler.exit_status;

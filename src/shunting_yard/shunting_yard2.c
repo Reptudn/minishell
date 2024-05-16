@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:07:19 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 10:25:21 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:30:34 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,7 @@ void	free_node(t_shunting_node *node)
 {
 	if (!node)
 		return ;
-	free(node->value);
-	free(node->type);
-	free(node->priority);
-	free(node->exit_status);
 	free_split(node->args);
-	free(node);
 }
 
 void	append_node(t_shunting_node *stack, t_shunting_node *node)

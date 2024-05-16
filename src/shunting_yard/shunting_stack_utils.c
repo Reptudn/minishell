@@ -32,14 +32,4 @@ void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard)
 		if (yard->output)
 			yard->output->prev = NULL;
 	}
-	if (pop->value)
-		free(pop->value);
-	if (pop->args)
-		while (pop->args[++i])
-			free(pop->args[i]);
-	free(pop->args);
-	free(pop->type);
-	free(pop->priority);
-	free(pop->exit_status);
-	free(pop);
 }

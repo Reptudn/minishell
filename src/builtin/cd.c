@@ -44,7 +44,6 @@ int	set_pwd(t_shell *shell, char *old_path)
 	new_path = getcwd(NULL, 0);
 	if (!new_path)
 	{
-		free(old_path);
 		echo_err(NULL);
 		return (CMD_FAILURE);
 	}
@@ -54,8 +53,6 @@ int	set_pwd(t_shell *shell, char *old_path)
 	oldpwd = env_get_by_name(shell->env_vars, "OLDPWD");
 	if (set_pwd_helper2(oldpwd, old_path, new_path, shell))
 		return (CMD_FAILURE);
-	free(old_path);
-	free(new_path);
 	if (!oldpwd)
 		return (CMD_FAILURE);
 	return (CMD_SUCCESS);
@@ -81,7 +78,6 @@ char	*handle_old_path(t_shunting_node *cmd, t_shell *shell,
 		tmp = env_get_by_name(shell->env_vars, "OLDPWD");
 		if (!tmp)
 		{
-			free(old_path);
 			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
 			return (NULL);
 		}
@@ -90,7 +86,7 @@ char	*handle_old_path(t_shunting_node *cmd, t_shell *shell,
 	return (new_path);
 }
 
-// FIXME: cd - causes double free
+// TODO: leaks when cd --
 int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 {
 	char		*old_path;
@@ -107,7 +103,6 @@ int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 	if (!new_path || chdir(new_path) == -1)
 	{
 		echo_err(new_path);
-		free(old_path);
 		return (CMD_FAILURE);
 	}
 	if (str_is_equal(cmd->args[0], "-"))

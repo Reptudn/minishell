@@ -31,8 +31,6 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/variables2.c \
 			$(SRCDIR)utils/variables3.c \
 			$(SRCDIR)utils/variables4.c \
-			$(SRCDIR)libft_extended/ft_free.c \
-			$(SRCDIR)libft_extended/ft_strjoin_many.c \
 			$(SRCDIR)commands/show_history.c \
 			$(SRCDIR)commands/clear.c \
 			$(SRCDIR)commands/env_commands.c \
@@ -74,8 +72,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)shunting_yard/shunting_yard_utils.c \
 			$(SRCDIR)shunting_yard/shunting_stack_utils.c \
 			$(SRCDIR)shunting_yard/shunting_print.c \
-			$(SRCDIR)shunting_yard/ast_utils.c \
-			$(SRCDIR)libft_extended/ft_realloc.c
+			$(SRCDIR)shunting_yard/ast_utils.c
 
 OBJDIR := ./obj/
 OBJS	:= $(SRCS:.c=.o)
@@ -90,9 +87,6 @@ all: $(NAME)
 libft:
 	@make -C ./lib/libft
 
-ft_printf:
-	@make -C ./lib/ft_printf
-
 get_next_line:
 	@make -C ./lib/get_next_line
 
@@ -100,18 +94,16 @@ $(OBJDIR)%.o: %.c
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
-$(NAME): $(OBJS) libft ft_printf get_next_line
-	$(CC) $(OBJS) ./lib/libft/libft.a ./lib/get_next_line/get_next_line.a ./lib/ft_printf/libftprintf.a $(HEADERS) -lreadline -lncurses	 -ltermcap -o $(NAME) && printf "\n\nCompilation finished!\n"
+$(NAME): $(OBJS) libft get_next_line
+	($(CC) $(OBJS) ./lib/libft/libft.a ./lib/get_next_line/get_next_line.a $(HEADERS) -lreadline -lncurses -ltermcap -o $(NAME) && printf "\n\nCompilation finished!\n") || (printf "\n\nCompilation failed!\n")
 
 clean:
 	@make -C ./lib/libft clean
-	@make -C ./lib/ft_printf clean
 	@make -C ./lib/get_next_line clean
 	@rm -rf $(OBJDIR)
 
 fclean: clean
 	@make -C ./lib/libft fclean
-	@make -C ./lib/ft_printf fclean
 	@make -C ./lib/get_next_line fclean
 	@rm -rf $(NAME)
 

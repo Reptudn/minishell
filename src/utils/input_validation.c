@@ -61,13 +61,10 @@ char	*read_and_append(char *line, char missing)
 		return (0);
 	new_line = ft_strjoin(line, "\n");
 	temp = new_line;
-	free(line);
 	new_line = ft_strjoin(temp, tmp);
-	free(temp);
 	if (!new_line)
 		return (0);
 	line = new_line;
-	free(tmp);
 	return (line);
 }
 

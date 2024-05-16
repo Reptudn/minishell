@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 08:33:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/04/02 15:14:28 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:25:25 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*strjoin(char *s1, char *s2)
 		return (ft_strdup(s1));
 	i = 0;
 	len = ft_strlen(s1) + ft_strlen(s2);
-	str = malloc(sizeof(char) * (len + 1));
+	str = ft_malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (0);
 	j = 0;
@@ -37,7 +37,6 @@ char	*strjoin(char *s1, char *s2)
 	while (*s2 != 0)
 		str[i++] = *s2++;
 	str[i] = 0;
-	free(s1);
 	return (str);
 }
 
@@ -52,7 +51,7 @@ char	*substr(char *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len > ft_strlen(s) - start)
 		len = ft_strlen(s) - start;
-	str = malloc(sizeof(char) * (len + 1));
+	str = ft_malloc(sizeof(char) * (len + 1));
 	if (!str)
 	{
 		return (0);

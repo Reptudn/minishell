@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 13:25:46 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:40:01 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,11 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 		if (chain[counter] == NULL && run_delimiter_helper2dot1(temp, heredoc))
 			return (CMD_SUCCESS);
 		new_heredoc = ft_strjoin(heredoc, temp);
-		free(heredoc);
 		heredoc = ft_strjoin(new_heredoc, "\n");
-		free(new_heredoc);
 		if (temp)
 			write(pipefd[1], temp, strlen(temp));
 		write(pipefd[1], "\n", 1);
-		free(temp);
 	}
-	free(heredoc);
 	return (CMD_SUCCESS);
 }
 
@@ -56,10 +52,9 @@ void	clean_quotes_in_chain(t_shunting_node **chain)
 	i = 0;
 	j = 0;
 	temp = strdup(chain[1]->value);
-	free(chain[1]->value);
-	temp2 = (char *)malloc(sizeof(char) * (ft_strlen(temp) + 1));
+	temp2 = ft_malloc(sizeof(char) * (ft_strlen(temp) + 1));
 	if (!temp2)
-		printf("malloc failed\n");
+		printf("ft_malloc failed\n");
 	while (temp[i])
 	{
 		if (temp[i] == '\'' || temp[i] == '\"')
@@ -70,7 +65,6 @@ void	clean_quotes_in_chain(t_shunting_node **chain)
 		temp2[j++] = temp[i++];
 	}
 	temp2[j] = '\0';
-	free(temp);
 	chain[1]->value = strdup(temp2);
 }
 
@@ -81,7 +75,7 @@ int	run_delimiter_helper(int pipefd[2],
 	int		counter;
 	int		exit_status;
 
-	heredoc = malloc(sizeof(char) * 100);
+	heredoc = ft_malloc(sizeof(char) * 100);
 	heredoc[0] = '\0';
 	counter = 1;
 	signal_ignore_parent();
@@ -107,7 +101,7 @@ int	run_delimiter_helper3(pid_t pid, t_delimiter *delimiter,
 	}
 	return (0);
 }
-
+// TODO: check what leaks here
 char	*run_delimiter(t_shunting_node **chain,
 		t_shell *shell)
 {

@@ -48,12 +48,7 @@ static int	the_split(int c, const char *s, char **strs, int i)
 			i++;
 		strs[word_count] = ft_substr(s, 0, i);
 		if (!strs[word_count])
-		{
-			while (word_count > 0)
-				free(strs[--word_count]);
-			free(strs);
 			return (0);
-		}
 		word_count++;
 		s += i;
 	}
@@ -64,7 +59,7 @@ static int	edgecase(const char *s, char c, char ***strs)
 {
 	if (!s || s[0] == 0)
 	{
-		*strs = malloc(1 * sizeof(char *));
+		*strs = ft_malloc(1 * sizeof(char *));
 		if (!*strs)
 			return (0);
 		(*strs)[0] = 0;
@@ -72,15 +67,12 @@ static int	edgecase(const char *s, char c, char ***strs)
 	}
 	if (!c)
 	{
-		*strs = malloc(2 * sizeof(char *));
+		*strs = ft_malloc(2 * sizeof(char *));
 		if (!*strs)
 			return (0);
 		(*strs)[0] = ft_strdup(s);
 		if (!(*strs)[0])
-		{
-			free(*strs);
 			return (0);
-		}
 		(*strs)[1] = 0;
 		return (1);
 	}
@@ -98,7 +90,7 @@ char	**ft_split(const char *s, char c)
 		return (strs);
 	if (edge == 0)
 		return (0);
-	strs = malloc((get_word_count(s, c) + 1) * sizeof(char *));
+	strs = ft_malloc((get_word_count(s, c) + 1) * sizeof(char *));
 	if (!strs)
 		return (0);
 	strs[get_word_count(s, c)] = 0;
