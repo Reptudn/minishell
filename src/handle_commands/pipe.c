@@ -80,6 +80,7 @@ char	*pipe_fail(int counter, int ***fd, pid_t **pid)
 	return (0);
 }
 
+// TODO: fix space being printed when pipe return null
 char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 {
 	int				**fd;

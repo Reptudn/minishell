@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 13:29:08 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:40:01 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	run_delimiter_helper3(pid_t pid, t_delimiter *delimiter,
 	}
 	return (0);
 }
-
+// TODO: check what leaks here
 char	*run_delimiter(t_shunting_node **chain,
 		t_shell *shell)
 {

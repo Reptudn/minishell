@@ -86,6 +86,7 @@ char	*handle_old_path(t_shunting_node *cmd, t_shell *shell,
 	return (new_path);
 }
 
+// TODO: leaks when cd --
 int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 {
 	char		*old_path;
