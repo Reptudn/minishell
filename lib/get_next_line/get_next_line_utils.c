@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 08:33:27 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 12:07:37 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 12:27:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*strjoin(char *s1, char *s2)
 	while (*s2 != 0)
 		str[i++] = *s2++;
 	str[i] = 0;
-	ft_free(s1);
+	// // ft_free(s1);
 	return (str);
 }
 

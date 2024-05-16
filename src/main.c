@@ -32,7 +32,7 @@ int	add_pwd(void)
 	if (!pwd_var)
 	{
 		ft_putstr_fd("Error: env_create_var\n", STDERR_FILENO);
-		ft_free((pwd));
+		// ft_free((pwd));
 		return (CMD_FAILURE);
 	}
 	env_push(get_shell()->env_vars, pwd_var);
@@ -54,7 +54,7 @@ int	add_minishell_path(void)
 	if (!path_var)
 	{
 		ft_putstr_fd("Error: env_create_var\n", STDERR_FILENO);
-		ft_free((path));
+		// ft_free((path));
 		return (CMD_FAILURE);
 	}
 	env_push(get_shell()->env_vars, path_var);
@@ -109,7 +109,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("exit\n");
 	init_status = *shell->exit_status;
 	if (shell->exit_status)
-		ft_free((shell->exit_status));
-	ft_free_all();
+		// ft_free((shell->exit_status));
+	// ft_free_all();
 	return (init_status);
 }

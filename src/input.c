@@ -29,22 +29,22 @@ void	shunting_yard_destroy(t_shunting_yard *yard)
 		return ;
 	while (node)
 	{
-		ft_free(node->value);
+		// ft_free(node->value);
 		i = -1;
 		if (node->args)
 		{
-			while (node->args[++i])
-				ft_free(node->args[i]);
+			// while (node->args[++i])
+				// ft_free(node->args[i]);
 		}
-		ft_free(node->args);
-		ft_free(node->type);
-		ft_free(node->priority);
-		ft_free(node->exit_status);
+		// ft_free(node->args);
+		// ft_free(node->type);
+		// ft_free(node->priority);
+		// ft_free(node->exit_status);
 		next_node = node->next;
-		ft_free(node);
+		// ft_free(node);
 		node = next_node;
 	}
-	ft_free(yard);
+	// ft_free(yard);
 }
 
 char	*get_input(char *prompt)
@@ -54,18 +54,18 @@ char	*get_input(char *prompt)
 
 	if (isatty(fileno(stdin)))
 		line = readline(prompt);
-	else
-		line = readline("");
 	// else
-	// {
-	// 	line = get_next_line(fileno(stdin));
-	// 	if (!line)
-	// 		return (NULL);
-	// 	tmp = ft_strtrim(line, "\n");
-	// 	if (line)
-	// 		free((line));
-	// 	line = tmp;
-	// }
+	// 	line = readline("");
+	else
+	{
+		line = get_next_line(fileno(stdin));
+		if (!line)
+			return (NULL);
+		tmp = ft_strtrim(line, "\n");
+		if (line)
+			// ft_free(line);
+		line = tmp;
+	}
 	if (!line)
 		return (NULL);
 	return (line);
@@ -96,6 +96,6 @@ int	command_loop(t_shell *shell)
 	}
 	clear_history();
 	if (line)
-		ft_free((line));
+		// ft_free((line));
 	return (*shell->exit_status);
 }

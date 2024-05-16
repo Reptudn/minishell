@@ -50,8 +50,8 @@ static int	the_split(int c, const char *s, char **strs, int i)
 		if (!strs[word_count])
 		{
 			while (word_count > 0)
-				ft_free(strs[--word_count]);
-			ft_free(strs);
+				// ft_free(strs[--word_count]);
+			// ft_free(strs);
 			return (0);
 		}
 		word_count++;
@@ -78,7 +78,7 @@ static int	edgecase(const char *s, char c, char ***strs)
 		(*strs)[0] = ft_strdup(s);
 		if (!(*strs)[0])
 		{
-			ft_free(*strs);
+			// ft_free(*strs);
 			return (0);
 		}
 		(*strs)[1] = 0;

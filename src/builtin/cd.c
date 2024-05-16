@@ -44,7 +44,7 @@ int	set_pwd(t_shell *shell, char *old_path)
 	new_path = getcwd(NULL, 0);
 	if (!new_path)
 	{
-		ft_free((old_path));
+		// ft_free((old_path));
 		echo_err(NULL);
 		return (CMD_FAILURE);
 	}
@@ -54,8 +54,8 @@ int	set_pwd(t_shell *shell, char *old_path)
 	oldpwd = env_get_by_name(shell->env_vars, "OLDPWD");
 	if (set_pwd_helper2(oldpwd, old_path, new_path, shell))
 		return (CMD_FAILURE);
-	ft_free((old_path));
-	ft_free((new_path));
+	// ft_free((old_path));
+	// ft_free((new_path));
 	if (!oldpwd)
 		return (CMD_FAILURE);
 	return (CMD_SUCCESS);
@@ -81,7 +81,7 @@ char	*handle_old_path(t_shunting_node *cmd, t_shell *shell,
 		tmp = env_get_by_name(shell->env_vars, "OLDPWD");
 		if (!tmp)
 		{
-			ft_free((old_path));
+			// ft_free((old_path));
 			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
 			return (NULL);
 		}
@@ -106,7 +106,7 @@ int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)
 	if (!new_path || chdir(new_path) == -1)
 	{
 		echo_err(new_path);
-		ft_free((old_path));
+		// ft_free((old_path));
 		return (CMD_FAILURE);
 	}
 	if (str_is_equal(cmd->args[0], "-"))

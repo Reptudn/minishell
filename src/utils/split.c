@@ -115,7 +115,7 @@ char	**clean_quotes(char **tmp)
 	if (!tmp || !result)
 	{
 		if (result)
-			ft_free((result));
+			// ft_free((result));
 		return (NULL);
 	}
 	i = -1;

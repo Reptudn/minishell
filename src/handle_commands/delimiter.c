@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 08:02:57 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 12:27:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 		if (chain[counter] == NULL && run_delimiter_helper2dot1(temp, heredoc))
 			return (CMD_SUCCESS);
 		new_heredoc = ft_strjoin(heredoc, temp);
-		ft_free((heredoc));
+		// ft_free((heredoc));
 		heredoc = ft_strjoin(new_heredoc, "\n");
-		ft_free((new_heredoc));
+		// ft_free((new_heredoc));
 		if (temp)
 			write(pipefd[1], temp, strlen(temp));
 		write(pipefd[1], "\n", 1);
-		ft_free((temp));
+		// ft_free((temp));
 	}
-	ft_free((heredoc));
+	// ft_free((heredoc));
 	return (CMD_SUCCESS);
 }
 
@@ -56,7 +56,7 @@ void	clean_quotes_in_chain(t_shunting_node **chain)
 	i = 0;
 	j = 0;
 	temp = strdup(chain[1]->value);
-	ft_free((chain[1]->value));
+	// ft_free((chain[1]->value));
 	temp2 = ft_malloc(sizeof(char) * (ft_strlen(temp) + 1));
 	if (!temp2)
 		printf("ft_malloc failed\n");
@@ -70,7 +70,7 @@ void	clean_quotes_in_chain(t_shunting_node **chain)
 		temp2[j++] = temp[i++];
 	}
 	temp2[j] = '\0';
-	ft_free((temp));
+	// ft_free((temp));
 	chain[1]->value = strdup(temp2);
 }
 

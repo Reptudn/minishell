@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:49:41 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 08:31:27 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 12:27:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static int	handle_question_mark(char **var_str, char *str)
 	if (!var)
 		return (-1);
 	tmp = ft_strjoin(*var_str, var);
-	ft_free((*var_str));
+	// ft_free((*var_str));
 	*var_str = tmp;
-	ft_free((var));
+	// ft_free((var));
 	if (!var_str)
 		return (-1);
 	return (2);
@@ -58,7 +58,7 @@ static char	*handle_trim(t_env_var *env_var, char **var_str)
 				free_split(split);
 				return (NULL);
 			}
-			ft_free((split[i]));
+			// ft_free((split[i]));
 			split[i] = tmp;
 		}
 		trimmed = ft_strjoin(*var_str, split[i]);
@@ -67,7 +67,7 @@ static char	*handle_trim(t_env_var *env_var, char **var_str)
 			free_split(split);
 			return (NULL);
 		}
-		ft_free((*var_str));
+		// ft_free((*var_str));
 		*var_str = trimmed;
 		trimmed = ft_strjoin(*var_str, " ");
 		if (!trimmed)
@@ -75,13 +75,13 @@ static char	*handle_trim(t_env_var *env_var, char **var_str)
 			free_split(split);
 			return (NULL);
 		}
-		ft_free((*var_str));
+		// ft_free((*var_str));
 		*var_str = trimmed;
 	}
 	free_split(split);
 	if (trimmed && str_is_equal(trimmed, " "))
 	{
-		ft_free((trimmed));
+		// ft_free((trimmed));
 		return (NULL);
 	}
 	return (trimmed);
@@ -97,7 +97,7 @@ static int	handle_var(char **var_str, char *str, int len, bool trim)
 	if (!var)
 		return (-1);
 	env_var = env_get_by_name(get_shell()->env_vars, var);
-	ft_free((var));
+	// ft_free((var));
 	if (!env_var)
 		return (len + 1);
 	if (trim && str + len && ft_strchr(env_var->value, ' '))
@@ -105,9 +105,9 @@ static int	handle_var(char **var_str, char *str, int len, bool trim)
 	else
 	{
 		temp_var_str = ft_strjoin(*var_str, env_var->value);
-		ft_free((*var_str));
+		// ft_free((*var_str));
 		(*var_str) = ft_strdup(temp_var_str);
-		ft_free((temp_var_str));
+		// ft_free((temp_var_str));
 	}
 	if (!var_str)
 		return (-1);

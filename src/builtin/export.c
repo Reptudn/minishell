@@ -22,7 +22,7 @@ char	**split_first_occ(char *str, char c);
 int	replace_existing_val(char **split, t_env_var *env, bool append)
 {
 	if (!append && env->value)
-		ft_free((env->value));
+		// ft_free((env->value));
 	if (split[1] && !append)
 		env->value = ft_strdup(split[1]);
 	else if (split[1] && append)

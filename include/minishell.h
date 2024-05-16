@@ -254,7 +254,7 @@ void			replace_variable(char **value, char ***args);
 char			*get_var_str(char *str);
 
 // libft extended
-void			*ft_free_many(void *return_val, int count, ...);
-char			*ft_strjoin_many(int count, ...);
+// void			*ft_free_many(void *return_val, int count, ...);
+// char			*ft_strjoin_many(int count, ...);
 
 #endif

@@ -20,6 +20,6 @@ int	pwd(void)
 	if (!path)
 		return (1);
 	ft_printf("%s\n", path);
-	ft_free((path));
+	// ft_free((path));
 	return (0);
 }

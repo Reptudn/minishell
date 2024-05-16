@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 08:38:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 08:02:57 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 12:27:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ char	**doublestrdup(char **str)
 		if (!new_str[i])
 		{
 			while (i >= 0)
-				ft_free((new_str[i--]));
-			ft_free((new_str));
+				// ft_free((new_str[i--]));
+			// ft_free((new_str));
 			return (NULL);
 		}
 	}
@@ -84,7 +84,7 @@ int	split_first_occ_helper(char **split, char *str, int i)
 {
 	if (!split[0])
 	{
-		ft_free((split));
+		// ft_free((split));
 		return (1);
 	}
 	split[0] = ft_strncpy(split[0], str, i);
@@ -92,8 +92,8 @@ int	split_first_occ_helper(char **split, char *str, int i)
 	split[1] = ft_strdup(str + i + 1);
 	if (!split[1])
 	{
-		ft_free((split[0]));
-		ft_free((split));
+		// ft_free((split[0]));
+		// ft_free((split));
 		return (1);
 	}
 	return (0);

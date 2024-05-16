@@ -27,10 +27,10 @@ char	*create_cmd_path(char *path, char *cmd)
 	if (!cmd_path)
 		return (NULL);
 	temp_cmd_path = ft_strjoin(cmd_path, cmd);
-	ft_free((cmd_path));
+	// ft_free((cmd_path));
 	if (!temp_cmd_path)
 	{
-		ft_free((temp_cmd_path));
+		// ft_free((temp_cmd_path));
 		return (NULL);
 	}
 	return (temp_cmd_path);
@@ -55,7 +55,7 @@ char	*get_env_path_to_cmd(t_shell *shell, char *cmd)
 			return (NULL);
 		if (access(cmd_path, F_OK) == 0)
 			return (cmd_path);
-		ft_free((cmd_path));
+		// ft_free((cmd_path));
 		cmd_path = NULL;
 	}
 	return (NULL);
@@ -106,7 +106,7 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 		if (!cmd_path)
 			return (-1);
 		ran = execute_command(shell, cmd, cmd_path, &status);
-		ft_free((cmd_path));
+		// ft_free((cmd_path));
 		cmd_path = NULL;
 		if (ran)
 			break ;

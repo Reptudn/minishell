@@ -26,7 +26,7 @@ typedef struct s_list
 void	*ft_malloc(size_t size);
 void	ft_free(void *ptr);
 void	ft_free_all(void);
-void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+// void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);

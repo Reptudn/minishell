@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 09:03:33 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 08:47:41 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 12:27:29 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ char	*read_buff(int fd[2])
 	{
 		buffer[bytes_read] = '\0';
 		tmp = ft_strjoin(line, buffer);
-		ft_free(line);
+		// ft_free(line);
 		if (!tmp)
 			return (NULL);
 		line = ft_strdup(tmp);
-		ft_free(tmp);
+		// ft_free(tmp);
 		bytes_read = read(fd[0], buffer,
 				sizeof(buffer) - 1);
 	}
@@ -59,7 +59,7 @@ int	setup_pipe(int pipe_amount, int ***fd, pid_t **pid)
 	*fd = ft_calloc(pipe_amount, sizeof(int *));
 	if (!fd)
 	{
-		ft_free(pid);
+		// ft_free(pid);
 		return (0);
 	}
 	while (++counter < pipe_amount)
@@ -68,9 +68,9 @@ int	setup_pipe(int pipe_amount, int ***fd, pid_t **pid)
 		if (!((*fd)[counter]))
 		{
 			while (--counter >= 0)
-				ft_free((*fd)[counter]);
-			ft_free(*fd);
-			ft_free(*pid);
+				// ft_free((*fd)[counter]);
+			// ft_free(*fd);
+			// ft_free(*pid);
 			return (0);
 		}
 	}
@@ -83,8 +83,8 @@ char	*complete_pipe(int ***fd, int pipe_amount, char *line)
 	{
 		close((*fd)[pipe_amount][0]);
 		close((*fd)[pipe_amount][1]);
-		ft_free((*fd)[pipe_amount]);
+		// ft_free((*fd)[pipe_amount]);
 	}
-	ft_free((*fd));
+	// ft_free((*fd));
 	return (line);
 }
