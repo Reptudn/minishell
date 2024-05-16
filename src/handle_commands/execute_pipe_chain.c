@@ -66,7 +66,7 @@ char	**chain_out_to_arg(char *output)
 	char	**out;
 
 	if (!output)
-		return (NULL);
+		return(ft_split(ft_strdup("-n"), ' ')); // TODO: check if this fixed the spaces problem
 	out = ft_calloc(3, sizeof(char *));
 	if (!out)
 	{
