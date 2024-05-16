@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:12 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 10:42:03 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 11:58:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,11 @@ char	*append_single_char(char *str, char c)
 	else
 	{
 		len = ft_strlen(str);
-		out = realloc(str, (len + 2) * sizeof(char)); // TODO: make ft_realloc once its fixed
+		out = ft_malloc((len + 2) * sizeof(char));
 		if (!out)
 			return (NULL);
+		ft_memcpy(out, str, len);
+		ft_free(str);
 		out[len] = c;
 		out[len + 1] = '\0';
 	}

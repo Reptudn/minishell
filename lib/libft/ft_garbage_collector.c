@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:49 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 10:42:51 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 11:55:42 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ static int	ft_garbage_col_add(void *ptr)
 	count = garbage_col_count();
 	if (*count >= *garbage_col_size())
 	{
-		new_garbage = realloc(*garbage, sizeof(void *) // TODO: make this ft_realloc after thats fixed
-				* (*garbage_col_size() * 2));
+		new_garbage = malloc(sizeof(void *) * (*garbage_col_size() * 2));
 		if (!new_garbage)
 			return (GARBAGE_ERROR_EXPAND);
+		ft_memcpy(new_garbage, *garbage, sizeof(void *)
+			* (*garbage_col_count()));
+		free(*garbage);
 		*garbage = new_garbage;
 		*garbage_col_size() *= 2;
 	}
@@ -146,8 +148,8 @@ void	ft_free(void *ptr)
 			while (++j < *garbage_col_count() - 1)
 				(*garbage)[j] = (*garbage)[j + 1];
 			(*garbage_col_count())--;
+			free(ptr);
 			break ;
 		}
 	}
-	free(ptr);
 }
