@@ -191,6 +191,7 @@ char			*ft_strncpy(char *dest, const char *src, size_t n);
 int				is_shell_op(char *str, char *shell_op[], int size);
 void			print_all_stacks(t_shunting_yard *yard);
 char			**split_first_occ(char *str, char c);
+void			place_node(t_shunting_node *node, t_shunting_yard *yard);
 
 // builtins
 int				ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path);

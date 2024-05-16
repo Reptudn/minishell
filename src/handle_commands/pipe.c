@@ -81,6 +81,7 @@ char	*pipe_fail(int counter, int ***fd, pid_t **pid)
 }
 
 // TODO: fix space being printed when pipe return null
+// FIXME: when running echo 42 | echo no | echo smth | grep 42 it says its running the grep but its not really because it shouldnt pinrt anything and give an error and not smth
 char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 {
 	int				**fd;
@@ -94,8 +95,10 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 	if (!setup_pipe(pipe_amount, &fd, &pid))
 		return (NULL);
 	counter = -1;
+	print_cmd_chain(chain);
 	while (chain[++counter] && counter <= pipe_amount)
 	{
+		printf("doing pipe %s\n", chain[counter]->value);
 		if (pipe(fd[counter]) == -1)
 			return (pipe_fail(counter, &fd, &pid));
 		pid[counter] = fork();
@@ -106,5 +109,6 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 		else if (parent(counter, fd, pid, &line))
 			break ;
 	}
+	printf("current chain %s\n", line);
 	return (complete_pipe(&fd, pipe_amount, line));
 }

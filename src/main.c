@@ -97,7 +97,7 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	*shell;
 	int		init_status;
 
-	// rl_catch_signals = 0;
+	rl_catch_signals = 0; // TODO: check this especially when it comes to break out of heredoc
 	shell = get_shell();
 	init_status = initialize_shell(shell, argc, argv, envp);
 	if (init_status == CMD_FAILURE)

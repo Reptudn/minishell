@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 19:52:13 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/15 16:20:28 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 15:14:39 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	execute_child_process(char *cmd_path, char **args,
 			return (0);
 		if (execve(cmd_path, env_args, envp) == -1)
 		{
-			perror("Command failed to execute");
+			perror("minishell: command failed to execute");
 			return (-1);
 		}
 	}

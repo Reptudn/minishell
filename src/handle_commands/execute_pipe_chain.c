@@ -100,8 +100,7 @@ int	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 		replace_variable(&(chain[i]->value), &chain[i]->args);
 	if (type == PIPE)
 	{
-		args = chain_out_to_arg(run_pipe(shell, chain, get_chain_len(chain)));
-		free_split(chain[0]->args);
+		args = chain_out_to_arg(run_pipe(shell, chain, get_chain_len(chain))); // TODO: check here
 		chain[0]->args = args;
 	}
 	else if (type == REDIRECT_IN)
