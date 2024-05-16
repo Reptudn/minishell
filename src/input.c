@@ -61,7 +61,7 @@ char	*get_input(char *prompt)
 			return (NULL);
 		tmp = ft_strtrim(line, "\n");
 		if (line)
-			ft_free((line));
+			free((line));
 		line = tmp;
 	}
 	if (!line)
@@ -83,7 +83,7 @@ int	command_loop(t_shell *shell)
 			continue ;
 		*shell->exit_status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
-		ft_free((line));
+		free(line);
 		line = NULL;
 		if (!(*get_run()))
 			break ;
