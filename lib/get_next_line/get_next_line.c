@@ -23,7 +23,7 @@ char	*buff_to_line(char *buffer, char *buf)
 	char	*temp;
 
 	temp = ft_strjoin(buffer, buf);
-	free(buffer);
+	ft_free(buffer);
 	return (temp);
 }
 
@@ -42,20 +42,20 @@ char	*next(char *buffer)
 		i++;
 	if (!buffer[i])
 	{
-		free(buffer);
+		ft_free(buffer);
 		return (NULL);
 	}
 	line = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
 	if (!line)
 	{
-		free(buffer);
+		ft_free(buffer);
 		return (NULL);
 	}
 	i++;
 	j = 0;
 	while (buffer[i])
 		line[j++] = buffer[i++];
-	free(buffer);
+	ft_free(buffer);
 	return (line);
 }
 

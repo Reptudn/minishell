@@ -55,15 +55,17 @@ char	*get_input(char *prompt)
 	if (isatty(fileno(stdin)))
 		line = readline(prompt);
 	else
-	{
-		line = get_next_line(fileno(stdin));
-		if (!line)
-			return (NULL);
-		tmp = ft_strtrim(line, "\n");
-		if (line)
-			free((line));
-		line = tmp;
-	}
+		line = readline("");
+	// else
+	// {
+	// 	line = get_next_line(fileno(stdin));
+	// 	if (!line)
+	// 		return (NULL);
+	// 	tmp = ft_strtrim(line, "\n");
+	// 	if (line)
+	// 		free((line));
+	// 	line = tmp;
+	// }
 	if (!line)
 		return (NULL);
 	return (line);
