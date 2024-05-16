@@ -249,11 +249,6 @@ void			signal_restore_parent(void);
 void			signal_ignore_parent(void);
 void			segfault(int signal);
 
-//garbage collector
-void			*ft_malloc(size_t size);
-void			free_all(void);
-void			ft_free(void *ptr);
-
 // var utils
 void			replace_variable(char **value, char ***args);
 char			*get_var_str(char *str);
@@ -261,6 +256,5 @@ char			*get_var_str(char *str);
 // libft extended
 void			*ft_free_many(void *return_val, int count, ...);
 char			*ft_strjoin_many(int count, ...);
-void			*ft_realloc(void *ptr, size_t size);
 
 #endif

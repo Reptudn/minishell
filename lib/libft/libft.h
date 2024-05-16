@@ -23,6 +23,11 @@ typedef struct s_list
 	struct s_list	*next;
 }				t_list;
 
+void	*ft_malloc(size_t size);
+void	ft_free(void *ptr);
+void	ft_free_all(void);
+void	*ft_realloc(void *ptr, size_t size);
+
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);

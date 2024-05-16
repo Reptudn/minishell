@@ -31,7 +31,6 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)utils/variables2.c \
 			$(SRCDIR)utils/variables3.c \
 			$(SRCDIR)utils/variables4.c \
-			$(SRCDIR)libft_extended/ft_garbage_collector.c \
 			$(SRCDIR)libft_extended/ft_free.c \
 			$(SRCDIR)libft_extended/ft_strjoin_many.c \
 			$(SRCDIR)commands/show_history.c \
@@ -75,8 +74,7 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)shunting_yard/shunting_yard_utils.c \
 			$(SRCDIR)shunting_yard/shunting_stack_utils.c \
 			$(SRCDIR)shunting_yard/shunting_print.c \
-			$(SRCDIR)shunting_yard/ast_utils.c \
-			$(SRCDIR)libft_extended/ft_realloc.c
+			$(SRCDIR)shunting_yard/ast_utils.c
 
 OBJDIR := ./obj/
 OBJS	:= $(SRCS:.c=.o)

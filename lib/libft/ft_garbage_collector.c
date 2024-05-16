@@ -6,13 +6,13 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:49 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 09:54:49 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 10:42:51 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/minishell.h"
+# include "./libft.h"
 
-#define GARBAGE_COL_SIZE 100
+#define GARBAGE_COL_SIZE 50
 #define GARBAGE_ERROR_EXPAND -2
 #define GARBAGE_ERROR_CREATE -1
 #define GARBAGE_SUCCESS 0
@@ -67,7 +67,7 @@ static int	ft_garbage_col_add(void *ptr)
 	count = garbage_col_count();
 	if (*count >= *garbage_col_size())
 	{
-		new_garbage = ft_realloc(*garbage, sizeof(void *)
+		new_garbage = realloc(*garbage, sizeof(void *) // TODO: make this ft_realloc after thats fixed
 				* (*garbage_col_size() * 2));
 		if (!new_garbage)
 			return (GARBAGE_ERROR_EXPAND);
@@ -123,7 +123,7 @@ void	*ft_malloc(size_t size)
 	return (ptr);
 }
 
-void	free_all(void)
+void	ft_free_all(void)
 {
 	ft_garbage_col_clear();
 }

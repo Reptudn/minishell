@@ -50,7 +50,7 @@ char	*ft_strfixedtrim(const char *s1, const char *set)
 		return (0);
 	t = substrcmp(s1, set, 0);
 	size = getlen(s1) - (t + substrcmp(s1, set, getlen(s1) - getlen(set)));
-	str = malloc(size * sizeof(char));
+	str = ft_malloc(size * sizeof(char));
 	if (!str)
 		return (0);
 	i = 0;

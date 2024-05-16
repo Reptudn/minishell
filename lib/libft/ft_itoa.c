@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./libft.h"
 
 static long	get_digits(long n)
 {
@@ -52,7 +52,7 @@ char	*ft_itoa(int n)
 	if (_n < 1)
 	{
 		digits += 1;
-		str = malloc((digits + 1) * sizeof(char));
+		str = ft_malloc((digits + 1) * sizeof(char));
 		if (!str)
 			return (0);
 		str[0] = '-';
@@ -60,7 +60,7 @@ char	*ft_itoa(int n)
 	}
 	else
 	{
-		str = malloc((digits + 1) * sizeof(char));
+		str = ft_malloc((digits + 1) * sizeof(char));
 		if (!str)
 			return (0);
 	}
