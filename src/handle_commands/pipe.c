@@ -60,7 +60,7 @@ int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 		printf("waiting for pipes to close\n");
 		while (++m < *get_pipe_amount())
 		{
-			printf("waiting for %d\n", m);
+			printf(" waiting for %d\n", m);
 			waitpid(pid[m], &exits, 0);
 			if (WIFEXITED(exits) != CMD_SUCCESS)
 				*get_shell()->exit_status = WEXITSTATUS(exits);
@@ -68,6 +68,7 @@ int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 		printf("done waiting\n");
 		*line = read_buff(fd[counter]);
 		close(fd[counter][0]);
+		ft_putstr_fd(*line, 1);
 		return (1);
 	}
 	return (0);
