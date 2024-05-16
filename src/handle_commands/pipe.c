@@ -53,15 +53,19 @@ int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 	close(fd[counter][1]);
 	if (counter != 0)
 		close(fd[counter - 1][0]);
+	printf("pipe amount %d\n", *get_pipe_amount());
 	if (counter == *get_pipe_amount() - 1)
 	{
 		m = -1;
+		printf("waiting for pipes to close\n");
 		while (++m < *get_pipe_amount())
 		{
+			printf("waiting for %d\n", m);
 			waitpid(pid[m], &exits, 0);
 			if (WIFEXITED(exits) != CMD_SUCCESS)
 				*get_shell()->exit_status = WEXITSTATUS(exits);
 		}
+		printf("done waiting\n");
 		*line = read_buff(fd[counter]);
 		close(fd[counter][0]);
 		return (1);
@@ -109,6 +113,5 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 		else if (parent(counter, fd, pid, &line))
 			break ;
 	}
-	printf("current chain %s\n", line);
 	return (complete_pipe(&fd, pipe_amount, line));
 }
