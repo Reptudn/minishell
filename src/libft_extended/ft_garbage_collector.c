@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:49 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 09:36:32 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/16 09:54:49 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ static void	ft_garbage_col_clear(void)
 	i = 0;
 	while (i < *count)
 	{
-		printf("freeing: %p\n", (*garbage)[i]);
 		free((*garbage)[i]);
+		(*garbage)[i] = NULL; 
 		i++;
 	}
 	free(*garbage);
@@ -132,6 +132,7 @@ void	ft_free(void *ptr)
 {
 	void	***garbage;
 	int		i;
+	int		j;
 
 	i = -1;
 	if (ptr == NULL)
@@ -141,8 +142,11 @@ void	ft_free(void *ptr)
 	{
 		if ((*garbage)[i] == ptr)
 		{
-			printf("pointer: %p\n", (*garbage)[i]);
-			(*garbage)[i] = NULL;
+			j = i - 1;
+			while (++j < *garbage_col_count() - 1)
+				(*garbage)[j] = (*garbage)[j + 1];
+			(*garbage_col_count())--;
+			break ;
 		}
 	}
 	free(ptr);
