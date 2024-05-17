@@ -13,6 +13,11 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# define GARBAGE_COL_SIZE 50
+# define GARBAGE_ERROR_EXPAND -2
+# define GARBAGE_ERROR_CREATE -1
+# define GARBAGE_SUCCESS 0
+
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>

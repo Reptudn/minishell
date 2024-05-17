@@ -1,12 +1,10 @@
 NAME	:= minishell
 
-# CFLAGS	:= -Wextra -Wall -Werror
+CFLAGS	:= -Wextra -Wall -Werror
 
 HEADERS	:= -I ./include
 
 SRCDIR := ./src/
-
-# SRCS := $(shell find $(SRCDIR) -name '*.c')
 
 SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)input.c \
@@ -17,7 +15,9 @@ SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)fancy/prompt.c \
 			$(SRCDIR)fancy/cursor_utils.c \
 			$(SRCDIR)utils/split.c \
+			$(SRCDIR)utils/split2.c \
 			$(SRCDIR)utils/split_helper.c \
+			$(SRCDIR)utils/split_helper2.c \
 			$(SRCDIR)utils/command_error.c \
 			$(SRCDIR)utils/make_cmds_helper.c \
 			$(SRCDIR)utils/free_split_cmds.c \

@@ -46,7 +46,6 @@ static void	replace_args(char ***args)
 {
 	int		i;
 	int		j;
-	char	*var;
 
 	i = -1;
 	while (*args && (*args)[++i])
@@ -71,7 +70,6 @@ static void	replace_args(char ***args)
 void	replace_variable(char **value, char ***args)
 {
 	int		i;
-	int		j;
 
 	i = -1;
 	if (!args || !value)

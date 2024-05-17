@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:43:35 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 08:29:57 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/17 06:54:37 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,10 @@ char	*handle_dollar_sign(char *str, t_temps *temp, char *var_str, int index)
 	else
 		var_str = append_single_char(var_str, str[temp->int_i]);
 	return (var_str);
+}
+
+int	handle_space(char **var_str)
+{
+	*var_str = append_single_char(*var_str, '$');
+	return (1);
 }

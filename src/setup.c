@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 08:11:34 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 13:27:13 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/17 12:22:30 by nsabia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	handle_shell_depth(t_shell *shell)
 	char		*new_val;
 	int			lvl;
 
+	new_val = NULL;
 	depth = env_get_by_name(shell->env_vars, "SHLVL");
 	if (!depth)
 	{

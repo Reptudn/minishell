@@ -73,7 +73,7 @@ char	**ft_split_shell(const char *str)
 	res_i = 0;
 	if (!str)
 		return (NULL);
-	temp = ft_malloc((ft_strlen(str) + 1) * sizeof(char *));
+	temp = ft_malloc((ft_strlen(str) + 2) * sizeof(char *));
 	process_string(str, temp, &res_i);
 	temp[res_i] = NULL;
 	result = ft_malloc((res_i + 1) * sizeof(char *));
