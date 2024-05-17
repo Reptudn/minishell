@@ -102,6 +102,7 @@ int	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 	if (type == PIPE)
 	{
 		args = chain_out_to_arg(run_pipe(shell, chain, get_chain_len(chain)));
+		exit_code = *get_shell()->exit_status;
 		chain[0]->args = args;
 	}
 	else if (type == REDIRECT_IN)

@@ -55,7 +55,7 @@ int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 	{
 		m = -1;
 		*get_shell()->exit_status = 0;
-		while (++m < *get_pipe_amount())
+		while (++m <= *get_pipe_amount())
 		{
 			waitpid(pid[m], &exits, 0);
 			if (WEXITSTATUS(exits) != 0)
