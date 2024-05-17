@@ -101,9 +101,7 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 		return (2);
 	}
 	exit_code = execute_commands_helper(yard, shell, cmd1, cmd2);
-	if (exit_code != 0)
-		*shell->exit_status = exit_code;
-	else if (yard->output && !yard->output->next && !yard->output->prev)
+	if (yard->output && !yard->output->next && !yard->output->prev)
 		run_command(shell, yard->output);
 	else
 		printf("Last command error\n");

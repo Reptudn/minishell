@@ -18,12 +18,6 @@ int	ft_unset(t_shunting_node *cmd, t_shell *shell)
 	int			i;
 
 	i = -1;
-	if (!cmd->args[0] || !cmd->args)
-	{
-		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
-		*shell->exit_status = 0;
-		return (CMD_SUCCESS);
-	}
 	while (cmd->args[++i])
 	{
 		found = env_get_by_name(shell->env_vars, cmd->args[i]);

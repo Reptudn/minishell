@@ -64,12 +64,12 @@ int	command_loop(t_shell *shell)
 	{
 		if (command_loop_helper3(line, &yard, &status))
 			continue ;
-		*shell->exit_status = execute_commands(yard, shell);
+		execute_commands(yard, shell);
 		shunting_yard_destroy(yard);
 		ft_free(line);
 		if (!(*get_run()))
 			break ;
-		if (status != CMD_SUCCESS)
+		if (*shell->exit_status != CMD_SUCCESS)
 			line = get_input(prompt_failure());
 		else
 			line = get_input(prompt_success());
