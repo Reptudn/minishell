@@ -69,9 +69,6 @@ static void	replace_args(char ***args)
 
 void	replace_variable(char **value, char ***args)
 {
-	int		i;
-
-	i = -1;
 	if (!args || !value)
 		return ;
 	if (str_is_equal(*value, "''") || str_is_equal(*value, "\"\""))

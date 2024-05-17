@@ -66,7 +66,7 @@ char	**chain_out_to_arg(char *output)
 	char	**out;
 
 	if (!output)
-		return(ft_split(ft_strdup("-n"), ' ')); // TODO: check if this fixed the spaces problem
+		return (ft_split(ft_strdup("-n"), ' '));
 	out = ft_calloc(3, sizeof(char *));
 	if (!out)
 	{
@@ -101,7 +101,7 @@ int	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 		replace_variable(&(chain[i]->value), &chain[i]->args);
 	if (type == PIPE)
 	{
-		args = chain_out_to_arg(run_pipe(shell, chain, get_chain_len(chain))); // TODO: check here
+		args = chain_out_to_arg(run_pipe(shell, chain, get_chain_len(chain)));
 		chain[0]->args = args;
 	}
 	else if (type == REDIRECT_IN)

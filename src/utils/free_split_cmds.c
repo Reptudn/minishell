@@ -14,9 +14,6 @@
 
 void	*free_split(char **split)
 {
-	int	i;
-
-	i = -1;
 	if (!split)
 		return (0);
 	return (0);

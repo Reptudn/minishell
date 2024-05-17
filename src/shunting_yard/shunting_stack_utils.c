@@ -17,9 +17,6 @@
 // only for output
 void	yard_pop(t_shunting_node *pop, t_shunting_yard *yard)
 {
-	int	i;
-
-	i = -1;
 	if (!pop)
 		return ;
 	if (pop->prev)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shunting_yard_node.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:36:01 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 15:12:34 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/17 12:43:01 by nsabia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	place_operator_node(t_shunting_node *node, t_shunting_yard *yard)
 	else
 	{
 		tmp = get_last_node(yard->stack);
-		while (tmp && *node->priority <= *tmp->priority) // TODO: hmm
+		while (tmp && *node->priority <= *tmp->priority)
 		{
 			stack_to_output_end(yard);
 			tmp = get_last_node(yard->stack);

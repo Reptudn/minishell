@@ -29,13 +29,9 @@ bool	wildcard_match(char *pattern, char *str)
 
 char	*append_match(char *match, char *dir_name)
 {
-	char	*temp;
-
-	temp = match;
 	match = ft_strjoin(match, " ");
 	if (!match)
 		return (NULL);
-	temp = match;
 	match = ft_strjoin(match, dir_name);
 	if (!match)
 		return (NULL);

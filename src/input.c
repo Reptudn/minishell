@@ -16,7 +16,7 @@ void	print_path(void);
 int		*is_heredoc(void);
 int		command_loop_helper2(t_shunting_yard *yard, char *line, int status);
 int		command_loop_helper(char *line);
-int		command_loop_helper3(char *line, t_shunting_yard **yard, int status);
+int		command_loop_helper3(char *line, t_shunting_yard **yard, int *status);
 
 void	shunting_yard_destroy(t_shunting_yard *yard)
 {
@@ -60,7 +60,7 @@ int	command_loop(t_shell *shell)
 	status = 0;
 	while (*get_run() && line)
 	{
-		if (command_loop_helper3(line, &yard, status))
+		if (command_loop_helper3(line, &yard, &status))
 			continue ;
 		*shell->exit_status = execute_commands(yard, shell);
 		shunting_yard_destroy(yard);

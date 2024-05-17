@@ -106,7 +106,6 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 		if (ran)
 			break ;
 	}
-	free_split(path);
 	return (norm_conform_function_to_return_correct_val(ran, status,
 			cmd->value));
 }
