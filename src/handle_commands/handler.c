@@ -86,7 +86,6 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 	t_shunting_node	*cmd1;
 	t_shunting_node	*cmd2;
 	int				operator_count;
-	int				exit_code;
 
 	cmd1 = NULL;
 	cmd2 = NULL;
@@ -100,10 +99,10 @@ int	execute_commands(t_shunting_yard *yard, t_shell *shell)
 		ft_putstr_fd("minishell: unbalanced tokens\n", 2);
 		return (2);
 	}
-	exit_code = execute_commands_helper(yard, shell, cmd1, cmd2);
+	*shell->exit_status = execute_commands_helper(yard, shell, cmd1, cmd2);
 	if (yard->output && !yard->output->next && !yard->output->prev)
 		run_command(shell, yard->output);
 	else
 		printf("Last command error\n");
-	return (exit_code);
+	return (*shell->exit_status);
 }
