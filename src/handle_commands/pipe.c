@@ -40,7 +40,7 @@ int	child(int counter, int pipe_amount, int *fd[2],
 		close(fd[counter][0]);
 		dup2(fd[counter][1], STDOUT_FILENO);
 	}
-	return (run_command(get_shell(), chain[counter]));
+	exit (run_command(get_shell(), chain[counter]));
 }
 
 int	parent(int counter, int *fd[2], pid_t pid[], char **line)
@@ -53,22 +53,18 @@ int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 	close(fd[counter][1]);
 	if (counter != 0)
 		close(fd[counter - 1][0]);
-	printf("pipe amount %d\n", *get_pipe_amount());
 	if (counter == *get_pipe_amount() - 1)
 	{
 		m = -1;
-		printf("waiting for pipes to close\n");
+		*get_shell()->exit_status = 0;
 		while (++m < *get_pipe_amount())
 		{
-			printf(" waiting for %d\n", m);
 			waitpid(pid[m], &exits, 0);
-			if (WIFEXITED(exits) != CMD_SUCCESS)
-				*get_shell()->exit_status = WEXITSTATUS(exits);
+			if (WEXITSTATUS(exits) != 0)
+				*get_shell()->exit_status = WEXITSTATUS(exits) % 256;
 		}
-		printf("done waiting\n");
 		*line = read_buff(fd[counter]);
 		close(fd[counter][0]);
-		ft_putstr_fd(*line, 1);
 		return (1);
 	}
 	return (0);
@@ -100,10 +96,8 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 	if (!setup_pipe(pipe_amount, &fd, &pid))
 		return (NULL);
 	counter = -1;
-	print_cmd_chain(chain);
 	while (chain[++counter] && counter <= pipe_amount)
 	{
-		printf("doing pipe %s\n", chain[counter]->value);
 		if (pipe(fd[counter]) == -1)
 			return (pipe_fail(counter, &fd, &pid));
 		pid[counter] = fork();

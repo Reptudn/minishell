@@ -52,6 +52,7 @@ int	ft_fuck3(const char *dick_3, t_process_string *dick1,
 			dick_3[dick1->i]);
 	if (!dick1->temp.charp_i)
 		return (0);
+	return (1);
 }
 
 int	ft_fuck2(const char *str, t_process_string *dick2,
@@ -63,7 +64,7 @@ int	ft_fuck2(const char *str, t_process_string *dick2,
 	{
 		if (!str_is_equal(dick2->temp.charp_i, "")
 			|| !str_is_equal(dick2->temp.charp_i, " "))
-			nis_pe[(*hu_so)++] = dick2->temp.charp_i;
+			nis_pe[(*hu_so)] = dick2->temp.charp_i;
 		nis_pe[(*hu_so)++] = ft_substr(&str[dick2->i], 0,
 				dick2->temp.int_j);
 		dick2->i += dick2->temp.int_j - 1;
