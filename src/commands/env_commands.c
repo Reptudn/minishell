@@ -75,6 +75,7 @@ int	execute_command(t_shell *shell, t_shunting_node *cmd,
 int	norm_conform_function_to_return_correct_val(int ran, int status,
 	char *val)
 {
+	(void)val;
 	if (ran)
 		return (status);
 	return (-1);
