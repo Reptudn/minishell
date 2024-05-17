@@ -49,7 +49,7 @@ int	run_external_command(t_shell *shell, t_shunting_node *cmd)
 		status = run_path_command(shell, cmd);
 		if (status == CMD_FAILURE)
 		{
-			print_invalid_cmd(cmd->value, "FAILURE", CMD_NOT_FOUND);
+			print_invalid_cmd(cmd->value, "NO SUCH FILE OR DIR", CMD_NOT_FOUND);
 			status = CMD_NOT_FOUND;
 		}
 		else if (status == CMD_IMPROP)

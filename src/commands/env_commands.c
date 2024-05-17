@@ -75,9 +75,7 @@ int	execute_command(t_shell *shell, t_shunting_node *cmd,
 int	norm_conform_function_to_return_correct_val(int ran, int status,
 	char *val)
 {
-	if (ran && val && (*val != '.' && *val != '/'))
-		return (127);
-	else if (ran)
+	if (ran)
 		return (status);
 	return (-1);
 }
@@ -95,7 +93,9 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 	if (!path)
 		return (-1);
 	ran = 0;
-	while (path[++i] && (cmd->value[0] != '.' && cmd->value[1] != '/'))
+	if (ft_strncmp(cmd->value, "./", 2) == 0)
+		return (-1);
+	while (path[++i])
 	{
 		cmd_path = create_cmd_path(path[i], cmd->value);
 		if (!cmd_path)

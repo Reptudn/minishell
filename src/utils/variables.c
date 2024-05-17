@@ -72,7 +72,7 @@ void	replace_variable(char **value, char ***args)
 	int		i;
 
 	i = -1;
-	if (!args || !value || (!*args && **args == NULL))
+	if (!args || !value)
 		return ;
 	if (str_is_equal(*value, "''") || str_is_equal(*value, "\"\""))
 		*value = ft_strdup("");

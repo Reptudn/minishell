@@ -20,7 +20,7 @@ int	openfiles(t_shunting_node **chain, int append_amount, int *i, int fd)
 		fd = open(chain[(*i)++]->value, O_CREAT, 0644);
 		if (fd == -1)
 		{
-			perror("minishell: ");
+			perror("minishell");
 			return (CMD_FAILURE);
 		}
 		close(fd);
@@ -43,7 +43,7 @@ int	run_append(t_shell *shell, t_shunting_node **chain, int append_amount)
 	{
 		fd = open(chain[i]->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
-			perror("minishell ");
+			perror("minishell");
 		if (fd == -1)
 			return (CMD_FAILURE);
 		if (dup2(fd, STDOUT_FILENO) == -1)

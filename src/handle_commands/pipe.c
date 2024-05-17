@@ -40,7 +40,7 @@ int	child(int counter, int pipe_amount, int *fd[2],
 		close(fd[counter][0]);
 		dup2(fd[counter][1], STDOUT_FILENO);
 	}
-	return (run_command(get_shell(), chain[counter]));
+	exit (run_command(get_shell(), chain[counter]));
 }
 
 int	parent(int counter, int *fd[2], pid_t pid[], char **line)
@@ -54,11 +54,12 @@ int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 	if (counter == *get_pipe_amount() - 1)
 	{
 		m = -1;
+		*get_shell()->exit_status = 0;
 		while (++m < *get_pipe_amount())
 		{
 			waitpid(pid[m], &exits, 0);
-			if (WIFEXITED(exits) != CMD_SUCCESS)
-				*get_shell()->exit_status = WEXITSTATUS(exits);
+			if (WEXITSTATUS(exits) != 0)
+				*get_shell()->exit_status = WEXITSTATUS(exits) % 256;
 		}
 		*line = read_buff(fd[counter]);
 		close(fd[counter][0]);
@@ -80,6 +81,7 @@ char	*pipe_fail(int counter, int ***fd, pid_t **pid)
 }
 
 // TODO: fix space being printed when pipe return null
+// FIXME: when running echo 42 | echo no | echo smth | grep 42 it says its running the grep but its not really because it shouldnt pinrt anything and give an error and not smth
 char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 {
 	int				**fd;
