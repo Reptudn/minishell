@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:48:04 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/17 06:46:26 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/17 13:52:24 by nsabia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	print_cmd_chain(t_shunting_node **chain);
 int		run_delimiter_helper2dot1(char *temp, char *heredoc);
 int		run_delmiter_im_crying(void);
+char	*get_input2(char *prompt);
 
 int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 		char *heredoc, int counter)
@@ -24,7 +25,7 @@ int	run_delimiter_helper2(int pipefd[2], t_shunting_node **chain,
 
 	while (69420)
 	{
-		temp = get_input("heredoc> ");
+		temp = get_input2("heredoc> ");
 		if (!temp && *sigint_recv() && run_delmiter_im_crying())
 			return (CMD_FAILURE);
 		else if (!temp && !*sigint_recv())
