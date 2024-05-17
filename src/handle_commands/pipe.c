@@ -46,8 +46,6 @@ int	child(int counter, int pipe_amount, int *fd[2],
 int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 {
 	int		m;
-	int		bytes_read;
-	char	*tmp;
 	int		exits;
 
 	close(fd[counter][1]);
@@ -71,6 +69,7 @@ int	parent(int counter, int *fd[2], pid_t pid[], char **line)
 
 char	*pipe_fail(int counter, int ***fd, pid_t **pid)
 {
+	(void)pid;
 	perror("minishell: pipe");
 	while (--counter >= 0)
 	{
@@ -88,6 +87,7 @@ char	*run_pipe(t_shell *shell, t_shunting_node **chain, int pipe_amount)
 	pid_t			*pid;
 	char			*line;
 
+	(void)shell;
 	counter = -1;
 	line = NULL;
 	*get_pipe_amount() = pipe_amount;

@@ -94,6 +94,7 @@ int	execute_cmd_chain_helper(int len, t_shunting_node **chain,
 	int		exit_code;
 	char	**args;
 
+	args = NULL;
 	i = -1;
 	exit_code = 0;
 	while (++i < len && chain[i] && type != REDIRECT_IN_DELIMITER)
@@ -124,6 +125,7 @@ int	execute_cmd_chain(t_shell *shell, t_shunting_node *start,
 	int				exit_code;
 	char			**args;
 
+	args = NULL;
 	chain = get_cmd_chain(start, &len, &type);
 	if (!chain)
 		return (-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cursor_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 06:28:44 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/12 13:26:36 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/17 12:23:27 by nsabia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	move_cursor_right_offset(int offset)
 
 void	move_cursor_relative_helper(int *x, int *y, char *cap)
 {
+	(void)x;
 	if (*y > 0)
 	{
 		cap = tgetstr("do", NULL);
@@ -52,6 +53,7 @@ void	move_cursor_relative(int x, int y)
 {
 	char	*cap;
 
+	cap = NULL;
 	if (x > 0)
 	{
 		cap = tgetstr("nd", NULL);

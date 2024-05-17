@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_helper.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 13:05:40 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/17 06:45:48 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/17 12:27:15 by nsabia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ int	set_pwd_helper(t_env_var *tmp, t_env_var *oldpwd,
 {
 	t_shell	*shell;
 
+	(void)old_path;
+	(void)oldpwd;
+	shell = NULL;
 	if (tmp)
 	{
 		tmp->value = ft_strdup(new_path);
@@ -36,6 +39,7 @@ int	set_pwd_helper(t_env_var *tmp, t_env_var *oldpwd,
 int	set_pwd_helper2(t_env_var *oldpwd, char *old_path,
 		char *new_path, t_shell *shell)
 {
+	(void)new_path;
 	if (oldpwd)
 	{
 		oldpwd->value = ft_strdup(old_path);

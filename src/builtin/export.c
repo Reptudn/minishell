@@ -81,6 +81,7 @@ int	ft_export(t_shell *shell, t_shunting_node *cmd)
 	int		status;
 	bool	append;
 
+	append = false;
 	if (!cmd->args || !cmd->args[0])
 		return (print_export(shell->env_vars));
 	i = -1;

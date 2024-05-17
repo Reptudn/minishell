@@ -110,7 +110,6 @@ void	process_string(const char *str, char **result, int *res_i)
 	t_temps	temp;
 	char	**shell_op;
 	int		i;
-	char	quote;
 
 	i = -1;
 	*get_i() = &i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiter_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:28:07 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 13:28:53 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/17 12:27:32 by nsabia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	run_delimiter_helper2dot1(char *temp, char *heredoc)
 {
+	(void)temp;
+	(void)heredoc;
 	return (1);
 }
 

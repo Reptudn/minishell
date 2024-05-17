@@ -78,6 +78,7 @@ bool	is_invlid_builtin(char *cmd)
 	bool	changed;
 	char	curr;
 
+	curr = '\0';
 	if (!cmd)
 		return (false);
 	lower = ft_strdup(cmd);

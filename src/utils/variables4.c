@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables4.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:49:41 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/17 06:54:51 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/17 12:24:25 by nsabia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int	handle_question_mark(char **var_str, char *str)
 	char	*var;
 	char	*tmp;
 
+	(void)str;
 	var = ft_itoa(*get_shell()->exit_status);
 	if (!var)
 		return (-1);
@@ -62,6 +63,7 @@ static char	*handle_trim(t_env_var *env_var, char **var_str)
 	int		i;
 	char	*tmp;
 
+	tmp = NULL;
 	split = ft_split(env_var->value, ' ');
 	if (!split)
 		return (NULL);

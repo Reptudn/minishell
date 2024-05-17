@@ -43,6 +43,7 @@ int	set_pwd(t_shell *shell, char *old_path)
 	char		*new_path;
 
 	new_path = getcwd(NULL, 0);
+	oldpwd = NULL;
 	if (!new_path)
 	{
 		echo_err(NULL);
@@ -61,6 +62,7 @@ int	set_pwd(t_shell *shell, char *old_path)
 
 int	handle_too_many_args(t_shunting_node *cmd, char *old_path)
 {
+	(void)old_path;
 	if (cmd->args && cmd->args[0] && cmd->args[1])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
@@ -74,6 +76,7 @@ char	*handle_old_path(t_shunting_node *cmd, t_shell *shell,
 {
 	t_env_var	*tmp;
 
+	(void)old_path;
 	if (str_is_equal(cmd->args[0], "-") || str_is_equal(cmd->args[0], "--"))
 	{
 		tmp = env_get_by_name(shell->env_vars, "OLDPWD");

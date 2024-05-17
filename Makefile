@@ -1,12 +1,10 @@
 NAME	:= minishell
 
-# CFLAGS	:= -Wextra -Wall -Werror
+CFLAGS	:= -Wextra -Wall -Werror
 
 HEADERS	:= -I ./include
 
 SRCDIR := ./src/
-
-# SRCS := $(shell find $(SRCDIR) -name '*.c')
 
 SRCS	:=  $(SRCDIR)main.c \
 			$(SRCDIR)input.c \
