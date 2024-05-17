@@ -3,58 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_garbage_collector.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: nsabia <nsabia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:11:49 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 13:08:20 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/17 12:15:43 by nsabia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "./libft.h"
+#include "./libft.h"
 
-#define GARBAGE_COL_SIZE 50
-#define GARBAGE_ERROR_EXPAND -2
-#define GARBAGE_ERROR_CREATE -1
-#define GARBAGE_SUCCESS 0
+int		*garbage_col_count(void);
+int		*garbage_col_size(void);
+void	***garbage_col_get(void);
+int		ft_garbage_col_create(void);
 
-static int	*garbage_col_count(void)
-{
-	static int	count = 0;
-
-	return (&count);
-}
-
-static int	*garbage_col_size(void)
-{
-	static int	count = GARBAGE_COL_SIZE;
-
-	return (&count);
-}
-
-static void	***garbage_col_get(void)
-{
-	static void	**garbage = NULL;
-
-	return (&garbage);
-}
-
-static int	ft_garbage_col_create(void)
-{
-	void	***garbage;
-
-	garbage = garbage_col_get();
-	if (*garbage)
-		return (1);
-	*garbage_col_count() = 0;
-	*garbage = malloc(sizeof(void *) * GARBAGE_COL_SIZE);
-	if (!*(garbage))
-		return (0);
-	return (1);
-}
-
-// returns 0 on success and otherwise the number of elements that were able to be added
-// returns -1 when the garbage collector has not been created
-// retuen -2 when the garbage collector is full and could not be realloced
 static int	ft_garbage_col_add(void *ptr)
 {
 	void	***garbage;
@@ -94,7 +56,7 @@ static void	ft_garbage_col_clear(void)
 	while (i < *count)
 	{
 		free((*garbage)[i]);
-		(*garbage)[i] = NULL; 
+		(*garbage)[i] = NULL;
 		i++;
 	}
 	free(*garbage);

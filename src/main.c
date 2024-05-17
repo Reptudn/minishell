@@ -97,7 +97,6 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	*shell;
 	int		init_status;
 
-	// rl_catch_signals = 0;
 	shell = get_shell();
 	init_status = initialize_shell(shell, argc, argv, envp);
 	if (init_status == CMD_FAILURE)

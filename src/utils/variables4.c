@@ -6,13 +6,14 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:49:41 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 13:32:13 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/17 06:54:51 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 char	*append_single_char(char *str, char c);
+int		handle_space(char **var_str);
 
 static int	handle_question_mark(char **var_str, char *str)
 {
@@ -29,10 +30,29 @@ static int	handle_question_mark(char **var_str, char *str)
 	return (2);
 }
 
-static int	handle_space(char **var_str)
+static char	*handle_trim_helper(char **split, int *i, char *tmp, char **var_str)
 {
-	*var_str = append_single_char(*var_str, '$');
-	return (1);
+	char	*trimmed;
+
+	while (split[++(*i)])
+	{
+		if ((*i) == 0)
+		{
+			tmp = ft_strjoin(" ", split[(*i)]);
+			if (!tmp)
+				return (NULL);
+			split[(*i)] = tmp;
+		}
+		trimmed = ft_strjoin(*var_str, split[(*i)]);
+		if (!trimmed)
+			return (NULL);
+		*var_str = trimmed;
+		trimmed = ft_strjoin(*var_str, " ");
+		if (!trimmed)
+			return (NULL);
+		*var_str = trimmed;
+	}
+	return (trimmed);
 }
 
 static char	*handle_trim(t_env_var *env_var, char **var_str)
@@ -46,34 +66,7 @@ static char	*handle_trim(t_env_var *env_var, char **var_str)
 	if (!split)
 		return (NULL);
 	i = -1;
-	while (split[++i])
-	{
-		if (i == 0)
-		{
-			tmp = ft_strjoin(" ", split[i]);
-			if (!tmp)
-			{
-				free_split(split);
-				return (NULL);
-			}
-			split[i] = tmp;
-		}
-		trimmed = ft_strjoin(*var_str, split[i]);
-		if (!trimmed)
-		{
-			free_split(split);
-			return (NULL);
-		}
-		*var_str = trimmed;
-		trimmed = ft_strjoin(*var_str, " ");
-		if (!trimmed)
-		{
-			free_split(split);
-			return (NULL);
-		}
-		*var_str = trimmed;
-	}
-	free_split(split);
+	trimmed = handle_trim_helper(split, &i, tmp, var_str);
 	if (trimmed && str_is_equal(trimmed, " "))
 		return (NULL);
 	return (trimmed);

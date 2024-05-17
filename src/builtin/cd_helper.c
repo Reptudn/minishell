@@ -6,7 +6,7 @@
 /*   By: jkauker <jkauker@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 13:05:40 by jkauker           #+#    #+#             */
-/*   Updated: 2024/05/16 13:27:53 by jkauker          ###   ########.fr       */
+/*   Updated: 2024/05/17 06:45:48 by jkauker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,15 @@ char	*handle_home_path(t_shunting_node *cmd, t_shell *shell, char *new_path)
 	else
 		new_path = (cmd->args)[0];
 	return (new_path);
+}
+
+char	*ft_getcwd(char *str, int num)
+{
+	char	*str_return;
+	char	*str2;
+
+	str_return = getcwd(str, num);
+	str2 = ft_strdup(str_return);
+	free(str_return);
+	return (str2);
 }

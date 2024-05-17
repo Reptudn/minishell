@@ -26,7 +26,7 @@ char	*create_cmd_path(char *path, char *cmd)
 	cmd_path = ft_strjoin(path, "/");
 	if (!cmd_path)
 		return (NULL);
-	temp_cmd_path = ft_strjoin(cmd_path, cmd);;
+	temp_cmd_path = ft_strjoin(cmd_path, cmd);
 	if (!temp_cmd_path)
 		return (NULL);
 	return (temp_cmd_path);

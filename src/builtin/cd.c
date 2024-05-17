@@ -19,6 +19,7 @@ int		set_pwd_helper2(t_env_var *oldpwd, char *old_path,
 			char *new_path, t_shell *shell);
 char	*handle_home_path(t_shunting_node *cmd, t_shell *shell, char *new_path);
 int		handle_same_path(t_shunting_node *cmd, char *old_path);
+char	*ft_getcwd(char *str, int num);
 
 void	echo_err(char *new_path)
 {
@@ -84,17 +85,6 @@ char	*handle_old_path(t_shunting_node *cmd, t_shell *shell,
 		new_path = tmp->value;
 	}
 	return (new_path);
-}
-
-char	*ft_getcwd(char *str, int num)
-{
-	char	*str_return;
-	char	*str2;
-
-	str_return = getcwd(str, num);
-	str2 = ft_strdup(str_return);
-	free(str_return);
-	return (str2);
 }
 
 int	ft_cd(t_shunting_node *cmd, t_shell *shell, char *new_path)

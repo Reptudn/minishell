@@ -110,6 +110,7 @@ typedef struct s_temps
 	int			int_j;
 	int			int_k;
 	int			int_l;
+	int			int_m;
 	char		*charp_i;
 	char		*charp_j;
 	char		*charp_k;
