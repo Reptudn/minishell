@@ -59,15 +59,13 @@ int	handle_arg(t_shell *shell, char *arg, bool append)
 	if (!split)
 		return (CMD_FAILURE);
 	if (!is_valid_var_indentifier(split[0]))
-	{
-		free_split(split);
 		return (export_error(arg));
-	}
 	append = false;
 	if (split[0][ft_strlen(split[0]) - 1] == '+')
+	{
 		split[0][ft_strlen(split[0]) - 1] = 0;
-	if (split[0][ft_strlen(split[0]) - 1] == '+')
 		append = true;
+	}
 	env = env_get_by_name(shell->env_vars, split[0]);
 	if (env)
 		if (handle_arg_helper(split, env, append))
