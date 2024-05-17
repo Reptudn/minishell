@@ -94,7 +94,7 @@ int	run_env_command(t_shell *shell, t_shunting_node *cmd)
 	if (!path)
 		return (-1);
 	ran = 0;
-	if (ft_strncmp(cmd->value, "./", 2) == 0)
+	if (ft_strncmp(cmd->value, "./", 2) == 0 || cmd->value[0] == '/')
 		return (-1);
 	while (path[++i])
 	{

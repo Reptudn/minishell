@@ -19,7 +19,7 @@ int		execute(char *cmd_path, char **args, char *command, t_shell *shell);
 int	run_path_command(t_shell *shell, t_shunting_node *cmd)
 {
 	if (access(cmd->value, F_OK) != 0)
-		return (CMD_FAILURE);
+		return (CMD_NOT_FOUND);
 	if (access(cmd->value, X_OK) != 0)
 	{
 		printf("minishell: %s: Permission denied\n", cmd->value);
