@@ -47,6 +47,8 @@ char	*get_input(char *prompt)
 		free(line);
 	else
 		ft_free(line);
+	if (*tmp == '\0')
+		return (ft_strdup(get_input(prompt)));
 	return (tmp);
 }
 
