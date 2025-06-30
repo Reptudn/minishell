@@ -68,6 +68,7 @@ int	execute(char *cmd_path, char **args, char *command, t_shell *shell)
 	int		status;
 
 	pid = fork();
+	status = 0;
 	if (pid < 0)
 	{
 		perror("minishell: fork failed");
